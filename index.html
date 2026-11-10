@@ -2322,10 +2322,10 @@ function padCenter(n){
 }
 function placeFrog(n, anim){
   var f = document.getElementById('hopper'), c = padCenter(n); if (!f || !c) return;
-  var size = Math.max(30, c.w * 0.95);
+  var size = Math.max(24, c.w * 0.68);          /* smaller frog that sits on top of the pad, number left visible */
   f.style.width = size + 'px';
   f.style.transition = anim ? 'none' : '';
-  f.style.left = (c.x - size / 2) + 'px'; f.style.top = (c.y - size * 1.22) + 'px';
+  f.style.left = (c.x - size / 2) + 'px'; f.style.top = (c.y - c.w * 0.3 - size * 1.2) + 'px';
 }
 function hopOnce(from, to, done){
   var f = document.getElementById('hopper'), a = padCenter(from), b = padCenter(to);
