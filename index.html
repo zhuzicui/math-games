@@ -1241,7 +1241,7 @@ function langPicker(cls){
 }
 
 /* ---------- avatars: the child's buddy (Momo or one of 25 animal faces) ---------- */
-var AVATAR_N = 25, AV_BG = ['#F7DCCF', '#DDEFF8', '#FBEFC4', '#E3F1DA', '#EADCF2', '#FBE3DC'];
+var AVATAR_N = 25, AV_BG = ['#FFFFFF'];   /* every buddy sits on a plain white circle */
 var AV_DEFAULT = 'av17';   /* the koala: first in the list and the default buddy */
 function avatarIds(){ var a = [AV_DEFAULT]; for (var i = 1; i <= AVATAR_N; i++) { var id = 'av' + (i < 10 ? '0' : '') + i; if (id !== AV_DEFAULT) a.push(id); } return a; }
 function avatarFace(id){
