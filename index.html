@@ -110,8 +110,8 @@ h1,h2{font-family:var(--display);font-weight:800;margin:0;line-height:1.05}
     radial-gradient(circle at 45% 70%, var(--chip) 0 8%, transparent 9%),
     var(--dough);}
 .cookie.start{--dough:#F4AE9F; --edge-c:#B5604A; --chip:#8A3A2C}       /* red = already on the plate */
-.cookie .x{position:absolute;top:-7px;right:-7px;width:24px;height:24px;border-radius:50%;background:var(--card);border:4px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 rgba(107,74,58,.25)}
-.cookie .x svg{width:11px;height:11px;stroke:#5A3E33;stroke-width:2.4;stroke-linecap:round;fill:none}
+.cookie .x{position:absolute;top:-4px;right:-4px;width:clamp(15px,calc(var(--ck) * .34),19px);height:clamp(15px,calc(var(--ck) * .34),19px);border-radius:50%;background:var(--card);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 rgba(107,74,58,.25)}
+.cookie .x svg{width:60%;height:60%;stroke:#5A3E33;stroke-width:2;stroke-linecap:round;fill:none}
 .jar .cookie,#plate button.cookie{touch-action:none;cursor:grab}
 .jar.hot{background:#CFE2EF}
 .cookie.pop{animation:pop .35s ease-out}
@@ -383,7 +383,92 @@ body.skybg,body.skybg #app{background:#DAECEC}
 .cookie.counted{background:var(--dough);border:4px solid var(--edge-c);filter:none}
 .cookie.ghost{filter:drop-shadow(0 10px 12px rgba(90,62,51,.3))}
 
+/* ===== icons: fixed sizes (iPad Safari shrank %-sized svgs inside buttons) ===== */
+.round svg{width:clamp(24px,4.4dvh,32px);height:clamp(24px,4.4dvh,32px);flex:none}
+.round .ic-say{display:flex;align-items:center;justify-content:center}
+@media (min-width:700px) and (min-height:600px){
+  .round{width:60px;height:60px}
+  .round svg{width:30px;height:30px}
+  .small-round{width:56px;height:56px}
+}
+/* ===== your rainbow page ===== */
+.sky{grid-template-rows:minmax(0,1fr) auto auto}
+.rb .rainbow{width:100%;height:100%;max-height:420px;overflow:visible}
+.bookbtn{justify-self:center;position:relative;display:flex;align-items:center;justify-content:center;width:clamp(64px,10dvh,84px);height:clamp(64px,10dvh,84px);border-radius:24px;border:4px solid #B3D5D7;background:#FFFCF7;box-shadow:0 6px 0 #B3D5D7;cursor:pointer}
+.bookbtn svg{width:60%;height:60%}
+.bookbtn:active{transform:translateY(3px);box-shadow:0 3px 0 #B3D5D7}
+.bookcount{position:absolute;top:-10px;right:-10px;min-width:28px;height:28px;padding:0 6px;border-radius:14px;background:#E9917A;color:#3E2A22;border:3px solid #FFFCF7;font-family:var(--display);font-weight:800;font-size:16px;line-height:22px;text-align:center;box-sizing:border-box}
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+  .sky{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);grid-template-rows:minmax(0,1fr) auto}
+  .rb{grid-row:1 / 3}
+  .bookbtn{grid-column:2}
+}
+/* ===== sticker book ===== */
+body.bookbg,body.bookbg #app{background:#F3E9DC}
+.book-title{font-size:clamp(22px,min(6vw,4.6dvh),40px);text-align:center;flex:1}
+.book{flex:1;min-height:0;background:#FFFCF7;border:4px solid #E6D5C4;border-radius:24px;box-shadow:0 6px 0 #E6D5C4;padding:clamp(10px,2.4dvh,24px);display:flex;flex-direction:column;gap:10px;overflow:hidden;
+  background-image:repeating-linear-gradient(to bottom, transparent 0 39px, #F3E6D6 39px 41px)}
+.book-empty{margin:0;text-align:center;font-weight:800;font-size:clamp(16px,2.6dvh,20px);color:var(--ink2)}
+.book-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(6px,1.4dvh,14px);align-items:center;justify-items:center}
+.sticker{border:0;background:none;padding:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform:rotate(var(--rot));cursor:pointer}
+.stk{width:88%;height:88%;overflow:visible;
+  filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 4px 4px rgba(90,62,51,.22))}
+.sticker.wiggle{animation:wiggle .5s ease-in-out}
+@keyframes wiggle{25%{transform:rotate(calc(var(--rot) - 10deg)) scale(1.08)}75%{transform:rotate(calc(var(--rot) + 8deg)) scale(1.08)}}
+.sticker-slot{width:70%;aspect-ratio:1/1;max-height:90%;border:4px dashed #E6D5C4;border-radius:24px}
+.reward .stk{width:auto;height:clamp(64px,22dvh,220px)}
+@media (orientation:landscape){ .book-grid{grid-template-columns:repeat(7,minmax(0,1fr))} }
+
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+
+/* ===== speech bubbles: the ask always stays; a second bubble gives feedback ===== */
+.momo-row{width:100%}
+.bubbles{flex:1 1 auto;min-width:0;max-width:440px;display:flex;flex-direction:column;align-items:stretch;gap:clamp(4px,1dvh,8px)}
+.bubbles .bubble{max-width:none;width:100%}
+.bubbles .bubble b{white-space:nowrap}
+.bubble2{padding-top:clamp(2px,.6dvh,6px)!important;padding-bottom:clamp(2px,.6dvh,6px)!important;background:#FBE3DC;border-color:#E9A796;visibility:hidden;transform:scale(.8);opacity:0;transition:transform .2s,opacity .2s}
+.bubble2 b{font-size:clamp(17px,min(5vw,3.4dvh),28px)!important;color:#A44A35}
+.bubble2.on{visibility:visible;transform:none;opacity:1}
+.bubble2.yum{background:#E3F1DA;border-color:#A9CB97}
+.bubble2.yum b{color:#4F7A3B}
+/* ===== mute toggle ===== */
+.round .ic-off{display:none}
+body.muted .speakbtn .ic-say{display:none}
+body.muted .speakbtn .ic-off{display:flex;align-items:center;justify-content:center}
+body.muted .speakbtn{background:#F3E9E2}
+
+/* ===== bubbles centred on the same axis as the sum; unicorn sits just to their left ===== */
+.momo-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:clamp(6px,1.6vw,16px);align-self:stretch;width:100%}
+.momo-row #momo{grid-column:1;justify-self:end;min-width:0;max-width:100%;display:flex;justify-content:flex-end}
+.momo-row .momo{max-width:100%;object-fit:contain;object-position:right center}
+.momo-row .bubbles{grid-column:2;width:max-content;min-width:min(400px,46vw);max-width:none;flex:none}
+@media (max-width:520px){ .momo-row .bubbles .bubble b{font-size:clamp(18px,6vw,26px)} .momo-row .bubbles{min-width:44vw} }
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+  .momo-row{display:flex;flex-direction:column}
+  .momo-row #momo{justify-content:center}
+  .momo-row .bubbles{width:100%;min-width:0}
+}
+.table.counting .loose .cookie{filter:grayscale(1);opacity:.45;transition:filter .25s,opacity .25s;cursor:default}
+.table .loose .cookie{transition:filter .25s,opacity .25s}
+
+/* ===== Chinese display font (only downloaded when Chinese characters are shown) ===== */
+@font-face{font-family:'Lemi MuHe';src:url(fonts/lemi-muhe.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+2E80-2FDF,U+3000-303F,U+3040-30FF,U+3100-312F,U+3190-31FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF}
+html:lang(zh){--display:'Baloo 2','Lemi MuHe','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
+html:lang(zh) body,html:lang(zh) .parents{font-family:Nunito,'Lemi MuHe','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
+
+/* ===== Japanese: Zen Maru Gothic (SIL OFL), only downloaded when Japanese is shown ===== */
+@font-face{font-family:'Zen Maru Gothic';src:url(fonts/zen-maru-gothic-bold.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+2E80-2FDF,U+3000-303F,U+3040-30FF,U+3100-312F,U+3190-31FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF}
+html:lang(ja){--display:'Baloo 2','Zen Maru Gothic','Hiragino Maru Gothic ProN','Hiragino Sans',system-ui,sans-serif}
+html:lang(ja) body,html:lang(ja) .parents{font-family:Nunito,'Zen Maru Gothic','Hiragino Maru Gothic ProN','Hiragino Sans',system-ui,sans-serif}
+html:lang(ja) .bubbles .bubble b,html:lang(ja) .big-btn,html:lang(ja) .donebtn{word-break:keep-all;line-break:strict}
+.seg button{white-space:nowrap}
+@media (max-width:430px){ .seg{gap:4px} .seg button{padding:0 8px;font-size:14px} }
+html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN','Hiragino Sans','Noto Sans JP','Yu Gothic',sans-serif}
+.bar-spacer{visibility:hidden}
+.bookbtn{width:clamp(52px,8dvh,60px);height:clamp(52px,8dvh,60px)}
+.chip{max-height:60px}
 </style>
 </head>
 <body>
@@ -396,6 +481,7 @@ body.skybg,body.skybg #app{background:#DAECEC}
   </defs>
 </svg>
 <main id="app"></main>
+<script src="rainbows.js"></script>
 <div id="live" class="sr" aria-live="polite"></div>
 
 <script>
@@ -405,7 +491,7 @@ body.skybg,body.skybg #app{background:#DAECEC}
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, name:'', facts:{}, lang:'en' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', facts:{}, lang:'en' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -413,9 +499,9 @@ var S = load();
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 
 /* ---------- languages ---------- */
-var LANGS = [['en', 'English'], ['fr', 'Français'], ['zh', '中文']];
-var HTML_LANG = { en: 'en', fr: 'fr', zh: 'zh-CN' };
-var SPEECH_LANG = { en: 'en-US', fr: 'fr-CA', zh: 'zh-CN' };
+var LANGS = [['en', 'English'], ['fr', 'Français'], ['zh', '中文'], ['ja', '日本語']];
+var HTML_LANG = { en: 'en', fr: 'fr', zh: 'zh-CN', ja: 'ja' };
+var SPEECH_LANG = { en: 'en-US', fr: 'fr-CA', zh: 'zh-CN', ja: 'ja-JP' };
 function P(t, s, n){ return { t: t, s: s || 'calm', n: n }; }
 function pl(n, one, many){ return n === 1 ? one : many; }
 
@@ -429,14 +515,16 @@ en: {
   gFeed: 'Feed the Monster', gGarden: 'My Stars', soon: 'Coming soon', gTen: 'Ten Frame', gBus: 'Bus Stop', gFrog: 'Frog Hops', gTower: 'Tower',
   backGames: 'Back to games', qOf: function(a, b){ return 'Question ' + a + ' of ' + b; }, plate: 'Plate', jar: 'Cookie jar', cookie: 'cookie',
   takeBack: 'Take this cookie back', putOn: 'Put a cookie on the plate',
-  feedMe: function(t){ return 'Feed me ' + t + '!'; }, yumT: function(t){ return 'Yum! ' + t + '!'; }, more: 'More please!', full: 'Too full!', done: 'Done!',
+  feedMe: function(t){ return 'Feed me\u00a0' + t + '!'; }, yumT: function(t){ return 'Yum! ' + t + '!'; }, more: 'Not enough!', full: 'Too full!', yum: 'Yum!', done: 'Done!',
   momoAlt: function(h){ return h ? 'Momo the unicorn, smiling' : 'Momo the unicorn, hungry'; },
   didIt: 'You did it!', next: 'Next', finish: 'Finish', eqLabel: function(s, a, t){ return s + ' plus ' + a + ' equals ' + t; },
   great: 'Great job!', newFlowers: function(n){ return n + ' new ' + pl(n, 'star', 'stars') + ' in your sky!'; }, seeGarden: 'See my stars', again: 'Play again',
-  gardenOf: function(n){ return n ? n + '’s sky' : 'My sky'; }, toSun: function(k){ return k + ' more ' + pl(k, 'star', 'stars') + ' to color the next stripe!'; },
+  gardenOf: function(){ return 'Your rainbow'; }, toSun: function(k){ return k + ' more ' + pl(k, 'star', 'stars') + ' to color the next stripe!'; },
   firstFlower: 'Play Feed the Monster to catch your first star!', flowersN: function(n){ return n + ' ' + pl(n, 'star', 'stars'); },
   rainbowsN: function(r){ return r + ' ' + pl(r, 'rainbow', 'rainbows'); }, myRainbows: 'My rainbows', noRainbow: 'Your first rainbow will appear here',
-  madeRainbow: 'You made a whole rainbow!', newStripe: 'You colored a new stripe!', rainbowDone: 'Rainbow complete! Your next star starts a new one.',
+  madeRainbow: 'Rainbow finished! New sticker!', newStripe: 'You colored a new stripe!',
+  myStickers: 'My sticker book', openBook: 'Open my sticker book', backSky: 'Back to my rainbow',
+  stickersN: function(n){ return n + ' ' + pl(n, 'sticker', 'stickers'); }, noStickers: 'Finish a rainbow to get your first sticker!', rainbowDone: 'Rainbow complete! It’s in your sticker book.',
   grownOnly: 'Grown-ups only', whatIs: function(a, b){ return 'What is ' + a + ' × ' + b + '?'; }, cancel: 'Cancel',
   grownUps: 'Grown-ups', progressOf: function(n){ return n ? n + '’s progress' : 'Progress'; }, backKid: 'Back to kid mode', tabProgress: 'Progress', tabSettings: 'Settings',
   facts: 'Addition facts', stat: function(s, g, n){ return s + ' stars · ' + g + ' of ' + n + ' mastered'; }, gotIt: 'Got it', learning: 'Learning', notTried: 'Not tried',
@@ -447,8 +535,10 @@ en: {
   ready: '<b>Ready for more:</b> most sums to 5 are mastered. Try “Up to 10”.',
   childName: 'Child’s name', shownHome: 'Shown on the home screen', biggest: 'Biggest answer', upTo: function(n){ return 'Up to ' + n; },
   spoken: 'Spoken instructions', on: 'On', off: 'Off', language: 'Language',
+  voiceType: 'Voice', female: 'Female', male: 'Male',
+  noVoiceType: function(name, male){ return 'This device has no ' + (male ? 'male' : 'female') + ' ' + name + ' voice, so a ' + (male ? 'female' : 'male') + ' voice is used.'; },
   noSpeech: 'This browser can’t speak aloud. Try Safari or Chrome.',
-  langName: { en: 'English', fr: 'French', zh: 'Mandarin' },
+  langName: { en: 'English', fr: 'French', zh: 'Mandarin', ja: 'Japanese' },
   noVoice: function(name){ return 'This device has no ' + name + ' voice installed, so instructions won’t be read aloud.'; },
   progressLab: 'Progress', reset: 'Reset progress', resetConfirm: 'Tap again to erase all progress', savedHere: 'Saved in this browser on this device only.',
   sAskName: [P('Hi!', 'cheer'), P('What’s your name?', 'ask'), P('A grown-up can help you type it.', 'calm')],
@@ -480,14 +570,16 @@ fr: {
   gFeed: 'Nourris le monstre', gGarden: 'Mes étoiles', soon: 'Bientôt', gTen: 'Cadre de dix', gBus: 'L’autobus', gFrog: 'Grenouille', gTower: 'La tour',
   backGames: 'Retour aux jeux', qOf: function(a, b){ return 'Question ' + a + ' sur ' + b; }, plate: 'Assiette', jar: 'Pot à biscuits', cookie: 'biscuit',
   takeBack: 'Reprendre ce biscuit', putOn: 'Mettre un biscuit dans l’assiette',
-  feedMe: function(t){ return 'J’en veux ' + t + ' !'; }, yumT: function(t){ return 'Miam ! ' + t + ' !'; }, more: 'Encore !', full: 'Trop plein !', done: 'Fini !',
+  feedMe: function(t){ return 'J’en veux ' + t + ' !'; }, yumT: function(t){ return 'Miam ! ' + t + ' !'; }, more: 'Pas assez\u00a0!', full: 'Trop plein\u00a0!', yum: 'Miam\u00a0!', done: 'Fini !',
   momoAlt: function(h){ return h ? 'Momo la licorne, qui sourit' : 'Momo la licorne, qui a faim'; },
   didIt: 'Bravo !', next: 'Suivant', finish: 'Terminer', eqLabel: function(s, a, t){ return s + ' plus ' + a + ' égale ' + t; },
   great: 'Super !', newFlowers: function(n){ return n + ' ' + pl(n, 'nouvelle étoile', 'nouvelles étoiles') + ' dans ton ciel !'; }, seeGarden: 'Voir mes étoiles', again: 'Rejouer',
-  gardenOf: function(n){ return n ? 'Le ciel de ' + n : 'Mon ciel'; }, toSun: function(k){ return 'Encore ' + k + ' ' + pl(k, 'étoile', 'étoiles') + ' pour colorier la prochaine bande !'; },
+  gardenOf: function(){ return 'Ton arc-en-ciel'; }, toSun: function(k){ return 'Encore ' + k + ' ' + pl(k, 'étoile', 'étoiles') + ' pour colorier la prochaine bande !'; },
   firstFlower: 'Joue à « Nourris le monstre » pour attraper ta première étoile !', flowersN: function(n){ return n + ' ' + pl(n, 'étoile', 'étoiles'); },
   rainbowsN: function(r){ return r + ' ' + pl(r, 'arc-en-ciel', 'arcs-en-ciel'); }, myRainbows: 'Mes arcs-en-ciel', noRainbow: 'Ton premier arc-en-ciel apparaîtra ici',
-  madeRainbow: 'Tu as fait un arc-en-ciel entier !', newStripe: 'Tu as colorié une nouvelle bande !', rainbowDone: 'Arc-en-ciel terminé ! Ta prochaine étoile en commence un nouveau.',
+  madeRainbow: 'Arc-en-ciel terminé ! Nouvel autocollant !', newStripe: 'Tu as colorié une nouvelle bande !',
+  myStickers: 'Mon album d’autocollants', openBook: 'Ouvrir mon album', backSky: 'Retour à mon arc-en-ciel',
+  stickersN: function(n){ return n + ' ' + pl(n, 'autocollant', 'autocollants'); }, noStickers: 'Termine un arc-en-ciel pour gagner ton premier autocollant !', rainbowDone: 'Arc-en-ciel terminé ! Il est dans ton album.',
   grownOnly: 'Réservé aux adultes', whatIs: function(a, b){ return 'Combien font ' + a + ' × ' + b + ' ?'; }, cancel: 'Annuler',
   grownUps: 'Adultes', progressOf: function(n){ return n ? 'Progrès de ' + n : 'Progrès'; }, backKid: 'Retour au mode enfant', tabProgress: 'Progrès', tabSettings: 'Réglages',
   facts: 'Additions', stat: function(s, g, n){ return s + ' étoiles · ' + g + ' sur ' + n + ' acquises'; }, gotIt: 'Acquis', learning: 'En cours', notTried: 'Pas essayé',
@@ -498,8 +590,10 @@ fr: {
   ready: '<b>Prêt pour la suite :</b> la plupart des sommes jusqu’à 5 sont acquises. Essayez « Jusqu’à 10 ».',
   childName: 'Prénom de l’enfant', shownHome: 'Affiché sur l’écran d’accueil', biggest: 'Plus grande réponse', upTo: function(n){ return 'Jusqu’à ' + n; },
   spoken: 'Consignes à voix haute', on: 'Oui', off: 'Non', language: 'Langue',
+  voiceType: 'Voix', female: 'Féminine', male: 'Masculine',
+  noVoiceType: function(name, male){ return 'Cet appareil n’a pas de voix ' + name + ' ' + (male ? 'masculine' : 'féminine') + ' : une voix ' + (male ? 'féminine' : 'masculine') + ' est utilisée.'; },
   noSpeech: 'Ce navigateur ne peut pas parler. Essayez Safari ou Chrome.',
-  langName: { en: 'anglaise', fr: 'française', zh: 'mandarin' },
+  langName: { en: 'anglaise', fr: 'française', zh: 'mandarin', ja: 'japonaise' },
   noVoice: function(name){ return 'Cet appareil n’a pas de voix ' + name + ' installée : les consignes ne seront pas lues à voix haute.'; },
   progressLab: 'Progrès', reset: 'Réinitialiser les progrès', resetConfirm: 'Touchez encore pour tout effacer', savedHere: 'Enregistré dans ce navigateur, sur cet appareil seulement.',
   sAskName: [P('Coucou !', 'cheer'), P('Comment tu t’appelles ?', 'ask'), P('Un adulte peut t’aider à l’écrire.', 'calm')],
@@ -531,14 +625,16 @@ zh: {
   gFeed: '喂小怪兽', gGarden: '我的星星', soon: '即将推出', gTen: '十格框', gBus: '公交车站', gFrog: '青蛙跳', gTower: '搭高塔',
   backGames: '返回游戏', qOf: function(a, b){ return '第' + a + '题，共' + b + '题'; }, plate: '盘子', jar: '饼干罐', cookie: '饼干',
   takeBack: '把这块饼干拿回去', putOn: '把一块饼干放到盘子里',
-  feedMe: function(t){ return '喂我' + t + '块！'; }, yumT: function(t){ return '好吃！' + t + '块！'; }, more: '还要！', full: '太饱啦！', done: '好了！',
+  feedMe: function(t){ return '喂我' + t + '块！'; }, yumT: function(t){ return '好吃！' + t + '块！'; }, more: '还不够！', full: '太饱啦！', yum: '好吃！', done: '好了！',
   momoAlt: function(h){ return h ? '独角兽莫莫，在微笑' : '独角兽莫莫，肚子饿了'; },
   didIt: '你做到了！', next: '下一题', finish: '完成', eqLabel: function(s, a, t){ return s + '加' + a + '等于' + t; },
   great: '太棒了！', newFlowers: function(n){ return '你的星空多了' + n + '颗星星！'; }, seeGarden: '看我的星星', again: '再玩一次',
-  gardenOf: function(n){ return n ? n + '的星空' : '我的星空'; }, toSun: function(k){ return '再得' + k + '颗星，就能给下一道彩虹上色！'; },
+  gardenOf: function(){ return '你的彩虹'; }, toSun: function(k){ return '再得' + k + '颗星，就能给下一道彩虹上色！'; },
   firstFlower: '玩“喂小怪兽”，摘到你的第一颗星星！', flowersN: function(n){ return n + '颗星星'; },
   rainbowsN: function(r){ return r + '道彩虹'; }, myRainbows: '我的彩虹', noRainbow: '你的第一道彩虹会出现在这里',
-  madeRainbow: '你变出了一整道彩虹！', newStripe: '你给彩虹涂上了一道新颜色！', rainbowDone: '彩虹完成啦！下一颗星星会开始新的彩虹。',
+  madeRainbow: '彩虹完成啦！得到一张新贴纸！', newStripe: '你给彩虹涂上了一道新颜色！',
+  myStickers: '我的贴纸册', openBook: '打开贴纸册', backSky: '回到我的彩虹',
+  stickersN: function(n){ return n + '张贴纸'; }, noStickers: '完成一道彩虹，就能得到第一张贴纸！', rainbowDone: '彩虹完成啦！它已经放进你的贴纸册了。',
   grownOnly: '仅限家长', whatIs: function(a, b){ return a + ' × ' + b + ' 等于多少？'; }, cancel: '取消',
   grownUps: '家长', progressOf: function(n){ return n ? n + '的进度' : '学习进度'; }, backKid: '返回儿童模式', tabProgress: '进度', tabSettings: '设置',
   facts: '加法练习', stat: function(s, g, n){ return s + '颗星 · 已掌握 ' + g + '/' + n; }, gotIt: '已掌握', learning: '学习中', notTried: '未尝试',
@@ -549,8 +645,10 @@ zh: {
   ready: '<b>可以挑战了：</b>5以内的加法大多已掌握，试试“10以内”。',
   childName: '孩子的名字', shownHome: '显示在主页上', biggest: '最大答案', upTo: function(n){ return n + '以内'; },
   spoken: '语音提示', on: '开', off: '关', language: '语言',
+  voiceType: '声音', female: '女声', male: '男声',
+  noVoiceType: function(name, male){ return '这台设备没有' + name + (male ? '男声' : '女声') + '，将使用' + (male ? '女声' : '男声') + '。'; },
   noSpeech: '这个浏览器不能朗读，请试试 Safari 或 Chrome。',
-  langName: { en: '英语', fr: '法语', zh: '普通话' },
+  langName: { en: '英语', fr: '法语', zh: '普通话', ja: '日语' },
   noVoice: function(name){ return '这台设备没有安装' + name + '语音，提示不会朗读出来。'; },
   progressLab: '进度', reset: '重置进度', resetConfirm: '再点一次即可清除所有进度', savedHere: '进度只保存在这台设备的浏览器里。',
   sAskName: [P('你好！', 'cheer'), P('你叫什么名字？', 'ask'), P('可以请大人帮你输入。', 'calm')],
@@ -572,6 +670,61 @@ zh: {
   sRainbows: function(r){ return P('你已经变出了' + r + '道彩虹！', 'proud'); },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
+},
+ja: {
+  hearIt: 'きいてみる', hearInstr: 'せつめいを きく', hearAgain: 'もういちど きく',
+  whatName: 'おなまえは？', yourName: 'あなたの なまえ', typeName: 'なまえを いれてね', letsGo: 'はじめよう！', skip: 'スキップ',
+  hiName: function(n){ return 'こんにちは、' + n + '！'; }, itsMe: 'わたしだよ！', notMe: function(n){ return n + 'じゃない？ なまえを かえる'; },
+  letsPlay: function(n){ return n ? n + '、あそぼう！' : 'あそぼう！'; }, tapGame: 'ゲームを タップしてね',
+  stars: function(n){ return 'ほし ' + n + 'こ'; }, grownArea: 'おとなの ページ',
+  gFeed: 'モンスターに ごはん', gGarden: 'わたしの ほし', soon: 'もうすぐ', gTen: 'テンフレーム', gBus: 'バスてい', gFrog: 'カエル ジャンプ', gTower: 'タワー',
+  backGames: 'ゲームに もどる', qOf: function(a, b){ return b + 'もん中 ' + a + 'もんめ'; }, plate: 'おさら', jar: 'クッキーの びん', cookie: 'クッキー',
+  takeBack: 'この クッキーを もどす', putOn: 'クッキーを おさらに のせる',
+  feedMe: function(t){ return t + 'こ ちょうだい！'; }, yumT: function(t){ return 'おいしい！ ' + t + 'こ！'; }, more: 'たりないよ！', full: 'おおすぎ！', yum: 'おいしい！', done: 'できた！',
+  momoAlt: function(h){ return h ? 'ユニコーンの モモ、にこにこ' : 'ユニコーンの モモ、おなかぺこぺこ'; },
+  didIt: 'できたね！', next: 'つぎへ', finish: 'おわり', eqLabel: function(s, a, t){ return s + ' たす ' + a + ' は ' + t; },
+  great: 'すごいね！', newFlowers: function(n){ return 'そらに ほしが ' + n + 'こ ふえたよ！'; }, seeGarden: 'ほしを みる', again: 'もういっかい',
+  gardenOf: function(){ return 'あなたの にじ'; }, toSun: function(k){ return 'あと ' + k + 'こで つぎの いろが ぬれるよ！'; },
+  firstFlower: '「モンスターに ごはん」で はじめての ほしを ゲットしよう！', flowersN: function(n){ return 'ほし ' + n + 'こ'; },
+  rainbowsN: function(r){ return 'にじ ' + r + 'こ'; }, myRainbows: 'わたしの にじ', noRainbow: 'はじめての にじは ここに でるよ',
+  madeRainbow: 'にじが できた！ あたらしい シール！', newStripe: 'あたらしい いろを ぬったよ！',
+  myStickers: 'シールちょう', openBook: 'シールちょうを ひらく', backSky: 'にじに もどる',
+  stickersN: function(n){ return 'シール ' + n + 'まい'; }, noStickers: 'にじを かんせいさせて、はじめての シールを もらおう！', rainbowDone: 'にじが かんせい！ シールちょうに はったよ。',
+  grownOnly: 'おとなの かたへ', whatIs: function(a, b){ return a + ' × ' + b + ' は？'; }, cancel: 'キャンセル',
+  grownUps: '保護者の方へ', progressOf: function(n){ return n ? n + 'の進み具合' : '進み具合'; }, backKid: 'こどもモードに もどる', tabProgress: '進み具合', tabSettings: '設定',
+  facts: 'たし算', stat: function(s, g, n){ return '星 ' + s + '個 · ' + n + '問中 ' + g + '問 習得'; }, gotIt: '習得', learning: '練習中', notTried: '未挑戦',
+  tryHome: 'おうちで ためそう', and: '、',
+  tipClose: function(pairs, x, y){ return 'あと少し：' + pairs + '。おやつの時間に、ぶどうを' + x + '粒出して、さらに' + y + '粒足し、「ぜんぶで いくつ？」と聞いてみましょう。'; },
+  tipDefault: '「数えたし」の練習：スプーンをいくつか並べ、1〜2本足して「いま何本？」と聞いてみましょう。',
+  caption: '行：おさらに あった クッキー · 列：たした クッキー',
+  ready: '<b>次に進めます：</b>5までのたし算はほぼ習得しています。「10まで」を試してみましょう。',
+  childName: 'お子さまの名前', shownHome: 'ホーム画面に表示されます', biggest: 'いちばん大きい答え', upTo: function(n){ return n + 'まで'; },
+  spoken: '音声ガイド', on: 'オン', off: 'オフ', language: '言語',
+  voiceType: '声の種類', female: '女性', male: '男性',
+  noVoiceType: function(name, male){ return 'この端末には' + name + 'の' + (male ? '男性' : '女性') + 'の声がないため、' + (male ? '女性' : '男性') + 'の声を使います。'; },
+  noSpeech: 'このブラウザは読み上げができません。Safari か Chrome をお試しください。',
+  langName: { en: '英語', fr: 'フランス語', zh: '中国語', ja: '日本語' },
+  noVoice: function(name){ return 'この端末には' + name + 'の音声が入っていないため、読み上げされません。'; },
+  progressLab: '進み具合', reset: '進み具合をリセット', resetConfirm: 'もう一度タップすると、すべての記録が消えます', savedHere: '記録はこの端末のブラウザにだけ保存されます。',
+  sAskName: [P('こんにちは！', 'cheer'), P('おなまえは？', 'ask'), P('おとなの ひとに いれて もらってね。', 'calm')],
+  sIsThatYou: function(n){ return [P('こんにちは、' + n + '！', 'cheer'), P('あなたかな？', 'ask')]; },
+  sNeedName: [P('なまえを いれて、「はじめよう」を おしてね！', 'calm')],
+  sWelcomeNew: function(n){ return [P('こんにちは、' + n + '！', 'cheer'), P('あそぼう！', 'cheer'), P('ユニコーンを タップしてね。', 'calm')]; },
+  sWelcomeBack: function(n){ return [P('おかえり、' + n + '！', 'cheer'), P('ユニコーンを タップして あそぼう。', 'calm')]; },
+  sSkip: [P('あそぼう！', 'cheer'), P('ユニコーンを タップしてね。', 'calm')],
+  sHello: function(n){ return [P(n ? 'こんにちは、' + n + '！' : 'こんにちは！', 'cheer'), P('ユニコーンを タップして あそぼう。', 'calm'), P('ほしを タップすると、そらが みられるよ。', 'calm')]; },
+  sSoon: function(g){ return [P(g + 'は もうすぐ だよ！', 'cheer')]; },
+  sAsk: function(t, s){ return [P('モモは クッキーが ' + t + 'こ ほしいな！', 'ask'), P('おさらには ' + s + 'こ あるよ。', 'calm'), P('たしてね！', 'cheer')]; },
+  sYum: function(s, a, t){ return [P('おいしい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
+  sCount: P('いっしょに かぞえよう。', 'calm'),
+  sTooFew: function(n, t){ return [P(n + 'こ だね。', 'calm'), P('モモは ' + t + 'こ ほしいな。', 'calm'), P('もっと たしてね！', 'cheer')]; },
+  sTooMany: function(n, t){ return [P(n + 'こ だね。', 'calm'), P('おおすぎ！', 'oops'), P('モモは ' + t + 'こで いいよ。すこし もどしてね。', 'calm')]; },
+  sGreat: function(n){ return [P('すごいね！', 'cheer'), P('ほしを ' + n + 'こ ゲットしたよ！', 'proud')]; },
+  sGarden: function(n){ return n ? [P('ほしが ' + n + 'こ あるよ！', 'cheer')] : [P('あそんで、はじめての ほしを ゲットしよう！', 'calm')]; },
+  sSun: function(k){ return P('あと ' + k + 'こで つぎの いろが ぬれるよ！', 'calm'); },
+  sRainbows: function(r){ return P('にじを ' + r + 'こ つくったよ！', 'proud'); },
+  sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
+  sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 }
 };
 function L(k){
@@ -587,11 +740,29 @@ function applyLang(){ document.documentElement.lang = HTML_LANG[S.lang] || 'en';
 var hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
 var VOICES = {};
 var NOVELTY = /(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy)/i;
-var PREFERRED = {
-  en: /(Samantha|Ava|Allison|Susan|Zoe|Karen|Moira|Aria|Jenny|Libby|Sonia|Natasha|Google US English|Google UK English Female)/i,
-  fr: /(Amélie|Amelie|Audrey|Aurélie|Marie|Denise|Sylvie|Chantal|Thomas|Google français)/i,
-  zh: /(Tingting|Ting-Ting|Lili|Lilian|Meijia|Mei-Jia|Xiaoxiao|Yaoyao|Huihui|Yunxi|Google 普通话)/i
+/* the Web Speech API doesn't say whether a voice is female or male, so we go by the voice's name */
+var VOICE_NAMES = {
+  female: {
+    en: /(Samantha|Ava|Allison|Susan|Zoe|Karen|Moira|Tessa|Fiona|Victoria|Kate|Serena|Catherine|Nicky|Joelle|Aria|Jenny|Libby|Sonia|Natasha|Zira|Hazel|Emma|Michelle|Ana\b|Google US English|Google UK English Female)/i,
+    fr: /(Amélie|Amelie|Audrey|Aurélie|Aurelie|Marie|Denise|Sylvie|Chantal|Julie|Hortense|Virginie|Brigitte|Celeste|Google français)/i,
+    zh: /(Tingting|Ting-Ting|Lili|Lilian|Meijia|Mei-Jia|Yu-shu|Yushu|Shanshan|Xiaoxiao|Xiaoyi|Yaoyao|Huihui|Xiaohan|Xiaomo|Google 普通话)/i,
+    ja: /(Kyoko|O-ren|Oren|Nanami|Haruka|Ayumi|Sayaka|Mizuki|Aoi|Google 日本語)/i
+  },
+  male: {
+    en: /(Alex\b|Daniel|Tom\b|Aaron|Arthur|Evan|Nathan|Oliver|Rishi|Gordon|Lee\b|Guy\b|Ryan|Christopher|Eric|Mark\b|David|George|James|Andrew|Brian|Roger|Steffan|Google UK English Male)/i,
+    fr: /(Thomas|Nicolas|Jacques|Henri|Paul\b|Antoine|Jean\b|Claude|Guillaume|Jerome|Jérôme|Remy|Rémy|Alain|Gabriel)/i,
+    zh: /(Han\b|Li-Mu|Limu|Kangkang|Yunxi|Yunyang|Yunjian|Yunfeng|Yunhao|Yunze)/i,
+    ja: /(Otoya|Hattori|Ichiro|Keita|Daichi|Naoki)/i
+  }
 };
+function voiceGender(v, lang){
+  var n = v.name || '';
+  if (/\bfemale\b/i.test(n)) return 'female';
+  if (/\bmale\b/i.test(n)) return 'male';
+  if (VOICE_NAMES.female[lang] && VOICE_NAMES.female[lang].test(n)) return 'female';
+  if (VOICE_NAMES.male[lang] && VOICE_NAMES.male[lang].test(n)) return 'male';
+  return '';
+}
 function matchesLang(v, lang){
   var l = (v.lang || '').replace('_', '-');
   if (lang === 'zh') return /^(zh|cmn)/i.test(l) && !/(HK|yue|Cantonese)/i.test(l + ' ' + v.name);
@@ -603,7 +774,6 @@ function scoreVoice(v, lang){
   if (/premium/i.test(n)) sc += 6;
   if (/(enhanced|natural|neural|online)/i.test(n)) sc += 5;
   if (/google/i.test(n)) sc += 3;
-  if (PREFERRED[lang] && PREFERRED[lang].test(n)) sc += 4;
   var l = (v.lang || '').replace('_', '-');
   if (lang === 'fr' && /CA/i.test(l)) sc += 1;
   if (lang === 'zh' && /CN|Hans/i.test(l)) sc += 2;
@@ -613,27 +783,37 @@ function scoreVoice(v, lang){
 function pickVoices(){
   try {
     var all = speechSynthesis.getVoices();
-    ['en', 'fr', 'zh'].forEach(function(lang){
-      var best = null, bs = -1e9;
-      all.forEach(function(v){ if (!matchesLang(v, lang)) return; var s = scoreVoice(v, lang); if (s > bs) { bs = s; best = v; } });
-      VOICES[lang] = best;
+    ['en', 'fr', 'zh', 'ja'].forEach(function(lang){
+      var pick = { female:null, male:null, any:null }, bs = { female:-1e9, male:-1e9, any:-1e9 };
+      all.forEach(function(v){
+        if (!matchesLang(v, lang)) return;
+        var sc = scoreVoice(v, lang), g = voiceGender(v, lang);
+        if (sc > bs.any) { bs.any = sc; pick.any = v; }
+        if (g && sc > bs[g]) { bs[g] = sc; pick[g] = v; }
+      });
+      VOICES[lang] = pick;
     });
   } catch(e) {}
 }
 if (hasSpeech) { pickVoices(); try { speechSynthesis.onvoiceschanged = function(){ pickVoices(); if (screen === 'parents') renderParents(); }; } catch(e) {} }
-function hasVoice(lang){ return !hasSpeech ? false : (VOICES[lang] ? true : (speechSynthesis.getVoices().length === 0)); }
+function hasVoice(lang){ return !hasSpeech ? false : (VOICES[lang] && VOICES[lang].any ? true : (speechSynthesis.getVoices().length === 0)); }
+/* the voice to use: the chosen kind if this device has one, otherwise the best voice of the other kind */
+function voiceFor(lang){ var p = VOICES[lang]; if (!p) return null; var want = S.voiceType === 'male' ? 'male' : 'female'; return p[want] || p.any; }
+function hasVoiceType(lang, type){ var p = VOICES[lang]; return !hasSpeech || speechSynthesis.getVoices().length === 0 || !!(p && p[type]); }
 
 /* how each kind of line is delivered: pitch / rate */
 var STYLE = {
-  calm:  { p: 1.08, r: 0.92 },
-  ask:   { p: 1.28, r: 0.95 },
-  cheer: { p: 1.45, r: 1.04 },
-  proud: { p: 1.22, r: 0.9 },
-  oops:  { p: 1.32, r: 1.0 },
-  count: { p: 1.05, r: 0.95 }
+  calm:  { p: 1.08, r: 0.8 },
+  ask:   { p: 1.28, r: 0.84 },
+  cheer: { p: 1.45, r: 0.9 },
+  proud: { p: 1.22, r: 0.78 },
+  oops:  { p: 1.32, r: 0.86 },
+  count: { p: 1.05, r: 0.82 }
 };
 var sayTimers = [];
-function clearSay(){ sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } }
+function syncMute(){ document.body.classList.toggle('muted', !S.voice); document.querySelectorAll('.speakbtn').forEach(function(x){ x.setAttribute('aria-pressed', String(!S.voice)); }); }
+function setTalking(on){ document.body.classList.toggle('talking', !!on); }
+function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
 function say(parts, onEach, gap){
   var arr = (Array.isArray(parts) ? parts : [parts]).map(function(p){ return typeof p === 'string' ? P(p, 'calm') : p; });
@@ -642,24 +822,29 @@ function say(parts, onEach, gap){
   live(arr.map(function(p){ return p.t; }).join(' '));
   var spoke = false;
   function fallback(){ arr.forEach(function(_, i){ sayTimers.push(setTimeout(function(){ onEach && onEach(i); }, i * gap)); }); }
-  var lang = S.lang || 'en', voice = VOICES[lang];
+  var lang = S.lang || 'en', voice = voiceFor(lang), male = !!(voice && VOICES[lang] && VOICES[lang].male === voice);
   if (!S.voice || !hasSpeech) { fallback(); return; }
-  var tone = lang === 'zh' ? 0.6 : 1;            /* gentler pitch swings for a tonal language */
+  var tone = lang === 'zh' ? 0.6 : lang === 'ja' ? 0.8 : 1;            /* gentler pitch swings for a tonal language */
   try {
     arr.forEach(function(p, i){
       var st = STYLE[p.s] || STYLE.calm;
       var pitch = st.p, rate = st.r;
       if (p.s === 'count' && p.n) pitch = Math.min(1.6, 1.0 + 0.06 * p.n);   /* counting climbs: 1, 2, 3… */
-      pitch = 1 + (pitch - 1) * tone + (Math.random() - 0.5) * 0.06;
+      pitch = (male ? 0.92 : 1) + (pitch - 1) * tone * (male ? 0.6 : 1) + (Math.random() - 0.5) * 0.06;   /* male voices: lower, steadier pitch */
       rate = rate + (Math.random() - 0.5) * 0.04;
       var u = new SpeechSynthesisUtterance(p.t);
       if (voice) u.voice = voice;
       u.lang = voice ? voice.lang : SPEECH_LANG[lang];
       u.pitch = Math.max(0.5, Math.min(2, pitch));
-      u.rate = Math.max(0.6, Math.min(1.4, rate));
-      u.onstart = function(){ spoke = true; onEach && onEach(i); };
+      u.rate = Math.max(0.55, Math.min(1.3, rate));
+      u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
+      if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
       speechSynthesis.speak(u);
     });
+    setTalking(true);
+    /* safety net: some browsers never fire onend */
+    var est = arr.reduce(function(t, p){ return t + 400 + p.t.length * 95; }, 0) + 1500;
+    sayTimers.push(setTimeout(function(){ try { if (!speechSynthesis.speaking) setTalking(false); else sayTimers.push(setTimeout(function(){ setTalking(false); }, est)); } catch(e) { setTalking(false); } }, est));
     if (onEach) sayTimers.push(setTimeout(function(){ if (!spoke) fallback(); }, 600));
   } catch(e) { fallback(); }
 }
@@ -710,24 +895,30 @@ function rainbow(filled, cls){
 var EMPTY_STAR = '<svg class="kstar empty" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.88 4.94 Q12.00 2.60 13.12 4.94L14.20 7.22 Q14.94 8.75 16.63 8.98L19.13 9.31 Q21.70 9.65 19.82 11.43L17.99 13.17 Q16.76 14.35 17.07 16.02L17.52 18.50 Q18.00 21.05 15.72 19.82L13.50 18.61 Q12.00 17.80 10.50 18.61L8.28 19.82 Q6.00 21.05 6.48 18.50L6.93 16.02 Q7.24 14.35 6.01 13.17L4.18 11.43 Q2.30 9.65 4.87 9.31L7.37 8.98 Q9.06 8.75 9.80 7.22Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="0.1 2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 var ICON = {
-  back:'<svg viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
-  home:'<svg viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10" fill="#F6C9B4"/><path d="M10 20v-5h4v5"/></svg>',
-  speak:'<svg viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#F6C9B4"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>',
+  back:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  home:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10" fill="#F6C9B4"/><path d="M10 20v-5h4v5"/></svg>',
+  muted:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#E4D6CC"/><path d="M16 9l6 6M22 9l-6 6" stroke="#D0705A" stroke-width="2.4"/></svg>',
+  speak:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#F6C9B4"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>',
   star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.8 6.2 20l1.4-6.4L2.7 9.2l6.5-.7z" fill="#F7D98C" stroke="#B88A4A" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   lock:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#7A5A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
 };
 
+function speakBtn(act, label){
+  return '<button class="round speakbtn" data-act="' + act + '" aria-label="' + esc(label) + '"><span class="ic-say">' + ICON.speak + '</span><span class="ic-off">' + ICON.muted + '</span></button>';
+}
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 var app = document.getElementById('app');
 var screen = 'start';
 function show(name){ screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
 function render(){
-  applyLang();
+  applyLang(); syncMute();
   document.body.classList.toggle('skybg', screen === 'garden');
+  document.body.classList.toggle('bookbg', screen === 'book');
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
   else if (screen === 'garden') renderGarden();
+  else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
 }
 
@@ -736,7 +927,7 @@ var askName = false;
 function renderStart(){
   var known = S.name && !askName;
   app.innerHTML = '<section class="screen startscreen">' +
-    '<div class="startbar">' + langPicker('langpick') + '<button class="round" data-act="name-say" aria-label="' + esc(L('hearIt')) + '">' + ICON.speak + '</button></div>' +
+    '<div class="startbar">' + langPicker('langpick') + speakBtn('name-say', L('hearIt')) + '</div>' +
     momo('happy') +
     (known
       ? '<h1>' + esc(L('hiName', S.name)) + '</h1>' +
@@ -763,7 +954,7 @@ function renderStart(){
 /* ---------- home ---------- */
 function renderHome(){
   app.innerHTML = '<section class="screen">' +
-    '<div class="bar"><button class="round" data-act="hello" aria-label="' + esc(L('hearInstr')) + '">' + ICON.speak + '</button>' +
+    '<div class="bar"><span class="small-round bar-spacer" aria-hidden="true"></span>' +
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + momo('happy') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
@@ -811,7 +1002,7 @@ function newQuestion(){
   G.last = factKey(G.s, G.a);
   G.added = 0; G.jarCount = Math.min(G.a + 2, 12 - G.s); G.first = true; G.lock = false; G.mood = 'hungry';
   G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
-  G.bubble = L('feedMe', G.t);
+  G.bubble2 = '';
   screen = 'play'; closeOverlay(); renderPlay();
   askAloud();
 }
@@ -819,6 +1010,11 @@ function askAloud(){
   say(L('sAsk', G.t, G.s));
 }
 function total(){ return G.s + G.added; }
+function setBubble2(t, kind){
+  var box = document.getElementById('bubble2Box'), b = document.getElementById('bubble2'); if (!box || !b) return;
+  b.textContent = t || '\u00a0';
+  box.classList.toggle('on', !!t); box.classList.toggle('yum', kind === 'yum');
+}
 
 function renderPlay(){
   var dots = '';
@@ -826,9 +1022,9 @@ function renderPlay(){
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
-    '<button class="round" data-act="repeat" aria-label="' + esc(L('hearAgain')) + '">' + ICON.speak + '</button></div>' +
+    speakBtn('repeat', L('hearAgain')) + '</div>' +
     '<div class="stage">' +
-      '<div class="left"><div class="momo-row"><div id="momo"></div><div class="bubble"><b id="bubble"></b></div></div>' +
+      '<div class="left"><div class="momo-row"><div id="momo"></div><div class="bubbles"><div class="bubble"><b id="bubble"></b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a" id="eqA"></span><span>=</span><span class="t" id="eqT"></span></div></div>' +
       '<div class="tablewrap"><div class="table" id="table">' +
         '<div class="plate" id="plate" aria-label="' + esc(L('plate')) + '"></div>' +
@@ -841,7 +1037,8 @@ function renderPlay(){
 function updatePlay(popLast){
   if (screen !== 'play') return;
   document.getElementById('momo').innerHTML = momo(G.mood);
-  document.getElementById('bubble').textContent = G.bubble;
+  document.getElementById('bubble').textContent = L('feedMe', G.t);
+  setBubble2(G.bubble2);
   var plate = '';
   for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
   for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" style="' + blueFace(G.stack[j]) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
@@ -910,13 +1107,13 @@ function addCookie(spot){
   if (!G || G.lock || G.added >= G.jarCount) return;
   if (spot === undefined || spot === null || isNaN(spot) || G.taken[spot]) { spot = 0; while (G.taken[spot]) spot++; }
   G.taken[spot] = true; G.stack.push(spot); G.added = G.stack.length;
-  G.bubble = L('feedMe', G.t); G.mood = 'hungry';
+  G.bubble2 = ''; G.mood = 'hungry';
   updatePlay(true);
   say(P(String(total()), 'count', total()));
 }
 function removeCookie(){
   if (!G || G.lock || G.added <= 0) return;
-  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot;
+  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = '';
   updatePlay('back');
   say(P(String(total()), 'count', total()));
 }
@@ -934,7 +1131,7 @@ function feedUnicorn(){
   var cs = Array.prototype.slice.call(document.querySelectorAll('#plate .cookie'));
   var m = document.querySelector('#momo .momo');
   if (!cs.length || !m) return 0;
-  if (reduceMotion || !Element.prototype.animate) { cs.forEach(function(c){ c.style.visibility = 'hidden'; }); return 300; }
+  var gentle = reduceMotion;                       /* Reduce Motion: still fly, but straight and without spinning */
   var mr = m.getBoundingClientRect();
   var tx = mr.left + mr.width * 0.64, ty = mr.top + mr.height * 0.6;   /* mouth (unicorn faces right) */
   var STAGGER = 200, FLY = 650;
@@ -949,16 +1146,30 @@ function feedUnicorn(){
     setTimeout(function(){
       document.body.appendChild(fly);
       c.style.visibility = 'hidden';
-      var a = fly.animate([
-        { transform: 'translate(0,0) scale(1) rotate(0deg)' },
-        { transform: 'translate(' + dx * 0.5 + 'px,' + (dy * 0.5 - lift) + 'px) scale(.85) rotate(160deg)', offset: 0.5 },
-        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(320deg)', opacity: 0.6 }
-      ], { duration: FLY, easing: 'cubic-bezier(.45,.05,.55,.95)', fill: 'forwards' });
-      a.onfinish = function(){
+      var landed = false;
+      function land(){
+        if (landed) return; landed = true;
         fly.remove();
         var mm = document.querySelector('#momo .momo');
-        if (mm && mm.animate) mm.animate([{ transform:'scale(1)' }, { transform:'scale(1.07,.93)' }, { transform:'scale(1)' }], { duration: 220 });
-      };
+        try { if (mm && mm.animate) mm.animate([{ transform:'scale(1)' }, { transform:'scale(1.07,.93)' }, { transform:'scale(1)' }], { duration: 220 }); } catch(e) {}
+      }
+      var rot = gentle ? 0 : 1, l2 = gentle ? 0 : lift;
+      /* every keyframe lists every property: older Safari rejects "partial" keyframes */
+      var frames = [
+        { transform: 'translate(0px,0px) scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'translate(' + dx * 0.5 + 'px,' + (dy * 0.5 - l2) + 'px) scale(.85) rotate(' + 160 * rot + 'deg)', opacity: 1, offset: 0.5 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.15) rotate(' + 320 * rot + 'deg)', opacity: 0.6, offset: 1 }
+      ];
+      var ok = false;
+      try {
+        if (fly.animate) { var a = fly.animate(frames, { duration: FLY, easing: 'ease-in-out', fill: 'forwards' }); a.onfinish = land; ok = true; }
+      } catch(e) { ok = false; }
+      if (!ok) {                                     /* fallback: plain CSS transition */
+        fly.style.transition = 'transform ' + FLY + 'ms ease-in-out, opacity ' + FLY + 'ms ease-in';
+        void fly.offsetWidth;
+        fly.style.transform = frames[2].transform; fly.style.opacity = '0.6';
+      }
+      setTimeout(land, FLY + 60);                    /* always finish, even if no end event arrives */
     }, i * STAGGER);
   });
   return (cs.length - 1) * STAGGER + FLY + 150;
@@ -971,8 +1182,7 @@ function check(){
   G.lock = true;
   document.getElementById('doneBtn').disabled = true;
   if (right) {
-    G.bubble = L('yumT', G.t);
-    document.getElementById('bubble').textContent = G.bubble;
+    G.bubble2 = L('yum'); setBubble2(G.bubble2, 'yum');
     setMomo('happy');
     S.stars++; G.earned++; save();
     say(L('sYum', G.s, G.a, G.t));
@@ -983,22 +1193,29 @@ function check(){
     setTimeout(showReward, fedFor + 1300);
   } else {
     var tooFew = n < G.t;
-    G.bubble = tooFew ? L('more') : L('full');
-    document.getElementById('bubble').textContent = G.bubble;
+    G.bubble2 = tooFew ? L('more') : L('full'); setBubble2(G.bubble2);
     setMomo('hungry', 'wobble');
     var parts = [L('sCount')];
     for (var i = 1; i <= n; i++) parts.push(P(String(i), 'count', i));
     parts = parts.concat(tooFew ? L('sTooFew', n, G.t) : L('sTooMany', n, G.t));
     var cookies = document.querySelectorAll('#plate .cookie');
+    var tbl = document.getElementById('table'); if (tbl) tbl.classList.add('counting');
+    var q = G.q, unlocked = false;
+    function unlock(){
+      if (unlocked || screen !== 'play' || !G || G.q !== q) return; unlocked = true; G.unlock = null;
+      G.lock = false;
+      var t = document.getElementById('table'); if (t) t.classList.remove('counting');
+      var d = document.getElementById('doneBtn'); if (d) d.disabled = false;
+    }
     say(parts, function(i){
       if (i >= 1 && i <= n && cookies[i-1]) {
         cookies[i-1].classList.add('counted');
         cookies[i-1].innerHTML = '<span class="num">' + i + '</span>';
       }
-      if (i === parts.length - 1) {
-        setTimeout(function(){ if (screen === 'play' && G) { G.lock = false; updatePlay(); } }, 900);
-      }
+      if (i > n) unlock();             /* counting is over: play again right away, no wait */
     }, 750);
+    G.unlock = unlock;                                     /* stopping the voice (mute, repeat, leaving) also unlocks */
+    setTimeout(unlock, (n + 2) * 2500);                   /* safety net if speech events never arrive */
   }
 }
 
@@ -1010,7 +1227,8 @@ document.addEventListener('pointerdown', function(e){
   if (!c) { c = e.target.closest('#plate button.cookie'); from = 'plate'; }
   if (!c) return;
   e.preventDefault();
-  drag = { el:c, from:from, spot:+c.getAttribute('data-spot'), x:e.clientX, y:e.clientY, moved:false, ghost:null, id:e.pointerId };
+  if (drag) finishDrag();                      /* a previous drag never got its "up": settle it first */
+  drag = { el:c, from:from, spot:+c.getAttribute('data-spot'), x:e.clientX, y:e.clientY, lx:e.clientX, ly:e.clientY, moved:false, ghost:null, id:e.pointerId };
 });
 document.addEventListener('pointermove', function(e){
   if (!drag || e.pointerId !== drag.id) return;
@@ -1020,8 +1238,11 @@ document.addEventListener('pointermove', function(e){
     var g = document.createElement('span'); g.className = 'cookie ghost'; g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
     document.body.appendChild(g); drag.ghost = g; drag.el.style.visibility = 'hidden';
   }
+  /* keep the ghost on screen, so it can never get parked out at the edge */
+  var vw = window.innerWidth, vh = window.innerHeight;
+  drag.lx = e.clientX; drag.ly = e.clientY;
   if (drag.ghost) {
-    drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = e.clientY + 'px';
+    drag.ghost.style.left = Math.max(24, Math.min(vw - 24, drag.lx)) + 'px'; drag.ghost.style.top = Math.max(24, Math.min(vh - 24, drag.ly)) + 'px';
     var pl = document.getElementById('plate');
     if (pl) pl.classList.toggle('hot', drag.from === 'jar' && over('plate', e.clientX, e.clientY));
   }
@@ -1032,18 +1253,32 @@ function over(id, x, y){
   if (id === 'plate') return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) < r.width / 2 + 24;   /* round plate */
   return x > r.left - m && x < r.right + m && y > r.top - m && y < r.bottom + m;
 }
-function endDrag(e, cancel){
+function endDrag(e){
   if (!drag || (e && e.pointerId !== drag.id)) return;
+  if (e && e.type === 'pointerup') { drag.lx = e.clientX; drag.ly = e.clientY; drag.up = true; }
+  finishDrag();
+}
+/* drop wherever the finger last was. Also used when the browser cancels the touch (finger slid off the
+   screen edge, a system gesture, the app lost focus): the cookie is dropped instead of being left stuck. */
+function finishDrag(){
+  if (!drag) return;
   var d = drag; drag = null;
   ['plate','jar'].forEach(function(id){ var el = document.getElementById(id); if (el) el.classList.remove('hot'); });
-  if (d.ghost) d.ghost.remove();
-  if (cancel) { d.el.style.visibility = ''; return; }
-  var onPlate = over('plate', e.clientX, e.clientY);
-  if (d.from === 'jar') { if (!d.moved || onPlate) addCookie(d.spot); else d.el.style.visibility = ''; }
-  else { if (!d.moved || !onPlate) removeCookie(); else d.el.style.visibility = ''; }
+  document.querySelectorAll('.cookie.ghost').forEach(function(g){ g.remove(); });
+  if (d.el) d.el.style.visibility = '';
+  if (!G || screen !== 'play') return;
+  if (!d.moved && !d.up) return;              /* cancelled before it became a drag: do nothing */
+  var onPlate = over('plate', d.lx, d.ly);
+  if (d.from === 'jar') { if (!d.moved || onPlate) addCookie(d.spot); }
+  else if (!d.moved || !onPlate) removeCookie();
+  if (G && screen === 'play' && !document.body.contains(d.el)) updatePlay();
 }
-document.addEventListener('pointerup', function(e){ endDrag(e, false); });
-document.addEventListener('pointercancel', function(e){ endDrag(e, true); });
+document.addEventListener('pointerup', function(e){ endDrag(e); });
+document.addEventListener('pointercancel', function(e){ endDrag(e); });
+window.addEventListener('blur', finishDrag);
+document.addEventListener('visibilitychange', finishDrag);
+document.addEventListener('touchend', function(e){ if (drag && e.touches.length === 0) setTimeout(function(){ if (drag) finishDrag(); }, 50); });
+document.addEventListener('touchcancel', function(){ if (drag) finishDrag(); });
 
 /* ---------- reward / round done ---------- */
 function closeOverlay(){ document.querySelectorAll('.flying').forEach(function(f){ f.remove(); }); var o = document.querySelector('.overlay'); if (o) o.remove(); var c = document.querySelector('.confetti'); if (c) c.remove(); }
@@ -1072,9 +1307,10 @@ function next(){
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
-  var madeRainbow = Math.floor(S.stars / PER_RAINBOW) > Math.floor((G.startStars || 0) / PER_RAINBOW);
+  var prNow = rainbowProgress(S.stars), prBefore = rainbowProgress(G.startStars || 0);
+  var madeRainbow = prNow.done.length > prBefore.done.length;
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
-  overlay('<div class="reward"><h1>' + L('great') + '</h1>' + (madeRainbow ? shootingStar('pic') : starImg(7, 'pic')) +
+  overlay('<div class="reward"><h1>' + L('great') + '</h1>' + (madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
     '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + L('madeRainbow') + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
     '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button><button class="big-btn" data-act="again">' + L('again') + '</button></div></div>');
   confetti();
@@ -1082,32 +1318,72 @@ function roundDone(){
 }
 
 /* ---------- garden ---------- */
-var PER_STRIPE = 5, PER_RAINBOW = 5 * 7;
+var PER_STRIPE = 5;
+/* draws rainbow `idx` with `filled` stripes coloured (outer first); unfilled parts use `empty` */
+function rainbowSvg(idx, filled, cls, empty){
+  var R = window.RAINBOWS && window.RAINBOWS[idx]; if (!R) return '';
+  var n = R.n, done = filled >= n, out = '';
+  empty = empty || '#F3F9F9';
+  R.p.forEach(function(p){
+    var show = p[2] < 0 || done || p[2] < filled;
+    out += '<path d="' + p[0] + '" fill="' + (show ? p[1] : empty) + '"' + (p[4] ? ' fill-rule="evenodd"' : '') + ' transform="matrix(' + p[3].join(' ') + ')"/>';
+  });
+  return '<svg class="' + (cls || 'rb-art') + '" viewBox="' + R.vb.join(' ') + '" aria-hidden="true">' + out + '</svg>';
+}
+/* walk the unlock order: each rainbow costs 5 stars per stripe */
+function rainbowProgress(stars){
+  var order = window.RAINBOW_ORDER || [], done = [], rem = stars, i = 0;
+  if (!order.length) return { done: done, cur: 0, rem: 0, n: 1 };
+  while (true) {
+    var r = order[i % order.length], cost = PER_STRIPE * window.RAINBOWS[r].n;
+    if (rem >= cost) { done.push(r); rem -= cost; i++; } else return { done: done, cur: r, rem: rem, n: window.RAINBOWS[r].n };
+  }
+}
+var BOOK_ICON = '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#5A3E33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z" fill="#F6C9B4"/><path d="M12 6.5v13"/></svg>';
 function renderGarden(){
-  var n = S.stars;
-  var made = Math.floor(n / PER_RAINBOW), p = n % PER_RAINBOW;
-  if (p === 0 && n > 0) p = PER_RAINBOW;                  /* just finished one: show it full */
-  var current = p === PER_RAINBOW ? made - 1 : made;      /* which rainbow we're building */
-  var bands = Math.floor(p / PER_STRIPE);                 /* stripes coloured so far */
-  var q = p % PER_STRIPE;                                  /* stars toward the next stripe */
-  var justDone = p > 0 && q === 0;                         /* a stripe was just completed */
-  var shownStars = justDone ? PER_STRIPE : q;
-  var stripe = Math.min(BANDS.length - 1, justDone ? bands - 1 : bands);
+  var n = S.stars, pr = rainbowProgress(n);
+  var justFinished = pr.rem === 0 && pr.done.length > 0;           /* show the rainbow just completed, full */
+  var idx = justFinished ? pr.done[pr.done.length - 1] : pr.cur;
+  var stripes = window.RAINBOWS[idx].n;
+  var filled = justFinished ? stripes : Math.floor(pr.rem / PER_STRIPE);
+  var q = justFinished ? 0 : pr.rem % PER_STRIPE;
+  var stripeJustDone = !justFinished && pr.rem > 0 && q === 0;
+  var shownStars = (justFinished || stripeJustDone) ? PER_STRIPE : q;
+  var stripe = justFinished ? stripes - 1 : Math.min(stripes - 1, stripeJustDone ? filled - 1 : filled);
+  var col = window.RAINBOWS[idx].fills[stripe];
   var slots = '';
   for (var i = 0; i < PER_STRIPE; i++) {
     slots += '<div class="slot-star' + (i === shownStars - 1 ? ' newest' : '') + '">' +
-      (i < shownStars ? starImg(current * PER_RAINBOW + stripe * PER_STRIPE + i) : EMPTY_STAR) + '</div>';
+      (i < shownStars ? starImg(n + i) : EMPTY_STAR) + '</div>';
   }
-  var goal = !n ? L('firstFlower') : (p === PER_RAINBOW ? L('rainbowDone') : L('toSun', PER_STRIPE - q));
+  var goal = !n ? L('firstFlower') : (justFinished ? L('rainbowDone') : L('toSun', PER_STRIPE - q));
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div>' +
-    '<button class="round" data-act="garden-say" aria-label="' + esc(L('hearIt')) + '">' + ICON.speak + '</button></div>' +
-    '<div class="garden-head"><h1>' + esc(L('gardenOf', S.name)) + '</h1></div>' +
-    '<div class="sky" role="img" aria-label="' + esc(L('flowersN', n) + ' · ' + L('rainbowsN', made) + ' · ' + goal) + '">' +
-      '<div class="rb">' + rainbow(bands) + '</div>' +
-      '<div class="slots" style="--stripe:' + BANDS[stripe] + '">' + slots + '</div>' +
+    speakBtn('garden-say', L('hearIt')) + '</div>' +
+    '<div class="garden-head"><h1>' + esc(L('gardenOf')) + '</h1></div>' +
+    '<div class="sky" role="img" aria-label="' + esc(L('flowersN', n) + ' · ' + goal) + '">' +
+      '<div class="rb">' + rainbowSvg(idx, filled, 'rainbow') + '</div>' +
+      '<div class="slots" style="--stripe:' + col + '">' + slots + '</div>' +
+      '<button class="bookbtn" data-act="book" aria-label="' + esc(L('openBook') + ' · ' + L('stickersN', pr.done.length)) + '">' + BOOK_ICON +
+        '<span class="bookcount">' + pr.done.length + '</span></button>' +
     '</div></section>';
+}
+function renderBook(){
+  var pr = rainbowProgress(S.stars), done = pr.done, slots = '';
+  var total = Math.max(window.RAINBOW_ORDER.length, done.length);
+  for (var i = 0; i < total; i++) {
+    if (i < done.length) {
+      var rot = ((i * 37) % 13) - 6;                                 /* each sticker sits a little crooked */
+      slots += '<button class="sticker" data-act="sticker" style="--rot:' + rot + 'deg" aria-label="' + esc(L('rainbowsN', 1)) + '">' + rainbowSvg(done[i], 99, 'stk') + '</button>';
+    } else slots += '<div class="sticker-slot" aria-hidden="true"></div>';
+  }
+  app.innerHTML = '<section class="screen">' +
+    '<div class="bar"><button class="round" data-act="garden" aria-label="' + esc(L('backSky')) + '">' + ICON.back + '</button>' +
+    '<h1 class="book-title">' + L('myStickers') + '</h1>' +
+    '<div class="chip" aria-label="' + esc(L('stickersN', done.length)) + '">' + BOOK_ICON.replace('width="30" height="30"', 'width="26" height="26"') + '<span>' + done.length + '</span></div></div>' +
+    '<div class="book">' + (done.length ? '' : '<p class="book-empty">' + L('noStickers') + '</p>') + '<div class="book-grid">' + slots + '</div></div>' +
+    '</section>';
 }
 
 /* ---------- parental gate ---------- */
@@ -1154,6 +1430,8 @@ function renderParents(){
       '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
+      (hasSpeech ? '<div class="field"><span class="lab">' + L('voiceType') + '</span><div class="seg"><button data-act="vtype" data-v="female" aria-pressed="' + (S.voiceType !== 'male') + '">' + L('female') + '</button><button data-act="vtype" data-v="male" aria-pressed="' + (S.voiceType === 'male') + '">' + L('male') + '</button></div>' +
+        (hasVoice(S.lang) && !hasVoiceType(S.lang, S.voiceType === 'male' ? 'male' : 'female') ? '<span class="tip small">' + L('noVoiceType', L('langName')[S.lang], S.voiceType === 'male') + '</span>' : '') + '</div>' : '') +
       '<div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
     '</div>';
@@ -1173,6 +1451,11 @@ document.addEventListener('click', function(e){
   if (jarC && e.detail === 0) { addCookie(+jarC.getAttribute('data-spot')); return; } /* keyboard */
   var b = e.target.closest('[data-act]'); if (!b) return;
   var act = b.getAttribute('data-act');
+  /* the speaker button is a mute toggle: tap to mute, tap again to unmute (and hear the line) */
+  if (b.classList.contains('speakbtn')) {
+    S.voice = !S.voice; save(); syncMute();
+    if (!S.voice) { clearSay(); return; }
+  }
   switch (act) {
     case 'name-say': say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); break;
     case 'its-me': show('home'); break;
@@ -1186,9 +1469,11 @@ document.addEventListener('click', function(e){
       break;
     case 'play': startRound(); break;
     case 'home': show('home'); break;
-    case 'garden': show('garden'); say(L('sGarden', S.stars)); break;
+    case 'garden': show('garden'); break;
+    case 'book': show('book'); break;
+    case 'sticker': b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle'); break;
     case 'garden-say':
-      var nR = Math.floor(S.stars / PER_RAINBOW), left = PER_STRIPE - S.stars % PER_STRIPE;
+      var nR = rainbowProgress(S.stars).done.length, left = PER_STRIPE - S.stars % PER_STRIPE;
       say(S.stars ? L('sGarden', S.stars).concat(nR ? [L('sRainbows', nR)] : []).concat([L('sSun', left)]) : L('sGarden', 0)); break;
     case 'soon': say(L('sSoon', L(b.getAttribute('data-g')))); break;
     case 'repeat': askAloud(); break;
@@ -1201,7 +1486,8 @@ document.addEventListener('click', function(e){
     case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
-    case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
+    case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
+    case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
       else { resetArmed = false; var keep = { name:S.name, voice:S.voice, maxSum:S.maxSum, lang:S.lang }; S = load(); S.stars = 0; S.facts = {}; S.name = keep.name; S.voice = keep.voice; S.maxSum = keep.maxSum; S.lang = keep.lang; save(); renderParents(); }
