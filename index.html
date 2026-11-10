@@ -641,6 +641,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .tray{display:grid !important;grid-template-columns:repeat(var(--tc,6), calc(var(--cell) * .66));grid-auto-rows:calc(var(--cell) * .82);justify-content:center;align-content:start;
   gap:calc(var(--cell) * .08) calc(var(--cell) * .14);padding:0 !important;border:0 !important;background:none !important;min-height:calc(var(--cell) * 1.72) !important;min-width:0 !important;max-width:none !important}
 .tray .egg{width:calc(var(--cell) * .62) !important;height:calc(var(--cell) * .76) !important;justify-self:center}
+.driver .driver-llama{position:absolute;left:26%;top:8%;width:160%;max-width:none;transform:translateX(-50%) scaleX(-1)}
 </style>
 </head>
 <body>
@@ -1282,8 +1283,8 @@ function critter(kind, style){
 }
 
 var STAR_FACES = 12;
-function starImg(i, cls){ return '<img class="' + (cls || 'kstar') + '" src="stars/s' + ((i % STAR_FACES) + 1) + '.png" alt="" draggable="false">'; }
-function shootingStar(cls){ return '<img class="' + (cls || 'pic animal') + '" src="stars/shooting.png" alt="" draggable="false">'; }
+function starImg(i, cls){ return '<img class="' + (cls || 'kstar') + '" src="stars/s' + ((i % STAR_FACES) + 1) + '.svg" alt="" draggable="false">'; }
+function shootingStar(cls){ return '<img class="' + (cls || 'pic animal') + '" src="stars/shooting.svg" alt="" draggable="false">'; }
 /* rainbow (flat pastel, 7 touching bands, straight legs with rounded feet). `filled` of 7 bands are coloured, outer first */
 var BANDS = ['#F2A3B3', '#F8C6B3', '#FFE18E', '#BFDDB7', '#9BD6DF', '#8BC4DA', '#6FA6C8'];
 var rbId = 0;
@@ -2003,7 +2004,7 @@ function renderBus(){
       '<div class="bus-scene" id="busScene">' +
         '<div class="bus" id="bus">' +
           '<div class="roof-sign" aria-label="' + esc(L('busIn', G.s)) + '">' + bunnyImg('sign-bunny') + '<b>' + G.s + '</b></div>' +
-          '<div class="bus-body"><div class="windows">' + wins + '</div><span class="driver">' + bunnyImg('driver-bunny') + '</span><span class="door"></span><span class="light"></span></div>' +
+          '<div class="bus-body"><div class="windows">' + wins + '</div><span class="driver"><img class="driver-llama" src="animals/llama.png" alt="" draggable="false"></span><span class="door"></span><span class="light"></span></div>' +
           '<span class="wheel w1"></span><span class="wheel w2"></span>' +
         '</div>' +
         '<div class="road"></div>' +
