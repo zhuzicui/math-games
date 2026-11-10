@@ -4,7 +4,7 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 
 **Try it:** https://math-games-neon.vercel.app (free, no account; add it to your home screen for a full-screen app)
 
-<p align="center"><img src="docs/screenshots/hero.png" width="640" alt="Momo Math on iPad and iPhone"></p>
+<p align="center"><img src="docs/screenshots/hero.png" width="760" alt="Momo Math on iPad and iPhone"></p>
 
 ## What's inside
 
@@ -21,13 +21,17 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 
 ## iPad
 
-| Home | Feed the Monster | Ten Frame |
+| Home | Feed the Monster | You did it! |
 |---|---|---|
-| <img src="docs/screenshots/ipad-03-home.png" width="260" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="260" alt="Feed the Monster"> | <img src="docs/screenshots/ipad-06-tenframe.png" width="260" alt="Ten Frame"> |
+| <img src="docs/screenshots/ipad-03-home.png" width="270" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="270" alt="Feed the Monster"> | <img src="docs/screenshots/ipad-05-bravo.png" width="270" alt="You did it!"> |
 
-| Bus Stop | Your rainbow | For grown-ups |
+| Ten Frame | Bus Stop | Your rainbow |
 |---|---|---|
-| <img src="docs/screenshots/ipad-07-bus.png" width="260" alt="Bus Stop"> | <img src="docs/screenshots/ipad-08-rainbow.png" width="260" alt="Your rainbow"> | <img src="docs/screenshots/ipad-10-grownups.png" width="260" alt="For grown-ups"> |
+| <img src="docs/screenshots/ipad-06-tenframe.png" width="270" alt="Ten Frame"> | <img src="docs/screenshots/ipad-07-bus.png" width="270" alt="Bus Stop"> | <img src="docs/screenshots/ipad-08-rainbow.png" width="270" alt="Your rainbow"> |
+
+| Sticker book | Pick your buddy | For grown-ups |
+|---|---|---|
+| <img src="docs/screenshots/ipad-09-stickers.png" width="270" alt="Sticker book"> | <img src="docs/screenshots/ipad-02-buddy.png" width="270" alt="Pick your buddy"> | <img src="docs/screenshots/ipad-10-grownups.png" width="270" alt="For grown-ups"> |
 
 ## iPhone
 
