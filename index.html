@@ -689,6 +689,11 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .arcs .arc{fill:none;stroke:#3E7FB0;stroke-width:3.5;stroke-dasharray:3 7;stroke-linecap:round}
 .mini-pad{display:inline-block;width:clamp(20px,3.6dvh,28px);height:clamp(20px,3.6dvh,28px);border-radius:50%;border:3px solid}
 .mini-pad.start{background:#F6C3B5;border-color:#C9806C}.mini-pad.add{background:#9DCBEC;border-color:#6EA6D1}
+/* ===== older iPad Safari: stop text flickering while cookies fly =====
+   moving things get their own GPU layer and no filter; the text that sits still gets its own layer too */
+.flying{filter:none !important;will-change:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.bus-fly,.egg-ghost,.hopper{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.bubbles,.eq,.bar,#momo,.donebtn{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 </style>
 </head>
 <body>
