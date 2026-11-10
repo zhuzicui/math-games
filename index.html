@@ -385,11 +385,7 @@ body.skybg,body.skybg #app{background:#DAECEC}
 
 /* ===== icons: fixed sizes (iPad Safari shrank %-sized svgs inside buttons) ===== */
 .round svg{width:clamp(24px,4.4dvh,32px);height:clamp(24px,4.4dvh,32px);flex:none}
-.round .ic-say,.round .ic-stop{display:flex;align-items:center;justify-content:center}
-.round .ic-stop{display:none}
-body.talking .speakbtn .ic-say{display:none}
-body.talking .speakbtn .ic-stop{display:flex}
-body.talking .speakbtn{border-color:#E9917A;box-shadow:0 5px 0 #E2A898}
+.round .ic-say{display:flex;align-items:center;justify-content:center}
 @media (min-width:700px) and (min-height:600px){
   .round{width:72px;height:72px}
   .round svg{width:36px;height:36px}
@@ -424,6 +420,22 @@ body.bookbg,body.bookbg #app{background:#F3E9DC}
 @media (orientation:landscape){ .book-grid{grid-template-columns:repeat(7,minmax(0,1fr))} }
 
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+
+/* ===== speech bubbles: the ask always stays; a second bubble gives feedback ===== */
+.momo-row{width:100%}
+.bubbles{flex:1 1 auto;min-width:0;max-width:440px;display:flex;flex-direction:column;align-items:stretch;gap:clamp(4px,1dvh,8px)}
+.bubbles .bubble{max-width:none;width:100%}
+.bubbles .bubble b{white-space:nowrap}
+.bubble2{padding-top:clamp(2px,.6dvh,6px)!important;padding-bottom:clamp(2px,.6dvh,6px)!important;background:#FBE3DC;border-color:#E9A796;visibility:hidden;transform:scale(.8);opacity:0;transition:transform .2s,opacity .2s}
+.bubble2 b{font-size:clamp(17px,min(5vw,3.4dvh),28px)!important;color:#A44A35}
+.bubble2.on{visibility:visible;transform:none;opacity:1}
+.bubble2.yum{background:#E3F1DA;border-color:#A9CB97}
+.bubble2.yum b{color:#4F7A3B}
+/* ===== mute toggle ===== */
+.round .ic-off{display:none}
+body.muted .speakbtn .ic-say{display:none}
+body.muted .speakbtn .ic-off{display:flex;align-items:center;justify-content:center}
+body.muted .speakbtn{background:#F3E9E2}
 </style>
 </head>
 <body>
@@ -470,7 +482,7 @@ en: {
   gFeed: 'Feed the Monster', gGarden: 'My Stars', soon: 'Coming soon', gTen: 'Ten Frame', gBus: 'Bus Stop', gFrog: 'Frog Hops', gTower: 'Tower',
   backGames: 'Back to games', qOf: function(a, b){ return 'Question ' + a + ' of ' + b; }, plate: 'Plate', jar: 'Cookie jar', cookie: 'cookie',
   takeBack: 'Take this cookie back', putOn: 'Put a cookie on the plate',
-  feedMe: function(t){ return 'Feed me ' + t + '!'; }, yumT: function(t){ return 'Yum! ' + t + '!'; }, more: 'More please!', full: 'Too full!', done: 'Done!',
+  feedMe: function(t){ return 'Feed me\u00a0' + t + '!'; }, yumT: function(t){ return 'Yum! ' + t + '!'; }, more: 'Not enough!', full: 'Too full!', yum: 'Yum!', done: 'Done!',
   momoAlt: function(h){ return h ? 'Momo the unicorn, smiling' : 'Momo the unicorn, hungry'; },
   didIt: 'You did it!', next: 'Next', finish: 'Finish', eqLabel: function(s, a, t){ return s + ' plus ' + a + ' equals ' + t; },
   great: 'Great job!', newFlowers: function(n){ return n + ' new ' + pl(n, 'star', 'stars') + ' in your sky!'; }, seeGarden: 'See my stars', again: 'Play again',
@@ -523,7 +535,7 @@ fr: {
   gFeed: 'Nourris le monstre', gGarden: 'Mes étoiles', soon: 'Bientôt', gTen: 'Cadre de dix', gBus: 'L’autobus', gFrog: 'Grenouille', gTower: 'La tour',
   backGames: 'Retour aux jeux', qOf: function(a, b){ return 'Question ' + a + ' sur ' + b; }, plate: 'Assiette', jar: 'Pot à biscuits', cookie: 'biscuit',
   takeBack: 'Reprendre ce biscuit', putOn: 'Mettre un biscuit dans l’assiette',
-  feedMe: function(t){ return 'J’en veux ' + t + ' !'; }, yumT: function(t){ return 'Miam ! ' + t + ' !'; }, more: 'Encore !', full: 'Trop plein !', done: 'Fini !',
+  feedMe: function(t){ return 'J’en veux ' + t + ' !'; }, yumT: function(t){ return 'Miam ! ' + t + ' !'; }, more: 'Pas assez\u00a0!', full: 'Trop plein\u00a0!', yum: 'Miam\u00a0!', done: 'Fini !',
   momoAlt: function(h){ return h ? 'Momo la licorne, qui sourit' : 'Momo la licorne, qui a faim'; },
   didIt: 'Bravo !', next: 'Suivant', finish: 'Terminer', eqLabel: function(s, a, t){ return s + ' plus ' + a + ' égale ' + t; },
   great: 'Super !', newFlowers: function(n){ return n + ' ' + pl(n, 'nouvelle étoile', 'nouvelles étoiles') + ' dans ton ciel !'; }, seeGarden: 'Voir mes étoiles', again: 'Rejouer',
@@ -576,7 +588,7 @@ zh: {
   gFeed: '喂小怪兽', gGarden: '我的星星', soon: '即将推出', gTen: '十格框', gBus: '公交车站', gFrog: '青蛙跳', gTower: '搭高塔',
   backGames: '返回游戏', qOf: function(a, b){ return '第' + a + '题，共' + b + '题'; }, plate: '盘子', jar: '饼干罐', cookie: '饼干',
   takeBack: '把这块饼干拿回去', putOn: '把一块饼干放到盘子里',
-  feedMe: function(t){ return '喂我' + t + '块！'; }, yumT: function(t){ return '好吃！' + t + '块！'; }, more: '还要！', full: '太饱啦！', done: '好了！',
+  feedMe: function(t){ return '喂我' + t + '块！'; }, yumT: function(t){ return '好吃！' + t + '块！'; }, more: '还不够！', full: '太饱啦！', yum: '好吃！', done: '好了！',
   momoAlt: function(h){ return h ? '独角兽莫莫，在微笑' : '独角兽莫莫，肚子饿了'; },
   didIt: '你做到了！', next: '下一题', finish: '完成', eqLabel: function(s, a, t){ return s + '加' + a + '等于' + t; },
   great: '太棒了！', newFlowers: function(n){ return '你的星空多了' + n + '颗星星！'; }, seeGarden: '看我的星星', again: '再玩一次',
@@ -680,6 +692,7 @@ var STYLE = {
   count: { p: 1.05, r: 0.82 }
 };
 var sayTimers = [];
+function syncMute(){ document.body.classList.toggle('muted', !S.voice); document.querySelectorAll('.speakbtn').forEach(function(x){ x.setAttribute('aria-pressed', String(!S.voice)); }); }
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
 function clearSay(){ sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
@@ -765,21 +778,21 @@ var EMPTY_STAR = '<svg class="kstar empty" viewBox="0 0 24 24" aria-hidden="true
 var ICON = {
   back:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
   home:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10" fill="#F6C9B4"/><path d="M10 20v-5h4v5"/></svg>',
-  stop:'<svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="3" fill="#E9917A" stroke="#6B4A3A" stroke-width="2"/></svg>',
+  muted:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#E4D6CC"/><path d="M16 9l6 6M22 9l-6 6" stroke="#D0705A" stroke-width="2.4"/></svg>',
   speak:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#F6C9B4"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>',
   star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.8 6.2 20l1.4-6.4L2.7 9.2l6.5-.7z" fill="#F7D98C" stroke="#B88A4A" stroke-width="1.2" stroke-linejoin="round"/></svg>',
   lock:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#7A5A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
 };
 
 function speakBtn(act, label){
-  return '<button class="round speakbtn" data-act="' + act + '" aria-label="' + esc(label) + '"><span class="ic-say">' + ICON.speak + '</span><span class="ic-stop">' + ICON.stop + '</span></button>';
+  return '<button class="round speakbtn" data-act="' + act + '" aria-label="' + esc(label) + '"><span class="ic-say">' + ICON.speak + '</span><span class="ic-off">' + ICON.muted + '</span></button>';
 }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 var app = document.getElementById('app');
 var screen = 'start';
 function show(name){ screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
 function render(){
-  applyLang();
+  applyLang(); syncMute();
   document.body.classList.toggle('skybg', screen === 'garden');
   document.body.classList.toggle('bookbg', screen === 'book');
   if (screen === 'start') renderStart();
@@ -870,7 +883,7 @@ function newQuestion(){
   G.last = factKey(G.s, G.a);
   G.added = 0; G.jarCount = Math.min(G.a + 2, 12 - G.s); G.first = true; G.lock = false; G.mood = 'hungry';
   G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
-  G.bubble = L('feedMe', G.t);
+  G.bubble2 = '';
   screen = 'play'; closeOverlay(); renderPlay();
   askAloud();
 }
@@ -878,6 +891,11 @@ function askAloud(){
   say(L('sAsk', G.t, G.s));
 }
 function total(){ return G.s + G.added; }
+function setBubble2(t, kind){
+  var box = document.getElementById('bubble2Box'), b = document.getElementById('bubble2'); if (!box || !b) return;
+  b.textContent = t || '\u00a0';
+  box.classList.toggle('on', !!t); box.classList.toggle('yum', kind === 'yum');
+}
 
 function renderPlay(){
   var dots = '';
@@ -887,7 +905,7 @@ function renderPlay(){
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
     speakBtn('repeat', L('hearAgain')) + '</div>' +
     '<div class="stage">' +
-      '<div class="left"><div class="momo-row"><div id="momo"></div><div class="bubble"><b id="bubble"></b></div></div>' +
+      '<div class="left"><div class="momo-row"><div id="momo"></div><div class="bubbles"><div class="bubble"><b id="bubble"></b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a" id="eqA"></span><span>=</span><span class="t" id="eqT"></span></div></div>' +
       '<div class="tablewrap"><div class="table" id="table">' +
         '<div class="plate" id="plate" aria-label="' + esc(L('plate')) + '"></div>' +
@@ -900,7 +918,8 @@ function renderPlay(){
 function updatePlay(popLast){
   if (screen !== 'play') return;
   document.getElementById('momo').innerHTML = momo(G.mood);
-  document.getElementById('bubble').textContent = G.bubble;
+  document.getElementById('bubble').textContent = L('feedMe', G.t);
+  setBubble2(G.bubble2);
   var plate = '';
   for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
   for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" style="' + blueFace(G.stack[j]) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
@@ -969,13 +988,13 @@ function addCookie(spot){
   if (!G || G.lock || G.added >= G.jarCount) return;
   if (spot === undefined || spot === null || isNaN(spot) || G.taken[spot]) { spot = 0; while (G.taken[spot]) spot++; }
   G.taken[spot] = true; G.stack.push(spot); G.added = G.stack.length;
-  G.bubble = L('feedMe', G.t); G.mood = 'hungry';
+  G.bubble2 = ''; G.mood = 'hungry';
   updatePlay(true);
   say(P(String(total()), 'count', total()));
 }
 function removeCookie(){
   if (!G || G.lock || G.added <= 0) return;
-  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot;
+  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = '';
   updatePlay('back');
   say(P(String(total()), 'count', total()));
 }
@@ -1044,8 +1063,7 @@ function check(){
   G.lock = true;
   document.getElementById('doneBtn').disabled = true;
   if (right) {
-    G.bubble = L('yumT', G.t);
-    document.getElementById('bubble').textContent = G.bubble;
+    G.bubble2 = L('yum'); setBubble2(G.bubble2, 'yum');
     setMomo('happy');
     S.stars++; G.earned++; save();
     say(L('sYum', G.s, G.a, G.t));
@@ -1056,8 +1074,7 @@ function check(){
     setTimeout(showReward, fedFor + 1300);
   } else {
     var tooFew = n < G.t;
-    G.bubble = tooFew ? L('more') : L('full');
-    document.getElementById('bubble').textContent = G.bubble;
+    G.bubble2 = tooFew ? L('more') : L('full'); setBubble2(G.bubble2);
     setMomo('hungry', 'wobble');
     var parts = [L('sCount')];
     for (var i = 1; i <= n; i++) parts.push(P(String(i), 'count', i));
@@ -1083,7 +1100,8 @@ document.addEventListener('pointerdown', function(e){
   if (!c) { c = e.target.closest('#plate button.cookie'); from = 'plate'; }
   if (!c) return;
   e.preventDefault();
-  drag = { el:c, from:from, spot:+c.getAttribute('data-spot'), x:e.clientX, y:e.clientY, moved:false, ghost:null, id:e.pointerId };
+  if (drag) finishDrag();                      /* a previous drag never got its "up": settle it first */
+  drag = { el:c, from:from, spot:+c.getAttribute('data-spot'), x:e.clientX, y:e.clientY, lx:e.clientX, ly:e.clientY, moved:false, ghost:null, id:e.pointerId };
 });
 document.addEventListener('pointermove', function(e){
   if (!drag || e.pointerId !== drag.id) return;
@@ -1093,8 +1111,11 @@ document.addEventListener('pointermove', function(e){
     var g = document.createElement('span'); g.className = 'cookie ghost'; g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
     document.body.appendChild(g); drag.ghost = g; drag.el.style.visibility = 'hidden';
   }
+  /* keep the ghost on screen, so it can never get parked out at the edge */
+  var vw = window.innerWidth, vh = window.innerHeight;
+  drag.lx = e.clientX; drag.ly = e.clientY;
   if (drag.ghost) {
-    drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = e.clientY + 'px';
+    drag.ghost.style.left = Math.max(24, Math.min(vw - 24, drag.lx)) + 'px'; drag.ghost.style.top = Math.max(24, Math.min(vh - 24, drag.ly)) + 'px';
     var pl = document.getElementById('plate');
     if (pl) pl.classList.toggle('hot', drag.from === 'jar' && over('plate', e.clientX, e.clientY));
   }
@@ -1105,18 +1126,32 @@ function over(id, x, y){
   if (id === 'plate') return Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)) < r.width / 2 + 24;   /* round plate */
   return x > r.left - m && x < r.right + m && y > r.top - m && y < r.bottom + m;
 }
-function endDrag(e, cancel){
+function endDrag(e){
   if (!drag || (e && e.pointerId !== drag.id)) return;
+  if (e && e.type === 'pointerup') { drag.lx = e.clientX; drag.ly = e.clientY; drag.up = true; }
+  finishDrag();
+}
+/* drop wherever the finger last was. Also used when the browser cancels the touch (finger slid off the
+   screen edge, a system gesture, the app lost focus): the cookie is dropped instead of being left stuck. */
+function finishDrag(){
+  if (!drag) return;
   var d = drag; drag = null;
   ['plate','jar'].forEach(function(id){ var el = document.getElementById(id); if (el) el.classList.remove('hot'); });
-  if (d.ghost) d.ghost.remove();
-  if (cancel) { d.el.style.visibility = ''; return; }
-  var onPlate = over('plate', e.clientX, e.clientY);
-  if (d.from === 'jar') { if (!d.moved || onPlate) addCookie(d.spot); else d.el.style.visibility = ''; }
-  else { if (!d.moved || !onPlate) removeCookie(); else d.el.style.visibility = ''; }
+  document.querySelectorAll('.cookie.ghost').forEach(function(g){ g.remove(); });
+  if (d.el) d.el.style.visibility = '';
+  if (!G || screen !== 'play') return;
+  if (!d.moved && !d.up) return;              /* cancelled before it became a drag: do nothing */
+  var onPlate = over('plate', d.lx, d.ly);
+  if (d.from === 'jar') { if (!d.moved || onPlate) addCookie(d.spot); }
+  else if (!d.moved || !onPlate) removeCookie();
+  if (G && screen === 'play' && !document.body.contains(d.el)) updatePlay();
 }
-document.addEventListener('pointerup', function(e){ endDrag(e, false); });
-document.addEventListener('pointercancel', function(e){ endDrag(e, true); });
+document.addEventListener('pointerup', function(e){ endDrag(e); });
+document.addEventListener('pointercancel', function(e){ endDrag(e); });
+window.addEventListener('blur', finishDrag);
+document.addEventListener('visibilitychange', finishDrag);
+document.addEventListener('touchend', function(e){ if (drag && e.touches.length === 0) setTimeout(function(){ if (drag) finishDrag(); }, 50); });
+document.addEventListener('touchcancel', function(){ if (drag) finishDrag(); });
 
 /* ---------- reward / round done ---------- */
 function closeOverlay(){ document.querySelectorAll('.flying').forEach(function(f){ f.remove(); }); var o = document.querySelector('.overlay'); if (o) o.remove(); var c = document.querySelector('.confetti'); if (c) c.remove(); }
@@ -1287,8 +1322,11 @@ document.addEventListener('click', function(e){
   if (jarC && e.detail === 0) { addCookie(+jarC.getAttribute('data-spot')); return; } /* keyboard */
   var b = e.target.closest('[data-act]'); if (!b) return;
   var act = b.getAttribute('data-act');
-  /* a speaker button pressed while talking just stops the voice */
-  if (b.classList.contains('speakbtn') && document.body.classList.contains('talking')) { clearSay(); return; }
+  /* the speaker button is a mute toggle: tap to mute, tap again to unmute (and hear the line) */
+  if (b.classList.contains('speakbtn')) {
+    S.voice = !S.voice; save(); syncMute();
+    if (!S.voice) { clearSay(); return; }
+  }
   switch (act) {
     case 'name-say': say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); break;
     case 'its-me': show('home'); break;
@@ -1319,7 +1357,7 @@ document.addEventListener('click', function(e){
     case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
-    case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
+    case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
       else { resetArmed = false; var keep = { name:S.name, voice:S.voice, maxSum:S.maxSum, lang:S.lang }; S = load(); S.stars = 0; S.facts = {}; S.name = keep.name; S.voice = keep.voice; S.maxSum = keep.maxSum; S.lang = keep.lang; save(); renderParents(); }
