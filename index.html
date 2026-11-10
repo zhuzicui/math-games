@@ -465,6 +465,7 @@ html:lang(ja) body,html:lang(ja) .parents{font-family:Nunito,'Zen Maru Gothic','
 html:lang(ja) .bubbles .bubble b,html:lang(ja) .big-btn,html:lang(ja) .donebtn{word-break:keep-all;line-break:strict}
 .seg button{white-space:nowrap}
 @media (max-width:430px){ .seg{gap:4px} .seg button{padding:0 8px;font-size:14px} }
+html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN','Hiragino Sans','Noto Sans JP','Yu Gothic',sans-serif}
 </style>
 </head>
 <body>
@@ -487,7 +488,7 @@ html:lang(ja) .bubbles .bubble b,html:lang(ja) .big-btn,html:lang(ja) .donebtn{w
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, name:'', facts:{}, lang:'en' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', facts:{}, lang:'en' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -531,6 +532,8 @@ en: {
   ready: '<b>Ready for more:</b> most sums to 5 are mastered. Try “Up to 10”.',
   childName: 'Child’s name', shownHome: 'Shown on the home screen', biggest: 'Biggest answer', upTo: function(n){ return 'Up to ' + n; },
   spoken: 'Spoken instructions', on: 'On', off: 'Off', language: 'Language',
+  voiceType: 'Voice', female: 'Female', male: 'Male',
+  noVoiceType: function(name, male){ return 'This device has no ' + (male ? 'male' : 'female') + ' ' + name + ' voice, so a ' + (male ? 'female' : 'male') + ' voice is used.'; },
   noSpeech: 'This browser can’t speak aloud. Try Safari or Chrome.',
   langName: { en: 'English', fr: 'French', zh: 'Mandarin', ja: 'Japanese' },
   noVoice: function(name){ return 'This device has no ' + name + ' voice installed, so instructions won’t be read aloud.'; },
@@ -584,6 +587,8 @@ fr: {
   ready: '<b>Prêt pour la suite :</b> la plupart des sommes jusqu’à 5 sont acquises. Essayez « Jusqu’à 10 ».',
   childName: 'Prénom de l’enfant', shownHome: 'Affiché sur l’écran d’accueil', biggest: 'Plus grande réponse', upTo: function(n){ return 'Jusqu’à ' + n; },
   spoken: 'Consignes à voix haute', on: 'Oui', off: 'Non', language: 'Langue',
+  voiceType: 'Voix', female: 'Féminine', male: 'Masculine',
+  noVoiceType: function(name, male){ return 'Cet appareil n’a pas de voix ' + name + ' ' + (male ? 'masculine' : 'féminine') + ' : une voix ' + (male ? 'féminine' : 'masculine') + ' est utilisée.'; },
   noSpeech: 'Ce navigateur ne peut pas parler. Essayez Safari ou Chrome.',
   langName: { en: 'anglaise', fr: 'française', zh: 'mandarin', ja: 'japonaise' },
   noVoice: function(name){ return 'Cet appareil n’a pas de voix ' + name + ' installée : les consignes ne seront pas lues à voix haute.'; },
@@ -637,6 +642,8 @@ zh: {
   ready: '<b>可以挑战了：</b>5以内的加法大多已掌握，试试“10以内”。',
   childName: '孩子的名字', shownHome: '显示在主页上', biggest: '最大答案', upTo: function(n){ return n + '以内'; },
   spoken: '语音提示', on: '开', off: '关', language: '语言',
+  voiceType: '声音', female: '女声', male: '男声',
+  noVoiceType: function(name, male){ return '这台设备没有' + name + (male ? '男声' : '女声') + '，将使用' + (male ? '女声' : '男声') + '。'; },
   noSpeech: '这个浏览器不能朗读，请试试 Safari 或 Chrome。',
   langName: { en: '英语', fr: '法语', zh: '普通话', ja: '日语' },
   noVoice: function(name){ return '这台设备没有安装' + name + '语音，提示不会朗读出来。'; },
@@ -690,6 +697,8 @@ ja: {
   ready: '<b>次に進めます：</b>5までのたし算はほぼ習得しています。「10まで」を試してみましょう。',
   childName: 'お子さまの名前', shownHome: 'ホーム画面に表示されます', biggest: 'いちばん大きい答え', upTo: function(n){ return n + 'まで'; },
   spoken: '音声ガイド', on: 'オン', off: 'オフ', language: '言語',
+  voiceType: '声の種類', female: '女性', male: '男性',
+  noVoiceType: function(name, male){ return 'この端末には' + name + 'の' + (male ? '男性' : '女性') + 'の声がないため、' + (male ? '女性' : '男性') + 'の声を使います。'; },
   noSpeech: 'このブラウザは読み上げができません。Safari か Chrome をお試しください。',
   langName: { en: '英語', fr: 'フランス語', zh: '中国語', ja: '日本語' },
   noVoice: function(name){ return 'この端末には' + name + 'の音声が入っていないため、読み上げされません。'; },
@@ -728,12 +737,29 @@ function applyLang(){ document.documentElement.lang = HTML_LANG[S.lang] || 'en';
 var hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
 var VOICES = {};
 var NOVELTY = /(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy)/i;
-var PREFERRED = {
-  en: /(Samantha|Ava|Allison|Susan|Zoe|Karen|Moira|Aria|Jenny|Libby|Sonia|Natasha|Google US English|Google UK English Female)/i,
-  fr: /(Amélie|Amelie|Audrey|Aurélie|Marie|Denise|Sylvie|Chantal|Thomas|Google français)/i,
-  ja: /(Kyoko|Otoya|Hattori|O-ren|Oren|Nanami|Haruka|Ayumi|Sayaka|Google 日本語)/i,
-  zh: /(Tingting|Ting-Ting|Lili|Lilian|Meijia|Mei-Jia|Xiaoxiao|Yaoyao|Huihui|Yunxi|Google 普通话)/i
+/* the Web Speech API doesn't say whether a voice is female or male, so we go by the voice's name */
+var VOICE_NAMES = {
+  female: {
+    en: /(Samantha|Ava|Allison|Susan|Zoe|Karen|Moira|Tessa|Fiona|Victoria|Kate|Serena|Catherine|Nicky|Joelle|Aria|Jenny|Libby|Sonia|Natasha|Zira|Hazel|Emma|Michelle|Ana\b|Google US English|Google UK English Female)/i,
+    fr: /(Amélie|Amelie|Audrey|Aurélie|Aurelie|Marie|Denise|Sylvie|Chantal|Julie|Hortense|Virginie|Brigitte|Celeste|Google français)/i,
+    zh: /(Tingting|Ting-Ting|Lili|Lilian|Meijia|Mei-Jia|Yu-shu|Yushu|Shanshan|Xiaoxiao|Xiaoyi|Yaoyao|Huihui|Xiaohan|Xiaomo|Google 普通话)/i,
+    ja: /(Kyoko|O-ren|Oren|Nanami|Haruka|Ayumi|Sayaka|Mizuki|Aoi|Google 日本語)/i
+  },
+  male: {
+    en: /(Alex\b|Daniel|Tom\b|Aaron|Arthur|Evan|Nathan|Oliver|Rishi|Gordon|Lee\b|Guy\b|Ryan|Christopher|Eric|Mark\b|David|George|James|Andrew|Brian|Roger|Steffan|Google UK English Male)/i,
+    fr: /(Thomas|Nicolas|Jacques|Henri|Paul\b|Antoine|Jean\b|Claude|Guillaume|Jerome|Jérôme|Remy|Rémy|Alain|Gabriel)/i,
+    zh: /(Han\b|Li-Mu|Limu|Kangkang|Yunxi|Yunyang|Yunjian|Yunfeng|Yunhao|Yunze)/i,
+    ja: /(Otoya|Hattori|Ichiro|Keita|Daichi|Naoki)/i
+  }
 };
+function voiceGender(v, lang){
+  var n = v.name || '';
+  if (/\bfemale\b/i.test(n)) return 'female';
+  if (/\bmale\b/i.test(n)) return 'male';
+  if (VOICE_NAMES.female[lang] && VOICE_NAMES.female[lang].test(n)) return 'female';
+  if (VOICE_NAMES.male[lang] && VOICE_NAMES.male[lang].test(n)) return 'male';
+  return '';
+}
 function matchesLang(v, lang){
   var l = (v.lang || '').replace('_', '-');
   if (lang === 'zh') return /^(zh|cmn)/i.test(l) && !/(HK|yue|Cantonese)/i.test(l + ' ' + v.name);
@@ -745,7 +771,6 @@ function scoreVoice(v, lang){
   if (/premium/i.test(n)) sc += 6;
   if (/(enhanced|natural|neural|online)/i.test(n)) sc += 5;
   if (/google/i.test(n)) sc += 3;
-  if (PREFERRED[lang] && PREFERRED[lang].test(n)) sc += 4;
   var l = (v.lang || '').replace('_', '-');
   if (lang === 'fr' && /CA/i.test(l)) sc += 1;
   if (lang === 'zh' && /CN|Hans/i.test(l)) sc += 2;
@@ -756,14 +781,22 @@ function pickVoices(){
   try {
     var all = speechSynthesis.getVoices();
     ['en', 'fr', 'zh', 'ja'].forEach(function(lang){
-      var best = null, bs = -1e9;
-      all.forEach(function(v){ if (!matchesLang(v, lang)) return; var s = scoreVoice(v, lang); if (s > bs) { bs = s; best = v; } });
-      VOICES[lang] = best;
+      var pick = { female:null, male:null, any:null }, bs = { female:-1e9, male:-1e9, any:-1e9 };
+      all.forEach(function(v){
+        if (!matchesLang(v, lang)) return;
+        var sc = scoreVoice(v, lang), g = voiceGender(v, lang);
+        if (sc > bs.any) { bs.any = sc; pick.any = v; }
+        if (g && sc > bs[g]) { bs[g] = sc; pick[g] = v; }
+      });
+      VOICES[lang] = pick;
     });
   } catch(e) {}
 }
 if (hasSpeech) { pickVoices(); try { speechSynthesis.onvoiceschanged = function(){ pickVoices(); if (screen === 'parents') renderParents(); }; } catch(e) {} }
-function hasVoice(lang){ return !hasSpeech ? false : (VOICES[lang] ? true : (speechSynthesis.getVoices().length === 0)); }
+function hasVoice(lang){ return !hasSpeech ? false : (VOICES[lang] && VOICES[lang].any ? true : (speechSynthesis.getVoices().length === 0)); }
+/* the voice to use: the chosen kind if this device has one, otherwise the best voice of the other kind */
+function voiceFor(lang){ var p = VOICES[lang]; if (!p) return null; var want = S.voiceType === 'male' ? 'male' : 'female'; return p[want] || p.any; }
+function hasVoiceType(lang, type){ var p = VOICES[lang]; return !hasSpeech || speechSynthesis.getVoices().length === 0 || !!(p && p[type]); }
 
 /* how each kind of line is delivered: pitch / rate */
 var STYLE = {
@@ -786,7 +819,7 @@ function say(parts, onEach, gap){
   live(arr.map(function(p){ return p.t; }).join(' '));
   var spoke = false;
   function fallback(){ arr.forEach(function(_, i){ sayTimers.push(setTimeout(function(){ onEach && onEach(i); }, i * gap)); }); }
-  var lang = S.lang || 'en', voice = VOICES[lang];
+  var lang = S.lang || 'en', voice = voiceFor(lang), male = !!(voice && VOICES[lang] && VOICES[lang].male === voice);
   if (!S.voice || !hasSpeech) { fallback(); return; }
   var tone = lang === 'zh' ? 0.6 : lang === 'ja' ? 0.8 : 1;            /* gentler pitch swings for a tonal language */
   try {
@@ -794,7 +827,7 @@ function say(parts, onEach, gap){
       var st = STYLE[p.s] || STYLE.calm;
       var pitch = st.p, rate = st.r;
       if (p.s === 'count' && p.n) pitch = Math.min(1.6, 1.0 + 0.06 * p.n);   /* counting climbs: 1, 2, 3… */
-      pitch = 1 + (pitch - 1) * tone + (Math.random() - 0.5) * 0.06;
+      pitch = (male ? 0.92 : 1) + (pitch - 1) * tone * (male ? 0.6 : 1) + (Math.random() - 0.5) * 0.06;   /* male voices: lower, steadier pitch */
       rate = rate + (Math.random() - 0.5) * 0.04;
       var u = new SpeechSynthesisUtterance(p.t);
       if (voice) u.voice = voice;
@@ -1394,6 +1427,8 @@ function renderParents(){
       '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
+      (hasSpeech ? '<div class="field"><span class="lab">' + L('voiceType') + '</span><div class="seg"><button data-act="vtype" data-v="female" aria-pressed="' + (S.voiceType !== 'male') + '">' + L('female') + '</button><button data-act="vtype" data-v="male" aria-pressed="' + (S.voiceType === 'male') + '">' + L('male') + '</button></div>' +
+        (hasVoice(S.lang) && !hasVoiceType(S.lang, S.voiceType === 'male' ? 'male' : 'female') ? '<span class="tip small">' + L('noVoiceType', L('langName')[S.lang], S.voiceType === 'male') + '</span>' : '') + '</div>' : '') +
       '<div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
     '</div>';
@@ -1448,6 +1483,7 @@ document.addEventListener('click', function(e){
     case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
+    case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
