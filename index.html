@@ -642,6 +642,11 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
   gap:calc(var(--cell) * .08) calc(var(--cell) * .14);padding:0 !important;border:0 !important;background:none !important;min-height:calc(var(--cell) * 1.72) !important;min-width:0 !important;max-width:none !important}
 .tray .egg{width:calc(var(--cell) * .62) !important;height:calc(var(--cell) * .76) !important;justify-self:center}
 .driver .driver-llama{position:absolute;left:36%;top:14%;width:118%;max-width:none;transform:translateX(-50%) scaleX(-1)}
+.table .plate{grid-template-columns:repeat(5, var(--pcol, minmax(0,var(--ck))))}
+.table .plate .cookie{max-width:var(--pcol, none)}
+.facts.many{gap:2px}
+.facts.many div{font-size:0;border-radius:4px}
+.facts.many .h{font-size:clamp(8px,min(1.8vw,1.3dvh),12px)}
 </style>
 </head>
 <body>
@@ -1407,7 +1412,7 @@ function allFacts(max){
   return out;
 }
 function pickFact(){
-  var list = allFacts(S.maxSum), bag = [];
+  var list = allFacts(S.maxSum).filter(function(p){ return S.maxSum <= 10 || p[1] <= 9; }), bag = [];
   list.forEach(function(p){
     var st = factState(p[0], p[1]);
     var w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
@@ -1421,7 +1426,7 @@ function newQuestion(){
   var p = pickFact();
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1];
   G.last = factKey(G.s, G.a);
-  G.added = 0; G.jarCount = Math.min(G.a + 2, 12 - G.s); G.first = true; G.lock = false; G.mood = 'hungry';
+  G.added = 0; G.jarCount = S.maxSum <= 10 ? Math.min(G.a + 2, 12 - G.s) : Math.min(G.a + 2, 11); G.first = true; G.lock = false; G.mood = 'hungry';
   G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
   G.bubble2 = '';
   screen = 'play'; closeOverlay(); renderPlay();
@@ -1513,6 +1518,10 @@ function layoutTable(){
   for (; D >= 120 && !done; D -= 6) done = place(D, 6, false);
   if (done) D += 6; else { D = 120; place(D, 0, true); }
   tb.style.setProperty('--pd', D + 'px');
+  /* more than 10 on the plate (up to 15 / 20): shrink plate cookies so 3-4 rows of 5 fit inside the rim */
+  var rows = Math.ceil((G.s + G.jarCount) / 5);
+  if (rows > 2) { var inner = D * 0.7, gp = 8, cell = Math.max(14, Math.min(c, (inner - 4 * gp) / 5, (inner - (rows - 1) * gp) / rows)); tb.style.setProperty('--pcol', Math.floor(cell) + 'px'); }
+  else tb.style.removeProperty('--pcol');
   G.pos = pos;
   var els = document.querySelectorAll('#jar .cookie');
   els.forEach(function(el){ var p = pos[+el.getAttribute('data-spot')]; if (p) { el.style.left = p[0] + 'px'; el.style.top = p[1] + 'px'; } });
@@ -2250,7 +2259,7 @@ function renderParents(){
   if (ptab === 'progress') {
     body = '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
       '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
-      '<div class="facts-wrap"><div class="facts" style="grid-template-columns:repeat(' + (cols + 1) + ',minmax(0,1fr));grid-template-rows:repeat(' + (cols + 1) + ',minmax(0,1fr))">' + grid + '</div></div></div>' +
+      '<div class="facts-wrap"><div class="facts' + (cols > 9 ? ' many' : '') + '" style="grid-template-columns:repeat(' + (cols + 1) + ',minmax(0,1fr));grid-template-rows:repeat(' + (cols + 1) + ',minmax(0,1fr))">' + grid + '</div></div></div>' +
       '<div class="card tipcard"><h2>' + L('tryHome') + '</h2><p class="tip">' + tip + '</p>' + suggest +
       '<p class="tip small">' + L('caption') + '</p></div>';
   } else {
@@ -2258,7 +2267,7 @@ function renderParents(){
       '<div class="field"><span class="lab">' + L('language') + '</span>' + langPicker() +
         (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div>' +
       '<div class="field"><label for="nameInput" class="lab">' + L('childName') + '</label><input id="nameInput" type="text" maxlength="20" placeholder="' + esc(L('shownHome')) + '" value="' + esc(S.name) + '"></div>' +
-      '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button></div></div>' +
+      '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
       (hasSpeech ? (function(){
