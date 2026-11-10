@@ -704,6 +704,18 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .pad.tried{filter:grayscale(1);opacity:.35}
 .mini-pad{border:0 !important;border-radius:0 !important;background:url(pads/coral.png) center / 100% 100% no-repeat !important}
 .mini-pad.add{background-image:url(pads/blue.png) !important}
+/* artwork rainbows: coloured part revealed along the arch, left to right */
+.rb-img{position:relative;display:inline-block;aspect-ratio:1.45/1}
+.rb-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.rb-img .rbi-g{filter:grayscale(1) brightness(1.55) contrast(.55);opacity:.55}
+.rb-img .rbi-c.part{-webkit-mask-image:conic-gradient(from 270deg at 50% 100%, #000 calc(var(--p) * 180deg), transparent 0);mask-image:conic-gradient(from 270deg at 50% 100%, #000 calc(var(--p) * 180deg), transparent 0)}
+.rb .rainbow.rb-img{height:auto;width:100%;max-height:420px;max-width:min(100%, 600px)}
+.book{overflow-y:auto !important;-webkit-overflow-scrolling:touch}
+.book-grid{flex:none !important;grid-auto-rows:clamp(70px,13dvh,120px) !important}
+.sticker .stk.rb-img{width:88%;height:auto;max-height:88%}
+img.stk{object-fit:contain}
+.sticker.special{animation:shine 2.4s ease-in-out infinite}
+@keyframes shine{0%,100%{transform:rotate(var(--rot)) scale(1)}50%{transform:rotate(var(--rot)) scale(1.06)}}
 </style>
 </head>
 <body>
@@ -717,6 +729,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 </svg>
 <main id="app"></main>
 <script src="rainbows.js"></script>
+<script src="rainbows-more.js"></script>
 <div id="live" class="sr" aria-live="polite"></div>
 
 <script>
@@ -817,6 +830,7 @@ en: {
   sFrogAsk: function(s, a){ return [P('I’m on ' + s + '.', 'calm'), P('I’ll hop ' + a + (a === 1 ? ' time.' : ' times.'), 'calm'), P('Tap where I’ll land!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('I landed on ' + t + '.', 'calm'), P('Try again!', 'cheer')]; },
+  specialSticker: 'Special sticker!',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -892,6 +906,7 @@ fr: {
   sFrogAsk: function(s, a){ return [P('Je suis sur le ' + s + '.', 'calm'), P(a === 1 ? 'Je fais 1 saut.' : 'Je fais ' + a + ' sauts.', 'calm'), P('Touche le nénuphar où je vais atterrir !', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud')]; },
   sFrogWrong: function(t){ return [P('Je suis arrivée sur le ' + t + '.', 'calm'), P('Essaie encore !', 'cheer')]; },
+  specialSticker: 'Autocollant spécial\u00a0!',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -967,6 +982,7 @@ es: {
   sFrogAsk: function(s, a){ return [P('Estoy en el ' + s + '.', 'calm'), P(a === 1 ? 'Voy a dar 1 salto.' : 'Voy a dar ' + a + ' saltos.', 'calm'), P('¡Toca el nenúfar donde voy a caer!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' son ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('Caí en el ' + t + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; },
+  specialSticker: '¡Pegatina especial!',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1042,6 +1058,7 @@ zh: {
   sFrogAsk: function(s, a){ return [P('我在' + s + '上。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('点一点我会落在哪片荷叶上！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳到了' + t + '。', 'calm'), P('再试一次！', 'cheer')]; },
+  specialSticker: '特别贴纸！',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1117,6 +1134,7 @@ ja: {
   sFrogAsk: function(s, a){ return [P('いま ' + s + 'に いるよ。', 'calm'), P(a + 'かい ジャンプするよ。', 'calm'), P('どの はっぱに つくか タップしてね！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + 'に ついたよ。', 'calm'), P('もういちど やってみよう！', 'cheer')]; },
+  specialSticker: 'とくべつな シール！',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1192,6 +1210,7 @@ yue: {
   sFrogAsk: function(s, a){ return [P('我喺' + s + '度。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('撳吓我會跳到邊塊荷葉！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳咗去' + t + '。', 'calm'), P('再試多次！', 'cheer')]; },
+  specialSticker: '特別貼紙！',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1267,6 +1286,7 @@ ko: {
   sFrogAsk: function(s, a){ return [P('나는 ' + s + '에 있어요.', 'calm'), P(a + '번 뛸 거예요.', 'calm'), P('어느 연잎에 도착할지 눌러 보세요!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + '에 도착했어요.', 'calm'), P('다시 해 봐요!', 'cheer')]; },
+  specialSticker: '특별 스티커!',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1908,12 +1928,13 @@ function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
   var prNow = rainbowProgress(S.stars), prBefore = rainbowProgress(G.startStars || 0);
   var madeRainbow = prNow.done.length > prBefore.done.length;
+  var madeSpecial = Math.floor(prNow.done.length / 100) > Math.floor(prBefore.done.length / 100);
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
-  overlay('<div class="reward"><h1>' + L('great') + '</h1>' + (madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
-    '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + L('madeRainbow') + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
+  overlay('<div class="reward"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
+    '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
     '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button><button class="big-btn" data-act="again">' + L('again') + '</button></div></div>');
   confetti();
-  say(L('sGreat', G.earned).concat(madeRainbow ? [P(L('madeRainbow'), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
+  say(L('sGreat', G.earned).concat(madeRainbow ? [P((madeSpecial ? L('specialSticker') : L('madeRainbow')), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
 
 /* =====================================================================
@@ -2506,6 +2527,12 @@ var PER_STRIPE = 5;
 /* draws rainbow `idx` with `filled` stripes coloured (outer first); unfilled parts use `empty` */
 function rainbowSvg(idx, filled, cls, empty){
   var R = window.RAINBOWS && window.RAINBOWS[idx]; if (!R) return '';
+  if (R.img) {                                           /* artwork rainbow: a pale copy, and the coloured one revealed along the arch */
+    var p = filled >= R.n ? 1 : Math.max(0, filled) / R.n;
+    return '<span class="' + (cls || 'rb-art') + ' rb-img" style="--p:' + p + '" aria-hidden="true">' +
+      (p < 1 ? '<img class="rbi-g" src="' + R.img + '" alt="" draggable="false">' : '') +
+      (p > 0 ? '<img class="rbi-c' + (p < 1 ? ' part' : '') + '" src="' + R.img + '" alt="" draggable="false">' : '') + '</span>';
+  }
   var n = R.n, done = filled >= n, out = '';
   empty = empty || '#F3F9F9';
   R.p.forEach(function(p){
@@ -2553,19 +2580,24 @@ function renderGarden(){
         '<span class="bookcount">' + pr.done.length + '</span></button>' +
     '</div></section>';
 }
+function specialSticker(k, rot){
+  var n = (k % (window.SPECIAL_STICKERS || 16)) + 1;
+  return '<button class="sticker special" data-act="sticker" style="--rot:' + (rot || 0) + 'deg" aria-label="' + esc(L('specialSticker')) + '"><img class="stk" src="stickers/special' + (n < 10 ? '0' : '') + n + '.svg" alt="" draggable="false"></button>';
+}
 function renderBook(){
-  var pr = rainbowProgress(S.stars), done = pr.done, slots = '';
-  var total = Math.max(window.RAINBOW_ORDER.length, done.length);
-  for (var i = 0; i < total; i++) {
-    if (i < done.length) {
-      var rot = ((i * 37) % 13) - 6;                                 /* each sticker sits a little crooked */
-      slots += '<button class="sticker" data-act="sticker" style="--rot:' + rot + 'deg" aria-label="' + esc(L('rainbowsN', 1)) + '">' + rainbowSvg(done[i], 99, 'stk') + '</button>';
-    } else slots += '<div class="sticker-slot" aria-hidden="true"></div>';
+  var pr = rainbowProgress(S.stars), done = pr.done, slots = '', count = 0;
+  for (var i = 0; i < done.length; i++) {
+    var rot = ((i * 37) % 13) - 6;                                   /* each sticker sits a little crooked */
+    slots += '<button class="sticker" data-act="sticker" style="--rot:' + rot + 'deg" aria-label="' + esc(L('rainbowsN', 1)) + '">' + rainbowSvg(done[i], 99, 'stk') + '</button>'; count++;
+    if ((i + 1) % 100 === 0) { slots += specialSticker((i + 1) / 100 - 1, -rot); count++; }   /* every 100th rainbow: a special sticker */
   }
+  /* a row or two of empty places waiting to be filled */
+  var empty = Math.max(10, 14 - (count % 7));
+  for (var e = 0; e < empty; e++) slots += '<div class="sticker-slot" aria-hidden="true"></div>';
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="garden" aria-label="' + esc(L('backSky')) + '">' + ICON.back + '</button>' +
     '<h1 class="book-title">' + L('myStickers') + '</h1>' +
-    '<div class="chip" aria-label="' + esc(L('stickersN', done.length)) + '">' + BOOK_ICON.replace('width="30" height="30"', 'width="26" height="26"') + '<span>' + done.length + '</span></div></div>' +
+    '<div class="chip" aria-label="' + esc(L('stickersN', count)) + '">' + BOOK_ICON.replace('width="30" height="30"', 'width="26" height="26"') + '<span>' + count + '</span></div></div>' +
     '<div class="book">' + (done.length ? '' : '<p class="book-empty">' + L('noStickers') + '</p>') + '<div class="book-grid">' + slots + '</div></div>' +
     '</section>';
 }
