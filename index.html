@@ -636,6 +636,11 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .av-bar h1{margin:0;text-align:center;font-size:clamp(22px,min(6.4vw,4.4dvh),40px);line-height:1.1}
 .av-bar .bar-spacer{visibility:hidden;box-shadow:none;border-color:transparent;background:none}
 .groups .g{display:grid;grid-template-columns:repeat(var(--cols,5), auto);justify-content:start;justify-items:center;align-items:center;max-width:none}
+/* eggs waiting under the carton: plain rows (max 6 across), fixed spots, space for 2 rows always kept */
+.tf-bottom{min-height:calc(var(--cell) * 1.9)}
+.tray{display:grid !important;grid-template-columns:repeat(var(--tc,6), calc(var(--cell) * .66));grid-auto-rows:calc(var(--cell) * .82);justify-content:center;align-content:start;
+  gap:calc(var(--cell) * .08) calc(var(--cell) * .14);padding:0 !important;border:0 !important;background:none !important;min-height:calc(var(--cell) * 1.72) !important;min-width:0 !important;max-width:none !important}
+.tray .egg{width:calc(var(--cell) * .62) !important;height:calc(var(--cell) * .76) !important;justify-self:center}
 </style>
 </head>
 <body>
@@ -1797,9 +1802,11 @@ function updateTen(pop){
   document.getElementById('carton').innerHTML = h;
   var b = '';
   if (G.phase === 'fill') {
-    b = '<div class="tray" id="tray" aria-label="' + esc(L('tfBasket')) + '">';
+    b = '<div class="tray" id="tray" aria-label="' + esc(L('tfBasket')) + '" style="--tc:' + Math.min(6, G.spares) + '">';
     G.inTray.forEach(function(on, k){
-      if (on) b += '<button class="egg add" data-spare="' + k + '" aria-label="' + esc(L('tfAdd')) + '">' + eggSvg('add', G.v + 1 + k * 5) + '</button>';
+      /* every egg keeps its own spot, so nothing moves when one goes into the carton */
+      b += on ? '<button class="egg add" data-spare="' + k + '" aria-label="' + esc(L('tfAdd')) + '">' + eggSvg('add', G.v + 1 + k * 5) + '</button>'
+              : '<span class="egg ghostslot" aria-hidden="true"></span>';
     });
     b += '</div>';
   } else {
@@ -2177,7 +2184,7 @@ function renderGarden(){
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div>' +
-    speakBtn('garden-say', L('hearIt')) + '</div>' +
+    '<span class="round bar-spacer" aria-hidden="true"></span></div>' +
     '<div class="garden-head"><h1>' + esc(L('gardenOf')) + '</h1></div>' +
     '<div class="sky" role="img" aria-label="' + esc(L('flowersN', n) + ' · ' + goal) + '">' +
       '<div class="rb">' + rainbowSvg(idx, filled, 'rainbow') + '</div>' +
