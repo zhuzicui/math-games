@@ -518,6 +518,17 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
   .tf-area{--cell:min(calc((100cqw - 56px) / 5.4), calc(100cqh / 4.1), 80px)}
 }
 .seg button:disabled{opacity:.4;border-style:dashed;cursor:not-allowed}
+
+/* ===== main buttons are blue ===== */
+:root{--cta:#9DCBEC;--cta-d:#6EA6D1}
+.big-btn{background:var(--cta);border-color:var(--cta-d);box-shadow:0 7px 0 var(--cta-d);color:#1F3B52}
+.big-btn:active{box-shadow:0 3px 0 var(--cta-d)}
+.big-btn.green{background:var(--sage);border-color:var(--sage-d);box-shadow:0 7px 0 var(--sage-d);color:#3E2A22}
+.big-btn.plain{background:var(--card);border-color:var(--edge);box-shadow:0 7px 0 var(--edge);color:var(--ink)}
+/* the "+1 star" chip next to Next is exactly as tall as the button */
+.reward .row:not(.two){align-items:stretch;flex-wrap:nowrap}
+.reward .row:not(.two) .chip{box-sizing:border-box;min-height:clamp(50px,10dvh,76px);height:auto;max-height:none;box-shadow:0 7px 0 var(--edge);padding:0 clamp(16px,3vw,24px);font-size:clamp(22px,4.6dvh,30px)}
+.reward .row:not(.two) .big-btn{margin:0}
 </style>
 </head>
 <body>
