@@ -20,11 +20,11 @@
 <meta property="og:title" content="Momo Math">
 <meta property="og:description" content="Learn to add with Momo the unicorn: feed cookies, fill the egg carton, count bunnies on the bus. Free, in 6 languages.">
 <meta property="og:url" content="https://math-games-neon.vercel.app/">
-<meta property="og:image" content="https://math-games-neon.vercel.app/og-image.png?v=2">
+<meta property="og:image" content="https://math-games-neon.vercel.app/og-image.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Momo the unicorn with red and blue cookies: Momo Math">
-<meta name="twitter:image" content="https://math-games-neon.vercel.app/og-image.png?v=2">
+<meta name="twitter:image" content="https://math-games-neon.vercel.app/og-image.png?v=3">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -740,13 +740,13 @@ en: {
   sTenHowMany: [P('All full!', 'cheer'), P('How many blue eggs did you add?', 'ask')],
   sTenRight: function(s, a, n){ return [P('Yes!', 'cheer'), P(s + ' and ' + a + ' make ' + n + '!', 'proud')]; },
   sTenCounted: function(a){ return P('You added ' + a + '!', 'calm'); },
-  busAlt: 'Lulu the bunny', busAll: 'All aboard!', busHowMany: 'How many on the bus?', busAllOn: 'Everyone’s on!', busCount: 'Let’s count on!',
-  busIn: function(s){ return s + ' ' + pl(s, 'bunny', 'bunnies') + ' already on the bus'; }, busTap: 'Help this bunny get on the bus',
-  sBusAsk: function(s, a){ return [P(s === 1 ? 'There is 1 bunny on the bus.' : 'There are ' + s + ' bunnies on the bus.', 'calm'), P(a === 1 ? '1 more is waiting.' : a + ' more are waiting.', 'calm'), P('Tap them to get on!', 'cheer')]; },
-  sBusHowMany: [P('Everyone’s on!', 'cheer'), P('How many bunnies are on the bus now?', 'ask')],
+  busAlt: 'Lulu the snail', busAll: 'All aboard!', busHowMany: 'How many on the bus?', busAllOn: 'Everyone’s on!', busCount: 'Let’s count on!',
+  busIn: function(s){ return s + ' ' + pl(s, 'snail', 'snails') + ' already on the bus'; }, busTap: 'Help this snail get on the bus',
+  sBusAsk: function(s, a){ return [P(s === 1 ? 'There is 1 snail on the bus.' : 'There are ' + s + ' snails on the bus.', 'calm'), P(a === 1 ? '1 more is waiting.' : a + ' more are waiting.', 'calm'), P('Tap them to get on!', 'cheer')]; },
+  sBusHowMany: [P('Everyone’s on!', 'cheer'), P('How many snails are on the bus now?', 'ask')],
   sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud'), P('Beep beep!', 'cheer')]; },
   sBusCountOn: function(s){ return P('Let’s count on. Start at ' + s + '.', 'calm'); },
-  sBusCounted: function(t){ return P(t + ' bunnies!', 'calm'); },
+  sBusCounted: function(t){ return P(t + ' snails!', 'calm'); },
   pickBuddy: 'Pick your buddy!', changeBuddy: 'Change my buddy', buddyN: function(n){ return 'Buddy ' + n; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
@@ -809,13 +809,13 @@ fr: {
   sTenHowMany: [P('C’est plein !', 'cheer'), P('Combien d’œufs bleus as-tu ajoutés ?', 'ask')],
   sTenRight: function(s, a, n){ return [P('Oui !', 'cheer'), P(s + ' et ' + a + ', ça fait ' + n + ' !', 'proud')]; },
   sTenCounted: function(a){ return P('Tu en as ajouté ' + a + ' !', 'calm'); },
-  busAlt: 'Lulu le lapin', busAll: 'Tout le monde monte !', busHowMany: 'Combien dans le bus ?', busAllOn: 'Tout le monde est là !', busCount: 'On compte à partir de là !',
-  busIn: function(s){ return s + ' ' + pl(s, 'lapin', 'lapins') + ' déjà dans le bus'; }, busTap: 'Aider ce lapin à monter dans le bus',
-  sBusAsk: function(s, a){ return [P('Il y a ' + s + ' ' + pl(s, 'lapin', 'lapins') + ' dans le bus.', 'calm'), P(a === 1 ? 'Encore 1 attend.' : 'Encore ' + a + ' attendent.', 'calm'), P('Touche-les pour les faire monter !', 'cheer')]; },
-  sBusHowMany: [P('Tout le monde est là !', 'cheer'), P('Combien de lapins dans le bus maintenant ?', 'ask')],
+  busAlt: 'Lulu l’escargot', busAll: 'Tout le monde monte !', busHowMany: 'Combien dans le bus ?', busAllOn: 'Tout le monde est là !', busCount: 'On compte à partir de là !',
+  busIn: function(s){ return s + ' ' + pl(s, 'escargot', 'escargots') + ' déjà dans le bus'; }, busTap: 'Aider cet escargot à monter dans le bus',
+  sBusAsk: function(s, a){ return [P('Il y a ' + s + ' ' + pl(s, 'escargot', 'escargots') + ' dans le bus.', 'calm'), P(a === 1 ? 'Encore 1 attend.' : 'Encore ' + a + ' attendent.', 'calm'), P('Touche-les pour les faire monter !', 'cheer')]; },
+  sBusHowMany: [P('Tout le monde est là !', 'cheer'), P('Combien d’escargots dans le bus maintenant ?', 'ask')],
   sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud'), P('Tut tut !', 'cheer')]; },
   sBusCountOn: function(s){ return P('On part de ' + s + ' et on continue.', 'calm'); },
-  sBusCounted: function(t){ return P(t + ' lapins !', 'calm'); },
+  sBusCounted: function(t){ return P(t + ' escargots !', 'calm'); },
   pickBuddy: 'Choisis ton animal\u00a0!', changeBuddy: 'Changer mon animal', buddyN: function(n){ return 'Animal ' + n; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
@@ -878,10 +878,10 @@ zh: {
   sTenHowMany: [P('放满啦！', 'cheer'), P('你放了几个蓝色的鸡蛋？', 'ask')],
   sTenRight: function(s, a, n){ return [P('对啦！', 'cheer'), P(s + '和' + a + '凑成' + n + '！', 'proud')]; },
   sTenCounted: function(a){ return P('你放了' + a + '个！', 'calm'); },
-  busAlt: '小兔露露', busAll: '大家上车！', busHowMany: '车上有几只？', busAllOn: '都上车啦！', busCount: '接着数！',
-  busIn: function(s){ return '车上已经有' + s + '只小兔'; }, busTap: '帮这只小兔上车',
-  sBusAsk: function(s, a){ return [P('车上已经有' + s + '只小兔。', 'calm'), P('还有' + a + '只在等车。', 'calm'), P('点它们上车吧！', 'cheer')]; },
-  sBusHowMany: [P('都上车啦！', 'cheer'), P('现在车上一共有几只小兔？', 'ask')],
+  busAlt: '蜗牛露露', busAll: '大家上车！', busHowMany: '车上有几只？', busAllOn: '都上车啦！', busCount: '接着数！',
+  busIn: function(s){ return '车上已经有' + s + '只小蜗牛'; }, busTap: '帮这只小蜗牛上车',
+  sBusAsk: function(s, a){ return [P('车上已经有' + s + '只小蜗牛。', 'calm'), P('还有' + a + '只在等车。', 'calm'), P('点它们上车吧！', 'cheer')]; },
+  sBusHowMany: [P('都上车啦！', 'cheer'), P('现在车上一共有几只小蜗牛？', 'ask')],
   sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud'), P('嘀嘀！', 'cheer')]; },
   sBusCountOn: function(s){ return P('从' + s + '开始，接着数。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
@@ -947,9 +947,9 @@ ja: {
   sTenHowMany: [P('いっぱいに なったね！', 'cheer'), P('あおい たまごを いくつ いれたかな？', 'ask')],
   sTenRight: function(s, a, n){ return [P('せいかい！', 'cheer'), P(s + 'と ' + a + 'で ' + n + '！', 'proud')]; },
   sTenCounted: function(a){ return P(a + 'こ いれたね！', 'calm'); },
-  busAlt: 'うさぎの ルル', busAll: 'のってね！', busHowMany: 'バスに なんびき？', busAllOn: 'みんな のったよ！', busCount: 'つづけて かぞえよう！',
-  busIn: function(s){ return 'バスには もう ' + s + 'ひき のってるよ'; }, busTap: 'この うさぎを バスに のせる',
-  sBusAsk: function(s, a){ return [P('バスには うさぎが ' + s + 'ひき のってるよ。', 'calm'), P('あと ' + a + 'ひき まってるよ。', 'calm'), P('タップして のせてあげてね！', 'cheer')]; },
+  busAlt: 'かたつむりの ルル', busAll: 'のってね！', busHowMany: 'バスに なんびき？', busAllOn: 'みんな のったよ！', busCount: 'つづけて かぞえよう！',
+  busIn: function(s){ return 'バスには もう ' + s + 'ひき のってるよ'; }, busTap: 'この かたつむりを バスに のせる',
+  sBusAsk: function(s, a){ return [P('バスには かたつむりが ' + s + 'ひき のってるよ。', 'calm'), P('あと ' + a + 'ひき まってるよ。', 'calm'), P('タップして のせてあげてね！', 'cheer')]; },
   sBusHowMany: [P('みんな のったよ！', 'cheer'), P('バスには いま なんびき いるかな？', 'ask')],
   sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud'), P('ブッブー！', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + 'から つづけて かぞえよう。', 'calm'); },
@@ -1016,10 +1016,10 @@ yue: {
   sTenHowMany: [P('放滿喇！', 'cheer'), P('你放咗幾多隻藍色雞蛋？', 'ask')],
   sTenRight: function(s, a, n){ return [P('啱喇！', 'cheer'), P(s + '同' + a + '湊夠' + n + '！', 'proud')]; },
   sTenCounted: function(a){ return P('你放咗' + a + '隻！', 'calm'); },
-  busAlt: '小兔露露', busAll: '大家上車！', busHowMany: '車上有幾多隻？', busAllOn: '全部上咗車喇！', busCount: '接住數！',
-  busIn: function(s){ return '車上已經有' + s + '隻小兔'; }, busTap: '幫呢隻小兔上車',
-  sBusAsk: function(s, a){ return [P('車上已經有' + s + '隻小兔。', 'calm'), P('仲有' + a + '隻等緊車。', 'calm'), P('撳佢哋上車啦！', 'cheer')]; },
-  sBusHowMany: [P('全部上咗車喇！', 'cheer'), P('而家車上一共有幾多隻小兔？', 'ask')],
+  busAlt: '蝸牛露露', busAll: '大家上車！', busHowMany: '車上有幾多隻？', busAllOn: '全部上咗車喇！', busCount: '接住數！',
+  busIn: function(s){ return '車上已經有' + s + '隻蝸牛'; }, busTap: '幫呢隻蝸牛上車',
+  sBusAsk: function(s, a){ return [P('車上已經有' + s + '隻蝸牛。', 'calm'), P('仲有' + a + '隻等緊車。', 'calm'), P('撳佢哋上車啦！', 'cheer')]; },
+  sBusHowMany: [P('全部上咗車喇！', 'cheer'), P('而家車上一共有幾多隻蝸牛？', 'ask')],
   sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud'), P('嘟嘟！', 'cheer')]; },
   sBusCountOn: function(s){ return P('由' + s + '開始，接住數。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
@@ -1085,10 +1085,10 @@ ko: {
   sTenHowMany: [P('꽉 찼어요!', 'cheer'), P('파란 달걀을 몇 개 넣었나요?', 'ask')],
   sTenRight: function(s, a, n){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + n + '!', 'proud')]; },
   sTenCounted: function(a){ return P(a + '개 넣었어요!', 'calm'); },
-  busAlt: '토끼 룰루', busAll: '모두 타세요!', busHowMany: '버스에 몇 마리?', busAllOn: '모두 탔어요!', busCount: '이어서 세어 봐요!',
-  busIn: function(s){ return '버스에 벌써 토끼 ' + s + '마리'; }, busTap: '이 토끼를 버스에 태우기',
-  sBusAsk: function(s, a){ return [P('버스에 토끼가 ' + s + '마리 타고 있어요.', 'calm'), P(a + '마리가 더 기다리고 있어요.', 'calm'), P('눌러서 태워 주세요!', 'cheer')]; },
-  sBusHowMany: [P('모두 탔어요!', 'cheer'), P('이제 버스에 토끼가 모두 몇 마리 있나요?', 'ask')],
+  busAlt: '달팽이 룰루', busAll: '모두 타세요!', busHowMany: '버스에 몇 마리?', busAllOn: '모두 탔어요!', busCount: '이어서 세어 봐요!',
+  busIn: function(s){ return '버스에 벌써 달팽이 ' + s + '마리'; }, busTap: '이 달팽이를 버스에 태우기',
+  sBusAsk: function(s, a){ return [P('버스에 달팽이가 ' + s + '마리 타고 있어요.', 'calm'), P(a + '마리가 더 기다리고 있어요.', 'calm'), P('눌러서 태워 주세요!', 'cheer')]; },
+  sBusHowMany: [P('모두 탔어요!', 'cheer'), P('이제 버스에 달팽이가 모두 몇 마리 있나요?', 'ask')],
   sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud'), P('빵빵!', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + '부터 이어서 세어 봐요.', 'calm'); },
   sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
@@ -1375,7 +1375,7 @@ function renderHome(){
     '<div class="games"><div class="tiles three">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + L('gFeed') + '</button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + L('gTen') + '</button>' +
-      '<button class="tile bus" data-act="bus">' + critter('bunny') + L('gBus') + '</button>' +
+      '<button class="tile bus" data-act="bus">' + critter('snail') + L('gBus') + '</button>' +
     '</div>' +
     '<div class="soon-wrap"><div class="soon-title">' + L('soon') + '</div>' +
     '<div class="soon two">' +
@@ -1958,10 +1958,10 @@ document.addEventListener('touchend', function(e){ if (tdrag && e.touches.length
 document.addEventListener('touchcancel', function(){ if (tdrag) tFinish(); });
 
 /* =====================================================================
-   BUS STOP (bunny): count on from the number already on the bus
+   BUS STOP (snail): count on from the number already on the bus
    ===================================================================== */
 var BUS_SEATS = 4;
-function bunnyImg(cls){ return '<img class="' + (cls || 'momo bunny') + '" src="animals/bunny.png" alt="' + esc(L('busAlt')) + '" draggable="false">'; }
+function bunnyImg(cls){ return '<img class="' + (cls || 'momo bunny') + '" src="animals/snail.png" alt="' + esc(L('busAlt')) + '" draggable="false">'; }
 function pickBus(){
   var max = S.maxSum, bag = [];
   for (var s = 2; s < max; s++) for (var a = 1; a <= Math.min(BUS_SEATS, max - s); a++) {
@@ -2054,7 +2054,7 @@ function busBoard(i){
   }
   var landed = false, fly = null;
   if (from && to && !reduceMotion) {
-    fly = document.createElement('img'); fly.src = 'animals/bunny.png'; fly.className = 'bus-fly'; fly.alt = '';
+    fly = document.createElement('img'); fly.src = 'animals/snail.png'; fly.className = 'bus-fly'; fly.alt = '';
     fly.style.left = from.left + 'px'; fly.style.top = from.top + 'px'; fly.style.width = from.width + 'px'; fly.style.height = from.height + 'px';
     document.body.appendChild(fly);
     var dx = to.left + to.width / 2 - (from.left + from.width / 2), dy = to.top + to.height * .45 - (from.top + from.height / 2), sc = Math.max(.4, to.width * 1.1 / from.width);
@@ -2129,7 +2129,7 @@ function showBusReward(){
     '<div class="row"><div class="chip">' + ICON.star + '+1</div><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
 }
-/* a bunny boards when the finger lifts, whether it was a tap or a drag toward the bus */
+/* a snail boards when the finger lifts, whether it was a tap or a drag toward the bus */
 var bpress = null;
 document.addEventListener('pointerdown', function(e){
   if (!e.target.closest || screen !== 'bus' || !G || G.lock || G.phase !== 'board') return;
