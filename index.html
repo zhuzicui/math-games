@@ -436,6 +436,18 @@ body.bookbg,body.bookbg #app{background:#F3E9DC}
 body.muted .speakbtn .ic-say{display:none}
 body.muted .speakbtn .ic-off{display:flex;align-items:center;justify-content:center}
 body.muted .speakbtn{background:#F3E9E2}
+
+/* ===== bubbles centred on the same axis as the sum; unicorn sits just to their left ===== */
+.momo-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:clamp(6px,1.6vw,16px);align-self:stretch;width:100%}
+.momo-row #momo{grid-column:1;justify-self:end;min-width:0;max-width:100%;display:flex;justify-content:flex-end}
+.momo-row .momo{max-width:100%;object-fit:contain;object-position:right center}
+.momo-row .bubbles{grid-column:2;width:max-content;min-width:min(400px,46vw);max-width:none;flex:none}
+@media (max-width:520px){ .momo-row .bubbles .bubble b{font-size:clamp(18px,6vw,26px)} .momo-row .bubbles{min-width:44vw} }
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+  .momo-row{display:flex;flex-direction:column}
+  .momo-row #momo{justify-content:center}
+  .momo-row .bubbles{width:100%;min-width:0}
+}
 </style>
 </head>
 <body>
