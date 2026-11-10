@@ -623,15 +623,18 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .home-av{width:clamp(64px,11dvh,110px);height:clamp(64px,11dvh,110px)}
 .avatarscreen{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6dvh,18px)}
 .avatarscreen h1{margin:0;text-align:center}
-.av-area{flex:1;min-height:0;width:100%;container-type:size;display:flex;align-items:center;justify-content:center;--c:5;--r:6;--g:clamp(8px,1.6vw,16px)}
+.av-area{flex:1;min-height:0;width:100%;container-type:size;display:flex;align-items:center;justify-content:center;--c:5;--r:5;--g:clamp(8px,1.6vw,16px)}
 .av-grid{display:grid;grid-template-columns:repeat(var(--c), var(--sz));gap:var(--g);
   --sz:min(calc((100cqw - (var(--c) - 1) * var(--g)) / var(--c)), calc((100cqh - (var(--r) - 1) * var(--g)) / var(--r)), 120px)}
 .av-opt{width:var(--sz);height:var(--sz);padding:0;border:4px solid transparent;border-radius:50%;background:none;cursor:pointer;transition:transform .15s}
 .av-opt[aria-checked="true"]{border-color:#6EA6D1;box-shadow:0 0 0 4px #DDEFF8}
 .av-opt.picked{animation:pop .35s}
 .av-opt:active{transform:scale(.94)}
-@media (min-width:600px){ .av-area{--c:6;--r:5} }
-@media (orientation:landscape){ .av-area{--c:9;--r:3} }
+/* 25 buddies: a 5 × 5 grid, or 9 across on a phone held sideways */
+@media (orientation:landscape) and (max-height:600px){ .av-area{--c:9;--r:3} }
+.av-bar{display:grid !important;grid-template-columns:auto 1fr auto;align-items:center;width:100%;gap:10px}
+.av-bar h1{margin:0;text-align:center;font-size:clamp(22px,min(6.4vw,4.4dvh),40px);line-height:1.1}
+.av-bar .bar-spacer{visibility:hidden;box-shadow:none;border-color:transparent;background:none}
 </style>
 </head>
 <body>
@@ -654,12 +657,12 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'av06', facts:{}, lang:'fr' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'av17', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
 var S = load();
-if (!S.avatarPicked) S.avatar = 'av06';   /* until the child picks one, the cat is their buddy */
+if (!S.avatarPicked || !/^av\d\d$/.test(S.avatar || '')) S.avatar = 'av17';   /* until the child picks one, the koala is their buddy */
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 
 /* ---------- languages ---------- */
@@ -1233,10 +1236,10 @@ function langPicker(cls){
 
 /* ---------- avatars: the child's buddy (Momo or one of 25 animal faces) ---------- */
 var AVATAR_N = 25, AV_BG = ['#F7DCCF', '#DDEFF8', '#FBEFC4', '#E3F1DA', '#EADCF2', '#FBE3DC'];
-function avatarIds(){ var a = ['momo']; for (var i = 1; i <= AVATAR_N; i++) a.push('av' + (i < 10 ? '0' : '') + i); return a; }
+var AV_DEFAULT = 'av17';   /* the koala: first in the list and the default buddy */
+function avatarIds(){ var a = [AV_DEFAULT]; for (var i = 1; i <= AVATAR_N; i++) { var id = 'av' + (i < 10 ? '0' : '') + i; if (id !== AV_DEFAULT) a.push(id); } return a; }
 function avatarFace(id){
-  if (!id || !/^(momo|av\d\d)$/.test(id)) id = 'av06';   /* the cat is the default buddy */
-  if (id === 'momo') return '<span class="avatar is-momo" style="--avbg:#F7DCCF"><img src="animals/unicorn.png" alt="" draggable="false"></span>';
+  if (!id || !/^av\d\d$/.test(id) || +id.slice(2) > AVATAR_N) id = AV_DEFAULT;
   var n = +id.slice(2);
   return '<span class="avatar" style="--avbg:' + AV_BG[n % AV_BG.length] + '"><img src="avatars/' + id + '.svg" alt="" draggable="false"></span>';
 }
@@ -1248,10 +1251,9 @@ var avatarReturn = 'home';
 function renderAvatar(){
   var ids = avatarIds();
   app.innerHTML = '<section class="screen avatarscreen">' +
-    '<div class="bar"><button class="round" data-act="avatar-done" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button><span></span><span class="small-round bar-spacer" aria-hidden="true"></span></div>' +
-    '<h1>' + L('pickBuddy') + '</h1>' +
+    '<div class="bar av-bar"><button class="round" data-act="avatar-done" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button><h1>' + L('pickBuddy') + '</h1><span class="round bar-spacer" aria-hidden="true"></span></div>' +
     '<div class="av-area"><div class="av-grid" role="radiogroup" aria-label="' + esc(L('pickBuddy')) + '">' +
-      ids.map(function(id, i){ return '<button class="av-opt" role="radio" data-act="pick-avatar" data-v="' + id + '" aria-checked="' + (S.avatar === id) + '" aria-label="' + esc(i ? L('buddyN', i) : L('momoAlt', true)) + '">' + avatarFace(id) + '</button>'; }).join('') +
+      ids.map(function(id, i){ return '<button class="av-opt" role="radio" data-act="pick-avatar" data-v="' + id + '" aria-checked="' + (S.avatar === id) + '" aria-label="' + esc(L('buddyN', i + 1)) + '">' + avatarFace(id) + '</button>'; }).join('') +
     '</div></div>' +
     '<button class="big-btn" data-act="avatar-done">' + L('letsGo') + '</button>' +
     '</section>';
