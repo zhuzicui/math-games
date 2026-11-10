@@ -610,6 +610,28 @@ html:lang(ko){--display:'Baloo 2','Chiron GoRound KO','Apple SD Gothic Neo','Not
 html:lang(ko) body,html:lang(ko) .parents{font-family:Nunito,'Chiron GoRound KO','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;word-break:keep-all}
 html:lang(zh-HK){--display:'Baloo 2','Chiron GoRound HK','PingFang HK','Noto Sans HK',system-ui,sans-serif}
 html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRound HK','PingFang HK','Noto Sans HK',system-ui,sans-serif}
+
+/* ===== avatars ===== */
+.avatar{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:var(--avbg);overflow:hidden;box-sizing:border-box}
+.avatar img{width:80%;height:80%;object-fit:contain;pointer-events:none}
+.avatar.is-momo img{width:96%;height:96%;object-fit:cover;object-position:50% 8%;transform:translateY(16%)}
+.avatar-btn{position:relative;padding:0;border:4px solid var(--edge);border-radius:50%;background:none;box-shadow:0 5px 0 var(--edge);flex:none;cursor:pointer}
+.avatar-btn .av-edit{position:absolute;right:-4px;bottom:-4px;width:34%;height:34%;max-width:40px;max-height:40px;border-radius:50%;background:var(--card);border:3px solid var(--edge);
+  display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.avatar-btn .av-edit svg{width:58%;height:58%}
+.start-av{width:clamp(110px,24dvh,220px);height:clamp(110px,24dvh,220px)}
+.home-av{width:clamp(64px,11dvh,110px);height:clamp(64px,11dvh,110px)}
+.avatarscreen{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6dvh,18px)}
+.avatarscreen h1{margin:0;text-align:center}
+.av-area{flex:1;min-height:0;width:100%;container-type:size;display:flex;align-items:center;justify-content:center;--c:5;--r:6;--g:clamp(8px,1.6vw,16px)}
+.av-grid{display:grid;grid-template-columns:repeat(var(--c), var(--sz));gap:var(--g);
+  --sz:min(calc((100cqw - (var(--c) - 1) * var(--g)) / var(--c)), calc((100cqh - (var(--r) - 1) * var(--g)) / var(--r)), 120px)}
+.av-opt{width:var(--sz);height:var(--sz);padding:0;border:4px solid transparent;border-radius:50%;background:none;cursor:pointer;transition:transform .15s}
+.av-opt[aria-checked="true"]{border-color:#6EA6D1;box-shadow:0 0 0 4px #DDEFF8}
+.av-opt.picked{animation:pop .35s}
+.av-opt:active{transform:scale(.94)}
+@media (min-width:600px){ .av-area{--c:6;--r:5} }
+@media (orientation:landscape){ .av-area{--c:9;--r:3} }
 </style>
 </head>
 <body>
@@ -632,7 +654,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', facts:{}, lang:'fr' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'momo', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -715,6 +737,7 @@ en: {
   sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud'), P('Beep beep!', 'cheer')]; },
   sBusCountOn: function(s){ return P('Let’s count on. Start at ' + s + '.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' bunnies!', 'calm'); },
+  pickBuddy: 'Pick your buddy!', changeBuddy: 'Change my buddy', buddyN: function(n){ return 'Buddy ' + n; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -783,6 +806,7 @@ fr: {
   sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud'), P('Tut tut !', 'cheer')]; },
   sBusCountOn: function(s){ return P('On part de ' + s + ' et on continue.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' lapins !', 'calm'); },
+  pickBuddy: 'Choisis ton animal\u00a0!', changeBuddy: 'Changer mon animal', buddyN: function(n){ return 'Animal ' + n; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -851,6 +875,7 @@ zh: {
   sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud'), P('嘀嘀！', 'cheer')]; },
   sBusCountOn: function(s){ return P('从' + s + '开始，接着数。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
+  pickBuddy: '选一个小伙伴！', changeBuddy: '换小伙伴', buddyN: function(n){ return '小伙伴' + n; },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -919,6 +944,7 @@ ja: {
   sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud'), P('ブッブー！', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + 'から つづけて かぞえよう。', 'calm'); },
   sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
+  pickBuddy: 'なかまを えらんでね！', changeBuddy: 'なかまを かえる', buddyN: function(n){ return 'なかま ' + n; },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -987,6 +1013,7 @@ yue: {
   sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud'), P('嘟嘟！', 'cheer')]; },
   sBusCountOn: function(s){ return P('由' + s + '開始，接住數。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
+  pickBuddy: '揀一個小夥伴！', changeBuddy: '換小夥伴', buddyN: function(n){ return '小夥伴' + n; },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1055,6 +1082,7 @@ ko: {
   sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud'), P('빵빵!', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + '부터 이어서 세어 봐요.', 'calm'); },
   sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
+  pickBuddy: '내 친구를 골라요!', changeBuddy: '친구 바꾸기', buddyN: function(n){ return '친구 ' + n; },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1202,6 +1230,31 @@ function langPicker(cls){
     '</select><span class="cv">' + CHEV + '</span></label>';
 }
 
+/* ---------- avatars: the child's buddy (Momo or one of 25 animal faces) ---------- */
+var AVATAR_N = 25, AV_BG = ['#F7DCCF', '#DDEFF8', '#FBEFC4', '#E3F1DA', '#EADCF2', '#FBE3DC'];
+function avatarIds(){ var a = ['momo']; for (var i = 1; i <= AVATAR_N; i++) a.push('av' + (i < 10 ? '0' : '') + i); return a; }
+function avatarFace(id){
+  if (!id || id === 'momo' || !/^av\d\d$/.test(id)) return '<span class="avatar is-momo" style="--avbg:#F7DCCF"><img src="animals/unicorn.png" alt="" draggable="false"></span>';
+  var n = +id.slice(2);
+  return '<span class="avatar" style="--avbg:' + AV_BG[n % AV_BG.length] + '"><img src="avatars/' + id + '.svg" alt="" draggable="false"></span>';
+}
+function avatarBtn(cls){
+  return '<button class="avatar-btn ' + (cls || '') + '" data-act="avatar" aria-label="' + esc(L('changeBuddy')) + '">' + avatarFace(S.avatar) +
+    '<span class="av-edit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span></button>';
+}
+var avatarReturn = 'home';
+function renderAvatar(){
+  var ids = avatarIds();
+  app.innerHTML = '<section class="screen avatarscreen">' +
+    '<div class="bar"><button class="round" data-act="avatar-done" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button><span></span><span class="small-round bar-spacer" aria-hidden="true"></span></div>' +
+    '<h1>' + L('pickBuddy') + '</h1>' +
+    '<div class="av-area"><div class="av-grid" role="radiogroup" aria-label="' + esc(L('pickBuddy')) + '">' +
+      ids.map(function(id, i){ return '<button class="av-opt" role="radio" data-act="pick-avatar" data-v="' + id + '" aria-checked="' + (S.avatar === id) + '" aria-label="' + esc(i ? L('buddyN', i) : L('momoAlt', true)) + '">' + avatarFace(id) + '</button>'; }).join('') +
+    '</div></div>' +
+    '<button class="big-btn" data-act="avatar-done">' + L('letsGo') + '</button>' +
+    '</section>';
+}
+
 /* ---------- art ---------- */
 function momo(mood){
   var happy = mood !== 'hungry';
@@ -1267,6 +1320,7 @@ function render(){
   else if (screen === 'play') renderPlay();
   else if (screen === 'ten') renderTen();
   else if (screen === 'bus') renderBus();
+  else if (screen === 'avatar') renderAvatar();
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
@@ -1278,7 +1332,7 @@ function renderStart(){
   var known = S.name && !askName;
   app.innerHTML = '<section class="screen startscreen">' +
     '<div class="startbar">' + langPicker('langpick') + '</div>' +
-    momo('happy') +
+    (known ? avatarBtn('start-av') : momo('happy')) +
     (known
       ? '<h1>' + esc(L('hiName', S.name)) + '</h1>' +
         '<button class="big-btn" data-act="its-me">' + L('itsMe') + '</button>' +
@@ -1297,7 +1351,7 @@ function renderStart(){
     var v = document.getElementById('kidName').value.trim().slice(0, 20);
     if (!v) { document.getElementById('kidName').focus(); return; }
     S.name = v; save(); askName = false;
-    show('home');
+    avatarReturn = 'home'; show('avatar');
   });
 }
 
@@ -1307,7 +1361,7 @@ function renderHome(){
     '<div class="bar"><span class="small-round bar-spacer" aria-hidden="true"></span>' +
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
-    '<div class="hero">' + momo('happy') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
+    '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
     '<div class="games"><div class="tiles three">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + L('gFeed') + '</button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + L('gTen') + '</button>' +
@@ -2231,6 +2285,13 @@ document.addEventListener('click', function(e){
     case 'play': startRound(); break;
     case 'ten': startTen(); break;
     case 'bus': startBus(); break;
+    case 'avatar': avatarReturn = screen === 'start' ? 'start' : 'home'; show('avatar'); break;
+    case 'pick-avatar':
+      S.avatar = b.getAttribute('data-v'); save();
+      document.querySelectorAll('.av-opt').forEach(function(x){ x.setAttribute('aria-checked', String(x === b)); });
+      b.classList.remove('picked'); void b.offsetWidth; b.classList.add('picked');
+      break;
+    case 'avatar-done': show(avatarReturn === 'start' ? 'start' : 'home'); break;
     case 'bus-repeat': busAskAloud(); break;
     case 'bus-pick': busPick(+b.getAttribute('data-v')); break;
     case 'ten-repeat': tenAskAloud(); break;
