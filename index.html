@@ -529,6 +529,62 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 .reward .row:not(.two){align-items:stretch;flex-wrap:nowrap}
 .reward .row:not(.two) .chip{box-sizing:border-box;min-height:clamp(50px,10dvh,76px);height:auto;max-height:none;box-shadow:0 7px 0 var(--edge);padding:0 clamp(16px,3vw,24px);font-size:clamp(22px,4.6dvh,30px)}
 .reward .row:not(.two) .big-btn{margin:0}
+/* ===== Bus Stop ===== */
+.tile.bus{background:#DDEFF8;border-color:#A9D0EA;box-shadow:0 7px 0 #A9D0EA}
+.busgame .momo-row .bunny{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
+.busgame .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent}
+.busgame .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
+.bus-scene{flex:1;min-height:0;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  --bw:min(94cqw, calc(50cqh * 2.2), 640px); --bn:min(calc(var(--bw) * .23), 28cqh, 130px)}
+.bus{position:relative;width:var(--bw);height:calc(var(--bw) * .46);margin-top:calc(var(--bw) * .1);flex:none}
+.bus.drive{animation:drive 1.4s ease-in forwards}
+@keyframes drive{15%{transform:translateX(-2%)}100%{transform:translateX(140vw)}}
+.bus-body{position:absolute;left:0;right:0;top:0;bottom:calc(var(--bw) * .07);background:#F7D98C;border:4px solid #5A3E33;
+  border-radius:calc(var(--bw) * .05) calc(var(--bw) * .1) calc(var(--bw) * .035) calc(var(--bw) * .035);overflow:hidden}
+.bus-body::after{content:'';position:absolute;left:0;right:0;bottom:12%;height:9%;background:#F2B8A0}
+.windows{position:absolute;left:4%;top:11%;width:66%;display:flex;gap:3%}
+.win{position:relative;flex:1;aspect-ratio:1/1.12;background:#DDEFF8;border:4px solid #5A3E33;border-radius:calc(var(--bw) * .03);overflow:hidden}
+.win .rider-in{position:absolute;left:50%;top:14%;width:118%;max-width:none;transform:translateX(-50%)}
+.win.arriving .rider-in{visibility:hidden}
+.win .num{position:absolute;right:4%;top:4%;min-width:1.5em;padding:0 .25em;border-radius:999px;background:#fff;border:3px solid #6EA6D1;color:#2F6E9E;
+  font-family:var(--display);font-weight:800;font-size:calc(var(--bw) * .05);line-height:1.25;text-align:center;opacity:0}
+.win .num.flash{animation:numflash 1.3s ease-out}
+.win .num.show{opacity:1;animation:pop .3s}
+@keyframes numflash{0%{opacity:0;transform:scale(.4)}15%{opacity:1;transform:scale(1.15)}30%{transform:scale(1)}75%{opacity:1}100%{opacity:0}}
+.driver{position:absolute;right:4%;top:11%;width:17%;aspect-ratio:1/1.2;background:#DDEFF8;border:4px solid #5A3E33;border-radius:calc(var(--bw) * .03) calc(var(--bw) * .06) calc(var(--bw) * .03) calc(var(--bw) * .03);overflow:hidden}
+.driver .driver-bunny{position:absolute;left:50%;top:16%;width:120%;max-width:none;transform:translateX(-50%) scaleX(-1)}
+.door{position:absolute;left:73%;top:11%;width:4.5%;bottom:22%;border:4px solid #5A3E33;border-radius:calc(var(--bw) * .015);background:#EAD9A6}
+.light{position:absolute;right:1.5%;bottom:30%;width:3.5%;aspect-ratio:1;border-radius:50%;background:#FFF3C4;border:3px solid #5A3E33}
+.wheel{position:absolute;bottom:0;width:calc(var(--bw) * .15);aspect-ratio:1;border-radius:50%;background:#5A3E33;border:4px solid #5A3E33;z-index:1}
+.wheel::after{content:'';position:absolute;inset:30%;border-radius:50%;background:#EADFD2}
+.wheel.w1{left:13%}.wheel.w2{right:15%}
+.roof-sign{position:absolute;left:8%;top:calc(var(--bw) * -.1);height:calc(var(--bw) * .12);display:flex;align-items:center;gap:.2em;padding:0 .45em 0 .2em;
+  background:#fff;border:4px solid #C9806C;border-radius:999px;font-family:var(--display);font-weight:800;font-size:calc(var(--bw) * .075);color:var(--red-ink);z-index:2}
+.roof-sign .sign-bunny{height:88%;width:auto}
+.roof-sign.glow{box-shadow:0 0 0 6px #F7CFC4;animation:pop .4s}
+.road{width:calc(var(--bw) * 1.04);height:calc(var(--bw) * .03);margin-top:-2px;background:#D9CFC4;border-radius:999px;flex:none}
+.sidewalk{flex:none;height:calc(var(--bn) * 1.3);width:var(--bw);display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--bw) * .03)}
+.stop-sign{display:flex;flex-direction:column;align-items:center;flex:none}
+.stop-sign .sign{width:calc(var(--bn) * .55);height:calc(var(--bn) * .55);border-radius:50%;background:#fff;border:4px solid #6EA6D1;display:flex;align-items:center;justify-content:center}
+.stop-sign .sign svg{width:72%;height:72%}
+.stop-sign .pole{width:5px;height:calc(var(--bn) * .6);background:#8A7466;border-radius:3px}
+.queue{display:flex;align-items:flex-end;gap:calc(var(--bw) * .015)}
+.rider{width:calc(var(--bn) * .78);height:var(--bn);padding:0;border:0;background:none;touch-action:none;cursor:pointer;display:flex;align-items:flex-end;justify-content:center}
+.rider .rider-img{height:100%;width:auto;pointer-events:none;filter:drop-shadow(0 3px 2px rgba(90,62,51,.2))}
+.rider:not(.gone){animation:hopwait 2.4s ease-in-out infinite}
+.rider:nth-child(2){animation-delay:.3s}.rider:nth-child(3){animation-delay:.6s}.rider:nth-child(4){animation-delay:.9s}
+@keyframes hopwait{0%,80%,100%{transform:none}88%{transform:translateY(-8%)}}
+.rider.gone{visibility:hidden}
+.bus-fly{position:fixed;z-index:60;pointer-events:none;object-fit:contain}
+.mini-bunny{display:inline-flex;width:26px;height:30px;border-radius:50%;align-items:flex-end;justify-content:center;overflow:hidden;border:3px solid}
+.mini-bunny img{width:120%;height:auto;margin-bottom:-30%}
+.mini-bunny.start{border-color:#E98C78;background:#FBE3DC}.mini-bunny.add{border-color:#6FAEDB;background:#E4F1FA}
+.busgame .choices{padding:calc(var(--bw) * .02) 0}
+.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.soon.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+  .bus-scene{--bw:min(94cqw, calc(50cqh * 2.2), 640px)}
+}
 </style>
 </head>
 <body>
@@ -624,6 +680,13 @@ en: {
   sTenHowMany: [P('All full!', 'cheer'), P('How many blue eggs did you add?', 'ask')],
   sTenRight: function(s, a, n){ return [P('Yes!', 'cheer'), P(s + ' and ' + a + ' make ' + n + '!', 'proud')]; },
   sTenCounted: function(a){ return P('You added ' + a + '!', 'calm'); },
+  busAlt: 'Lulu the bunny', busAll: 'All aboard!', busHowMany: 'How many on the bus?', busAllOn: 'Everyone’s on!', busCount: 'Let’s count on!',
+  busIn: function(s){ return s + ' ' + pl(s, 'bunny', 'bunnies') + ' already on the bus'; }, busTap: 'Help this bunny get on the bus',
+  sBusAsk: function(s, a){ return [P(s === 1 ? 'There is 1 bunny on the bus.' : 'There are ' + s + ' bunnies on the bus.', 'calm'), P(a === 1 ? '1 more is waiting.' : a + ' more are waiting.', 'calm'), P('Tap them to get on!', 'cheer')]; },
+  sBusHowMany: [P('Everyone’s on!', 'cheer'), P('How many bunnies are on the bus now?', 'ask')],
+  sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud'), P('Beep beep!', 'cheer')]; },
+  sBusCountOn: function(s){ return P('Let’s count on. Start at ' + s + '.', 'calm'); },
+  sBusCounted: function(t){ return P(t + ' bunnies!', 'calm'); },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -685,6 +748,13 @@ fr: {
   sTenHowMany: [P('C’est plein !', 'cheer'), P('Combien d’œufs bleus as-tu ajoutés ?', 'ask')],
   sTenRight: function(s, a, n){ return [P('Oui !', 'cheer'), P(s + ' et ' + a + ', ça fait ' + n + ' !', 'proud')]; },
   sTenCounted: function(a){ return P('Tu en as ajouté ' + a + ' !', 'calm'); },
+  busAlt: 'Lulu le lapin', busAll: 'Tout le monde monte !', busHowMany: 'Combien dans le bus ?', busAllOn: 'Tout le monde est là !', busCount: 'On compte à partir de là !',
+  busIn: function(s){ return s + ' ' + pl(s, 'lapin', 'lapins') + ' déjà dans le bus'; }, busTap: 'Aider ce lapin à monter dans le bus',
+  sBusAsk: function(s, a){ return [P('Il y a ' + s + ' ' + pl(s, 'lapin', 'lapins') + ' dans le bus.', 'calm'), P(a === 1 ? 'Encore 1 attend.' : 'Encore ' + a + ' attendent.', 'calm'), P('Touche-les pour les faire monter !', 'cheer')]; },
+  sBusHowMany: [P('Tout le monde est là !', 'cheer'), P('Combien de lapins dans le bus maintenant ?', 'ask')],
+  sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud'), P('Tut tut !', 'cheer')]; },
+  sBusCountOn: function(s){ return P('On part de ' + s + ' et on continue.', 'calm'); },
+  sBusCounted: function(t){ return P(t + ' lapins !', 'calm'); },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -746,6 +816,13 @@ zh: {
   sTenHowMany: [P('放满啦！', 'cheer'), P('你放了几个蓝色的鸡蛋？', 'ask')],
   sTenRight: function(s, a, n){ return [P('对啦！', 'cheer'), P(s + '和' + a + '凑成' + n + '！', 'proud')]; },
   sTenCounted: function(a){ return P('你放了' + a + '个！', 'calm'); },
+  busAlt: '小兔露露', busAll: '大家上车！', busHowMany: '车上有几只？', busAllOn: '都上车啦！', busCount: '接着数！',
+  busIn: function(s){ return '车上已经有' + s + '只小兔'; }, busTap: '帮这只小兔上车',
+  sBusAsk: function(s, a){ return [P('车上已经有' + s + '只小兔。', 'calm'), P('还有' + a + '只在等车。', 'calm'), P('点它们上车吧！', 'cheer')]; },
+  sBusHowMany: [P('都上车啦！', 'cheer'), P('现在车上一共有几只小兔？', 'ask')],
+  sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud'), P('嘀嘀！', 'cheer')]; },
+  sBusCountOn: function(s){ return P('从' + s + '开始，接着数。', 'calm'); },
+  sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -807,6 +884,13 @@ ja: {
   sTenHowMany: [P('いっぱいに なったね！', 'cheer'), P('あおい たまごを いくつ いれたかな？', 'ask')],
   sTenRight: function(s, a, n){ return [P('せいかい！', 'cheer'), P(s + 'と ' + a + 'で ' + n + '！', 'proud')]; },
   sTenCounted: function(a){ return P(a + 'こ いれたね！', 'calm'); },
+  busAlt: 'うさぎの ルル', busAll: 'のってね！', busHowMany: 'バスに なんびき？', busAllOn: 'みんな のったよ！', busCount: 'つづけて かぞえよう！',
+  busIn: function(s){ return 'バスには もう ' + s + 'ひき のってるよ'; }, busTap: 'この うさぎを バスに のせる',
+  sBusAsk: function(s, a){ return [P('バスには うさぎが ' + s + 'ひき のってるよ。', 'calm'), P('あと ' + a + 'ひき まってるよ。', 'calm'), P('タップして のせてあげてね！', 'cheer')]; },
+  sBusHowMany: [P('みんな のったよ！', 'cheer'), P('バスには いま なんびき いるかな？', 'ask')],
+  sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud'), P('ブッブー！', 'cheer')]; },
+  sBusCountOn: function(s){ return P(s + 'から つづけて かぞえよう。', 'calm'); },
+  sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 }
@@ -1002,6 +1086,7 @@ function render(){
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
   else if (screen === 'ten') renderTen();
+  else if (screen === 'bus') renderBus();
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
@@ -1043,13 +1128,13 @@ function renderHome(){
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + momo('happy') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
-    '<div class="games"><div class="tiles">' +
+    '<div class="games"><div class="tiles three">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + L('gFeed') + '</button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + L('gTen') + '</button>' +
+      '<button class="tile bus" data-act="bus">' + critter('bunny') + L('gBus') + '</button>' +
     '</div>' +
     '<div class="soon-wrap"><div class="soon-title">' + L('soon') + '</div>' +
-    '<div class="soon three">' +
-      '<button data-act="soon" data-g="gBus">' + critter('bunny') + L('gBus') + '</button>' +
+    '<div class="soon two">' +
       '<button data-act="soon" data-g="gFrog">' + critter('frog') + L('gFrog') + '</button>' +
       '<button data-act="soon" data-g="gTower">' + critter('bear') + L('gTower') + '</button>' +
     '</div></div></div></section>';
@@ -1388,7 +1473,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -1623,6 +1708,190 @@ document.addEventListener('visibilitychange', tFinish);
 document.addEventListener('touchend', function(e){ if (tdrag && e.touches.length === 0) setTimeout(function(){ if (tdrag) tFinish(); }, 50); });
 document.addEventListener('touchcancel', function(){ if (tdrag) tFinish(); });
 
+/* =====================================================================
+   BUS STOP (bunny): count on from the number already on the bus
+   ===================================================================== */
+var BUS_SEATS = 4;
+function bunnyImg(cls){ return '<img class="' + (cls || 'momo bunny') + '" src="animals/bunny.png" alt="' + esc(L('busAlt')) + '" draggable="false">'; }
+function pickBus(){
+  var max = S.maxSum, bag = [];
+  for (var s = 2; s < max; s++) for (var a = 1; a <= Math.min(BUS_SEATS, max - s); a++) {
+    var st = factState(s, a), w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
+    if (G && G.last === factKey(s, a)) w = 0;
+    for (var i = 0; i < w; i++) bag.push([s, a]);
+  }
+  return bag[Math.floor(Math.random() * bag.length)] || [3, 2];
+}
+function startBus(){ G = { game:'bus', q:0, earned:0, startStars:S.stars }; busQuestion(); }
+function busQuestion(){
+  var p = pickBus();
+  G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
+  G.boarded = 0; G.waiting = []; for (var i = 0; i < G.a; i++) G.waiting.push(true);
+  G.phase = 'board'; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.opts = null;
+  screen = 'bus'; closeOverlay(); renderBus();
+  busAskAloud();
+}
+function busAskAloud(){ say(G.phase === 'ask' ? L('sBusHowMany') : L('sBusAsk', G.s, G.a)); }
+
+function renderBus(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var wins = '';
+  for (var w = 0; w < BUS_SEATS; w++) wins += '<span class="win" data-win="' + w + '"></span>';
+  app.innerHTML = '<section class="screen busgame">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('bus-repeat', L('hearAgain')) + '</div>' +
+    '<div class="stage">' +
+      '<div class="left"><div class="momo-row"><div id="momo">' + bunnyImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble"></b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+        '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox" id="busT">?</span></div></div>' +
+      '<div class="bus-scene" id="busScene">' +
+        '<div class="bus" id="bus">' +
+          '<div class="roof-sign" aria-label="' + esc(L('busIn', G.s)) + '">' + bunnyImg('sign-bunny') + '<b>' + G.s + '</b></div>' +
+          '<div class="bus-body"><div class="windows">' + wins + '</div><span class="driver">' + bunnyImg('driver-bunny') + '</span><span class="door"></span><span class="light"></span></div>' +
+          '<span class="wheel w1"></span><span class="wheel w2"></span>' +
+        '</div>' +
+        '<div class="road"></div>' +
+        '<div class="sidewalk" id="busBottom"></div>' +
+      '</div>' +
+    '</div></section>';
+  updateBus();
+}
+function busWinHtml(k){ return bunnyImg('rider-in') + '<span class="num">' + (G.s + k + 1) + '</span>'; }
+function updateBus(){
+  if (screen !== 'bus') return;
+  document.getElementById('bubble').textContent = G.phase === 'ask' ? L('busHowMany') : L('busAll');
+  setBubble2(G.bubble2, G.bubble2Kind);
+  document.querySelectorAll('#bus .win').forEach(function(w, k){
+    var has = k < G.boarded;
+    if (has && !w.firstChild) w.innerHTML = busWinHtml(k);
+    if (!has) w.innerHTML = '';
+    w.classList.toggle('full', has);
+  });
+  var b = '';
+  if (G.phase === 'board') {
+    b = '<div class="stop-sign" aria-hidden="true"><span class="sign">' + BUS_ICON + '</span><span class="pole"></span></div><div class="queue">';
+    G.waiting.forEach(function(on, i){
+      b += on ? '<button class="rider" data-rider="' + i + '" aria-label="' + esc(L('busTap')) + '">' + bunnyImg('rider-img') + '</button>'
+              : '<span class="rider gone"></span>';
+    });
+    b += '</div>';
+  } else {
+    b = '<div class="choices" role="group" aria-label="' + esc(L('busHowMany')) + '">' + (G.opts || []).map(function(n){
+      return '<button class="choice' + (G.tried[n] ? ' tried' : '') + '" data-act="bus-pick" data-v="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '>' + n + '</button>';
+    }).join('') + '</div>';
+  }
+  document.getElementById('busBottom').innerHTML = b;
+}
+var BUS_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="3" fill="#F7D98C" stroke="#5A3E33" stroke-width="1.8"/><rect x="6.5" y="6.5" width="11" height="5" rx="1.2" fill="#DDEFF8" stroke="#5A3E33" stroke-width="1.4"/><circle cx="8" cy="18.5" r="1.8" fill="#5A3E33"/><circle cx="16" cy="18.5" r="1.8" fill="#5A3E33"/></svg>';
+
+function busBoard(i){
+  if (!G || G.lock || G.phase !== 'board') return;
+  if (i === undefined || isNaN(i) || !G.waiting[i]) { i = G.waiting.indexOf(true); if (i < 0) return; }
+  var btn = document.querySelector('#busBottom [data-rider="' + i + '"]');
+  var k = G.boarded, win = document.querySelector('#bus .win[data-win="' + k + '"]');
+  G.waiting[i] = false; G.boarded++; G.bubble2 = '';
+  var from = btn ? btn.getBoundingClientRect() : null, to = win ? win.getBoundingClientRect() : null;
+  /* leave the spot empty so the other bunnies don't jump around */
+  if (btn) { var gone = document.createElement('span'); gone.className = 'rider gone'; btn.replaceWith(gone); }
+  if (win) { win.innerHTML = busWinHtml(k); win.classList.add('full', 'arriving'); }
+  var n = G.s + k + 1;
+  say(k === 0 ? [P(String(G.s), 'calm'), P(String(n), 'count', n)] : P(String(n), 'count', n));
+  function land(){
+    if (!win || landed) return; landed = true;
+    if (fly) fly.remove();
+    win.classList.remove('arriving');
+    var num = win.querySelector('.num'); if (num) { num.classList.remove('flash'); void num.offsetWidth; num.classList.add('flash'); }
+  }
+  var landed = false, fly = null;
+  if (from && to && !reduceMotion) {
+    fly = document.createElement('img'); fly.src = 'animals/bunny.png'; fly.className = 'bus-fly'; fly.alt = '';
+    fly.style.left = from.left + 'px'; fly.style.top = from.top + 'px'; fly.style.width = from.width + 'px'; fly.style.height = from.height + 'px';
+    document.body.appendChild(fly);
+    var dx = to.left + to.width / 2 - (from.left + from.width / 2), dy = to.top + to.height * .45 - (from.top + from.height / 2), sc = Math.max(.4, to.width * 1.1 / from.width);
+    try {
+      var an = fly.animate([
+        { transform:'translate(0px,0px) scale(1)', opacity:1, offset:0 },
+        { transform:'translate(' + dx * .5 + 'px,' + (Math.min(0, dy) - 60) + 'px) scale(' + ((1 + sc) / 2) + ')', opacity:1, offset:.5 },
+        { transform:'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')', opacity:1, offset:1 }
+      ], { duration:520, easing:'ease-in-out', fill:'forwards' });
+      an.onfinish = land;
+    } catch(e) { land(); }
+    setTimeout(land, 640);
+  } else land();
+  if (G.boarded >= G.a) busAllOn();
+}
+function busAllOn(){
+  G.lock = true;
+  var t = G.t, opts = [t];
+  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= S.maxSum && n !== G.s; });
+  while (opts.length < 3 && cand.length) opts.push(cand.splice(Math.floor(Math.random() * Math.min(2, cand.length)), 1)[0]);
+  opts.sort(function(x, y){ return x - y; });
+  setTimeout(function(){
+    if (screen !== 'bus' || !G) return;
+    G.phase = 'ask'; G.opts = opts; G.lock = false;
+    G.bubble2 = L('busAllOn'); G.bubble2Kind = 'yum';
+    updateBus();
+    say(L('sBusHowMany'));
+  }, 900);
+}
+function busPick(n){
+  if (!G || G.lock || G.phase !== 'ask') return;
+  var right = n === G.t;
+  if (G.first) { record(right); G.first = false; }
+  if (right) {
+    G.lock = true;
+    var qt = document.getElementById('busT'); if (qt) { qt.textContent = G.t; qt.classList.add('solved'); }
+    G.bubble2 = L('yum'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    document.querySelectorAll('.busgame .choice').forEach(function(x){ if (+x.getAttribute('data-v') === n) x.classList.add('right'); else x.disabled = true; });
+    S.stars++; G.earned++; save();
+    say(L('sBusRight', G.s, G.a, G.t));
+    setTimeout(function(){ var bus = document.getElementById('bus'); if (bus && screen === 'bus') bus.classList.add('drive'); }, 900);
+    setTimeout(showBusReward, 2400);
+  } else {
+    G.lock = true; G.tried[n] = true;
+    G.bubble2 = L('busCount'); G.bubble2Kind = '';
+    updateBus();
+    var wins = document.querySelectorAll('#bus .win.full .num');
+    wins.forEach(function(x){ x.classList.remove('flash', 'show'); });
+    var sign = document.querySelector('#bus .roof-sign');
+    var parts = [L('sBusCountOn', G.s)];
+    for (var i = 1; i <= G.a; i++) parts.push(P(String(G.s + i), 'count', G.s + i));
+    parts.push(L('sBusCounted', G.t));
+    var q = G.q, done = false;
+    function unlock(){ if (done || screen !== 'bus' || !G || G.q !== q) return; done = true; G.unlock = null; G.lock = false; if (sign) sign.classList.remove('glow'); }
+    say(parts, function(i){
+      if (i === 0 && sign) sign.classList.add('glow');
+      if (i >= 1 && i <= G.a && wins[i - 1]) { if (sign) sign.classList.remove('glow'); wins[i - 1].classList.add('show'); }
+      if (i > G.a) unlock();
+    }, 800);
+    G.unlock = unlock;
+    setTimeout(unlock, (G.a + 3) * 2500);
+  }
+}
+function minis(n, kind){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="mini-bunny ' + kind + '">' + bunnyImg('') + '</span>'; return h; }
+function showBusReward(){
+  if (screen !== 'bus') return;
+  var last = G.q + 1 >= ROUND;
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1>' + bunnyImg('pic animal') +
+    '<div class="sumcard"><div class="groups"><div class="g">' + minis(G.s, 'start') + '</div>+<div class="g">' + minis(G.a, 'add') + '</div></div>' +
+    '<div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.t)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.t + '</span></div></div>' +
+    '<div class="row"><div class="chip">' + ICON.star + '+1</div><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+/* a bunny boards when the finger lifts, whether it was a tap or a drag toward the bus */
+var bpress = null;
+document.addEventListener('pointerdown', function(e){
+  if (!e.target.closest || screen !== 'bus' || !G || G.lock || G.phase !== 'board') return;
+  var r = e.target.closest('#busBottom .rider[data-rider]'); if (!r) return;
+  e.preventDefault(); bpress = { i:+r.getAttribute('data-rider'), id:e.pointerId };
+});
+function bEnd(e){ if (!bpress || (e && e.pointerId !== bpress.id)) return; var i = bpress.i; bpress = null; busBoard(i); }
+document.addEventListener('pointerup', bEnd);
+document.addEventListener('pointercancel', bEnd);
+window.addEventListener('blur', function(){ if (bpress) bEnd(); });
+
 /* ---------- garden ---------- */
 var PER_STRIPE = 5;
 /* draws rainbow `idx` with `filled` stripes coloured (outer first); unfilled parts use `empty` */
@@ -1761,6 +2030,8 @@ function renderParents(){
 document.addEventListener('click', function(e){
   var jarC = e.target.closest('#jar .cookie');
   if (jarC && e.detail === 0) { addCookie(+jarC.getAttribute('data-spot')); return; } /* keyboard */
+  var rd = e.target.closest('.busgame .rider[data-rider]');
+  if (rd && e.detail === 0) { busBoard(+rd.getAttribute('data-rider')); return; }
   var eg = e.target.closest('.ten .egg[data-spare], .ten .egg[data-cell]');
   if (eg && e.detail === 0) { if (eg.hasAttribute('data-spare')) tenPut(+eg.getAttribute('data-spare')); else tenTake(+eg.getAttribute('data-cell')); return; }
   var b = e.target.closest('[data-act]'); if (!b) return;
@@ -1783,6 +2054,9 @@ document.addEventListener('click', function(e){
       break;
     case 'play': startRound(); break;
     case 'ten': startTen(); break;
+    case 'bus': startBus(); break;
+    case 'bus-repeat': busAskAloud(); break;
+    case 'bus-pick': busPick(+b.getAttribute('data-v')); break;
     case 'ten-repeat': tenAskAloud(); break;
     case 'tf-pick': tenPick(+b.getAttribute('data-v')); break;
     case 'home': show('home'); break;
@@ -1797,7 +2071,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
