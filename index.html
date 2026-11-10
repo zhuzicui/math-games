@@ -652,6 +652,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .settings .seg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
 .settings .seg4 button{white-space:nowrap;padding:0 4px}
 @container (max-width:440px){ .settings .seg4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:520px){ .momo-row .bubbles{max-width:58vw} .momo-row .bubbles .bubble b{white-space:normal} }
 </style>
 </head>
 <body>
@@ -760,6 +761,7 @@ en: {
   sBusCounted: function(t){ return P(t + ' snails!', 'calm'); },
   bravo: 'Great job!',
   pickBuddy: 'Pick your buddy!', changeBuddy: 'Change my buddy', buddyN: function(n){ return 'Buddy ' + n; },
+  sBusNow: function(s, a){ return [P(s === 1 ? 'There was 1 snail on the bus.' : 'There were ' + s + ' snails on the bus.', 'calm'), P(a === 1 ? '1 more got on.' : a + ' more got on.', 'calm'), P('How many snails are on the bus now?', 'ask')]; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -830,6 +832,7 @@ fr: {
   sBusCounted: function(t){ return P(t + ' escargots !', 'calm'); },
   bravo: 'Bravo\u00a0!',
   pickBuddy: 'Choisis ton animal\u00a0!', changeBuddy: 'Changer mon animal', buddyN: function(n){ return 'Animal ' + n; },
+  sBusNow: function(s, a){ return [P('Il y avait ' + s + ' ' + pl(s, 'escargot', 'escargots') + ' dans le bus.', 'calm'), P(a === 1 ? 'Un autre est monté.' : 'Encore ' + a + ' sont montés.', 'calm'), P('Combien d’escargots dans le bus maintenant ?', 'ask')]; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -900,6 +903,7 @@ zh: {
   sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
   bravo: '真棒！',
   pickBuddy: '选一个小伙伴！', changeBuddy: '换小伙伴', buddyN: function(n){ return '小伙伴' + n; },
+  sBusNow: function(s, a){ return [P('车上原来有' + s + '只小蜗牛。', 'calm'), P('又上来了' + a + '只。', 'calm'), P('现在车上一共有几只？', 'ask')]; },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -970,6 +974,7 @@ ja: {
   sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
   bravo: 'すごいね！',
   pickBuddy: 'なかまを えらんでね！', changeBuddy: 'なかまを かえる', buddyN: function(n){ return 'なかま ' + n; },
+  sBusNow: function(s, a){ return [P('バスに かたつむりが ' + s + 'ひき のっていたよ。', 'calm'), P('あと ' + a + 'ひき のったよ。', 'calm'), P('いま バスには なんびき いるかな？', 'ask')]; },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1040,6 +1045,7 @@ yue: {
   sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
   bravo: '好叻呀！',
   pickBuddy: '揀一個小夥伴！', changeBuddy: '換小夥伴', buddyN: function(n){ return '小夥伴' + n; },
+  sBusNow: function(s, a){ return [P('車上本來有' + s + '隻蝸牛。', 'calm'), P('再上咗' + a + '隻。', 'calm'), P('而家車上一共有幾多隻？', 'ask')]; },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1110,6 +1116,7 @@ ko: {
   sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
   bravo: '잘했어요!',
   pickBuddy: '내 친구를 골라요!', changeBuddy: '친구 바꾸기', buddyN: function(n){ return '친구 ' + n; },
+  sBusNow: function(s, a){ return [P('버스에 달팽이가 ' + s + '마리 있었어요.', 'calm'), P(a + '마리가 더 탔어요.', 'calm'), P('이제 버스에 모두 몇 마리 있나요?', 'ask')]; },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1996,12 +2003,19 @@ function startBus(){ G = { game:'bus', q:0, earned:0, startStars:S.stars }; busQ
 function busQuestion(){
   var p = pickBus();
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
-  G.boarded = 0; G.waiting = []; for (var i = 0; i < G.a; i++) G.waiting.push(true);
-  G.phase = 'board'; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.opts = null;
+  /* the new snails are already on board: the child just picks the total */
+  G.boarded = G.a; G.waiting = []; for (var i = 0; i < G.a; i++) G.waiting.push(false);
+  G.phase = 'ask'; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.opts = busOpts();
   screen = 'bus'; closeOverlay(); renderBus();
   busAskAloud();
 }
-function busAskAloud(){ say(G.phase === 'ask' ? L('sBusHowMany') : L('sBusAsk', G.s, G.a)); }
+function busOpts(){
+  var t = G.t, opts = [t];
+  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= S.maxSum && n !== G.s; });
+  while (opts.length < 3 && cand.length) opts.push(cand.splice(Math.floor(Math.random() * Math.min(2, cand.length)), 1)[0]);
+  return opts.sort(function(x, y){ return x - y; });
+}
+function busAskAloud(){ say(L('sBusNow', G.s, G.a)); }
 
 function renderBus(){
   var dots = '';
