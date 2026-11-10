@@ -1,13 +1,16 @@
 # math-games · Momo Math
 
-Learn to add with Momo the unicorn. Works on phones and iPads, in English, Français and 中文.
+Learn to add with Momo the unicorn. Three games (Feed the Monster, Ten Frame, Bus Stop), sums up to 5, 10, 15 or 20, and voice in English, Français, 普通话, 廣東話, 日本語 and 한국어. Works on phones and iPads.
 
 ## What's in this folder
 
 | File | What it's for |
 |---|---|
 | `index.html` | The whole app |
-| `animals/`, `stars/`, `cookies/` | Character, star and cookie artwork (red = already on the plate, blue = added) |
+| `animals/`, `stars/`, `cookies/`, `eggs/` | Characters, stars, cookies and eggs (red = already there, blue = added) |
+| `avatars/` | The 25 buddy faces a child can pick |
+| `rainbows.js` | Rainbow stickers |
+| `fonts/` | Fonts for Chinese, Cantonese, Japanese and Korean (only downloaded when used) |
 | `icons/apple-touch-icon.png` | iPhone / iPad home-screen icon (180×180) |
 | `icons/icon-192.png`, `icons/icon-512.png` | Android / Chrome home-screen icons |
 | `icons/icon-maskable-192.png`, `icons/icon-maskable-512.png` | Android adaptive icons (any shape mask) |
@@ -25,10 +28,9 @@ Learn to add with Momo the unicorn. Works on phones and iPads, in English, Fran�
 
 The icon shows Momo, the home-screen name is **Momo Math**, and the app opens full-screen without browser bars.
 
-## One small thing for link previews
+## Link previews
 
-`og:image` in `index.html` points to `og-image.png` with a relative path. Some apps (iMessage, WhatsApp, Slack) need a full address — once you know your site's URL, change it to e.g.
-`<meta property="og:image" content="https://your-site.netlify.app/og-image.png">`.
+`og:image` points to `https://math-games-neon.vercel.app/og-image.png`. After changing the picture, bump the `?v=` number in `index.html` and re-scrape the link in Facebook's Sharing Debugger and LinkedIn's Post Inspector.
 
 ## Notes
 
