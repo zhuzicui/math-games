@@ -1,23 +1,57 @@
-# math-games · Momo Math
+# Momo Math
 
-Learn to add with Momo the unicorn. Three games (Feed the Monster, Ten Frame, Bus Stop), sums up to 5, 10, 15 or 20, and voice in English, Français, 普通话, 廣東話, 日本語 and 한국어. Works on phones and iPads.
+A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn, fill an egg carton to make 10, and count snails on a bus. Mistakes aren't failures: Momo just counts with you, out loud.
 
-## What's in this folder
+**Try it:** https://math-games-neon.vercel.app (free, no account, works offline-ish in the browser; add it to your home screen for a full-screen app)
 
-| File | What it's for |
+<p align="center"><img src="docs/screenshots/hero.png" width="640" alt="Momo Math on iPad and iPhone"></p>
+
+## What's inside
+
+- **Three games**, each teaching a different addition idea
+  - **Feed the Monster**: drag blue cookies onto a plate that already has red ones (adding two groups)
+  - **Ten Frame**: fill the egg carton, then say how many eggs you added (making 10)
+  - **Bus Stop**: some snails were on the bus, more got on; how many now? (counting on)
+- **Colour coding everywhere**: red = what was already there, blue = what you add, matching the numbers in the sum
+- **Kind feedback**: a wrong answer triggers counting together, never a buzzer
+- **Rewards**: stars colour in rainbows; finished rainbows become stickers in a sticker book
+- **Buddies**: kids pick one of 25 animal avatars
+- **Voice in 6 languages**: English, Français, 普通话, 廣東話, 日本語, 한국어 (device voices, female or male)
+- **For grown-ups** (behind a simple maths gate): a progress grid of every fact, a "try at home" tip, sums up to 5, 10, 15 or 20
+
+## iPad
+
+| Home | Feed the Monster | Ten Frame |
+|---|---|---|
+| <img src="docs/screenshots/ipad-03-home.png" width="260" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="260" alt="Feed the Monster"> | <img src="docs/screenshots/ipad-06-tenframe.png" width="260" alt="Ten Frame"> |
+
+| Bus Stop | Your rainbow | For grown-ups |
+|---|---|---|
+| <img src="docs/screenshots/ipad-07-bus.png" width="260" alt="Bus Stop"> | <img src="docs/screenshots/ipad-08-rainbow.png" width="260" alt="Your rainbow"> | <img src="docs/screenshots/ipad-10-grownups.png" width="260" alt="For grown-ups"> |
+
+## iPhone
+
+| Name | Pick a buddy | Home | Feed the Monster | You did it! |
+|---|---|---|---|---|
+| <img src="docs/screenshots/phone-01-name.png" width="150" alt="Name"> | <img src="docs/screenshots/phone-02-buddy.png" width="150" alt="Pick a buddy"> | <img src="docs/screenshots/phone-03-home.png" width="150" alt="Home"> | <img src="docs/screenshots/phone-04-feed.png" width="150" alt="Feed the Monster"> | <img src="docs/screenshots/phone-05-bravo.png" width="150" alt="You did it!"> |
+
+| Ten Frame | Bus Stop | Your rainbow | Sticker book | For grown-ups |
+|---|---|---|---|---|
+| <img src="docs/screenshots/phone-06-tenframe.png" width="150" alt="Ten Frame"> | <img src="docs/screenshots/phone-07-bus.png" width="150" alt="Bus Stop"> | <img src="docs/screenshots/phone-08-rainbow.png" width="150" alt="Your rainbow"> | <img src="docs/screenshots/phone-09-stickers.png" width="150" alt="Sticker book"> | <img src="docs/screenshots/phone-10-grownups.png" width="150" alt="For grown-ups"> |
+
+## How it's built
+
+A single `index.html` (plain HTML, CSS and JavaScript, no framework, no build step) plus artwork folders. Progress is saved in the browser's local storage on each device; nothing is sent anywhere.
+
+| Path | What it's for |
 |---|---|
 | `index.html` | The whole app |
-| `animals/`, `stars/`, `cookies/`, `eggs/` | Characters, stars, cookies and eggs (red = already there, blue = added) |
-| `avatars/` | The 25 buddy faces a child can pick |
+| `animals/`, `avatars/`, `stars/`, `cookies/`, `eggs/` | Characters, buddy faces, stars, cookies and eggs |
 | `rainbows.js` | Rainbow stickers |
 | `fonts/` | Fonts for Chinese, Cantonese, Japanese and Korean (only downloaded when used) |
-| `icons/apple-touch-icon.png` | iPhone / iPad home-screen icon (180×180) |
-| `icons/icon-192.png`, `icons/icon-512.png` | Android / Chrome home-screen icons |
-| `icons/icon-maskable-192.png`, `icons/icon-maskable-512.png` | Android adaptive icons (any shape mask) |
-| `icons/icon-1024.png` | Master icon (App Store size, or for any other use) |
-| `icons/favicon-16/32/48/96.png`, `favicon.ico` | Browser-tab icons |
-| `manifest.webmanifest` | Tells phones the app's name, colours and icons |
+| `icons/`, `favicon.ico`, `manifest.webmanifest` | Home-screen and browser icons, app name |
 | `og-image.png` | Preview picture when the link is shared (1200×630) |
+| `docs/screenshots/` | The pictures in this README |
 
 ## Put it online (any static host works)
 
