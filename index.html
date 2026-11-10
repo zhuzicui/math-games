@@ -469,6 +469,53 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 .bar-spacer{visibility:hidden}
 .bookbtn{width:clamp(52px,8dvh,60px);height:clamp(52px,8dvh,60px)}
 .chip{max-height:60px}
+/* ===== Ten Frame ===== */
+.tile.ten{background:#FBEFC4;border-color:#EBD58F;box-shadow:0 7px 0 #EBD58F}
+.soon.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ten .momo-row .chick{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
+.ten .qbox{min-width:1.4em;text-align:center;color:#3E7FB0;border:4px dashed #9CC6E3;border-radius:16px;padding:0 .15em;line-height:1.1}
+.ten .qbox.solved{border-style:solid;background:#EAF4FB;animation:pop .35s}
+.tf-area{flex:1;min-height:0;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.4cqh,28px);
+  --cell:min(calc((100cqw - 28px) / 5.3), calc(100cqh / 4.3), 104px)}
+.tf-area:has(.carton.five){--cell:min(calc((100cqw - 28px) / 5.3), calc(100cqh / 3.2), 110px)}
+.carton{display:grid;grid-template-columns:repeat(5,var(--cell));grid-auto-rows:var(--cell);gap:0;padding:calc(var(--cell) * .12);
+  background:#F3DDB8;border:4px solid #D9B888;border-radius:24px;box-shadow:0 6px 0 #D9B888;transition:background .2s}
+.carton.hot{background:#F7E6C6}
+.carton .cell{display:flex;align-items:center;justify-content:center;border:2px solid #E3C79B;margin:-1px;
+  background:radial-gradient(circle at 50% 45%, #E7C899 0 40%, #EFD6AE 62%, #F3DDB8 72%)}
+.carton .cell:first-child{border-top-left-radius:16px}.carton .cell:nth-child(5){border-top-right-radius:16px}
+.carton.five .cell:first-child{border-bottom-left-radius:16px}.carton.five .cell:nth-child(5){border-bottom-right-radius:16px}
+.carton:not(.five) .cell:nth-child(6){border-bottom-left-radius:16px}.carton:not(.five) .cell:nth-child(10){border-bottom-right-radius:16px}
+.egg{position:relative;display:inline-flex;align-items:center;justify-content:center;width:calc(var(--cell) * .66);height:calc(var(--cell) * .8);padding:0;border:0;background:none;
+  touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;filter:drop-shadow(0 3px 2px rgba(90,62,51,.22))}
+.egg .egg-svg{width:100%;height:100%;display:block;pointer-events:none}
+.egg.start{cursor:default}
+.egg.pop{animation:egghop .32s ease-out}
+@keyframes egghop{0%{transform:translateY(-30%) scale(.7)}60%{transform:translateY(4%) scale(1.06)}100%{transform:none}}
+.egg .num{position:absolute;inset:18% 0 0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:calc(var(--cell) * .4);color:#1F4F73;text-shadow:0 0 6px #fff,0 0 3px #fff}
+.egg.counted .egg-svg{opacity:.55}
+.tf-bottom{display:flex;justify-content:center;width:100%;min-height:calc(var(--cell) * 1.9)}
+.tray{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;min-width:calc(var(--cell) * 3);min-height:calc(var(--cell) * 1.1);gap:calc(var(--cell) * .14) calc(var(--cell) * .2);max-width:calc(var(--cell) * 6.4);
+  padding:calc(var(--cell) * .14) calc(var(--cell) * .3);background:#F6EAD7;border:4px dashed #E1CDB0;border-radius:24px}
+.tray .egg{width:calc(var(--cell) * .6);height:calc(var(--cell) * .74)}
+.tray .ghostslot{visibility:hidden}
+.tf-area.counting .tray .egg{filter:grayscale(1);opacity:.45}
+.egg-ghost{position:fixed;z-index:50;pointer-events:none;transform:translate(-50%,-50%) scale(1.15);filter:drop-shadow(0 10px 12px rgba(90,62,51,.3))}
+.choices{display:flex;gap:clamp(10px,3vw,24px);justify-content:center;align-items:center}
+.choice{width:clamp(64px,min(20vw,11dvh),104px);height:clamp(64px,min(20vw,11dvh),104px);border-radius:24px;border:4px solid #9CC6E3;background:#FFFCF7;box-shadow:0 6px 0 #9CC6E3;
+  font-family:var(--display);font-weight:800;font-size:clamp(32px,min(10vw,6dvh),52px);color:#3E7FB0}
+.choice:active{transform:translateY(3px);box-shadow:0 3px 0 #9CC6E3}
+.choice.tried{opacity:.35;box-shadow:none}
+.choice.right{background:#E3F1DA;border-color:#A9CB97;box-shadow:0 6px 0 #A9CB97;color:#4F7A3B;animation:pop .35s}
+.carton.wiggle{animation:cartonjig .5s}
+@keyframes cartonjig{25%{transform:rotate(-2deg) scale(1.03)}75%{transform:rotate(2deg) scale(1.03)}}
+.ten .chick.bounce{animation:bounce .5s 2}
+.groups .egg.mini{width:24px;height:29px;cursor:default;filter:none}
+@media (orientation:landscape) and (min-width:600px) and (max-height:600px){
+  .momo-row .bubbles .bubble b{white-space:normal}
+  .tf-area{--cell:min(calc((100cqw - 56px) / 5.4), calc(100cqh / 4.1), 80px)}
+}
+.seg button:disabled{opacity:.4;border-style:dashed;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -535,7 +582,7 @@ en: {
   ready: '<b>Ready for more:</b> most sums to 5 are mastered. Try “Up to 10”.',
   childName: 'Child’s name', shownHome: 'Shown on the home screen', biggest: 'Biggest answer', upTo: function(n){ return 'Up to ' + n; },
   spoken: 'Spoken instructions', on: 'On', off: 'Off', language: 'Language',
-  voiceType: 'Voice', female: 'Female', male: 'Male',
+  voiceType: 'System voice', female: 'Female', male: 'Male',
   noVoiceType: function(name, male){ return 'This device has no ' + (male ? 'male' : 'female') + ' ' + name + ' voice, so a ' + (male ? 'female' : 'male') + ' voice is used.'; },
   noSpeech: 'This browser can’t speak aloud. Try Safari or Chrome.',
   langName: { en: 'English', fr: 'French', zh: 'Mandarin', ja: 'Japanese' },
@@ -558,6 +605,12 @@ en: {
   sGarden: function(n){ return n ? [P('You have ' + n + ' ' + pl(n, 'star', 'stars') + '!', 'cheer')] : [P('Play to catch your first star!', 'calm')]; },
   sSun: function(k){ return P(k + ' more ' + pl(k, 'star', 'stars') + ' to color the next stripe!', 'calm'); },
   sRainbows: function(r){ return P('You made ' + r + ' ' + pl(r, 'rainbow', 'rainbows') + '!', 'proud'); },
+  chickAlt: 'Pip the chick', tfMake: function(n){ return 'Make\u00a0' + n + '!'; }, tfHowMany: 'How many did you add?', tfFull: 'All full!', tfCount: 'Let’s count!',
+  tfFrame: 'Egg carton', tfBasket: 'Eggs to add', tfAdd: 'Put an egg in the carton', tfTake: 'Take this egg out',
+  sTenAsk: function(n, s){ return [P('Let’s make ' + n + '!', 'cheer'), P(s === 1 ? 'There is 1 egg in the carton.' : 'There are ' + s + ' eggs in the carton.', 'calm'), P('Fill every empty spot!', 'cheer')]; },
+  sTenHowMany: [P('All full!', 'cheer'), P('How many blue eggs did you add?', 'ask')],
+  sTenRight: function(s, a, n){ return [P('Yes!', 'cheer'), P(s + ' and ' + a + ' make ' + n + '!', 'proud')]; },
+  sTenCounted: function(a){ return P('You added ' + a + '!', 'calm'); },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -590,7 +643,7 @@ fr: {
   ready: '<b>Prêt pour la suite :</b> la plupart des sommes jusqu’à 5 sont acquises. Essayez « Jusqu’à 10 ».',
   childName: 'Prénom de l’enfant', shownHome: 'Affiché sur l’écran d’accueil', biggest: 'Plus grande réponse', upTo: function(n){ return 'Jusqu’à ' + n; },
   spoken: 'Consignes à voix haute', on: 'Oui', off: 'Non', language: 'Langue',
-  voiceType: 'Voix', female: 'Féminine', male: 'Masculine',
+  voiceType: 'Voix du système', female: 'Féminine', male: 'Masculine',
   noVoiceType: function(name, male){ return 'Cet appareil n’a pas de voix ' + name + ' ' + (male ? 'masculine' : 'féminine') + ' : une voix ' + (male ? 'féminine' : 'masculine') + ' est utilisée.'; },
   noSpeech: 'Ce navigateur ne peut pas parler. Essayez Safari ou Chrome.',
   langName: { en: 'anglaise', fr: 'française', zh: 'mandarin', ja: 'japonaise' },
@@ -613,6 +666,12 @@ fr: {
   sGarden: function(n){ return n ? [P('Tu as ' + n + ' ' + pl(n, 'étoile', 'étoiles') + ' !', 'cheer')] : [P('Joue pour attraper ta première étoile !', 'calm')]; },
   sSun: function(k){ return P('Encore ' + k + ' ' + pl(k, 'étoile', 'étoiles') + ' pour colorier la prochaine bande !', 'calm'); },
   sRainbows: function(r){ return P('Tu as fait ' + r + ' ' + pl(r, 'arc-en-ciel', 'arcs-en-ciel') + ' !', 'proud'); },
+  chickAlt: 'Pipou le poussin', tfMake: function(n){ return 'Fais\u00a0' + n + '\u00a0!'; }, tfHowMany: 'Combien en as-tu ajouté ?', tfFull: 'C’est plein !', tfCount: 'On compte !',
+  tfFrame: 'Boîte à œufs', tfBasket: 'Œufs à ajouter', tfAdd: 'Mettre un œuf dans la boîte', tfTake: 'Enlever cet œuf',
+  sTenAsk: function(n, s){ return [P('On fait ' + n + ' !', 'cheer'), P(s === 1 ? 'Il y a 1 œuf dans la boîte.' : 'Il y a ' + s + ' œufs dans la boîte.', 'calm'), P('Remplis toutes les places vides !', 'cheer')]; },
+  sTenHowMany: [P('C’est plein !', 'cheer'), P('Combien d’œufs bleus as-tu ajoutés ?', 'ask')],
+  sTenRight: function(s, a, n){ return [P('Oui !', 'cheer'), P(s + ' et ' + a + ', ça fait ' + n + ' !', 'proud')]; },
+  sTenCounted: function(a){ return P('Tu en as ajouté ' + a + ' !', 'calm'); },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -645,7 +704,7 @@ zh: {
   ready: '<b>可以挑战了：</b>5以内的加法大多已掌握，试试“10以内”。',
   childName: '孩子的名字', shownHome: '显示在主页上', biggest: '最大答案', upTo: function(n){ return n + '以内'; },
   spoken: '语音提示', on: '开', off: '关', language: '语言',
-  voiceType: '声音', female: '女声', male: '男声',
+  voiceType: '系统语音', female: '女声', male: '男声',
   noVoiceType: function(name, male){ return '这台设备没有' + name + (male ? '男声' : '女声') + '，将使用' + (male ? '女声' : '男声') + '。'; },
   noSpeech: '这个浏览器不能朗读，请试试 Safari 或 Chrome。',
   langName: { en: '英语', fr: '法语', zh: '普通话', ja: '日语' },
@@ -668,6 +727,12 @@ zh: {
   sGarden: function(n){ return n ? [P('你有' + n + '颗星星！', 'cheer')] : [P('玩游戏，摘到你的第一颗星星吧！', 'calm')]; },
   sSun: function(k){ return P('再得' + k + '颗星，就能给下一道彩虹上色！', 'calm'); },
   sRainbows: function(r){ return P('你已经变出了' + r + '道彩虹！', 'proud'); },
+  chickAlt: '小鸡皮皮', tfMake: function(n){ return '凑成' + n + '！'; }, tfHowMany: '你放了几个？', tfFull: '放满啦！', tfCount: '一起数一数！',
+  tfFrame: '鸡蛋盒', tfBasket: '要放的鸡蛋', tfAdd: '把一个鸡蛋放进盒子', tfTake: '把这个鸡蛋拿出来',
+  sTenAsk: function(n, s){ return [P('我们来凑成' + n + '！', 'cheer'), P('盒子里已经有' + s + '个鸡蛋。', 'calm'), P('把空格都放满吧！', 'cheer')]; },
+  sTenHowMany: [P('放满啦！', 'cheer'), P('你放了几个蓝色的鸡蛋？', 'ask')],
+  sTenRight: function(s, a, n){ return [P('对啦！', 'cheer'), P(s + '和' + a + '凑成' + n + '！', 'proud')]; },
+  sTenCounted: function(a){ return P('你放了' + a + '个！', 'calm'); },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -700,7 +765,7 @@ ja: {
   ready: '<b>次に進めます：</b>5までのたし算はほぼ習得しています。「10まで」を試してみましょう。',
   childName: 'お子さまの名前', shownHome: 'ホーム画面に表示されます', biggest: 'いちばん大きい答え', upTo: function(n){ return n + 'まで'; },
   spoken: '音声ガイド', on: 'オン', off: 'オフ', language: '言語',
-  voiceType: '声の種類', female: '女性', male: '男性',
+  voiceType: 'システムの声', female: '女性', male: '男性',
   noVoiceType: function(name, male){ return 'この端末には' + name + 'の' + (male ? '男性' : '女性') + 'の声がないため、' + (male ? '女性' : '男性') + 'の声を使います。'; },
   noSpeech: 'このブラウザは読み上げができません。Safari か Chrome をお試しください。',
   langName: { en: '英語', fr: 'フランス語', zh: '中国語', ja: '日本語' },
@@ -723,6 +788,12 @@ ja: {
   sGarden: function(n){ return n ? [P('ほしが ' + n + 'こ あるよ！', 'cheer')] : [P('あそんで、はじめての ほしを ゲットしよう！', 'calm')]; },
   sSun: function(k){ return P('あと ' + k + 'こで つぎの いろが ぬれるよ！', 'calm'); },
   sRainbows: function(r){ return P('にじを ' + r + 'こ つくったよ！', 'proud'); },
+  chickAlt: 'ひよこの ピピ', tfMake: function(n){ return n + 'を\u00a0つくろう！'; }, tfHowMany: 'いくつ いれた？', tfFull: 'いっぱい！', tfCount: 'かぞえよう！',
+  tfFrame: 'たまごの パック', tfBasket: 'いれる たまご', tfAdd: 'たまごを パックに いれる', tfTake: 'この たまごを だす',
+  sTenAsk: function(n, s){ return [P(n + 'を つくろう！', 'cheer'), P('パックには たまごが ' + s + 'こ あるよ。', 'calm'), P('あいている ところを ぜんぶ うめてね！', 'cheer')]; },
+  sTenHowMany: [P('いっぱいに なったね！', 'cheer'), P('あおい たまごを いくつ いれたかな？', 'ask')],
+  sTenRight: function(s, a, n){ return [P('せいかい！', 'cheer'), P(s + 'と ' + a + 'で ' + n + '！', 'proud')]; },
+  sTenCounted: function(a){ return P(a + 'こ いれたね！', 'calm'); },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 }
@@ -917,6 +988,7 @@ function render(){
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
+  else if (screen === 'ten') renderTen();
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
@@ -958,12 +1030,12 @@ function renderHome(){
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + momo('happy') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
-    '<div class="games"><div class="tiles one">' +
+    '<div class="games"><div class="tiles">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + L('gFeed') + '</button>' +
+      '<button class="tile ten" data-act="ten">' + critter('chick') + L('gTen') + '</button>' +
     '</div>' +
     '<div class="soon-wrap"><div class="soon-title">' + L('soon') + '</div>' +
-    '<div class="soon">' +
-      '<button data-act="soon" data-g="gTen">' + critter('chick') + L('gTen') + '</button>' +
+    '<div class="soon three">' +
       '<button data-act="soon" data-g="gBus">' + critter('bunny') + L('gBus') + '</button>' +
       '<button data-act="soon" data-g="gFrog">' + critter('frog') + L('gFrog') + '</button>' +
       '<button data-act="soon" data-g="gTower">' + critter('bear') + L('gTower') + '</button>' +
@@ -1303,7 +1375,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -1316,6 +1388,237 @@ function roundDone(){
   confetti();
   say(L('sGreat', G.earned).concat(madeRainbow ? [P(L('madeRainbow'), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
+
+/* =====================================================================
+   TEN FRAME (chick): fill the egg carton, then say how many you added
+   ===================================================================== */
+var EGG_COLORS = { start: ['#F6B2A3', '#E98C78'], add: ['#A9D4F0', '#6FAEDB'] };
+function eggSvg(kind, v){
+  var c = EGG_COLORS[kind] || EGG_COLORS.add, id = 'eg' + (eggId++);
+  var eyes = [
+    '<ellipse cx="38" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/><ellipse cx="62" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/>',
+    '<path d="M33 58q5-5 10 0M57 58q5-5 10 0" stroke="#4A3229" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
+    '<ellipse cx="38" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/><path d="M57 58q5-5 10 0" stroke="#4A3229" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
+  ][((v % 3) + 3) % 3];
+  var mouth = v % 2 ? '<path d="M44 68q6 6 12 0" stroke="#4A3229" stroke-width="3" fill="none" stroke-linecap="round"/>'
+                    : '<path d="M44 67q6 8 12 0z" fill="#8B4B3E"/>';
+  return '<svg class="egg-svg" viewBox="0 0 100 120" aria-hidden="true"><defs><radialGradient id="' + id + '" cx="38%" cy="32%" r="75%">' +
+    '<stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".35" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></radialGradient></defs>' +
+    '<path d="M8 68C8 30 28 4 50 4s42 26 42 64c0 30-18 48-42 48S8 98 8 68z" fill="url(#' + id + ')"/>' +
+    '<ellipse cx="30" cy="68" rx="6" ry="3.6" fill="#F28C8C" opacity=".45"/><ellipse cx="70" cy="68" rx="6" ry="3.6" fill="#F28C8C" opacity=".45"/>' +
+    eyes + mouth + '</svg>';
+}
+var eggId = 0;
+function chick(cls){ return '<img class="' + (cls || 'momo chick') + '" src="animals/chick.png" alt="' + esc(L('chickAlt')) + '" draggable="false">'; }
+
+function tenSize(){ return S.maxSum <= 5 ? 5 : 10; }
+function pickTen(){
+  var N = tenSize(), bag = [];
+  for (var s = 1; s < N; s++) {
+    var st = factState(s, N - s), w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
+    if (G && G.last === factKey(s, N - s)) w = 0;
+    for (var i = 0; i < w; i++) bag.push(s);
+  }
+  return bag[Math.floor(Math.random() * bag.length)] || 3;
+}
+function startTen(){ G = { game:'ten', q:0, earned:0, startStars:S.stars }; tenQuestion(); }
+function tenQuestion(){
+  var N = tenSize(), s = pickTen();
+  G.N = N; G.s = s; G.a = N - s; G.t = N; G.last = factKey(s, N - s);
+  G.cells = [];                               /* cell i: 'start' | spare index | null */
+  for (var i = 0; i < N; i++) G.cells.push(i < s ? 'start' : null);
+  G.spares = Math.min(G.a + 2, 11);           /* a couple of extra eggs, so "use them all" isn't the answer */
+  G.inTray = []; for (var k = 0; k < G.spares; k++) G.inTray.push(true);
+  G.v = Math.floor(Math.random() * 6);
+  G.phase = 'fill'; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = '';
+  screen = 'ten'; closeOverlay(); renderTen();
+  tenAskAloud();
+}
+function tenAskAloud(){ say(G.phase === 'ask' ? L('sTenHowMany') : L('sTenAsk', G.N, G.s)); }
+function tenAdded(){ return G.cells.filter(function(c){ return typeof c === 'number'; }).length; }
+
+function renderTen(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  app.innerHTML = '<section class="screen ten">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('ten-repeat', L('hearAgain')) + '</div>' +
+    '<div class="stage">' +
+      '<div class="left"><div class="momo-row"><div id="momo">' + chick() + '</div><div class="bubbles"><div class="bubble"><b id="bubble"></b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+        '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a qbox" id="tfA">?</span><span>=</span><span class="t">' + G.N + '</span></div></div>' +
+      '<div class="tf-area" id="tfArea">' +
+        '<div class="carton' + (G.N === 5 ? ' five' : '') + '" id="carton" aria-label="' + esc(L('tfFrame')) + '"></div>' +
+        '<div class="tf-bottom" id="tfBottom"></div>' +
+      '</div>' +
+    '</div></section>';
+  updateTen();
+}
+function updateTen(pop){
+  if (screen !== 'ten') return;
+  document.getElementById('bubble').textContent = G.phase === 'ask' ? L('tfHowMany') : L('tfMake', G.N);
+  setBubble2(G.bubble2, G.bubble2Kind);
+  var h = '';
+  G.cells.forEach(function(c, i){
+    if (c === 'start') h += '<span class="cell"><span class="egg start">' + eggSvg('start', G.v + i * 2) + '</span></span>';
+    else if (typeof c === 'number') h += '<span class="cell"><button class="egg add' + (pop === i ? ' pop' : '') + '" data-cell="' + i + '" aria-label="' + esc(L('tfTake')) + '"' + (G.phase !== 'fill' ? ' tabindex="-1"' : '') + '>' + eggSvg('add', G.v + 1 + c * 5) + '</button></span>';
+    else h += '<span class="cell empty"></span>';
+  });
+  document.getElementById('carton').innerHTML = h;
+  var b = '';
+  if (G.phase === 'fill') {
+    b = '<div class="tray" id="tray" aria-label="' + esc(L('tfBasket')) + '">';
+    G.inTray.forEach(function(on, k){
+      if (on) b += '<button class="egg add" data-spare="' + k + '" aria-label="' + esc(L('tfAdd')) + '">' + eggSvg('add', G.v + 1 + k * 5) + '</button>';
+    });
+    b += '</div>';
+  } else {
+    var opts = G.opts || [];
+    b = '<div class="choices" role="group" aria-label="' + esc(L('tfHowMany')) + '">' + opts.map(function(n){
+      return '<button class="choice' + (G.tried[n] ? ' tried' : '') + '" data-act="tf-pick" data-v="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '>' + n + '</button>';
+    }).join('') + '</div>';
+  }
+  document.getElementById('tfBottom').innerHTML = b;
+}
+function tenPut(spare){
+  if (!G || G.lock || G.phase !== 'fill') return;
+  if (spare === undefined || spare === null || isNaN(spare) || !G.inTray[spare]) { spare = G.inTray.indexOf(true); if (spare < 0) return; }
+  var cell = G.cells.indexOf(null); if (cell < 0) return;
+  G.inTray[spare] = false; G.cells[cell] = spare; G.bubble2 = '';
+  updateTen(cell);
+  say(P(String(tenAdded()), 'count', tenAdded()));
+  if (G.cells.indexOf(null) < 0) tenFull();
+}
+function tenTake(cell){
+  if (!G || G.lock || G.phase !== 'fill') return;
+  if (cell === undefined || isNaN(cell) || typeof G.cells[cell] !== 'number') {   /* take the last one put in */
+    for (cell = G.N - 1; cell >= 0 && typeof G.cells[cell] !== 'number'; cell--);
+    if (cell < 0) return;
+  }
+  var spare = G.cells[cell]; G.cells[cell] = null; G.inTray[spare] = true;
+  /* keep the carton filled in order (like a real ten frame): slide later eggs back */
+  var adds = G.cells.filter(function(c){ return typeof c === 'number'; });
+  for (var i = G.s; i < G.N; i++) G.cells[i] = i - G.s < adds.length ? adds[i - G.s] : null;
+  G.bubble2 = '';
+  updateTen();
+  say(P(String(tenAdded()), 'count', tenAdded()));
+}
+function tenFull(){
+  G.lock = true;
+  var a = G.a, opts = [a];
+  var cand = [a - 1, a + 1, a - 2, a + 2].filter(function(n){ return n >= 1 && n <= G.N; });
+  while (opts.length < 3 && cand.length) opts.push(cand.splice(Math.floor(Math.random() * Math.min(2, cand.length)), 1)[0]);
+  opts.sort(function(x, y){ return x - y; });
+  setTimeout(function(){
+    if (screen !== 'ten' || !G) return;
+    G.phase = 'ask'; G.opts = opts; G.lock = false;
+    G.bubble2 = L('tfFull'); G.bubble2Kind = 'yum';
+    updateTen();
+    var c = document.getElementById('carton'); if (c) { c.classList.remove('wiggle'); void c.offsetWidth; c.classList.add('wiggle'); }
+    say(L('sTenHowMany'));
+  }, 450);
+}
+function tenPick(n){
+  if (!G || G.lock || G.phase !== 'ask') return;
+  var right = n === G.a;
+  if (G.first) { record(right); G.first = false; }
+  if (right) {
+    G.lock = true;
+    var qa = document.getElementById('tfA'); if (qa) { qa.textContent = G.a; qa.classList.add('solved'); }
+    G.bubble2 = L('yum'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    var m = document.querySelector('#momo .chick'); if (m) m.classList.add('bounce');
+    document.querySelectorAll('.choice').forEach(function(x){ if (+x.getAttribute('data-v') === n) x.classList.add('right'); else x.disabled = true; });
+    S.stars++; G.earned++; save();
+    say(L('sTenRight', G.s, G.a, G.N));
+    setTimeout(showTenReward, 1900);
+  } else {
+    G.lock = true; G.tried[n] = true;
+    G.bubble2 = L('tfCount'); G.bubble2Kind = '';
+    updateTen();
+    var area = document.getElementById('tfArea'); if (area) area.classList.add('counting');
+    var eggs = [];
+    G.cells.forEach(function(c, i){ if (typeof c === 'number') eggs.push(document.querySelector('#carton [data-cell="' + i + '"]')); });
+    var parts = [L('sCount')];
+    for (var i = 1; i <= G.a; i++) parts.push(P(String(i), 'count', i));
+    parts.push(L('sTenCounted', G.a));
+    var q = G.q, done = false;
+    function unlock(){
+      if (done || screen !== 'ten' || !G || G.q !== q) return; done = true; G.unlock = null;
+      G.lock = false; var ar = document.getElementById('tfArea'); if (ar) ar.classList.remove('counting');
+    }
+    say(parts, function(i){
+      if (i >= 1 && i <= G.a && eggs[i - 1]) { eggs[i - 1].classList.add('counted'); eggs[i - 1].insertAdjacentHTML('beforeend', '<span class="num">' + i + '</span>'); }
+      if (i > G.a) unlock();
+    }, 750);
+    G.unlock = unlock;
+    setTimeout(unlock, (G.a + 2) * 2500);
+  }
+}
+function eggs(n, kind, v){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="egg mini ' + kind + '">' + eggSvg(kind, v + i * (kind === 'start' ? 2 : 5)) + '</span>'; return h; }
+function showTenReward(){
+  if (screen !== 'ten') return;
+  var last = G.q + 1 >= ROUND;
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1>' + chick('pic animal') +
+    '<div class="sumcard"><div class="groups"><div class="g">' + eggs(G.s, 'start', G.v) + '</div>+<div class="g">' + eggs(G.a, 'add', G.v + 1) + '</div></div>' +
+    '<div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.N)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.N + '</span></div></div>' +
+    '<div class="row"><div class="chip">' + ICON.star + '+1</div><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+
+/* tap or drag: tray egg -> carton adds; carton egg -> away takes it out */
+var tdrag = null;
+document.addEventListener('pointerdown', function(e){
+  if (!e.target.closest || !G || G.lock || screen !== 'ten' || G.phase !== 'fill') return;
+  var el = e.target.closest('#tray .egg[data-spare]'), from = 'tray';
+  if (!el) { el = e.target.closest('#carton .egg[data-cell]'); from = 'carton'; }
+  if (!el) return;
+  e.preventDefault();
+  if (tdrag) tFinish();
+  tdrag = { el:el, from:from, key:+(el.getAttribute(from === 'tray' ? 'data-spare' : 'data-cell')), x:e.clientX, y:e.clientY, lx:e.clientX, ly:e.clientY, moved:false, ghost:null, id:e.pointerId };
+});
+document.addEventListener('pointermove', function(e){
+  if (!tdrag || e.pointerId !== tdrag.id) return;
+  if (!tdrag.moved && Math.hypot(e.clientX - tdrag.x, e.clientY - tdrag.y) > 10) {
+    tdrag.moved = true;
+    var g = document.createElement('span'); g.className = 'egg add egg-ghost'; g.innerHTML = tdrag.el.innerHTML;
+    var r = tdrag.el.getBoundingClientRect(); g.style.width = r.width + 'px'; g.style.height = r.height + 'px';
+    document.body.appendChild(g); tdrag.ghost = g; tdrag.el.style.visibility = 'hidden';
+  }
+  tdrag.lx = e.clientX; tdrag.ly = e.clientY;
+  if (tdrag.ghost) {
+    tdrag.ghost.style.left = Math.max(24, Math.min(innerWidth - 24, e.clientX)) + 'px';
+    tdrag.ghost.style.top = Math.max(24, Math.min(innerHeight - 24, e.clientY)) + 'px';
+    var c = document.getElementById('carton'); if (c) c.classList.toggle('hot', tdrag.from === 'tray' && overCarton(e.clientX, e.clientY));
+  }
+});
+function overCarton(x, y){
+  var c = document.getElementById('carton'); if (!c) return false;
+  var r = c.getBoundingClientRect(), m = 24;
+  return x > r.left - m && x < r.right + m && y > r.top - m && y < r.bottom + m;
+}
+function tEnd(e){
+  if (!tdrag || (e && e.pointerId !== tdrag.id)) return;
+  if (e && e.type === 'pointerup') { tdrag.lx = e.clientX; tdrag.ly = e.clientY; tdrag.up = true; }
+  tFinish();
+}
+function tFinish(){
+  if (!tdrag) return;
+  var d = tdrag; tdrag = null;
+  document.querySelectorAll('.egg-ghost').forEach(function(g){ g.remove(); });
+  var c = document.getElementById('carton'); if (c) c.classList.remove('hot');
+  if (d.el) d.el.style.visibility = '';
+  if (!G || screen !== 'ten' || (!d.moved && !d.up)) return;
+  var on = overCarton(d.lx, d.ly);
+  if (d.from === 'tray') { if (!d.moved || on) tenPut(d.key); }
+  else if (!d.moved || !on) tenTake(d.key);
+}
+document.addEventListener('pointerup', tEnd);
+document.addEventListener('pointercancel', tEnd);
+window.addEventListener('blur', tFinish);
+document.addEventListener('visibilitychange', tFinish);
+document.addEventListener('touchend', function(e){ if (tdrag && e.touches.length === 0) setTimeout(function(){ if (tdrag) tFinish(); }, 50); });
+document.addEventListener('touchcancel', function(){ if (tdrag) tFinish(); });
 
 /* ---------- garden ---------- */
 var PER_STRIPE = 5;
@@ -1430,8 +1733,14 @@ function renderParents(){
       '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
-      (hasSpeech ? '<div class="field"><span class="lab">' + L('voiceType') + '</span><div class="seg"><button data-act="vtype" data-v="female" aria-pressed="' + (S.voiceType !== 'male') + '">' + L('female') + '</button><button data-act="vtype" data-v="male" aria-pressed="' + (S.voiceType === 'male') + '">' + L('male') + '</button></div>' +
-        (hasVoice(S.lang) && !hasVoiceType(S.lang, S.voiceType === 'male' ? 'male' : 'female') ? '<span class="tip small">' + L('noVoiceType', L('langName')[S.lang], S.voiceType === 'male') + '</span>' : '') + '</div>' : '') +
+      (hasSpeech ? (function(){
+        /* only the kinds of voice this device actually has for this language can be picked */
+        var okF = hasVoiceType(S.lang, 'female'), okM = hasVoiceType(S.lang, 'male');
+        var cur = S.voiceType === 'male' ? (okM || !okF ? 'male' : 'female') : (okF || !okM ? 'female' : 'male');
+        return '<div class="field"><span class="lab">' + L('voiceType') + '</span><div class="seg">' +
+          '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF ? '' : ' disabled') + '>' + L('female') + '</button>' +
+          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
+      })() : '') +
       '<div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
     '</div>';
@@ -1449,6 +1758,8 @@ function renderParents(){
 document.addEventListener('click', function(e){
   var jarC = e.target.closest('#jar .cookie');
   if (jarC && e.detail === 0) { addCookie(+jarC.getAttribute('data-spot')); return; } /* keyboard */
+  var eg = e.target.closest('.ten .egg[data-spare], .ten .egg[data-cell]');
+  if (eg && e.detail === 0) { if (eg.hasAttribute('data-spare')) tenPut(+eg.getAttribute('data-spare')); else tenTake(+eg.getAttribute('data-cell')); return; }
   var b = e.target.closest('[data-act]'); if (!b) return;
   var act = b.getAttribute('data-act');
   /* the speaker button is a mute toggle: tap to mute, tap again to unmute (and hear the line) */
@@ -1468,6 +1779,9 @@ document.addEventListener('click', function(e){
       else { render(); say(L('sSample')); }
       break;
     case 'play': startRound(); break;
+    case 'ten': startTen(); break;
+    case 'ten-repeat': tenAskAloud(); break;
+    case 'tf-pick': tenPick(+b.getAttribute('data-v')); break;
     case 'home': show('home'); break;
     case 'garden': show('garden'); break;
     case 'book': show('book'); break;
@@ -1480,7 +1794,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
