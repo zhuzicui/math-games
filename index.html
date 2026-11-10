@@ -684,7 +684,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .pad.tried{opacity:.38;filter:grayscale(.7);box-shadow:none}
 .pad.hit{animation:padbob .35s}
 @keyframes padbob{40%{transform:translateY(4px) scale(.94)}}
-.hopper{position:absolute;z-index:2;pointer-events:none;height:auto;transition:left .3s,top .3s;filter:drop-shadow(0 4px 3px rgba(90,62,51,.2))}
+.hopper{position:absolute;z-index:2;pointer-events:none;height:auto;transform-origin:50% 100%;filter:drop-shadow(0 4px 3px rgba(90,62,51,.2))}
 .arcs{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
 .arcs .arc{fill:none;stroke:#3E7FB0;stroke-width:3.5;stroke-dasharray:3 7;stroke-linecap:round}
 .mini-pad{display:inline-block;width:clamp(20px,3.6dvh,28px);height:clamp(20px,3.6dvh,28px);border-radius:50%;border:3px solid}
@@ -1411,7 +1411,7 @@ var ICON = {
   muted:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#E4D6CC"/><path d="M16 9l6 6M22 9l-6 6" stroke="#D0705A" stroke-width="2.4"/></svg>',
   speak:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B4A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z" fill="#F6C9B4"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>',
   star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.8 6.2 20l1.4-6.4L2.7 9.2l6.5-.7z" fill="#F7D98C" stroke="#B88A4A" stroke-width="1.2" stroke-linejoin="round"/></svg>',
-  lock:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#7A5A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
+  lock:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#7A5A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'
 };
 
 function speakBtn(act, label){
@@ -2337,18 +2337,30 @@ function hopOnce(from, to, done){
     var y = a.y - a.w * .32, mx = (a.x + b.x) / 2;
     svg.insertAdjacentHTML('beforeend', '<path d="M' + a.x + ' ' + y + ' Q' + mx + ' ' + (y - lift * 1.1) + ' ' + b.x + ' ' + y + '" class="arc"/>');
   }
-  var finished = false;
-  function end(){ if (finished) return; finished = true; G.pos = to; placeFrog(to, false); done(); }
+  var finished = false, an = null, DUR = 620;
+  function end(){
+    if (finished) return; finished = true;
+    G.pos = to; placeFrog(to, false);              /* move the frog for real first, then drop the animation: no slide back */
+    if (an) try { an.cancel(); } catch(e) {}
+    done();
+  }
   if (reduceMotion) { end(); return; }
+  /* a real jump: crouch, take off, fly along a parabola (stretched), land (squashed), settle */
+  var fr = [], up = 0.16, air = 0.80, peak = lift * 1.15;
+  fr.push({ transform:'translate(0px,0px) scale(1,1)', offset:0 });
+  fr.push({ transform:'translate(0px,0px) scale(1.12,.84)', offset:up });
+  for (var i = 1; i <= 10; i++) {
+    var t = i / 10, x = dx * t, y = dy * t - 4 * peak * t * (1 - t);
+    var sx = t < .5 ? .92 : 1, sy = t < .5 ? 1.1 : 1;
+    fr.push({ transform:'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sx + ',' + sy + ')', offset: +(up + (air - up) * t).toFixed(3) });
+  }
+  fr.push({ transform:'translate(' + dx + 'px,' + dy + 'px) scale(1.14,.82)', offset:.9 });
+  fr.push({ transform:'translate(' + dx + 'px,' + dy + 'px) scale(1,1)', offset:1 });
   try {
-    var an = f.animate([
-      { transform:'translate(0px,0px)', offset:0 },
-      { transform:'translate(' + dx / 2 + 'px,' + (Math.min(0, dy) - lift) + 'px)', offset:.5 },
-      { transform:'translate(' + dx + 'px,' + dy + 'px)', offset:1 }
-    ], { duration:430, easing:'ease-in-out' });
+    an = f.animate(fr, { duration:DUR, easing:'linear', fill:'forwards' });
     an.onfinish = end;
   } catch(e) { end(); }
-  setTimeout(end, 560);
+  setTimeout(end, DUR + 120);
 }
 /* hop a times from s, counting on out loud; then call done() */
 function frogHop(done){
