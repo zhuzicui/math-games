@@ -193,7 +193,7 @@ h1,h2{font-family:var(--display);font-weight:800;margin:0;line-height:1.05}
 .startscreen{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
 .startscreen .momo{width:clamp(150px,44vw,240px)}
 .startbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.langpick{max-width:330px;flex:1}
+.langpick{max-width:330px;flex:0 1 auto}
 .langpick button{min-height:44px;font-size:15px;padding:0 6px}
 .nameform{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:420px}
 .name-input{width:100%;font-family:var(--display);font-weight:700;font-size:clamp(28px,8vw,40px);text-align:center;padding:12px 18px;border-radius:24px;border:4px solid var(--edge);background:var(--card);color:var(--ink);user-select:text;-webkit-user-select:text;outline:none}
@@ -585,6 +585,26 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 @media (orientation:landscape) and (min-width:600px) and (max-height:600px){
   .bus-scene{--bw:min(94cqw, calc(50cqh * 2.2), 640px)}
 }
+
+/* ===== language dropdown ===== */
+.langsel{position:relative;display:inline-flex;align-items:center;height:clamp(44px,7dvh,56px);border:4px solid var(--edge);border-radius:999px;background:var(--card);
+  box-shadow:0 5px 0 var(--edge);color:var(--ink);max-width:100%}
+.langsel .gl,.langsel .cv{position:absolute;top:50%;transform:translateY(-50%);display:flex;pointer-events:none}
+.langsel .gl{left:14px;width:22px;height:22px}.langsel .cv{right:14px;width:18px;height:18px}
+.langsel svg{width:100%;height:100%}
+.langsel select{appearance:none;-webkit-appearance:none;border:0;background:transparent;height:100%;padding:0 44px 0 46px;border-radius:999px;
+  font-family:var(--display);font-weight:800;font-size:clamp(16px,2.6dvh,20px);color:var(--ink);cursor:pointer;max-width:100%;text-overflow:ellipsis}
+.langsel select:focus-visible{outline:4px solid #9DCBEC;outline-offset:2px}
+.parents .langsel{box-shadow:none}
+/* ===== Korean and Cantonese: Chiron GoRound TC (SIL OFL), only downloaded when shown ===== */
+@font-face{font-family:'Chiron GoRound KO';src:url(fonts/chiron-ko.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+1100-11FF,U+3130-318F,U+AC00-D7A3}
+@font-face{font-family:'Chiron GoRound HK';src:url(fonts/chiron-yue.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+2E80-2FDF,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF,U+2018-201D}
+html:lang(ko){--display:'Baloo 2','Chiron GoRound KO','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+html:lang(ko) body,html:lang(ko) .parents{font-family:Nunito,'Chiron GoRound KO','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;word-break:keep-all}
+html:lang(zh-HK){--display:'Baloo 2','Chiron GoRound HK','PingFang HK','Noto Sans HK',system-ui,sans-serif}
+html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRound HK','PingFang HK','Noto Sans HK',system-ui,sans-serif}
 </style>
 </head>
 <body>
@@ -607,7 +627,7 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', facts:{}, lang:'en' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -615,11 +635,14 @@ var S = load();
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 
 /* ---------- languages ---------- */
-var LANGS = [['en', 'English'], ['fr', 'Français'], ['zh', '中文'], ['ja', '日本語']];
-var HTML_LANG = { en: 'en', fr: 'fr', zh: 'zh-CN', ja: 'ja' };
-var SPEECH_LANG = { en: 'en-US', fr: 'fr-CA', zh: 'zh-CN', ja: 'ja-JP' };
+var LANGS = [['en', 'English'], ['fr', 'Français'], ['zh', '中文 · 普通话'], ['yue', '中文 · 廣東話'], ['ja', '日本語'], ['ko', '한국어']];
+var HTML_LANG = { en: 'en', fr: 'fr', zh: 'zh-CN', yue: 'zh-HK', ja: 'ja', ko: 'ko' };
+var SPEECH_LANG = { en: 'en-US', fr: 'fr-CA', zh: 'zh-CN', yue: 'zh-HK', ja: 'ja-JP', ko: 'ko-KR' };
 function P(t, s, n){ return { t: t, s: s || 'calm', n: n }; }
 function pl(n, one, many){ return n === 1 ? one : many; }
+/* Korean particles after a number depend on how the number ends when read aloud */
+function koEun(n){ return /[2459]$/.test(String(n)) ? '는' : '은'; }
+function koEul(n){ return /[2459]$/.test(String(n)) ? '를' : '을'; }
 
 var TX = {
 en: {
@@ -654,7 +677,7 @@ en: {
   voiceType: 'System voice', female: 'Female', male: 'Male',
   noVoiceType: function(name, male){ return 'This device has no ' + (male ? 'male' : 'female') + ' ' + name + ' voice, so a ' + (male ? 'female' : 'male') + ' voice is used.'; },
   noSpeech: 'This browser can’t speak aloud. Try Safari or Chrome.',
-  langName: { en: 'English', fr: 'French', zh: 'Mandarin', ja: 'Japanese' },
+  langName: { en: 'English', fr: 'French', zh: 'Mandarin', yue: 'Cantonese', ja: 'Japanese', ko: 'Korean' },
   noVoice: function(name){ return 'This device has no ' + name + ' voice installed, so instructions won’t be read aloud.'; },
   progressLab: 'Progress', reset: 'Reset progress', resetConfirm: 'Tap again to erase all progress', savedHere: 'Saved in this browser on this device only.',
   sAskName: [P('Hi!', 'cheer'), P('What’s your name?', 'ask'), P('A grown-up can help you type it.', 'calm')],
@@ -722,7 +745,7 @@ fr: {
   voiceType: 'Voix du système', female: 'Féminine', male: 'Masculine',
   noVoiceType: function(name, male){ return 'Cet appareil n’a pas de voix ' + name + ' ' + (male ? 'masculine' : 'féminine') + ' : une voix ' + (male ? 'féminine' : 'masculine') + ' est utilisée.'; },
   noSpeech: 'Ce navigateur ne peut pas parler. Essayez Safari ou Chrome.',
-  langName: { en: 'anglaise', fr: 'française', zh: 'mandarin', ja: 'japonaise' },
+  langName: { en: 'anglaise', fr: 'française', zh: 'mandarin', yue: 'cantonaise', ja: 'japonaise', ko: 'coréenne' },
   noVoice: function(name){ return 'Cet appareil n’a pas de voix ' + name + ' installée : les consignes ne seront pas lues à voix haute.'; },
   progressLab: 'Progrès', reset: 'Réinitialiser les progrès', resetConfirm: 'Touchez encore pour tout effacer', savedHere: 'Enregistré dans ce navigateur, sur cet appareil seulement.',
   sAskName: [P('Coucou !', 'cheer'), P('Comment t’appelles-\u2060tu\u00a0?', 'ask'), P('Un adulte peut t’aider à l’écrire.', 'calm')],
@@ -790,7 +813,7 @@ zh: {
   voiceType: '系统语音', female: '女声', male: '男声',
   noVoiceType: function(name, male){ return '这台设备没有' + name + (male ? '男声' : '女声') + '，将使用' + (male ? '女声' : '男声') + '。'; },
   noSpeech: '这个浏览器不能朗读，请试试 Safari 或 Chrome。',
-  langName: { en: '英语', fr: '法语', zh: '普通话', ja: '日语' },
+  langName: { en: '英语', fr: '法语', zh: '普通话', yue: '粤语', ja: '日语', ko: '韩语' },
   noVoice: function(name){ return '这台设备没有安装' + name + '语音，提示不会朗读出来。'; },
   progressLab: '进度', reset: '重置进度', resetConfirm: '再点一次即可清除所有进度', savedHere: '进度只保存在这台设备的浏览器里。',
   sAskName: [P('你好！', 'cheer'), P('你叫什么名字？', 'ask'), P('可以请大人帮你输入。', 'calm')],
@@ -858,7 +881,7 @@ ja: {
   voiceType: 'システムの声', female: '女性', male: '男性',
   noVoiceType: function(name, male){ return 'この端末には' + name + 'の' + (male ? '男性' : '女性') + 'の声がないため、' + (male ? '女性' : '男性') + 'の声を使います。'; },
   noSpeech: 'このブラウザは読み上げができません。Safari か Chrome をお試しください。',
-  langName: { en: '英語', fr: 'フランス語', zh: '中国語', ja: '日本語' },
+  langName: { en: '英語', fr: 'フランス語', zh: '中国語（普通話）', yue: '広東語', ja: '日本語', ko: '韓国語' },
   noVoice: function(name){ return 'この端末には' + name + 'の音声が入っていないため、読み上げされません。'; },
   progressLab: '進み具合', reset: '進み具合をリセット', resetConfirm: 'もう一度タップすると、すべての記録が消えます', savedHere: '記録はこの端末のブラウザにだけ保存されます。',
   sAskName: [P('こんにちは！', 'cheer'), P('おなまえは？', 'ask'), P('おとなの ひとに いれて もらってね。', 'calm')],
@@ -893,6 +916,142 @@ ja: {
   sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
+},
+yue: {
+  hearIt: '聽吓', hearInstr: '聽說明', hearAgain: '再聽一次',
+  whatName: '你叫咩名呀？', yourName: '你嘅名', typeName: '打你個名', letsGo: '出發！', skip: '跳過',
+  hiName: function(n){ return '你好，' + n + '！'; }, itsMe: '係我！', notMe: function(n){ return '唔係' + n + '？換過名'; },
+  letsPlay: function(n){ return n ? '一齊玩，' + n + '！' : '一齊玩啦！'; }, tapGame: '揀一個遊戲開始',
+  stars: function(n){ return n + '粒星'; }, grownArea: '家長區',
+  gFeed: '餵小怪獸', gGarden: '我啲星星', soon: '就嚟推出', gTen: '十格框', gBus: '巴士站', gFrog: '青蛙跳', gTower: '砌高塔',
+  backGames: '返去遊戲', qOf: function(a, b){ return '第' + a + '題，共' + b + '題'; }, plate: '碟', jar: '曲奇罐', cookie: '曲奇',
+  takeBack: '將呢塊曲奇攞返去', putOn: '放一塊曲奇落碟度',
+  feedMe: function(t){ return '餵我' + t + '塊！'; }, yumT: function(t){ return '好好食！' + t + '塊！'; }, more: '仲未夠！', full: '太飽喇！', yum: '好好食！', done: '得喇！',
+  momoAlt: function(h){ return h ? '獨角獸摩摩，笑緊' : '獨角獸摩摩，肚餓喇'; },
+  didIt: '你做到喇！', next: '下一題', finish: '完成', eqLabel: function(s, a, t){ return s + '加' + a + '等於' + t; },
+  great: '好叻呀！', newFlowers: function(n){ return '你個星空多咗' + n + '粒星！'; }, seeGarden: '睇我啲星星', again: '再玩一次',
+  gardenOf: function(){ return '你嘅彩虹'; }, toSun: function(k){ return '再攞' + k + '粒星，就可以幫下一條彩虹填色！'; },
+  firstFlower: '玩「餵小怪獸」，攞你第一粒星星！', flowersN: function(n){ return n + '粒星星'; },
+  rainbowsN: function(r){ return r + '條彩虹'; }, myRainbows: '我嘅彩虹', noRainbow: '你第一條彩虹會喺呢度出現',
+  madeRainbow: '彩虹完成喇！得到一張新貼紙！', newStripe: '你幫彩虹塗咗一條新顏色！',
+  myStickers: '我嘅貼紙簿', openBook: '打開貼紙簿', backSky: '返去我嘅彩虹',
+  stickersN: function(n){ return n + '張貼紙'; }, noStickers: '完成一條彩虹，就可以攞到第一張貼紙！', rainbowDone: '彩虹完成喇！已經放咗入你嘅貼紙簿。',
+  grownOnly: '家長專用', whatIs: function(a, b){ return a + ' × ' + b + ' 係幾多？'; }, cancel: '取消',
+  grownUps: '家長', progressOf: function(n){ return n ? n + '嘅進度' : '學習進度'; }, backKid: '返去兒童模式', tabProgress: '進度', tabSettings: '設定',
+  facts: '加數練習', stat: function(s, g, n){ return s + '粒星 · 已掌握 ' + g + '/' + n; }, gotIt: '已掌握', learning: '學緊', notTried: '未試過',
+  tryHome: '喺屋企試吓', and: '同',
+  tipClose: function(pairs, x, y){ return '就快掌握：' + pairs + '。食茶點嗰陣，先放' + x + '粒提子，再放' + y + '粒，問小朋友而家一共有幾多粒。'; },
+  tipDefault: '練習「接住數」：擺幾隻匙羹，再加一兩隻，問小朋友「而家有幾多隻？」',
+  caption: '橫行：碟入面原本嘅曲奇 · 直行：加落去嘅曲奇',
+  ready: '<b>可以挑戰喇：</b>5以內嘅加數大致已經掌握，試吓「10以內」。',
+  childName: '小朋友嘅名', shownHome: '會喺主頁顯示', biggest: '最大答案', upTo: function(n){ return n + '以內'; },
+  spoken: '語音提示', on: '開', off: '關', language: '語言',
+  voiceType: '系統語音', female: '女聲', male: '男聲',
+  noVoiceType: function(name, male){ return '呢部機冇' + name + (male ? '男聲' : '女聲') + '，會用' + (male ? '女聲' : '男聲') + '。'; },
+  noSpeech: '呢個瀏覽器唔可以讀出聲，請試吓 Safari 或者 Chrome。',
+  langName: { en: '英文', fr: '法文', zh: '普通話', yue: '廣東話', ja: '日文', ko: '韓文' },
+  noVoice: function(name){ return '呢部機冇安裝' + name + '語音，提示唔會讀出嚟。'; },
+  progressLab: '進度', reset: '重設進度', resetConfirm: '再撳一次就會清除所有進度', savedHere: '進度只會儲存喺呢部機嘅瀏覽器。',
+  sAskName: [P('你好！', 'cheer'), P('你叫咩名呀？', 'ask'), P('可以請大人幫你打。', 'calm')],
+  sIsThatYou: function(n){ return [P('你好，' + n + '！', 'cheer'), P('係咪你呀？', 'ask')]; },
+  sNeedName: [P('打你個名，然後撳「出發」！', 'calm')],
+  sWelcomeNew: function(n){ return [P('你好，' + n + '！', 'cheer'), P('我哋一齊玩啦！', 'cheer'), P('撳一下獨角獸開始。', 'calm')]; },
+  sWelcomeBack: function(n){ return [P('歡迎返嚟，' + n + '！', 'cheer'), P('撳一下獨角獸開始玩。', 'calm')]; },
+  sSkip: [P('我哋一齊玩啦！', 'cheer'), P('撳一下獨角獸開始。', 'calm')],
+  sHello: function(n){ return [P(n ? '你好，' + n + '！' : '你好！', 'cheer'), P('撳獨角獸開始玩。', 'calm'), P('或者撳星星，睇吓你個星空。', 'calm')]; },
+  sSoon: function(g){ return [P(g + '就快嚟喇！', 'cheer')]; },
+  sAsk: function(t, s){ return [P('摩摩想食' + t + '塊曲奇！', 'ask'), P('碟度已經有' + s + '塊。', 'calm'), P('再加多啲啦！', 'cheer')]; },
+  sYum: function(s, a, t){ return [P('好好食！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
+  sCount: P('我哋一齊數吓。', 'calm'),
+  sTooFew: function(n, t){ return [P('一共' + n + '塊。', 'calm'), P('摩摩想要' + t + '塊。', 'calm'), P('再加多啲！', 'cheer')]; },
+  sTooMany: function(n, t){ return [P('一共' + n + '塊。', 'calm'), P('太多喇！', 'oops'), P('摩摩只要' + t + '塊，攞返啲走啦。', 'calm')]; },
+  sGreat: function(n){ return [P('好叻呀！', 'cheer'), P('你攞到' + n + '粒星星！', 'proud')]; },
+  sGarden: function(n){ return n ? [P('你有' + n + '粒星星！', 'cheer')] : [P('玩遊戲，攞你第一粒星星啦！', 'calm')]; },
+  sSun: function(k){ return P('再攞' + k + '粒星，就可以幫下一條彩虹填色！', 'calm'); },
+  sRainbows: function(r){ return P('你已經變咗' + r + '條彩虹出嚟！', 'proud'); },
+  chickAlt: '小雞皮皮', tfMake: function(n){ return '湊夠' + n + '！'; }, tfHowMany: '你放咗幾多隻？', tfFull: '放滿喇！', tfCount: '一齊數吓！',
+  tfFrame: '雞蛋盒', tfBasket: '要放嘅雞蛋', tfAdd: '放一隻雞蛋入盒', tfTake: '將呢隻雞蛋攞出嚟',
+  sTenAsk: function(n, s){ return [P('我哋嚟湊夠' + n + '！', 'cheer'), P('盒入面已經有' + s + '隻雞蛋。', 'calm'), P('將啲空位全部放滿佢！', 'cheer')]; },
+  sTenHowMany: [P('放滿喇！', 'cheer'), P('你放咗幾多隻藍色雞蛋？', 'ask')],
+  sTenRight: function(s, a, n){ return [P('啱喇！', 'cheer'), P(s + '同' + a + '湊夠' + n + '！', 'proud')]; },
+  sTenCounted: function(a){ return P('你放咗' + a + '隻！', 'calm'); },
+  busAlt: '小兔露露', busAll: '大家上車！', busHowMany: '車上有幾多隻？', busAllOn: '全部上咗車喇！', busCount: '接住數！',
+  busIn: function(s){ return '車上已經有' + s + '隻小兔'; }, busTap: '幫呢隻小兔上車',
+  sBusAsk: function(s, a){ return [P('車上已經有' + s + '隻小兔。', 'calm'), P('仲有' + a + '隻等緊車。', 'calm'), P('撳佢哋上車啦！', 'cheer')]; },
+  sBusHowMany: [P('全部上咗車喇！', 'cheer'), P('而家車上一共有幾多隻小兔？', 'ask')],
+  sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud'), P('嘟嘟！', 'cheer')]; },
+  sBusCountOn: function(s){ return P('由' + s + '開始，接住數。', 'calm'); },
+  sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
+  sVoiceOn: [P('語音已經開咗。', 'calm')],
+  sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
+},
+ko: {
+  hearIt: '들어 보기', hearInstr: '설명 듣기', hearAgain: '다시 듣기',
+  whatName: '이름이 뭐예요?', yourName: '내 이름', typeName: '이름을 써 주세요', letsGo: '시작!', skip: '건너뛰기',
+  hiName: function(n){ return '안녕, ' + n + '!'; }, itsMe: '나예요!', notMe: function(n){ return n + ' 아니에요? 이름 바꾸기'; },
+  letsPlay: function(n){ return n ? n + ', 같이 놀자!' : '같이 놀자!'; }, tapGame: '게임을 눌러서 시작해요',
+  stars: function(n){ return '별 ' + n + '개'; }, grownArea: '보호자 공간',
+  gFeed: '괴물에게 밥 주기', gGarden: '나의 별', soon: '곧 나와요', gTen: '열 칸 상자', gBus: '버스 정류장', gFrog: '개구리 점프', gTower: '탑 쌓기',
+  backGames: '게임으로 돌아가기', qOf: function(a, b){ return b + '문제 중 ' + a + '번째'; }, plate: '접시', jar: '쿠키 병', cookie: '쿠키',
+  takeBack: '이 쿠키 다시 가져가기', putOn: '쿠키를 접시에 올리기',
+  feedMe: function(t){ return '쿠키 ' + t + '개 주세요!'; }, yumT: function(t){ return '냠냠! ' + t + '개!'; }, more: '모자라요!', full: '너무 많아요!', yum: '냠냠!', done: '다 했어요!',
+  momoAlt: function(h){ return h ? '웃고 있는 유니콘 모모' : '배고픈 유니콘 모모'; },
+  didIt: '해냈어요!', next: '다음', finish: '끝', eqLabel: function(s, a, t){ return s + ' 더하기 ' + a + koEun(a) + ' ' + t; },
+  great: '정말 잘했어요!', newFlowers: function(n){ return '하늘에 별이 ' + n + '개 늘었어요!'; }, seeGarden: '내 별 보기', again: '다시 하기',
+  gardenOf: function(){ return '나의 무지개'; }, toSun: function(k){ return '별 ' + k + '개만 더 모으면 다음 색을 칠할 수 있어요!'; },
+  firstFlower: '“괴물에게 밥 주기”를 하고 첫 별을 받아요!', flowersN: function(n){ return '별 ' + n + '개'; },
+  rainbowsN: function(r){ return '무지개 ' + r + '개'; }, myRainbows: '나의 무지개', noRainbow: '첫 무지개가 여기에 나타나요',
+  madeRainbow: '무지개 완성! 새 스티커!', newStripe: '무지개에 새 색을 칠했어요!',
+  myStickers: '스티커북', openBook: '스티커북 열기', backSky: '무지개로 돌아가기',
+  stickersN: function(n){ return '스티커 ' + n + '장'; }, noStickers: '무지개를 완성하면 첫 스티커를 받아요!', rainbowDone: '무지개 완성! 스티커북에 붙였어요.',
+  grownOnly: '보호자 전용', whatIs: function(a, b){ return a + ' × ' + b + ' = ?'; }, cancel: '취소',
+  grownUps: '보호자', progressOf: function(n){ return n ? n + '의 학습 현황' : '학습 현황'; }, backKid: '아이 화면으로 돌아가기', tabProgress: '학습 현황', tabSettings: '설정',
+  facts: '덧셈', stat: function(s, g, n){ return '별 ' + s + '개 · ' + n + '개 중 ' + g + '개 익힘'; }, gotIt: '익힘', learning: '연습 중', notTried: '아직 안 함',
+  tryHome: '집에서 해 보기', and: ', ',
+  tipClose: function(pairs, x, y){ return '거의 다 익혔어요: ' + pairs + '. 간식 시간에 포도 ' + x + '알을 놓고 ' + y + '알을 더 놓은 뒤 “모두 몇 개야?”라고 물어보세요.'; },
+  tipDefault: '“이어 세기” 연습: 숟가락 몇 개를 놓고 한두 개를 더한 뒤 “이제 몇 개야?”라고 물어보세요.',
+  caption: '가로줄: 접시에 있던 쿠키 · 세로줄: 더한 쿠키',
+  ready: '<b>다음 단계 준비 완료:</b> 5까지의 덧셈을 거의 익혔어요. “10까지”를 해 보세요.',
+  childName: '아이 이름', shownHome: '홈 화면에 표시돼요', biggest: '가장 큰 답', upTo: function(n){ return n + '까지'; },
+  spoken: '음성 안내', on: '켜기', off: '끄기', language: '언어',
+  voiceType: '시스템 음성', female: '여성', male: '남성',
+  noVoiceType: function(name, male){ return '이 기기에 ' + name + ' ' + (male ? '남성' : '여성') + ' 음성이 없어서 ' + (male ? '여성' : '남성') + ' 음성을 써요.'; },
+  noSpeech: '이 브라우저는 소리 내어 읽을 수 없어요. Safari나 Chrome을 사용해 보세요.',
+  langName: { en: '영어', fr: '프랑스어', zh: '중국어(보통화)', yue: '광둥어', ja: '일본어', ko: '한국어' },
+  noVoice: function(name){ return '이 기기에 ' + name + ' 음성이 없어서 안내를 읽어 줄 수 없어요.'; },
+  progressLab: '학습 현황', reset: '기록 초기화', resetConfirm: '한 번 더 누르면 모든 기록이 지워져요', savedHere: '기록은 이 기기의 브라우저에만 저장돼요.',
+  sAskName: [P('안녕!', 'cheer'), P('이름이 뭐예요?', 'ask'), P('어른이 써 줄 수 있어요.', 'calm')],
+  sIsThatYou: function(n){ return [P('안녕, ' + n + '!', 'cheer'), P('너 맞니?', 'ask')]; },
+  sNeedName: [P('이름을 쓰고 “시작”을 눌러요!', 'calm')],
+  sWelcomeNew: function(n){ return [P('안녕, ' + n + '!', 'cheer'), P('같이 놀자!', 'cheer'), P('유니콘을 눌러서 시작해요.', 'calm')]; },
+  sWelcomeBack: function(n){ return [P('다시 왔구나, ' + n + '!', 'cheer'), P('유니콘을 눌러서 놀아요.', 'calm')]; },
+  sSkip: [P('같이 놀자!', 'cheer'), P('유니콘을 눌러서 시작해요.', 'calm')],
+  sHello: function(n){ return [P(n ? '안녕, ' + n + '!' : '안녕!', 'cheer'), P('유니콘을 눌러서 놀아요.', 'calm'), P('별을 누르면 하늘을 볼 수 있어요.', 'calm')]; },
+  sSoon: function(g){ return [P(g + ', 곧 나와요!', 'cheer')]; },
+  sAsk: function(t, s){ return [P('모모는 쿠키 ' + t + '개를 먹고 싶어요!', 'ask'), P('접시에 벌써 ' + s + '개 있어요.', 'calm'), P('더 올려 주세요!', 'cheer')]; },
+  sYum: function(s, a, t){ return [P('냠냠!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
+  sCount: P('같이 세어 봐요.', 'calm'),
+  sTooFew: function(n, t){ return [P('모두 ' + n + '개예요.', 'calm'), P('모모는 ' + t + '개를 먹고 싶어요.', 'calm'), P('더 올려 주세요!', 'cheer')]; },
+  sTooMany: function(n, t){ return [P('모두 ' + n + '개예요.', 'calm'), P('너무 많아요!', 'oops'), P('모모는 ' + t + '개면 돼요. 조금 가져가 주세요.', 'calm')]; },
+  sGreat: function(n){ return [P('정말 잘했어요!', 'cheer'), P('별을 ' + n + '개 받았어요!', 'proud')]; },
+  sGarden: function(n){ return n ? [P('별이 ' + n + '개 있어요!', 'cheer')] : [P('놀이를 하고 첫 별을 받아요!', 'calm')]; },
+  sSun: function(k){ return P('별 ' + k + '개만 더 모으면 다음 색을 칠할 수 있어요!', 'calm'); },
+  sRainbows: function(r){ return P('무지개를 ' + r + '개 만들었어요!', 'proud'); },
+  chickAlt: '병아리 삐삐', tfMake: function(n){ return n + ' 만들기!'; }, tfHowMany: '몇 개 넣었어요?', tfFull: '꽉 찼어요!', tfCount: '같이 세어 봐요!',
+  tfFrame: '달걀판', tfBasket: '넣을 달걀', tfAdd: '달걀을 판에 넣기', tfTake: '이 달걀 빼기',
+  sTenAsk: function(n, s){ return [P(n + koEul(n) + ' 만들어 봐요!', 'cheer'), P('달걀판에 벌써 달걀이 ' + s + '개 있어요.', 'calm'), P('빈칸을 모두 채워 주세요!', 'cheer')]; },
+  sTenHowMany: [P('꽉 찼어요!', 'cheer'), P('파란 달걀을 몇 개 넣었나요?', 'ask')],
+  sTenRight: function(s, a, n){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + n + '!', 'proud')]; },
+  sTenCounted: function(a){ return P(a + '개 넣었어요!', 'calm'); },
+  busAlt: '토끼 룰루', busAll: '모두 타세요!', busHowMany: '버스에 몇 마리?', busAllOn: '모두 탔어요!', busCount: '이어서 세어 봐요!',
+  busIn: function(s){ return '버스에 벌써 토끼 ' + s + '마리'; }, busTap: '이 토끼를 버스에 태우기',
+  sBusAsk: function(s, a){ return [P('버스에 토끼가 ' + s + '마리 타고 있어요.', 'calm'), P(a + '마리가 더 기다리고 있어요.', 'calm'), P('눌러서 태워 주세요!', 'cheer')]; },
+  sBusHowMany: [P('모두 탔어요!', 'cheer'), P('이제 버스에 토끼가 모두 몇 마리 있나요?', 'ask')],
+  sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud'), P('빵빵!', 'cheer')]; },
+  sBusCountOn: function(s){ return P(s + '부터 이어서 세어 봐요.', 'calm'); },
+  sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
+  sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
+  sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
 };
 function L(k){
@@ -914,13 +1073,17 @@ var VOICE_NAMES = {
     en: /(Samantha|Ava|Allison|Susan|Zoe|Karen|Moira|Tessa|Fiona|Victoria|Kate|Serena|Catherine|Nicky|Joelle|Aria|Jenny|Libby|Sonia|Natasha|Zira|Hazel|Emma|Michelle|Ana\b|Google US English|Google UK English Female)/i,
     fr: /(Amélie|Amelie|Audrey|Aurélie|Aurelie|Marie|Denise|Sylvie|Chantal|Julie|Hortense|Virginie|Brigitte|Celeste|Google français)/i,
     zh: /(Tingting|Ting-Ting|Lili|Lilian|Meijia|Mei-Jia|Yu-shu|Yushu|Shanshan|Xiaoxiao|Xiaoyi|Yaoyao|Huihui|Xiaohan|Xiaomo|Google 普通话)/i,
-    ja: /(Kyoko|O-ren|Oren|Nanami|Haruka|Ayumi|Sayaka|Mizuki|Aoi|Google 日本語)/i
+    ja: /(Kyoko|O-ren|Oren|Nanami|Haruka|Ayumi|Sayaka|Mizuki|Aoi|Google 日本語)/i,
+    yue: /(Sinji|Sin-ji|HiuGaai|Hiu Gaai|HiuMaan|Hiu Maan|Google 粵語|Google 粤語)/i,
+    ko: /(Yuna|Sora|SunHi|Sun-Hi|Heami|Seoyeon|JiMin|Yujin|Google 한국의)/i
   },
   male: {
     en: /(Alex\b|Daniel|Tom\b|Aaron|Arthur|Evan|Nathan|Oliver|Rishi|Gordon|Lee\b|Guy\b|Ryan|Christopher|Eric|Mark\b|David|George|James|Andrew|Brian|Roger|Steffan|Google UK English Male)/i,
     fr: /(Thomas|Nicolas|Jacques|Henri|Paul\b|Antoine|Jean\b|Claude|Guillaume|Jerome|Jérôme|Remy|Rémy|Alain|Gabriel)/i,
     zh: /(Han\b|Li-Mu|Limu|Kangkang|Yunxi|Yunyang|Yunjian|Yunfeng|Yunhao|Yunze)/i,
-    ja: /(Otoya|Hattori|Ichiro|Keita|Daichi|Naoki)/i
+    ja: /(Otoya|Hattori|Ichiro|Keita|Daichi|Naoki)/i,
+    yue: /(Aasing|WanLung|Wan Lung|Danny)/i,
+    ko: /(Minsu|InJoon|In-Joon|Hyunsu|BongJin|GookMin|Jinho)/i
   }
 };
 function voiceGender(v, lang){
@@ -933,7 +1096,8 @@ function voiceGender(v, lang){
 }
 function matchesLang(v, lang){
   var l = (v.lang || '').replace('_', '-');
-  if (lang === 'zh') return /^(zh|cmn)/i.test(l) && !/(HK|yue|Cantonese)/i.test(l + ' ' + v.name);
+  if (lang === 'zh') return /^(zh|cmn)/i.test(l) && !/(HK|MO|yue|Cantonese)/i.test(l + ' ' + v.name);
+  if (lang === 'yue') return /^(zh-HK|zh-MO|yue)/i.test(l) || /Cantonese|粵語|粤语/i.test(v.name || '');
   return new RegExp('^' + lang, 'i').test(l);
 }
 function scoreVoice(v, lang){
@@ -951,7 +1115,7 @@ function scoreVoice(v, lang){
 function pickVoices(){
   try {
     var all = speechSynthesis.getVoices();
-    ['en', 'fr', 'zh', 'ja'].forEach(function(lang){
+    LANGS.map(function(x){ return x[0]; }).forEach(function(lang){
       var pick = { female:null, male:null, any:null }, bs = { female:-1e9, male:-1e9, any:-1e9 };
       all.forEach(function(v){
         if (!matchesLang(v, lang)) return;
@@ -992,7 +1156,7 @@ function say(parts, onEach, gap){
   function fallback(){ arr.forEach(function(_, i){ sayTimers.push(setTimeout(function(){ onEach && onEach(i); }, i * gap)); }); }
   var lang = S.lang || 'en', voice = voiceFor(lang), male = !!(voice && VOICES[lang] && VOICES[lang].male === voice);
   if (!S.voice || !hasSpeech) { fallback(); return; }
-  var tone = lang === 'zh' ? 0.6 : lang === 'ja' ? 0.8 : 1;            /* gentler pitch swings for a tonal language */
+  var tone = lang === 'zh' ? 0.6 : lang === 'yue' ? 0.5 : lang === 'ja' ? 0.8 : lang === 'ko' ? 0.9 : 1;            /* gentler pitch swings for a tonal language */
   try {
     arr.forEach(function(p, i){
       var st = STYLE[p.s] || STYLE.calm;
@@ -1016,10 +1180,21 @@ function say(parts, onEach, gap){
     if (onEach) sayTimers.push(setTimeout(function(){ if (!spoke) fallback(); }, 600));
   } catch(e) { fallback(); }
 }
+function setLang(v){
+  if (!TX[v]) return;
+  S.lang = v; save(); applyLang();
+  if (screen === 'start') { var keepVal = (document.getElementById('kidName') || {}).value; renderStart(); var kn = document.getElementById('kidName'); if (kn && keepVal) kn.value = keepVal; say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); }
+  else { render(); say(L('sSample')); }
+}
+document.addEventListener('change', function(e){ if (e.target && e.target.classList && e.target.classList.contains('langsel-input')) setLang(e.target.value); });
 function live(t){ var l = document.getElementById('live'); if (l) l.textContent = t; }
+var GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.8 5.5 3.8 9s-1.2 6.5-3.8 9c-2.6-2.5-3.8-5.5-3.8-9s1.2-6.5 3.8-9z"/></svg>';
+var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 function langPicker(cls){
-  return '<div class="seg ' + (cls || '') + '" role="group" aria-label="' + esc(L('language')) + '">' +
-    LANGS.map(function(l){ return '<button data-act="lang" data-v="' + l[0] + '" lang="' + HTML_LANG[l[0]] + '" aria-pressed="' + (S.lang === l[0]) + '">' + l[1] + '</button>'; }).join('') + '</div>';
+  return '<label class="langsel ' + (cls || '') + '"><span class="gl">' + GLOBE + '</span>' +
+    '<select class="langsel-input" aria-label="' + esc(L('language')) + '">' +
+    LANGS.map(function(l){ return '<option value="' + l[0] + '" lang="' + HTML_LANG[l[0]] + '"' + (S.lang === l[0] ? ' selected' : '') + '>' + l[1] + '</option>'; }).join('') +
+    '</select><span class="cv">' + CHEV + '</span></label>';
 }
 
 /* ---------- art ---------- */
@@ -2047,11 +2222,7 @@ document.addEventListener('click', function(e){
     case 'not-me': askName = true; renderStart(); say(L('sAskName')); var ki = document.getElementById('kidName'); if (ki) ki.focus(); break;
     case 'skip-name': askName = false; show('home'); break;
     case 'hello': say(L('sHello', S.name)); break;
-    case 'lang':
-      S.lang = b.getAttribute('data-v'); save(); applyLang();
-      if (screen === 'start') { var keepVal = (document.getElementById('kidName') || {}).value; renderStart(); var kn = document.getElementById('kidName'); if (kn && keepVal) kn.value = keepVal; say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); }
-      else { render(); say(L('sSample')); }
-      break;
+    case 'lang': setLang(b.getAttribute('data-v')); break;
     case 'play': startRound(); break;
     case 'ten': startTen(); break;
     case 'bus': startBus(); break;
