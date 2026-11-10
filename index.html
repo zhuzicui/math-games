@@ -1183,7 +1183,7 @@ function say(parts, onEach, gap){
 function setLang(v){
   if (!TX[v]) return;
   S.lang = v; save(); applyLang();
-  if (screen === 'start') { var keepVal = (document.getElementById('kidName') || {}).value; renderStart(); var kn = document.getElementById('kidName'); if (kn && keepVal) kn.value = keepVal; say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); }
+  if (screen === 'start') { var keepVal = (document.getElementById('kidName') || {}).value; renderStart(); var kn = document.getElementById('kidName'); if (kn && keepVal) kn.value = keepVal; }   /* the name screen stays quiet */
   else { render(); say(L('sSample')); }
 }
 document.addEventListener('change', function(e){ if (e.target && e.target.classList && e.target.classList.contains('langsel-input')) setLang(e.target.value); });
@@ -1272,7 +1272,7 @@ var askName = false;
 function renderStart(){
   var known = S.name && !askName;
   app.innerHTML = '<section class="screen startscreen">' +
-    '<div class="startbar">' + langPicker('langpick') + speakBtn('name-say', L('hearIt')) + '</div>' +
+    '<div class="startbar">' + langPicker('langpick') + '</div>' +
     momo('happy') +
     (known
       ? '<h1>' + esc(L('hiName', S.name)) + '</h1>' +
@@ -1290,7 +1290,7 @@ function renderStart(){
   if (f) f.addEventListener('submit', function(e){
     e.preventDefault();
     var v = document.getElementById('kidName').value.trim().slice(0, 20);
-    if (!v) { document.getElementById('kidName').focus(); say(L('sNeedName')); return; }
+    if (!v) { document.getElementById('kidName').focus(); return; }
     S.name = v; save(); askName = false;
     show('home');
   });
@@ -2219,7 +2219,7 @@ document.addEventListener('click', function(e){
   switch (act) {
     case 'name-say': say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); break;
     case 'its-me': show('home'); break;
-    case 'not-me': askName = true; renderStart(); say(L('sAskName')); var ki = document.getElementById('kidName'); if (ki) ki.focus(); break;
+    case 'not-me': askName = true; renderStart(); var ki = document.getElementById('kidName'); if (ki) ki.focus(); break;
     case 'skip-name': askName = false; show('home'); break;
     case 'hello': say(L('sHello', S.name)); break;
     case 'lang': setLang(b.getAttribute('data-v')); break;
