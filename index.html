@@ -110,8 +110,8 @@ h1,h2{font-family:var(--display);font-weight:800;margin:0;line-height:1.05}
     radial-gradient(circle at 45% 70%, var(--chip) 0 8%, transparent 9%),
     var(--dough);}
 .cookie.start{--dough:#F4AE9F; --edge-c:#B5604A; --chip:#8A3A2C}       /* red = already on the plate */
-.cookie .x{position:absolute;top:-7px;right:-7px;width:24px;height:24px;border-radius:50%;background:var(--card);border:4px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 rgba(107,74,58,.25)}
-.cookie .x svg{width:11px;height:11px;stroke:#5A3E33;stroke-width:2.4;stroke-linecap:round;fill:none}
+.cookie .x{position:absolute;top:-4px;right:-4px;width:clamp(15px,calc(var(--ck) * .34),19px);height:clamp(15px,calc(var(--ck) * .34),19px);border-radius:50%;background:var(--card);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 rgba(107,74,58,.25)}
+.cookie .x svg{width:60%;height:60%;stroke:#5A3E33;stroke-width:2;stroke-linecap:round;fill:none}
 .jar .cookie,#plate button.cookie{touch-action:none;cursor:grab}
 .jar.hot{background:#CFE2EF}
 .cookie.pop{animation:pop .35s ease-out}
