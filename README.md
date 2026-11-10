@@ -2,7 +2,7 @@
 
 A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn, fill an egg carton to make 10, and count snails on a bus. Mistakes aren't failures: Momo just counts with you, out loud.
 
-**Try it:** https://math-games-neon.vercel.app (free, no account, works offline-ish in the browser; add it to your home screen for a full-screen app)
+**Try it:** https://math-games-neon.vercel.app (free, no account; add it to your home screen for a full-screen app)
 
 <p align="center"><img src="docs/screenshots/hero.png" width="640" alt="Momo Math on iPad and iPhone"></p>
 
