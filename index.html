@@ -448,6 +448,8 @@ body.muted .speakbtn{background:#F3E9E2}
   .momo-row #momo{justify-content:center}
   .momo-row .bubbles{width:100%;min-width:0}
 }
+.table.counting .loose .cookie{filter:grayscale(1);opacity:.45;transition:filter .25s,opacity .25s;cursor:default}
+.table .loose .cookie{transition:filter .25s,opacity .25s}
 </style>
 </head>
 <body>
@@ -706,7 +708,7 @@ var STYLE = {
 var sayTimers = [];
 function syncMute(){ document.body.classList.toggle('muted', !S.voice); document.querySelectorAll('.speakbtn').forEach(function(x){ x.setAttribute('aria-pressed', String(!S.voice)); }); }
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
-function clearSay(){ sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
+function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
 function say(parts, onEach, gap){
   var arr = (Array.isArray(parts) ? parts : [parts]).map(function(p){ return typeof p === 'string' ? P(p, 'calm') : p; });
@@ -1092,15 +1094,23 @@ function check(){
     for (var i = 1; i <= n; i++) parts.push(P(String(i), 'count', i));
     parts = parts.concat(tooFew ? L('sTooFew', n, G.t) : L('sTooMany', n, G.t));
     var cookies = document.querySelectorAll('#plate .cookie');
+    var tbl = document.getElementById('table'); if (tbl) tbl.classList.add('counting');
+    var q = G.q, unlocked = false;
+    function unlock(){
+      if (unlocked || screen !== 'play' || !G || G.q !== q) return; unlocked = true; G.unlock = null;
+      G.lock = false;
+      var t = document.getElementById('table'); if (t) t.classList.remove('counting');
+      var d = document.getElementById('doneBtn'); if (d) d.disabled = false;
+    }
     say(parts, function(i){
       if (i >= 1 && i <= n && cookies[i-1]) {
         cookies[i-1].classList.add('counted');
         cookies[i-1].innerHTML = '<span class="num">' + i + '</span>';
       }
-      if (i === parts.length - 1) {
-        setTimeout(function(){ if (screen === 'play' && G) { G.lock = false; updatePlay(); } }, 900);
-      }
+      if (i > n) unlock();             /* counting is over: play again right away, no wait */
     }, 750);
+    G.unlock = unlock;                                     /* stopping the voice (mute, repeat, leaving) also unlocks */
+    setTimeout(unlock, (n + 2) * 2500);                   /* safety net if speech events never arrive */
   }
 }
 
