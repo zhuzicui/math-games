@@ -654,11 +654,12 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'momo', facts:{}, lang:'fr' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'av06', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
 var S = load();
+if (!S.avatarPicked) S.avatar = 'av06';   /* until the child picks one, the cat is their buddy */
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 
 /* ---------- languages ---------- */
@@ -1234,7 +1235,8 @@ function langPicker(cls){
 var AVATAR_N = 25, AV_BG = ['#F7DCCF', '#DDEFF8', '#FBEFC4', '#E3F1DA', '#EADCF2', '#FBE3DC'];
 function avatarIds(){ var a = ['momo']; for (var i = 1; i <= AVATAR_N; i++) a.push('av' + (i < 10 ? '0' : '') + i); return a; }
 function avatarFace(id){
-  if (!id || id === 'momo' || !/^av\d\d$/.test(id)) return '<span class="avatar is-momo" style="--avbg:#F7DCCF"><img src="animals/unicorn.png" alt="" draggable="false"></span>';
+  if (!id || !/^(momo|av\d\d)$/.test(id)) id = 'av06';   /* the cat is the default buddy */
+  if (id === 'momo') return '<span class="avatar is-momo" style="--avbg:#F7DCCF"><img src="animals/unicorn.png" alt="" draggable="false"></span>';
   var n = +id.slice(2);
   return '<span class="avatar" style="--avbg:' + AV_BG[n % AV_BG.length] + '"><img src="avatars/' + id + '.svg" alt="" draggable="false"></span>';
 }
@@ -2287,7 +2289,7 @@ document.addEventListener('click', function(e){
     case 'bus': startBus(); break;
     case 'avatar': avatarReturn = screen === 'start' ? 'start' : 'home'; show('avatar'); break;
     case 'pick-avatar':
-      S.avatar = b.getAttribute('data-v'); save();
+      S.avatar = b.getAttribute('data-v'); S.avatarPicked = true; save();
       document.querySelectorAll('.av-opt').forEach(function(x){ x.setAttribute('aria-checked', String(x === b)); });
       b.classList.remove('picked'); void b.offsetWidth; b.classList.add('picked');
       break;
