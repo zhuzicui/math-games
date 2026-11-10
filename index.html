@@ -540,7 +540,7 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 .busgame .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent}
 .busgame .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
 .bus-scene{flex:1;min-height:0;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  --bw:min(94cqw, calc(50cqh * 2.2), 640px); --bn:min(calc(var(--bw) * .23), 28cqh, 130px)}
+  --bw:min(94cqw, calc(50cqh * 2.2), 640px); --bs:min(calc(var(--bw) * .23), 28cqh, 130px); --bn:min(calc(var(--bw) * .12), 15cqh, 68px)}
 .bus{position:relative;width:var(--bw);height:calc(var(--bw) * .46);margin-top:calc(var(--bw) * .1);flex:none}
 .bus.drive{animation:drive 1.4s ease-in forwards}
 @keyframes drive{15%{transform:translateX(-2%)}100%{transform:translateX(140vw)}}
@@ -568,11 +568,11 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 .roof-sign .sign-bunny{height:88%;width:auto}
 .roof-sign.glow{box-shadow:0 0 0 6px #F7CFC4;animation:pop .4s}
 .road{width:calc(var(--bw) * 1.04);height:calc(var(--bw) * .03);margin-top:-2px;background:#D9CFC4;border-radius:999px;flex:none}
-.sidewalk{flex:none;height:calc(var(--bn) * 1.3);width:var(--bw);display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--bw) * .03)}
+.sidewalk{flex:none;height:calc(var(--bs) * 1.25);width:var(--bw);display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--bw) * .03)}
 .stop-sign{display:flex;flex-direction:column;align-items:center;flex:none}
-.stop-sign .sign{width:calc(var(--bn) * .55);height:calc(var(--bn) * .55);border-radius:50%;background:#fff;border:4px solid #6EA6D1;display:flex;align-items:center;justify-content:center}
+.stop-sign .sign{width:calc(var(--bs) * .5);height:calc(var(--bs) * .5);border-radius:50%;background:#fff;border:4px solid #6EA6D1;display:flex;align-items:center;justify-content:center}
 .stop-sign .sign svg{width:72%;height:72%}
-.stop-sign .pole{width:5px;height:calc(var(--bn) * .6);background:#8A7466;border-radius:3px}
+.stop-sign .pole{width:5px;height:calc(var(--bs) * .55);background:#8A7466;border-radius:3px}
 .queue{display:flex;align-items:flex-end;gap:calc(var(--bw) * .015)}
 .rider{width:calc(var(--bn) * .78);height:var(--bn);padding:0;border:0;background:none;touch-action:none;cursor:pointer;display:flex;align-items:flex-end;justify-content:center}
 .rider .rider-img{height:100%;width:auto;pointer-events:none;filter:drop-shadow(0 3px 2px rgba(90,62,51,.2))}
@@ -747,6 +747,7 @@ en: {
   sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud'), P('Beep beep!', 'cheer')]; },
   sBusCountOn: function(s){ return P('Let’s count on. Start at ' + s + '.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' snails!', 'calm'); },
+  bravo: 'Great job!',
   pickBuddy: 'Pick your buddy!', changeBuddy: 'Change my buddy', buddyN: function(n){ return 'Buddy ' + n; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
@@ -816,6 +817,7 @@ fr: {
   sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud'), P('Tut tut !', 'cheer')]; },
   sBusCountOn: function(s){ return P('On part de ' + s + ' et on continue.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' escargots !', 'calm'); },
+  bravo: 'Bravo\u00a0!',
   pickBuddy: 'Choisis ton animal\u00a0!', changeBuddy: 'Changer mon animal', buddyN: function(n){ return 'Animal ' + n; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
@@ -885,6 +887,7 @@ zh: {
   sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud'), P('嘀嘀！', 'cheer')]; },
   sBusCountOn: function(s){ return P('从' + s + '开始，接着数。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
+  bravo: '真棒！',
   pickBuddy: '选一个小伙伴！', changeBuddy: '换小伙伴', buddyN: function(n){ return '小伙伴' + n; },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
@@ -954,6 +957,7 @@ ja: {
   sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud'), P('ブッブー！', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + 'から つづけて かぞえよう。', 'calm'); },
   sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
+  bravo: 'すごいね！',
   pickBuddy: 'なかまを えらんでね！', changeBuddy: 'なかまを かえる', buddyN: function(n){ return 'なかま ' + n; },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
@@ -1023,6 +1027,7 @@ yue: {
   sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud'), P('嘟嘟！', 'cheer')]; },
   sBusCountOn: function(s){ return P('由' + s + '開始，接住數。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
+  bravo: '好叻呀！',
   pickBuddy: '揀一個小夥伴！', changeBuddy: '換小夥伴', buddyN: function(n){ return '小夥伴' + n; },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
@@ -1092,6 +1097,7 @@ ko: {
   sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud'), P('빵빵!', 'cheer')]; },
   sBusCountOn: function(s){ return P(s + '부터 이어서 세어 봐요.', 'calm'); },
   sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
+  bravo: '잘했어요!',
   pickBuddy: '내 친구를 골라요!', changeBuddy: '친구 바꾸기', buddyN: function(n){ return '친구 ' + n; },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
@@ -1862,7 +1868,7 @@ function tenPick(n){
   if (right) {
     G.lock = true;
     var qa = document.getElementById('tfA'); if (qa) { qa.textContent = G.a; qa.classList.add('solved'); }
-    G.bubble2 = L('yum'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
     var m = document.querySelector('#momo .chick'); if (m) m.classList.add('bounce');
     document.querySelectorAll('.choice').forEach(function(x){ if (+x.getAttribute('data-v') === n) x.classList.add('right'); else x.disabled = true; });
     S.stars++; G.earned++; save();
@@ -2091,7 +2097,7 @@ function busPick(n){
   if (right) {
     G.lock = true;
     var qt = document.getElementById('busT'); if (qt) { qt.textContent = G.t; qt.classList.add('solved'); }
-    G.bubble2 = L('yum'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
     document.querySelectorAll('.busgame .choice').forEach(function(x){ if (+x.getAttribute('data-v') === n) x.classList.add('right'); else x.disabled = true; });
     S.stars++; G.earned++; save();
     say(L('sBusRight', G.s, G.a, G.t));
