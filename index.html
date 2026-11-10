@@ -275,7 +275,7 @@ h1,h2{font-family:var(--display);font-weight:800;margin:0;line-height:1.05}
 .tipcard .small{font-size:13px;color:var(--ink2);margin-top:6px}
 .settings{display:grid;grid-template-columns:1fr;gap:4px 18px;align-content:start}
 .settings .field{margin-top:6px}
-.pbody > .settings{flex:1;align-self:stretch;box-sizing:border-box}
+.pbody > .settings{flex:1;align-self:stretch;box-sizing:border-box;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 
 /* short screens held sideways (phones) and all landscape play */
 @media (orientation:landscape) and (min-width:600px){
@@ -289,7 +289,7 @@ h1,h2{font-family:var(--display);font-weight:800;margin:0;line-height:1.05}
   .donebtn{width:100%;min-height:clamp(50px,12dvh,84px)}
   .pbody{flex-direction:row}
   .tipcard{width:34%;overflow:hidden}
-  .settings{grid-template-columns:1fr 1fr}
+  .settings{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
 @media (orientation:landscape) and (max-height:600px){
   .hero p{display:none}
@@ -647,6 +647,11 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .facts.many{gap:2px}
 .facts.many div{font-size:0;border-radius:4px}
 .facts.many .h{font-size:clamp(8px,min(1.8vw,1.3dvh),12px)}
+.settings .field{min-width:0}
+.settings .field{container-type:inline-size}
+.settings .seg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.settings .seg4 button{white-space:nowrap;padding:0 4px}
+@container (max-width:440px){ .settings .seg4{grid-template-columns:repeat(2,minmax(0,1fr))} }
 </style>
 </head>
 <body>
@@ -708,7 +713,7 @@ en: {
   myStickers: 'My sticker book', openBook: 'Open my sticker book', backSky: 'Back to my rainbow',
   stickersN: function(n){ return n + ' ' + pl(n, 'sticker', 'stickers'); }, noStickers: 'Finish a rainbow to get your first sticker!', rainbowDone: 'Rainbow complete! It’s in your sticker book.',
   grownOnly: 'Grown-ups only', whatIs: function(a, b){ return 'What is ' + a + ' × ' + b + '?'; }, cancel: 'Cancel',
-  grownUps: 'Grown-ups', progressOf: function(n){ return n ? n + '’s progress' : 'Progress'; }, backKid: 'Back to kid mode', tabProgress: 'Progress', tabSettings: 'Settings',
+  grownUps: 'For grown-ups', progressOf: function(n){ return n ? n + '’s Progress' : 'Progress'; }, backKid: 'Back to kid mode', tabProgress: 'Progress', tabSettings: 'Settings',
   facts: 'Addition facts', stat: function(s, g, n){ return s + ' stars · ' + g + ' of ' + n + ' mastered'; }, gotIt: 'Got it', learning: 'Learning', notTried: 'Not tried',
   tryHome: 'Try at home', and: ' and ',
   tipClose: function(pairs, x, y){ return 'Close on ' + pairs + '. At snack time, put out ' + x + ' grapes, then ' + y + ' more, and ask how many there are now.'; },
@@ -778,7 +783,7 @@ fr: {
   myStickers: 'Mon album d’autocollants', openBook: 'Ouvrir mon album', backSky: 'Retour à mon arc-en-ciel',
   stickersN: function(n){ return n + ' ' + pl(n, 'autocollant', 'autocollants'); }, noStickers: 'Termine un arc-en-ciel pour gagner ton premier autocollant !', rainbowDone: 'Arc-en-ciel terminé ! Il est dans ton album.',
   grownOnly: 'Réservé aux adultes', whatIs: function(a, b){ return 'Combien font ' + a + ' × ' + b + ' ?'; }, cancel: 'Annuler',
-  grownUps: 'Adultes', progressOf: function(n){ return n ? 'Progrès de ' + n : 'Progrès'; }, backKid: 'Retour au mode enfant', tabProgress: 'Progrès', tabSettings: 'Réglages',
+  grownUps: 'Pour les adultes', progressOf: function(n){ return n ? 'Progrès de ' + n : 'Progrès'; }, backKid: 'Retour au mode enfant', tabProgress: 'Progrès', tabSettings: 'Réglages',
   facts: 'Additions', stat: function(s, g, n){ return s + ' étoiles · ' + g + ' sur ' + n + ' acquises'; }, gotIt: 'Acquis', learning: 'En cours', notTried: 'Pas essayé',
   tryHome: 'À essayer à la maison', and: ' et ',
   tipClose: function(pairs, x, y){ return 'Presque acquis : ' + pairs + '. À la collation, posez ' + x + ' raisins, puis ' + y + ' de plus, et demandez combien il y en a maintenant.'; },
@@ -848,7 +853,7 @@ zh: {
   myStickers: '我的贴纸册', openBook: '打开贴纸册', backSky: '回到我的彩虹',
   stickersN: function(n){ return n + '张贴纸'; }, noStickers: '完成一道彩虹，就能得到第一张贴纸！', rainbowDone: '彩虹完成啦！它已经放进你的贴纸册了。',
   grownOnly: '仅限家长', whatIs: function(a, b){ return a + ' × ' + b + ' 等于多少？'; }, cancel: '取消',
-  grownUps: '家长', progressOf: function(n){ return n ? n + '的进度' : '学习进度'; }, backKid: '返回儿童模式', tabProgress: '进度', tabSettings: '设置',
+  grownUps: '家长专区', progressOf: function(n){ return n ? n + '的进度' : '学习进度'; }, backKid: '返回儿童模式', tabProgress: '进度', tabSettings: '设置',
   facts: '加法练习', stat: function(s, g, n){ return s + '颗星 · 已掌握 ' + g + '/' + n; }, gotIt: '已掌握', learning: '学习中', notTried: '未尝试',
   tryHome: '在家试试', and: '和',
   tipClose: function(pairs, x, y){ return '快掌握了：' + pairs + '。吃点心时，先放' + x + '颗葡萄，再放' + y + '颗，问孩子现在一共有几颗。'; },
@@ -988,7 +993,7 @@ yue: {
   myStickers: '我嘅貼紙簿', openBook: '打開貼紙簿', backSky: '返去我嘅彩虹',
   stickersN: function(n){ return n + '張貼紙'; }, noStickers: '完成一條彩虹，就可以攞到第一張貼紙！', rainbowDone: '彩虹完成喇！已經放咗入你嘅貼紙簿。',
   grownOnly: '家長專用', whatIs: function(a, b){ return a + ' × ' + b + ' 係幾多？'; }, cancel: '取消',
-  grownUps: '家長', progressOf: function(n){ return n ? n + '嘅進度' : '學習進度'; }, backKid: '返去兒童模式', tabProgress: '進度', tabSettings: '設定',
+  grownUps: '家長專區', progressOf: function(n){ return n ? n + '嘅進度' : '學習進度'; }, backKid: '返去兒童模式', tabProgress: '進度', tabSettings: '設定',
   facts: '加數練習', stat: function(s, g, n){ return s + '粒星 · 已掌握 ' + g + '/' + n; }, gotIt: '已掌握', learning: '學緊', notTried: '未試過',
   tryHome: '喺屋企試吓', and: '同',
   tipClose: function(pairs, x, y){ return '就快掌握：' + pairs + '。食茶點嗰陣，先放' + x + '粒提子，再放' + y + '粒，問小朋友而家一共有幾多粒。'; },
@@ -1058,7 +1063,7 @@ ko: {
   myStickers: '스티커북', openBook: '스티커북 열기', backSky: '무지개로 돌아가기',
   stickersN: function(n){ return '스티커 ' + n + '장'; }, noStickers: '무지개를 완성하면 첫 스티커를 받아요!', rainbowDone: '무지개 완성! 스티커북에 붙였어요.',
   grownOnly: '보호자 전용', whatIs: function(a, b){ return a + ' × ' + b + ' = ?'; }, cancel: '취소',
-  grownUps: '보호자', progressOf: function(n){ return n ? n + '의 학습 현황' : '학습 현황'; }, backKid: '아이 화면으로 돌아가기', tabProgress: '학습 현황', tabSettings: '설정',
+  grownUps: '보호자용', progressOf: function(n){ return n ? n + '의 학습 현황' : '학습 현황'; }, backKid: '아이 화면으로 돌아가기', tabProgress: '학습 현황', tabSettings: '설정',
   facts: '덧셈', stat: function(s, g, n){ return '별 ' + s + '개 · ' + n + '개 중 ' + g + '개 익힘'; }, gotIt: '익힘', learning: '연습 중', notTried: '아직 안 함',
   tryHome: '집에서 해 보기', and: ', ',
   tipClose: function(pairs, x, y){ return '거의 다 익혔어요: ' + pairs + '. 간식 시간에 포도 ' + x + '알을 놓고 ' + y + '알을 더 놓은 뒤 “모두 몇 개야?”라고 물어보세요.'; },
@@ -2267,7 +2272,7 @@ function renderParents(){
       '<div class="field"><span class="lab">' + L('language') + '</span>' + langPicker() +
         (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div>' +
       '<div class="field"><label for="nameInput" class="lab">' + L('childName') + '</label><input id="nameInput" type="text" maxlength="20" placeholder="' + esc(L('shownHome')) + '" value="' + esc(S.name) + '"></div>' +
-      '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
+      '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
       (hasSpeech ? (function(){
@@ -2283,9 +2288,9 @@ function renderParents(){
     '</div>';
   }
   app.innerHTML = '<section class="screen parents">' +
-    '<div class="bar"><div><div class="eyebrow">' + L('grownUps') + '</div><h1>' + esc(L('progressOf', S.name)) + '</h1></div>' +
+    '<div class="bar"><div><h1>' + L('grownUps') + '</h1></div>' +
     '<button class="big-btn plain back-kid" data-act="home">' + L('backKid') + '</button></div>' +
-    '<div class="tabs" role="tablist"><button role="tab" data-act="ptab" data-v="progress" aria-selected="' + (ptab === 'progress') + '">' + L('tabProgress') + '</button><button role="tab" data-act="ptab" data-v="settings" aria-selected="' + (ptab === 'settings') + '">' + L('tabSettings') + '</button></div>' +
+    '<div class="tabs" role="tablist"><button role="tab" data-act="ptab" data-v="progress" aria-selected="' + (ptab === 'progress') + '">' + esc(L('progressOf', S.name)) + '</button><button role="tab" data-act="ptab" data-v="settings" aria-selected="' + (ptab === 'settings') + '">' + L('tabSettings') + '</button></div>' +
     '<div class="pbody">' + body + '</div></section>';
   var inp = document.getElementById('nameInput');
   if (inp) inp.addEventListener('input', function(){ S.name = inp.value.trim(); save(); });
