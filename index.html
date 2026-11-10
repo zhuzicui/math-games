@@ -635,6 +635,7 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .av-bar{display:grid !important;grid-template-columns:auto 1fr auto;align-items:center;width:100%;gap:10px}
 .av-bar h1{margin:0;text-align:center;font-size:clamp(22px,min(6.4vw,4.4dvh),40px);line-height:1.1}
 .av-bar .bar-spacer{visibility:hidden;box-shadow:none;border-color:transparent;background:none}
+.groups .g{display:grid;grid-template-columns:repeat(var(--cols,5), auto);justify-content:start;justify-items:center;align-items:center;max-width:none}
 </style>
 </head>
 <body>
@@ -1690,7 +1691,10 @@ document.addEventListener('touchcancel', function(){ if (drag) finishDrag(); });
 
 /* ---------- reward / round done ---------- */
 function closeOverlay(){ document.querySelectorAll('.flying').forEach(function(f){ f.remove(); }); var o = document.querySelector('.overlay'); if (o) o.remove(); var c = document.querySelector('.confetti'); if (c) c.remove(); }
-function overlay(html){ closeOverlay(); var o = document.createElement('div'); o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.innerHTML = html; document.body.appendChild(o); var b = o.querySelector('button'); if (b) b.focus(); return o; }
+function overlay(html){ closeOverlay(); var o = document.createElement('div'); o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.innerHTML = html; document.body.appendChild(o);
+  /* reward groups: at most 5 per row, filled from the left, so they're easy to count */
+  o.querySelectorAll('.groups .g').forEach(function(g){ g.style.setProperty('--cols', Math.min(5, g.children.length)); });
+  var b = o.querySelector('button'); if (b) b.focus(); return o; }
 function confetti(){
   var c = document.createElement('div'); c.className = 'confetti'; c.setAttribute('aria-hidden', 'true');
   var cols = ['#F6C9B4','#F7D98C','#B9D3E3','#E9917A','#A9C99F','#E6DDEF'], h = '';
