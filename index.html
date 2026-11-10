@@ -694,6 +694,16 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .flying{filter:none !important;will-change:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .bus-fly,.egg-ghost,.hopper{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .bubbles,.eq,.bar,#momo,.donebtn{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* lily pads from the supplied artwork */
+.pad{background:url(pads/green.png) center / 100% 100% no-repeat !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;filter:drop-shadow(0 3px 0 rgba(60,90,50,.25))}
+.pad::before{display:none !important}
+.pad.start{background-image:url(pads/coral.png) !important}
+.pad.right{background-image:url(pads/blue.png) !important}
+.pad span{color:#fff !important;padding-top:6%;padding-left:4%;text-shadow:0 0 3px rgba(40,50,30,.55),0 2px 0 rgba(40,50,30,.45)}
+.pad.chosen{outline:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 4px #3E7FB0) drop-shadow(0 0 2px #3E7FB0)}
+.pad.tried{filter:grayscale(1);opacity:.35}
+.mini-pad{border:0 !important;border-radius:0 !important;background:url(pads/coral.png) center / 100% 100% no-repeat !important}
+.mini-pad.add{background-image:url(pads/blue.png) !important}
 </style>
 </head>
 <body>
