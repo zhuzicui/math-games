@@ -1,7 +1,7 @@
 {
   "name": "Momo Math",
   "short_name": "Momo Math",
-  "description": "Learn to add with Momo the unicorn — English, Français, 中文.",
+  "description": "Learn to add with Momo the unicorn. Free, in 6 languages.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
