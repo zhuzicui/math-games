@@ -1,6 +1,6 @@
 {
-  "name": "Feed the Monster",
-  "short_name": "Feed Momo",
+  "name": "Momo Math",
+  "short_name": "Momo Math",
   "description": "Learn to add with Momo the unicorn — English, Français, 中文.",
   "start_url": "./",
   "scope": "./",

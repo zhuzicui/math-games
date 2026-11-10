@@ -1,4 +1,4 @@
-# math-games · Feed the Monster
+# math-games · Momo Math
 
 Learn to add with Momo the unicorn. Works on phones and iPads, in English, Français and 中文.
 
@@ -23,7 +23,7 @@ Learn to add with Momo the unicorn. Works on phones and iPads, in English, Fran�
 3. **iPhone / iPad (Safari):** Share button → **Add to Home Screen**.
    **Android (Chrome):** ⋮ menu → **Add to Home screen** / **Install app**.
 
-The icon shows Momo, the home-screen name is **Feed Momo**, and the app opens full-screen without browser bars.
+The icon shows Momo, the home-screen name is **Momo Math**, and the app opens full-screen without browser bars.
 
 ## One small thing for link previews
 
