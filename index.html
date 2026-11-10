@@ -1284,6 +1284,7 @@ function avatarBtn(cls){
     '<span class="av-edit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span></button>';
 }
 var avatarReturn = 'home';
+var gardenFrom = null;
 function renderAvatar(){
   var ids = avatarIds();
   app.innerHTML = '<section class="screen avatarscreen">' +
@@ -2223,7 +2224,7 @@ function renderGarden(){
   }
   var goal = !n ? L('firstFlower') : (justFinished ? L('rainbowDone') : L('toSun', PER_STRIPE - q));
   app.innerHTML = '<section class="screen">' +
-    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="bar"><button class="round" data-act="garden-back" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button>' +
     '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div>' +
     '<span class="round bar-spacer" aria-hidden="true"></span></div>' +
     '<div class="garden-head"><h1>' + esc(L('gardenOf')) + '</h1></div>' +
@@ -2353,7 +2354,15 @@ document.addEventListener('click', function(e){
     case 'ten-repeat': tenAskAloud(); break;
     case 'tf-pick': tenPick(+b.getAttribute('data-v')); break;
     case 'home': show('home'); break;
-    case 'garden': show('garden'); break;
+    case 'garden':
+      /* remember where we came from, so Back returns there (a game in progress continues with the next question) */
+      var ov = document.querySelector('.overlay');
+      if (screen !== 'book') gardenFrom = ov && ov.querySelector('[data-act=next]') && G ? { kind:'next', screen:screen } : { kind:'screen', screen:(ov ? 'home' : screen) };
+      show('garden'); break;
+    case 'garden-back':
+      if (gardenFrom && gardenFrom.kind === 'next' && G) { screen = gardenFrom.screen; render(); next(); }
+      else show(gardenFrom && gardenFrom.screen && gardenFrom.screen !== 'garden' ? gardenFrom.screen : 'home');
+      break;
     case 'book': show('book'); break;
     case 'sticker': b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle'); break;
     case 'garden-say':
