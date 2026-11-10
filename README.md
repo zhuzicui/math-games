@@ -7,7 +7,7 @@ Learn to add with Momo the unicorn. Works on phones and iPads, in English, Fran√
 | File | What it's for |
 |---|---|
 | `index.html` | The whole app |
-| `animals/`, `stars/` | Character and star artwork |
+| `animals/`, `stars/`, `cookies/` | Character, star and cookie artwork (red = already on the plate, blue = added) |
 | `icons/apple-touch-icon.png` | iPhone / iPad home-screen icon (180√ó180) |
 | `icons/icon-192.png`, `icons/icon-512.png` | Android / Chrome home-screen icons |
 | `icons/icon-maskable-192.png`, `icons/icon-maskable-512.png` | Android adaptive icons (any shape mask) |

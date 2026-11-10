@@ -378,6 +378,11 @@ body.skybg,body.skybg #app{background:#DAECEC}
   :root{--ck:clamp(36px,10dvh,52px)}
 }
 
+/* ===== picture cookies (red = already on the plate, blue = added) ===== */
+.cookie{border:0;background:var(--face) center / 100% 100% no-repeat;filter:drop-shadow(0 2px 1px rgba(90,62,51,.18))}
+.cookie.counted{background:var(--dough);border:4px solid var(--edge-c);filter:none}
+.cookie.ghost{filter:drop-shadow(0 10px 12px rgba(90,62,51,.3))}
+
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
 </style>
 </head>
@@ -805,7 +810,7 @@ function newQuestion(){
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1];
   G.last = factKey(G.s, G.a);
   G.added = 0; G.jarCount = Math.min(G.a + 2, 12 - G.s); G.first = true; G.lock = false; G.mood = 'hungry';
-  G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null;
+  G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
   G.bubble = L('feedMe', G.t);
   screen = 'play'; closeOverlay(); renderPlay();
   askAloud();
@@ -838,20 +843,24 @@ function updatePlay(popLast){
   document.getElementById('momo').innerHTML = momo(G.mood);
   document.getElementById('bubble').textContent = G.bubble;
   var plate = '';
-  for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
-  for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
+  for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
+  for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" style="' + blueFace(G.stack[j]) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
   document.getElementById('plate').innerHTML = plate;
   var jar = '';
   for (var k = 0; k < G.jarCount; k++) if (!G.taken[k]) {
     var ps = G.pos && G.pos[k];
     jar += '<button class="cookie' + (popLast === 'back' && G.lastBack === k ? ' pop' : '') + '" data-jar="1" data-spot="' + k + '" aria-label="' + esc(L('putOn')) + '"' +
-      (ps ? ' style="left:' + ps[0] + 'px;top:' + ps[1] + 'px"' : '') + '></button>';
+      ' style="' + blueFace(k) + (ps ? ';left:' + ps[0] + 'px;top:' + ps[1] + 'px' : '') + '"></button>';
   }
   document.getElementById('jar').innerHTML = jar;
   document.getElementById('eqA').textContent = G.added;
   document.getElementById('eqT').textContent = total();
   document.getElementById('doneBtn').disabled = G.lock;
 }
+var FACES = 12;
+function face(color, n){ return '--face:url(cookies/' + color + '_' + ('0' + ((((n % FACES) + FACES) % FACES) + 1)).slice(-2) + '.png)'; }
+function redFace(i){ return face('red', (G ? G.faceSeed : 0) + i * 5); }
+function blueFace(spot){ return face('blue', (G ? G.faceSeed : 0) + 3 + spot * 7); }
 function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 function layoutTable(){
   var tb = document.getElementById('table'), pl = document.getElementById('plate');
@@ -933,7 +942,8 @@ function feedUnicorn(){
     var r = c.getBoundingClientRect();
     var fly = document.createElement('span');
     fly.className = c.className.replace(/\b(pop|counted)\b/g, '') + ' flying';
-    fly.style.cssText = 'position:fixed;left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;margin:0;z-index:30;pointer-events:none';
+    var fc = c.style.getPropertyValue('--face');
+    fly.style.cssText = (fc ? '--face:' + fc + ';' : '') + 'position:fixed;left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;margin:0;z-index:30;pointer-events:none';
     var dx = tx - (r.left + r.width / 2), dy = ty - (r.top + r.height / 2);
     var lift = Math.min(160, 60 + Math.abs(dx) * 0.25);
     setTimeout(function(){
@@ -1007,7 +1017,7 @@ document.addEventListener('pointermove', function(e){
   var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (!drag.moved && Math.hypot(dx, dy) > 10) {
     drag.moved = true;
-    var g = document.createElement('span'); g.className = 'cookie ghost';
+    var g = document.createElement('span'); g.className = 'cookie ghost'; g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
     document.body.appendChild(g); drag.ghost = g; drag.el.style.visibility = 'hidden';
   }
   if (drag.ghost) {
@@ -1045,7 +1055,7 @@ function confetti(){
   c.innerHTML = h; document.body.appendChild(c);
   setTimeout(function(){ c.remove(); }, 4200);
 }
-function cookies(n, cls){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '"></span>'; return h; }
+function cookies(n, cls){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(i) : blueFace(i)) + '"></span>'; return h; }
 function showReward(){
   if (screen !== 'play') return;
   var last = G.q + 1 >= ROUND;
