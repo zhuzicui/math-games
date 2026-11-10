@@ -478,14 +478,16 @@ html:not(:lang(ja)) .seg button[lang=ja]{font-family:'Hiragino Maru Gothic ProN'
 .tf-area{flex:1;min-height:0;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.4cqh,28px);
   --cell:min(calc((100cqw - 28px) / 5.3), calc(100cqh / 4.3), 104px)}
 .tf-area:has(.carton.five){--cell:min(calc((100cqw - 28px) / 5.3), calc(100cqh / 3.2), 110px)}
-.carton{display:grid;grid-template-columns:repeat(5,var(--cell));grid-auto-rows:var(--cell);gap:0;padding:calc(var(--cell) * .12);
-  background:#F3DDB8;border:4px solid #D9B888;border-radius:24px;box-shadow:0 6px 0 #D9B888;transition:background .2s}
-.carton.hot{background:#F7E6C6}
-.carton .cell{display:flex;align-items:center;justify-content:center;border:2px solid #E3C79B;margin:-1px;
-  background:radial-gradient(circle at 50% 45%, #E7C899 0 40%, #EFD6AE 62%, #F3DDB8 72%)}
-.carton .cell:first-child{border-top-left-radius:16px}.carton .cell:nth-child(5){border-top-right-radius:16px}
-.carton.five .cell:first-child{border-bottom-left-radius:16px}.carton.five .cell:nth-child(5){border-bottom-right-radius:16px}
-.carton:not(.five) .cell:nth-child(6){border-bottom-left-radius:16px}.carton:not(.five) .cell:nth-child(10){border-bottom-right-radius:16px}
+.carton{position:relative;display:grid;grid-template-columns:repeat(5,var(--cell));grid-auto-rows:var(--cell);gap:0;padding:calc(var(--cell) * .1);
+  background:#E6D6BE;border:4px solid #CDB794;border-radius:calc(var(--cell) * .28);box-shadow:0 6px 0 #CDB794;transition:background .2s}
+.carton.hot{background:#EFE2CD}
+/* each cup: a round moulded hollow */
+.carton .cell{background:none;border:0;border-radius:0;aspect-ratio:auto;width:auto;margin:0;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:calc(var(--cell) * .08)}
+.carton .cell::before{content:'';position:absolute;left:9%;top:9%;right:9%;bottom:9%;border-radius:50%;background:#D5C0A0;box-shadow:inset 0 calc(var(--cell) * .06) 0 #C4AB85}
+.carton .cell > *{position:relative;z-index:1}
+/* little cones between the cups */
+.carton .post{position:absolute;z-index:0;width:calc(var(--cell) * .2);height:calc(var(--cell) * .2);margin:calc(var(--cell) * -.1) 0 0 calc(var(--cell) * -.1);border-radius:50%;
+  background:#EFE3D0;border:2px solid #CDB794}
 .egg{position:relative;display:inline-flex;align-items:center;justify-content:center;width:calc(var(--cell) * .66);height:calc(var(--cell) * .8);padding:0;border:0;background:none;
   touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;filter:drop-shadow(0 3px 2px rgba(90,62,51,.22))}
 .egg .egg-svg{width:100%;height:100%;display:block;pointer-events:none}
@@ -1392,23 +1394,12 @@ function roundDone(){
 /* =====================================================================
    TEN FRAME (chick): fill the egg carton, then say how many you added
    ===================================================================== */
-var EGG_COLORS = { start: ['#F6B2A3', '#E98C78'], add: ['#A9D4F0', '#6FAEDB'] };
+/* decorated eggs: red-ish = already in the carton, blue = added (same colour code as the cookies) */
+var EGG_N = 21;
 function eggSvg(kind, v){
-  var c = EGG_COLORS[kind] || EGG_COLORS.add, id = 'eg' + (eggId++);
-  var eyes = [
-    '<ellipse cx="38" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/><ellipse cx="62" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/>',
-    '<path d="M33 58q5-5 10 0M57 58q5-5 10 0" stroke="#4A3229" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
-    '<ellipse cx="38" cy="58" rx="3.4" ry="4.4" fill="#4A3229"/><path d="M57 58q5-5 10 0" stroke="#4A3229" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
-  ][((v % 3) + 3) % 3];
-  var mouth = v % 2 ? '<path d="M44 68q6 6 12 0" stroke="#4A3229" stroke-width="3" fill="none" stroke-linecap="round"/>'
-                    : '<path d="M44 67q6 8 12 0z" fill="#8B4B3E"/>';
-  return '<svg class="egg-svg" viewBox="0 0 100 120" aria-hidden="true"><defs><radialGradient id="' + id + '" cx="38%" cy="32%" r="75%">' +
-    '<stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".35" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></radialGradient></defs>' +
-    '<path d="M8 68C8 30 28 4 50 4s42 26 42 64c0 30-18 48-42 48S8 98 8 68z" fill="url(#' + id + ')"/>' +
-    '<ellipse cx="30" cy="68" rx="6" ry="3.6" fill="#F28C8C" opacity=".45"/><ellipse cx="70" cy="68" rx="6" ry="3.6" fill="#F28C8C" opacity=".45"/>' +
-    eyes + mouth + '</svg>';
+  var n = ((Math.floor(v) % EGG_N) + EGG_N) % EGG_N + 1;
+  return '<img class="egg-svg" src="eggs/' + (kind === 'start' ? 'red' : 'blue') + '_' + (n < 10 ? '0' : '') + n + '.svg" alt="" draggable="false">';
 }
-var eggId = 0;
 function chick(cls){ return '<img class="' + (cls || 'momo chick') + '" src="animals/chick.png" alt="' + esc(L('chickAlt')) + '" draggable="false">'; }
 
 function tenSize(){ return S.maxSum <= 5 ? 5 : 10; }
@@ -1464,6 +1455,7 @@ function updateTen(pop){
     else if (typeof c === 'number') h += '<span class="cell"><button class="egg add' + (pop === i ? ' pop' : '') + '" data-cell="' + i + '" aria-label="' + esc(L('tfTake')) + '"' + (G.phase !== 'fill' ? ' tabindex="-1"' : '') + '>' + eggSvg('add', G.v + 1 + c * 5) + '</button></span>';
     else h += '<span class="cell empty"></span>';
   });
+  if (G.N === 10) for (var pc = 1; pc < 5; pc++) h += '<span class="post" style="left:calc(var(--cell) * ' + (pc + .1) + ' );top:calc(var(--cell) * 1.1)"></span>';
   document.getElementById('carton').innerHTML = h;
   var b = '';
   if (G.phase === 'fill') {
