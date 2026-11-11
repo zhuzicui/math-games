@@ -819,7 +819,7 @@ img.stk{object-fit:contain}
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'av17', facts:{}, lang:'fr' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', voiceRate:'medium', name:'', avatar:'av17', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -939,6 +939,7 @@ en: {
   tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   back: 'Back',
   nextStep: 'Next',
+  speed: 'Speed', rate_slow: 'Slower', rate_medium: 'Medium', rate_fast: 'Faster',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1018,6 +1019,7 @@ fr: {
   tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   back: 'Retour',
   nextStep: 'Suivant',
+  speed: 'Vitesse', rate_slow: 'Plus lente', rate_medium: 'Moyenne', rate_fast: 'Plus rapide',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1097,6 +1099,7 @@ es: {
   tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   back: 'Volver',
   nextStep: 'Siguiente',
+  speed: 'Velocidad', rate_slow: 'Más lenta', rate_medium: 'Media', rate_fast: 'Más rápida',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1176,6 +1179,7 @@ zh: {
   tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   back: '返回',
   nextStep: '下一步',
+  speed: '语速', rate_slow: '慢一点', rate_medium: '中等', rate_fast: '快一点',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1255,6 +1259,7 @@ ja: {
   tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   back: 'もどる',
   nextStep: 'つぎへ',
+  speed: 'はやさ', rate_slow: 'ゆっくり', rate_medium: 'ふつう', rate_fast: 'はやい',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1334,6 +1339,7 @@ yue: {
   tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   back: '返回',
   nextStep: '下一步',
+  speed: '語速', rate_slow: '慢啲', rate_medium: '中等', rate_fast: '快啲',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1413,6 +1419,7 @@ ko: {
   tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   back: '뒤로',
   nextStep: '다음',
+  speed: '속도', rate_slow: '느리게', rate_medium: '보통', rate_fast: '빠르게',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1548,6 +1555,7 @@ function syncMute(){ document.body.classList.toggle('muted', !S.voice); document
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
 function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
+var RATE_MUL = { slow: 0.8, medium: 1, fast: 1.22 };
 function say(parts, onEach, gap){
   var arr = (Array.isArray(parts) ? parts : [parts]).map(function(p){ return typeof p === 'string' ? P(p, 'calm') : p; });
   gap = gap || 800;
@@ -1569,7 +1577,8 @@ function say(parts, onEach, gap){
       if (voice) u.voice = voice;
       u.lang = voice ? voice.lang : SPEECH_LANG[lang];
       u.pitch = Math.max(0.5, Math.min(2, pitch));
-      u.rate = Math.max(0.55, Math.min(1.3, rate));
+      rate *= RATE_MUL[S.voiceRate] || 1;   /* grown-ups' speed setting */
+      u.rate = Math.max(0.45, Math.min(1.6, rate));
       u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
       if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
       try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch(e) {}
@@ -2842,7 +2851,9 @@ function renderParents(){
         var cur = S.voiceType === 'male' ? (okM || !okF ? 'male' : 'female') : (okF || !okM ? 'female' : 'male');
         return '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('voiceType') + '</span><div class="seg">' +
           '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF && S.voice ? '' : ' disabled') + '>' + L('female') + '</button>' +
-          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM && S.voice ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
+          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM && S.voice ? '' : ' disabled') + '>' + L('male') + '</button></div></div>' +
+          '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('speed') + '</span><div class="seg">' +
+          ['slow', 'medium', 'fast'].map(function(r){ return '<button data-act="vrate" data-v="' + r + '" aria-pressed="' + ((S.voiceRate || 'medium') === r) + '"' + (S.voice ? '' : ' disabled') + '>' + L('rate_' + r) + '</button>'; }).join('') + '</div></div>';
       })() : '') +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
@@ -2947,6 +2958,7 @@ document.addEventListener('click', function(e){
     }
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
     case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
+    case 'vrate': S.voiceRate = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
