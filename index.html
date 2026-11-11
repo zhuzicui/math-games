@@ -956,6 +956,15 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 @keyframes chomp{50%{transform:var(--cf,scaleX(1)) scale(1.05,.95)}}
 .croc-img.flip.chomp{--cf:scaleX(-1)}
 .croc-img.flip{transform:scaleX(-1)}
+/* home header */
+.home-bar{align-items:flex-start}
+.corner-av{width:clamp(56px,9dvh,84px) !important;height:clamp(56px,9dvh,84px) !important;flex:none}
+.corner-av .av-edit{width:clamp(22px,3.4dvh,30px);height:clamp(22px,3.4dvh,30px)}
+.hero-solo{justify-content:flex-start;margin-top:clamp(4px,1.6dvh,14px)}
+.hero-solo h1{margin:0;font-size:clamp(30px,min(9vw,7dvh),64px)}
+.group-bar{position:relative}
+.group-title{display:flex;align-items:center;gap:clamp(10px,2vw,18px);min-width:0;flex:1;justify-content:center}
+.group-title h1{margin:0;font-size:clamp(19px,min(5.4vw,5.6dvh),48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 </style>
 </head>
 <body>
@@ -2064,10 +2073,19 @@ function renderAddBuddy(){
 /* ---------- home ---------- */
 var homeGroup = null;   /* null = the two group tiles; 'add' | 'kinder' = that group's games */
 function renderHome(){
-  var bar = '<div class="bar">' + (homeGroup ? '<button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' : '<span class="small-round bar-spacer" aria-hidden="true"></span>') +
-    '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
-    '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>';
-  var hero = '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(homeGroup === 'add' ? L('gAddition') : homeGroup === 'kinder' ? L('gKinder') : L('letsPlay', S.name)) + '</h1></div></div>';
+  var starChip = '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>';
+  var gear = '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button>';
+  var bar, hero;
+  if (homeGroup) {
+    /* group page: back, then the group's name with the stars beside it, no avatar */
+    bar = '<div class="bar group-bar"><button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
+      '<div class="group-title"><h1>' + esc(homeGroup === 'add' ? L('gAddition') : L('gKinder')) + '</h1>' + starChip + '</div>' + gear + '</div>';
+    hero = '';
+  } else {
+    /* top: the buddy sits in the top-left corner, the greeting gets its own line */
+    bar = '<div class="bar home-bar">' + avatarBtn('home-av corner-av') + starChip + gear + '</div>';
+    hero = '<div class="hero hero-solo"><h1>' + esc(L('letsPlay', S.name)) + '</h1></div>';
+  }
   var body;
   if (homeGroup === 'add') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + '<span class="tl">' + L('gFeed') + '</span></button>' +
@@ -2086,6 +2104,9 @@ function renderHome(){
       '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
+  /* long group names on a narrow phone: shrink the title until it fits beside the stars */
+  var gt = document.querySelector('.group-title h1');
+  if (gt) { var fs = parseFloat(getComputedStyle(gt).fontSize); while (gt.scrollWidth > gt.clientWidth + 1 && fs > 15) { fs -= 1; gt.style.fontSize = fs + 'px'; } }
 }
 
 /* =====================================================================
