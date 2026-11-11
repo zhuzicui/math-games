@@ -1007,11 +1007,11 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
 @keyframes starIn{from{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}}
 .dots span.pop{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
-body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) var(--bgx,50%) var(--bgy,100%)/var(--bgw,cover) no-repeat fixed}
+body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/cover no-repeat fixed}
 .tile.traint{background:#DDEDF0;border-color:#A7CBD2;box-shadow:0 7px 0 #A7CBD2}
 .tile.traint .train-pic{height:auto;width:62%;max-height:clamp(70px,22dvh,190px);object-fit:contain}
 .traingame{gap:clamp(4px,1.2dvh,12px)}
-.train-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.train-stage{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:clamp(20px,7dvh,40px)}
 .train-wrap{position:relative;width:100%;display:flex;justify-content:center;padding-bottom:calc(var(--u,80px)*.16)}
 .train-wrap::after{content:'';position:absolute;left:50%;bottom:0;width:100vw;transform:translateX(-50%);height:calc(var(--u,80px)*.2);z-index:0;
   background:linear-gradient(#9AA4B6,#9AA4B6) top/100% 24% no-repeat,repeating-linear-gradient(90deg,#C9D2DE 0 calc(var(--u,80px)*.1),transparent 0 calc(var(--u,80px)*.32)) bottom/100% 70% no-repeat}
@@ -2469,22 +2469,9 @@ function renderTrain(){
 /* one size unit (a car's width) so the whole train fits the stage */
 function sizeTrain(){
   var st = document.querySelector('.train-stage'), tr = document.querySelector('.train'); if (!st || !tr) return;
-  var n = G.seq.length, w = Math.min(innerWidth, 1400) - (innerWidth > 700 ? 88 : 40), h = st.clientHeight;
+  var n = G.seq.length, w = Math.min(innerWidth, 1400) - (innerWidth > 700 ? 88 : 40), h = st.clientHeight - (parseFloat(getComputedStyle(st).paddingBottom) || 0);
   var u = Math.min(w / (2.0 + n * 1.134), h / 2.0, 190);
   tr.style.setProperty('--u', Math.max(40, Math.floor(u)) + 'px');
-  placeTrainBg();
-}
-/* scale and shift the ice picture so its water line always sits under the rails, whatever the screen shape */
-var TRAIN_BG = { w:1800, h:1214, water:0.79 };
-function placeTrainBg(){
-  var wrap = document.querySelector('.train-wrap'); if (!wrap) return;
-  var W = innerWidth, H = innerHeight, r = wrap.getBoundingClientRect();
-  var u = parseFloat(getComputedStyle(document.querySelector('.train')).getPropertyValue('--u')) || 80;
-  var y = r.bottom - u * 0.1, iw = TRAIN_BG.w, ih = TRAIN_BG.h, f = TRAIN_BG.water;
-  var sc = Math.max(W / iw, H / ih, y / (f * ih), (H - y) / ((1 - f) * ih));
-  var bw = iw * sc, x = (W - bw) / 2, top = y - f * ih * sc;
-  var st = document.body.style;
-  st.setProperty('--bgw', Math.ceil(bw) + 'px'); st.setProperty('--bgx', Math.round(x) + 'px'); st.setProperty('--bgy', Math.round(top) + 'px');
 }
 window.addEventListener('resize', function(){ if (screen === 'train' && G) sizeTrain(); });
 function trainCardTap(id){
