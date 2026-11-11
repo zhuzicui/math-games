@@ -1003,7 +1003,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 @media (orientation:landscape) and (max-height:600px){ .reward.croc-rw{gap:6px} .reward.croc-rw .croc-reward{max-height:24dvh !important} .reward.croc-rw h1{font-size:clamp(26px,8dvh,44px)} }
 /* ---------- number train ---------- */
 .star-pop{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .55s cubic-bezier(.3,1.6,.6,1) both}
-.star-pop img{width:clamp(110px,26dvh,200px);height:auto;filter:drop-shadow(0 8px 10px rgba(120,90,40,.25))}
+.star-pop img{width:clamp(80px,24dvh,200px);height:auto;filter:drop-shadow(0 8px 10px rgba(120,90,40,.25))}
 .star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
 @keyframes starIn{from{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}}
 .dots span.pop{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
@@ -1099,10 +1099,12 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .group-kinder .grp-pics .croc-pic{max-width:44%}
 .group-kinder .grp-pics img.grp-train{max-width:24%;height:86%}
 .group-kinder .grp-pics img.grp-octo{max-width:22%;height:66%}
-.necklace .loop{position:absolute;overflow:visible;opacity:0;transition:opacity .5s .6s;pointer-events:none}
+.necklace .loop{position:absolute;overflow:visible;opacity:0;transition:opacity .8s 1.2s;pointer-events:none}
 .necklace .loop path{fill:none;stroke:#7A4A35;stroke-width:3}
 .necklace .loop-back{z-index:1}.necklace .loop-front{z-index:5}
 .necklace.worn .loop{opacity:1}
+.bead-tray{transition:opacity .4s}
+.bead-tray.gone{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -2638,6 +2640,7 @@ function starToDot(scr){
   if (screen !== scr || !G) return;
   var q = G.q, dot = document.querySelectorAll('.screen .dots span')[q];
   var st = document.createElement('div'); st.className = 'star-pop'; st.innerHTML = starImg(q + S.stars) + '<b>+1</b>';
+  if (G.starTop) { st.style.top = Math.round(G.starTop) + 'px'; G.starTop = null; }
   document.body.appendChild(st);
   setTimeout(function(){
     if (dot && st.animate && !reduceMotion) {
@@ -2734,6 +2737,17 @@ function layoutBeads(){
     sl.style.left = Math.round(x - u / 2) + 'px'; sl.style.top = Math.round(y - u / 2) + 'px';
   });
 }
+/* make room for the star: the tray fades and the octopus glides down below the star (star goes higher if the screen is short) */
+function beadMakeRoom(){
+  var stg = document.querySelector('.bead-stage'), oc = document.querySelector('.necklace .octo'), tray = document.querySelector('.bead-tray');
+  if (!stg || !oc) return;
+  if (tray) tray.classList.add('gone');
+  var H = innerHeight, star = Math.min(Math.max(80, H * 0.24), 200), half = (star + Math.max(28, Math.min(48, H * 0.06))) / 2;
+  var r = oc.getBoundingClientRect(), loopBottom = r.top + r.height * 0.86, starTop = H * 0.46;
+  var want = starTop + half + 10 - r.top, room = H - 10 - loopBottom, shift = Math.max(0, Math.min(want, room));
+  if (shift < want) G.starTop = Math.max(star / 2 + 10, starTop - (want - shift));
+  stg.style.transition = 'transform .7s ease-in-out'; stg.style.transform = 'translateY(' + Math.round(shift) + 'px)';
+}
 /* the finished necklace slides into a loop around the octopus: back half behind it, front half in front */
 function wrapBeads(animate){
   var nk = document.querySelector('.necklace'); if (!nk || !G || !G.lay) return;
@@ -2749,7 +2763,7 @@ function wrapBeads(animate){
   var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length;
   sl.forEach(function(el, i){
     var a = Math.PI / 2 + (i - (n - 1) / 2) * (2 * Math.PI / n), x = cx + rx * Math.cos(a), y = cy + ry * Math.sin(a);
-    if (animate) { el.style.transition = 'left .9s cubic-bezier(.5,0,.3,1),top .9s cubic-bezier(.5,0,.3,1),width .9s,height .9s'; el.style.transitionDelay = (Math.abs(i - (n - 1) / 2) * 45) + 'ms'; }
+    if (animate) { el.style.transition = 'left 1.6s cubic-bezier(.45,0,.3,1),top 1.6s cubic-bezier(.45,0,.3,1),width 1.6s,height 1.6s'; el.style.transitionDelay = (Math.abs(i - (n - 1) / 2) * 90) + 'ms'; }
     el.style.left = Math.round(x - bs / 2) + 'px'; el.style.top = Math.round(y - bs / 2) + 'px';
     el.style.width = bs + 'px'; el.style.height = bs + 'px';
     el.style.zIndex = Math.sin(a) > 0 ? 6 : 1;
@@ -2831,8 +2845,9 @@ function beadWin(){
   G.worn = true;
   document.querySelectorAll('.bslot').forEach(function(s){ s.classList.remove('snap', 'next'); });
   setTimeout(function(){ if (screen === 'beads') wrapBeads(!reduceMotion); }, 450);
-  setTimeout(function(){ var nk = document.querySelector('.necklace'); if (nk && screen === 'beads') nk.classList.add('dance'); }, 1600);
-  setTimeout(function(){ starToDot('beads'); }, 2600);
+  setTimeout(function(){ if (screen === 'beads') beadMakeRoom(); }, 2500);
+  setTimeout(function(){ var nk = document.querySelector('.necklace'); if (nk && screen === 'beads') nk.classList.add('dance'); }, 3200);
+  setTimeout(function(){ starToDot('beads'); }, 4300);
 }
 
 /* ---------- game ---------- */
