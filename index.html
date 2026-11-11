@@ -963,7 +963,8 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .hero-solo{justify-content:flex-start;margin-top:clamp(4px,1.6dvh,14px)}
 .hero-solo h1{margin:0;font-size:clamp(30px,min(9vw,7dvh),64px)}
 .group-bar{position:relative}
-.group-title{display:flex;align-items:center;gap:clamp(10px,2vw,18px);min-width:0;flex:1;justify-content:center}
+.group-title{display:flex;align-items:center;gap:clamp(10px,2vw,18px);min-width:0;flex:1;justify-content:flex-start}
+.group-right{display:flex;align-items:center;gap:clamp(8px,1.6vw,14px);flex:none}
 .group-title h1{margin:0;font-size:clamp(19px,min(5.4vw,5.6dvh),48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .grp-pics img.grp-uni{height:108%;max-width:40%}   /* unicorn ~35% bigger than before */
 </style>
@@ -2079,8 +2080,8 @@ function renderHome(){
   var bar, hero;
   if (homeGroup) {
     /* group page: back, then the group's name with the stars beside it, no avatar */
-    bar = '<div class="bar group-bar"><button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
-      '<div class="group-title"><h1>' + esc(homeGroup === 'add' ? L('gAddition') : L('gKinder')) + '</h1>' + starChip + '</div>' + gear + '</div>';
+    bar = '<div class="bar group-bar"><div class="group-title"><button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
+      '<h1>' + esc(homeGroup === 'add' ? L('gAddition') : L('gKinder')) + '</h1></div><div class="group-right">' + starChip + gear + '</div></div>';
     hero = '';
   } else {
     /* top: the buddy sits in the top-left corner, the greeting gets its own line */
