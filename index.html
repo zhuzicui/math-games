@@ -1002,6 +1002,11 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .reward.croc-rw .croc-reward{max-height:min(26dvh,220px) !important;max-width:min(60vw,360px) !important}
 @media (orientation:landscape) and (max-height:600px){ .reward.croc-rw{gap:6px} .reward.croc-rw .croc-reward{max-height:24dvh !important} .reward.croc-rw h1{font-size:clamp(26px,8dvh,44px)} }
 /* ---------- number train ---------- */
+.star-pop{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .55s cubic-bezier(.3,1.6,.6,1) both}
+.star-pop img{width:clamp(110px,26dvh,200px);height:auto;filter:drop-shadow(0 8px 10px rgba(120,90,40,.25))}
+.star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
+@keyframes starIn{from{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}}
+.dots span.pop{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
 body.railbg,body.railbg #app{background:linear-gradient(180deg,#D7ECF4 0%,#E6F3F1 52%,#DCEBCF 78%,#D1E4C1 100%) fixed}
 .tile.traint{background:#DDEDF0;border-color:#A7CBD2;box-shadow:0 7px 0 #A7CBD2}
 .tile.traint .train-pic{height:auto;width:62%;max-height:clamp(70px,22dvh,190px);object-fit:contain}
@@ -1052,6 +1057,10 @@ body.railbg,body.railbg #app{background:linear-gradient(180deg,#D7ECF4 0%,#E6F3F
 .seq-eq{gap:.35em}
 @media (orientation:landscape) and (max-height:600px){ .train-reward{max-height:24dvh !important} }
 @media (prefers-reduced-motion:reduce){ .train.enter,.train.moving .loco-box,.train.moving .tcar,.train.moving .puffs i{animation:none} }
+/* round-end page: everything stacked and centred, also on a phone held sideways */
+.reward.round-rw{flex-direction:column !important;flex-wrap:nowrap !important;align-items:center;text-align:center}
+.reward.round-rw .sumcard{flex:none !important;min-width:0 !important;width:auto;align-items:center}
+@media (orientation:landscape) and (max-height:600px){ .reward.round-rw{gap:4px} .reward.round-rw h1{font-size:clamp(26px,8dvh,44px)} .reward.round-rw .pic{max-height:20dvh !important;width:auto !important;height:20dvh !important} .reward.round-rw .sumcard{padding-top:6px;padding-bottom:6px;gap:2px} }
 </style>
 </head>
 <body>
@@ -2557,7 +2566,24 @@ function trainWin(){
   cars.forEach(function(c, i){ setTimeout(function(){ c.classList.add('lit'); setTimeout(function(){ c.classList.remove('lit'); }, 420); }, 700 + i * 480); });
   var leaveAt = 900 + cars.length * 480;
   setTimeout(function(){ var tr = document.querySelector('.train'); if (tr && !reduceMotion) tr.classList.add('moving', 'leave'); }, leaveAt);
-  setTimeout(showTrainReward, leaveAt + (reduceMotion ? 300 : 1700));
+  setTimeout(trainStar, leaveAt + (reduceMotion ? 300 : 1500));
+}
+function trainStar(){
+  if (screen !== 'train' || !G) return;
+  var q = G.q, dot = document.querySelectorAll('.traingame .dots span')[q];
+  var st = document.createElement('div'); st.className = 'star-pop'; st.innerHTML = starImg(q + S.stars) + '<b>+1</b>';
+  document.body.appendChild(st);
+  setTimeout(function(){
+    if (dot && st.animate && !reduceMotion) {
+      var a = st.getBoundingClientRect(), d = dot.getBoundingClientRect();
+      st.animate([{ transform:'translate(-50%,-50%) scale(1)' }, { transform:'translate(calc(-50% + ' + (d.left + d.width / 2 - a.left - a.width / 2) + 'px),calc(-50% + ' + (d.top + d.height / 2 - a.top - a.height / 2) + 'px)) scale(.12)', opacity:.6 }],
+        { duration:600, easing:'cubic-bezier(.5,0,.7,.4)', fill:'forwards' });
+    }
+  }, 900);
+  setTimeout(function(){
+    st.remove(); if (dot) { dot.className = 'done'; dot.classList.add('pop'); }
+  }, 1500);
+  setTimeout(function(){ if (screen === 'train' && G && G.q === q) next(); }, 2000);
 }
 function showTrainReward(){
   if (screen !== 'train') return;
@@ -2917,7 +2943,7 @@ function roundDone(){
   var madeRainbow = prNow.done.length > prBefore.done.length;
   var madeSpecial = Math.floor(prNow.done.length / 100) > Math.floor(prBefore.done.length / 100);
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
-  overlay('<div class="reward"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
+  overlay('<div class="reward round-rw"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
     '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
     '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button><button class="big-btn" data-act="again">' + L('again') + '</button></div></div>');
   confetti();
