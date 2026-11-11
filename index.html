@@ -798,8 +798,12 @@ img.stk{object-fit:contain}
 .choice{display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-sizing:border-box;line-height:1;text-align:center;-webkit-appearance:none;appearance:none;font-variant-numeric:tabular-nums}
 /* ===== Tower ===== */
 .tile.towert{background:#FCE6CF;border-color:#EDBF91;box-shadow:0 7px 0 #EDBF91}
-.tiles.five{grid-template-columns:repeat(5,minmax(0,1fr))}
-@media (orientation:portrait) and (max-width:600px){ .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.five .tile:last-child{grid-column:1 / -1} }
+/* five games: three on top, two centred underneath (iPad); one row on a phone held sideways; 2 + 2 + 1 on a phone */
+.tiles.five{grid-template-columns:repeat(6,minmax(0,1fr))}
+.tiles.five .tile{grid-column:span 2}
+.tiles.five .tile:nth-child(4){grid-column:2 / span 2}
+@media (orientation:landscape) and (max-height:600px){ .tiles.five{grid-template-columns:repeat(5,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} }
+@media (orientation:portrait) and (max-width:600px){ .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} .tiles.five .tile:last-child{grid-column:1 / -1} }
 .tower .momo-row .tigerpic{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
 .tower .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent;border-radius:16px;padding:0 .15em;min-width:1.4em;text-align:center}
 .tower .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
