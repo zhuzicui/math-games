@@ -2745,8 +2745,8 @@ function beadMakeRoom(){
 function wrapBeads(animate){
   var nk = document.querySelector('.necklace'); if (!nk || !G || !G.lay) return;
   var L0 = G.lay, ocTop = L0.lift + Math.round(L0.u * 0.75) - L0.oh;
-  var bw = L0.ow * 1.05, bx = L0.w / 2 - bw / 2, by = ocTop + L0.oh * 0.5, bh = L0.oh * 0.3;
-  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length, bs = Math.round(Math.min(L0.u * 0.6, bw * 1.25 / n));
+  var bw = L0.ow * 0.89, bx = L0.w / 2 - bw / 2, by = ocTop + L0.oh * 0.52, bh = L0.oh * 0.26;
+  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length, bs = Math.round(Math.min(L0.u * 0.51, bw * 1.25 / n));
   var ease = 'cubic-bezier(.45,0,.3,1)', dur = animate ? '1.6s ' : '0s ';
   var svg = nk.querySelector('.string');
   svg.style.transition = animate ? 'left ' + dur + ease + ',top ' + dur + ease + ',width ' + dur + ease + ',height ' + dur + ease : '';
@@ -2834,8 +2834,8 @@ function beadWin(){
   G.worn = true;
   document.querySelectorAll('.bslot').forEach(function(s){ s.classList.remove('snap', 'next'); });
   setTimeout(function(){ if (screen === 'beads') wrapBeads(!reduceMotion); }, 450);
-  setTimeout(function(){ var nk = document.querySelector('.necklace'); if (nk && screen === 'beads') nk.classList.add('dance'); }, 2400);
-  setTimeout(function(){ if (screen === 'beads') { beadMakeRoom(); starToDot('beads'); } }, 3400);
+  /* the moment the necklace is on: wiggle and the star, together */
+  setTimeout(function(){ if (screen !== 'beads') return; var nk = document.querySelector('.necklace'); if (nk) nk.classList.add('dance'); beadMakeRoom(); starToDot('beads'); }, reduceMotion ? 500 : 2100);
 }
 
 /* ---------- game ---------- */
