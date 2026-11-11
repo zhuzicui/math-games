@@ -918,8 +918,16 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 @keyframes paddle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-1deg)}}
 .croc-mid::after{content:'';position:absolute;left:8%;right:8%;bottom:8%;height:10px;border-radius:50%;background:rgba(255,255,255,.45);filter:blur(2px);z-index:-1}
 .waterbg .bar .round,.waterbg .bubble,.waterbg .cmp .n,.waterbg .same-btn{box-shadow:0 5px 0 rgba(90,130,160,.25)}
-.fish{position:absolute;height:auto;transform:translate(0,-50%) scaleX(var(--flip,1));animation:swim 3.2s ease-in-out infinite;pointer-events:none}
-@keyframes swim{0%,100%{translate:0 0;rotate:0deg}35%{translate:var(--fx,6px) var(--fy,-4px);rotate:var(--fr,2deg)}70%{translate:calc(var(--fx,6px) * -.5) calc(var(--fy,-4px) * .6);rotate:calc(var(--fr,2deg) * -.6)}}
+.fish{position:absolute;height:auto;transform:translate(0,-50%) scaleX(var(--flip,1));animation:swim 5s ease-in-out infinite;pointer-events:none;will-change:transform}
+/* swim forward a little (the way the fish faces), wiggling, then drift back; transform-only so older iPads animate it too */
+@keyframes swim{
+  0%,100%{transform:translate(0,-50%) scaleX(var(--flip,1)) rotate(0deg)}
+  15%{transform:translate(calc(var(--fx,20px) * .25),calc(-50% + var(--fy,-6px) * .3)) scaleX(var(--flip,1)) rotate(var(--fr,3deg))}
+  30%{transform:translate(calc(var(--fx,20px) * .55),calc(-50% + var(--fy,-6px) * .8)) scaleX(var(--flip,1)) rotate(calc(var(--fr,3deg) * -1))}
+  50%{transform:translate(var(--fx,20px),calc(-50% + var(--fy,-6px))) scaleX(var(--flip,1)) rotate(var(--fr,3deg))}
+  70%{transform:translate(calc(var(--fx,20px) * .6),calc(-50% + var(--fy,-6px) * .4)) scaleX(var(--flip,1)) rotate(calc(var(--fr,3deg) * -1))}
+  85%{transform:translate(calc(var(--fx,20px) * .25),calc(-50% + var(--fy,-6px) * -.2)) scaleX(var(--flip,1)) rotate(0deg)}
+}
 .fish.counted{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 6px #FFD54A) brightness(1.08)}
 .count-tag{position:absolute;transform:translate(-30%,-120%);background:#5A3E33;color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(14px,2.4dvh,22px);min-width:1.5em;height:1.5em;border-radius:999px;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;animation:pop .3s}
 .water.eaten .fish{opacity:0}
@@ -950,7 +958,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 @keyframes tilt{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 .croc-reward{width:auto !important;max-width:min(40vw,320px) !important;height:auto !important;max-height:26dvh !important;object-fit:contain}
 .cmp-eq .s{color:var(--ink)} .cmp-eq .a{color:var(--ink)}
-@media (prefers-reduced-motion:reduce){ .fish,.croc-img.open,.cmp .sign.shown{animation:none} }
+@media (prefers-reduced-motion:reduce){ .croc-img.open,.cmp .sign.shown{animation:none} .fish{animation-duration:9s !important} }
 .croc-reward.flip{transform:scaleX(-1)}
 .croc-img.chomp{animation:chomp .26s ease-out}
 @keyframes chomp{50%{transform:var(--cf,scaleX(1)) scale(1.05,.95)}}
@@ -2149,7 +2157,7 @@ function pondFish(n, big, side){
     }
     var f = 1 + Math.floor(Math.random() * FISH_N);
     out.push({ f:f, x:best[0], y:best[1], w:w, flip:Math.random() < 0.5, d:(Math.random() * 4).toFixed(2),
-      dur:(4 + Math.random() * 4).toFixed(1), dx:Math.round((Math.random() - 0.5) * 28), dy:Math.round((Math.random() - 0.5) * 16), rot:((Math.random() - 0.5) * 10).toFixed(1) });
+      dur:(4 + Math.random() * 4).toFixed(1), dx:Math.round(16 + Math.random() * 22), dy:Math.round((Math.random() - 0.5) * 18), rot:(2 + Math.random() * 3).toFixed(1) });
   }
   return out;
 }
@@ -2165,7 +2173,7 @@ function crocQuestion(){
 }
 function fishHtml(list, side){
   return list.map(function(o, i){
-    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + o.dx + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
+    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + ((FISH_LEFT[o.f - 1] ? -1 : 1) * (o.flip ? -1 : 1) * o.dx) + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
   }).join('');
 }
 function renderCroc(){
