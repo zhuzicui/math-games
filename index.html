@@ -403,7 +403,7 @@ body.skybg,body.skybg #app{background:#DAECEC}
 .sky{grid-template-rows:minmax(0,1fr) auto auto}
 .rb .rainbow{width:100%;height:100%;max-height:420px;overflow:visible}
 .bookbtn{justify-self:center;position:relative;display:flex;align-items:center;justify-content:center;width:clamp(64px,10dvh,84px);height:clamp(64px,10dvh,84px);border-radius:24px;border:4px solid #B3D5D7;background:#FFFCF7;box-shadow:0 6px 0 #B3D5D7;cursor:pointer}
-.bookbtn svg{width:60%;height:60%}
+.bookbtn svg{width:clamp(26px,4.4dvh,32px);height:clamp(26px,4.4dvh,32px);flex:none}
 .bookbtn:active{transform:translateY(3px);box-shadow:0 3px 0 #B3D5D7}
 .bookcount{position:absolute;top:-10px;right:-10px;min-width:28px;height:28px;padding:0 6px;border-radius:14px;background:#E9917A;color:#3E2A22;border:3px solid #FFFCF7;font-family:var(--display);font-weight:800;font-size:16px;line-height:22px;text-align:center;box-sizing:border-box}
 @media (orientation:landscape) and (min-width:600px) and (max-height:600px){
@@ -795,6 +795,8 @@ img.stk{object-fit:contain}
 @keyframes nope{0%,100%{transform:translateX(0)}15%{transform:translateX(-14px)}30%{transform:translateX(12px)}45%{transform:translateX(-9px)}60%{transform:translateX(7px)}75%{transform:translateX(-4px)}90%{transform:translateX(2px)}}
 .gate.nope{animation:nope .45s ease-out}
 @media (prefers-reduced-motion:reduce){.gate.nope{animation:none}}
+/* answer tiles: centre the number exactly (older iPad Safari adds its own button padding) */
+.choice{display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-sizing:border-box;line-height:1;text-align:center;-webkit-appearance:none;appearance:none;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -937,6 +939,7 @@ en: {
   specialSticker: 'Special sticker!',
   tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   back: 'Back',
+  nextStep: 'Next',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1015,6 +1018,7 @@ fr: {
   specialSticker: 'Autocollant spécial\u00a0!',
   tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   back: 'Retour',
+  nextStep: 'Suivant',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1093,6 +1097,7 @@ es: {
   specialSticker: '¡Pegatina especial!',
   tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   back: 'Volver',
+  nextStep: 'Siguiente',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1171,6 +1176,7 @@ zh: {
   specialSticker: '特别贴纸！',
   tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   back: '返回',
+  nextStep: '下一步',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1249,6 +1255,7 @@ ja: {
   specialSticker: 'とくべつな シール！',
   tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   back: 'もどる',
+  nextStep: 'つぎへ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1327,6 +1334,7 @@ yue: {
   specialSticker: '特別貼紙！',
   tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   back: '返回',
+  nextStep: '下一步',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1405,6 +1413,7 @@ ko: {
   specialSticker: '특별 스티커!',
   tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   back: '뒤로',
+  nextStep: '다음',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1425,8 +1434,32 @@ var hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in win
    silent word to unlock speech for the rest of the visit. */
 if (hasSpeech) (function(){
   var done = false;
+  /* On iPhone the silent switch mutes web speech through the speaker (headphones still work).
+     A playing <audio> element moves the page into "media playback", which the switch doesn't mute,
+     so on iOS we loop a tiny silent clip while the page is visible. */
+  var IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch(e) {}
+  var hush = null;
+  function silentWav(){
+    var n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+    function str(o, t){ for (var i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); }
+    str(0, 'RIFF'); v.setUint32(4, 36 + n, true); str(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); str(36, 'data'); v.setUint32(40, n, true);
+    for (var i = 44; i < b.length; i++) b[i] = 128;   /* 8-bit silence */
+    var bin = ''; for (var j = 0; j < b.length; j++) bin += String.fromCharCode(b[j]);
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  function startHush(){
+    if (!IOS) return;
+    try {
+      if (!hush) { hush = document.createElement('audio'); hush.src = silentWav(); hush.loop = true; hush.setAttribute('playsinline', ''); hush.setAttribute('x-webkit-airplay', 'deny'); }
+      var pr = hush.play(); if (pr && pr.catch) pr.catch(function(){});
+    } catch(e) {}
+  }
+  document.addEventListener('visibilitychange', function(){ if (!hush) return; if (document.hidden) hush.pause(); else startHush(); });
   function unlockSpeech(){
     if (done) return; done = true;
+    startHush();
     try { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch(e) {}
     ['touchend', 'pointerup', 'click', 'keydown'].forEach(function(t){ document.removeEventListener(t, unlockSpeech, true); });
   }
@@ -2750,7 +2783,7 @@ function kidDialog(id){
   var o = overlay('<form class="gate kid-dialog" id="kidForm" autocomplete="off"><h2>' + (k ? L('editKid', k.name || '') : L('addKid')) + '</h2>' +
     '<label class="lab" for="kidDlgName">' + L('childName') + '</label>' +
     '<input id="kidDlgName" class="kid-name" type="text" maxlength="20" spellcheck="false" autocapitalize="words" value="' + esc(k ? k.name : '') + '" placeholder="' + esc(L('typeName')) + '">' +
-    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid">' + (k ? L('saveBtn') : L('next')) + '</button></div>' +
+    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid">' + (k ? L('saveBtn') : L('nextStep')) + '</button></div>' +
     (k && S.kids.length > 1 ? '<button type="button" class="link-btn kid-del" data-act="kid-del" data-v="' + k.id + '">' + L('deleteKid') + '</button>' : '') +
     '</form>');
   var inp = document.getElementById('kidDlgName'); if (inp) setTimeout(function(){ inp.focus(); }, 50);
