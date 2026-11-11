@@ -795,6 +795,8 @@ img.stk{object-fit:contain}
 @keyframes nope{0%,100%{transform:translateX(0)}15%{transform:translateX(-14px)}30%{transform:translateX(12px)}45%{transform:translateX(-9px)}60%{transform:translateX(7px)}75%{transform:translateX(-4px)}90%{transform:translateX(2px)}}
 .gate.nope{animation:nope .45s ease-out}
 @media (prefers-reduced-motion:reduce){.gate.nope{animation:none}}
+/* answer tiles: centre the number exactly (older iPad Safari adds its own button padding) */
+.choice{display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-sizing:border-box;line-height:1;text-align:center;-webkit-appearance:none;appearance:none;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
