@@ -951,7 +951,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .same .same-btn{opacity:1;border-color:#A9CB97;background:#E3F1DA;box-shadow:0 5px 0 #A9CB97;color:#4F7A3B}
 .rotate-hint{display:none}
 @media (orientation:portrait) and (max-width:600px){
-  .crocgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
+  .crocgame .rotate-hint,.traingame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
   .rotate-hint svg{width:110px;height:110px;overflow:visible}
   .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tilt 2.4s ease-in-out infinite}
   .rotate-hint b{font-family:var(--display);font-size:28px}
@@ -1001,6 +1001,57 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .reward.croc-rw .sumcard{flex:none !important;min-width:0 !important;width:auto}
 .reward.croc-rw .croc-reward{max-height:min(26dvh,220px) !important;max-width:min(60vw,360px) !important}
 @media (orientation:landscape) and (max-height:600px){ .reward.croc-rw{gap:6px} .reward.croc-rw .croc-reward{max-height:24dvh !important} .reward.croc-rw h1{font-size:clamp(26px,8dvh,44px)} }
+/* ---------- number train ---------- */
+body.railbg,body.railbg #app{background:linear-gradient(180deg,#D7ECF4 0%,#E6F3F1 52%,#DCEBCF 78%,#D1E4C1 100%) fixed}
+.tile.traint{background:#DDEDF0;border-color:#A7CBD2;box-shadow:0 7px 0 #A7CBD2}
+.tile.traint .train-pic{height:auto;width:62%;max-height:clamp(70px,22dvh,190px);object-fit:contain}
+.traingame{gap:clamp(4px,1.2dvh,12px)}
+.train-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.train-wrap{position:relative;width:100%;display:flex;justify-content:center;padding-bottom:calc(var(--u,80px)*.16)}
+.train-wrap::after{content:'';position:absolute;left:50%;bottom:0;width:100vw;transform:translateX(-50%);height:calc(var(--u,80px)*.2);z-index:0;
+  background:linear-gradient(#6E6158,#6E6158) top/100% 24% no-repeat,repeating-linear-gradient(90deg,#B08F6E 0 calc(var(--u,80px)*.1),transparent 0 calc(var(--u,80px)*.32)) bottom/100% 70% no-repeat}
+.train{--u:80px;display:flex;align-items:flex-end;gap:calc(var(--u)*.134);position:relative;z-index:1;margin-bottom:calc(var(--u)*-.01)}
+.train.enter{animation:trainIn 1.6s cubic-bezier(.2,.75,.3,1) both}
+.train.leave{transition:transform 1.6s cubic-bezier(.55,0,.8,.6);transform:translateX(-130vw)}
+@keyframes trainIn{from{transform:translateX(115vw)}}
+.train.moving .loco-box,.train.moving .tcar{animation:chug .26s ease-in-out infinite alternate}
+.train.moving .tcar:nth-child(odd){animation-delay:-.13s}
+@keyframes chug{to{transform:translateY(calc(var(--u)*-.025))}}
+.loco-box{position:relative;width:calc(var(--u)*1.986);flex:none}
+.loco-box .loco{width:100%;height:auto;display:block}
+.puffs{position:absolute;left:22%;top:13%;width:0;height:0;pointer-events:none}
+.puffs i{position:absolute;left:calc(var(--u)*-.14);top:calc(var(--u)*-.14);width:calc(var(--u)*.28);height:calc(var(--u)*.28);border-radius:50%;background:#fff;opacity:0}
+.train.moving .puffs i{animation:puff 1s ease-out infinite}
+.train.moving .puffs i:nth-child(2){animation-delay:.33s}.train.moving .puffs i:nth-child(3){animation-delay:.66s}
+@keyframes puff{0%{opacity:.9;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(calc(var(--u)*.5),calc(var(--u)*-.7)) scale(1.6)}}
+.tcar{position:relative;width:var(--u);aspect-ratio:358/221;flex:none}
+.tcar::before{content:'';position:absolute;right:100%;width:calc(var(--u)*.16);top:40%;height:max(2px,calc(var(--u)*.045));background:#323337}
+.tcar .car{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:block}
+.tcar .pg{position:absolute;height:auto;z-index:1}
+.tcar.arrive .pg{animation:pgpop .55s cubic-bezier(.3,1.6,.6,1) both}
+@keyframes pgpop{from{transform:translateY(45%)}}
+.tnum,.tslot{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:3;min-width:1.35em;padding:0 .12em;border-radius:.3em;font-family:var(--display);font-weight:800;font-size:calc(var(--u)*.38);line-height:1.12;text-align:center;transition:transform .2s,background .2s}
+.tnum{background:#FFFCF7;border:max(2px,calc(var(--u)*.03)) solid #3A6473;color:var(--ink)}
+.tnum.new{color:var(--blue-ink)}
+.tcar.arrive .tnum{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
+.tslot{background:rgba(255,252,247,.75);border:max(2px,calc(var(--u)*.03)) dashed #3A6473;color:#3A6473;cursor:pointer}
+.tcar.gap:not(.filled){cursor:pointer}
+.picking .tcar.gap:not(.filled) .tslot,.tcar.over .tslot{background:#FFF1C2;animation:slotpulse .9s ease-in-out infinite}
+.tcar.over .tslot{transform:translate(-50%,-50%) scale(1.18);animation:none}
+@keyframes slotpulse{50%{transform:translate(-50%,-50%) scale(1.1)}}
+.tcar.lit .tnum{background:#FFE9A8;transform:translate(-50%,-50%) scale(1.18)}
+.tcar.lit .tslot{animation:nope .6s}
+.train-tray{display:flex;justify-content:center;align-items:center;gap:clamp(12px,3vw,30px);min-height:clamp(62px,14dvh,112px);padding-bottom:4px}
+.tcard{font-family:var(--display);font-weight:800;font-size:clamp(32px,8dvh,64px);line-height:1.1;min-width:1.6em;padding:.08em .25em;border-radius:.3em;background:#FFFCF7;border:4px solid var(--edge);box-shadow:0 5px 0 var(--edge);color:var(--ink);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .15s,opacity .2s}
+.tcard.sel{transform:translateY(-8px);border-color:#3A6473;box-shadow:0 5px 0 #3A6473;background:#FFF1C2}
+.tcard.used{visibility:hidden}
+.tcard.lifted{opacity:.25}
+.tcard.nope{animation:nope .5s}
+.ghost-card{position:fixed;left:0;top:0;z-index:70;pointer-events:none;margin:0;cursor:grabbing;box-shadow:0 10px 18px rgba(60,40,30,.22)}
+.train-reward{width:auto !important;max-width:min(46vw,300px) !important;height:auto !important;max-height:min(26dvh,220px) !important;object-fit:contain}
+.seq-eq{gap:.35em}
+@media (orientation:landscape) and (max-height:600px){ .train-reward{max-height:24dvh !important} }
+@media (prefers-reduced-motion:reduce){ .train.enter,.train.moving .loco-box,.train.moving .tcar,.train.moving .puffs i{animation:none} }
 </style>
 </head>
 <body>
@@ -1158,6 +1209,8 @@ en: {
   sCrocRight: function(b, s){ return [P('Chomp!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
   sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
   crocAskNum: 'Which number is bigger?', sCrocAskNum: [P('Which number is bigger?', 'ask')],
+  gTrain: 'Number Train', trainAlt: 'Penguin train', trainAsk: 'Which number is missing?', trainAskDrag: 'Drag the numbers onto the train', trainSlot: 'Empty car', toot: 'Toot toot!',
+  sTrainAsk: [P('All aboard the number train!', 'cheer'), P('Some numbers are missing. Which number is missing?', 'ask')], sTrainAsk2: [P('Which number is missing?', 'ask')], sTrainDrag: [P('Drag each number to its car!', 'ask')], sTrainGood: [P('Yes!', 'cheer')], sTrainWrong: [P('Hmm, let’s count the cars together.', 'calm')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1251,6 +1304,8 @@ fr: {
   sCrocRight: function(b, s){ return [P('Crac !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
   sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
   crocAskNum: 'Quel nombre est le plus grand\u00a0?', sCrocAskNum: [P('Quel nombre est le plus grand ?', 'ask')],
+  gTrain: 'Le train des nombres', trainAlt: 'Train des pingouins', trainAsk: 'Quel nombre manque\u00a0?', trainAskDrag: 'Glisse les nombres dans le train', trainSlot: 'Wagon vide', toot: 'Tchou tchou\u00a0!',
+  sTrainAsk: [P('Tout le monde à bord du train des nombres !', 'cheer'), P('Il manque des nombres. Lequel manque ?', 'ask')], sTrainAsk2: [P('Quel nombre manque ?', 'ask')], sTrainDrag: [P('Glisse chaque nombre dans son wagon !', 'ask')], sTrainGood: [P('Oui !', 'cheer')], sTrainWrong: [P('Hmm, comptons les wagons ensemble.', 'calm')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1344,6 +1399,8 @@ es: {
   sCrocRight: function(b, s){ return [P('¡Ñam!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
   sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
   crocAskNum: '¿Qué número es más grande?', sCrocAskNum: [P('¿Qué número es más grande?', 'ask')],
+  gTrain: 'El tren de los números', trainAlt: 'Tren de pingüinos', trainAsk: '¿Qué número falta?', trainAskDrag: 'Arrastra los números al tren', trainSlot: 'Vagón vacío', toot: '¡Chu chu!',
+  sTrainAsk: [P('¡Todos a bordo del tren de los números!', 'cheer'), P('Faltan algunos números. ¿Cuál falta?', 'ask')], sTrainAsk2: [P('¿Qué número falta?', 'ask')], sTrainDrag: [P('¡Arrastra cada número a su vagón!', 'ask')], sTrainGood: [P('¡Sí!', 'cheer')], sTrainWrong: [P('Mmm, contemos los vagones juntos.', 'calm')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1437,6 +1494,8 @@ zh: {
   sCrocRight: function(b, s){ return [P('啊呜！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
   sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
   crocAskNum: '哪个数字更大？', sCrocAskNum: [P('哪个数字更大？', 'ask')],
+  gTrain: '数字火车', trainAlt: '企鹅火车', trainAsk: '缺了哪个数字？', trainAskDrag: '把数字拖到火车上', trainSlot: '空车厢', toot: '呜呜！',
+  sTrainAsk: [P('数字火车要出发啦！', 'cheer'), P('有些数字不见了。缺了哪个数字？', 'ask')], sTrainAsk2: [P('缺了哪个数字？', 'ask')], sTrainDrag: [P('把每个数字拖到它的车厢里！', 'ask')], sTrainGood: [P('对啦！', 'cheer')], sTrainWrong: [P('嗯，我们一起数一数车厢。', 'calm')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1530,6 +1589,8 @@ ja: {
   sCrocRight: function(b, s){ return [P('パクッ！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
   sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
   crocAskNum: 'どっちの かずが おおきい？', sCrocAskNum: [P('どっちの かずが おおきい？', 'ask')],
+  gTrain: 'かずの きしゃ', trainAlt: 'ペンギンの きしゃ', trainAsk: 'どの かずが ないかな？', trainAskDrag: 'かずを きしゃに いれてね', trainSlot: 'からっぽの しゃりょう', toot: 'ポッポー！',
+  sTrainAsk: [P('かずの きしゃが しゅっぱつするよ！', 'cheer'), P('かずが たりないね。どの かずが ないかな？', 'ask')], sTrainAsk2: [P('どの かずが ないかな？', 'ask')], sTrainDrag: [P('かずを ただしい しゃりょうに いれてね！', 'ask')], sTrainGood: [P('そう！', 'cheer')], sTrainWrong: [P('うーん、いっしょに かぞえてみよう。', 'calm')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1623,6 +1684,8 @@ yue: {
   sCrocRight: function(b, s){ return [P('啊嗚！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
   sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
   crocAskNum: '邊個數字大啲？', sCrocAskNum: [P('邊個數字大啲？', 'ask')],
+  gTrain: '數字火車', trainAlt: '企鵝火車', trainAsk: '唔見咗邊個數字？', trainAskDrag: '將數字拖上火車', trainSlot: '空車卡', toot: '嘟嘟！',
+  sTrainAsk: [P('數字火車開車喇！', 'cheer'), P('有啲數字唔見咗。唔見咗邊個數字？', 'ask')], sTrainAsk2: [P('唔見咗邊個數字？', 'ask')], sTrainDrag: [P('將每個數字拖去佢嘅車卡！', 'ask')], sTrainGood: [P('啱喇！', 'cheer')], sTrainWrong: [P('嗯，我哋一齊數下啲車卡。', 'calm')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1716,6 +1779,8 @@ ko: {
   sCrocRight: function(b, s){ return [P('냠!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
   sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
   crocAskNum: '어느 숫자가 더 커요?', sCrocAskNum: [P('어느 숫자가 더 커요?', 'ask')],
+  gTrain: '숫자 기차', trainAlt: '펭귄 기차', trainAsk: '어떤 숫자가 빠졌을까요?', trainAskDrag: '숫자를 기차에 끌어다 놓아요', trainSlot: '빈 칸', toot: '칙칙폭폭!',
+  sTrainAsk: [P('숫자 기차 출발해요!', 'cheer'), P('숫자가 빠졌어요. 어떤 숫자가 빠졌을까요?', 'ask')], sTrainAsk2: [P('어떤 숫자가 빠졌을까요?', 'ask')], sTrainDrag: [P('숫자를 알맞은 칸에 끌어다 놓아요!', 'ask')], sTrainGood: [P('맞아요!', 'cheer')], sTrainWrong: [P('음, 같이 기차 칸을 세어 봐요.', 'calm')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1991,6 +2056,7 @@ function render(){
   document.body.classList.toggle('skybg', screen === 'garden');
   document.body.classList.toggle('bookbg', screen === 'book');
   document.body.classList.toggle('waterbg', screen === 'croc');
+  document.body.classList.toggle('railbg', screen === 'train');
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
@@ -1999,6 +2065,7 @@ function render(){
   else if (screen === 'frog') renderFrog();
   else if (screen === 'tower') renderTower();
   else if (screen === 'croc') renderCroc();
+  else if (screen === 'train') renderTrain();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2140,10 +2207,11 @@ function renderHome(){
     '</div></div>';
   else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile croct" data-act="croc">' + crocImg(false, 'pic animal croc-pic') + '<span class="tl">' + L('gCroc') + '</span></button>' +
+      '<button class="tile traint" data-act="train">' + trainImg('pic animal train-pic') + '<span class="tl">' + L('gTrain') + '</span></button>' +
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
-      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="train/loco.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
       '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
@@ -2315,6 +2383,188 @@ function showCrocReward(){
   overlay('<div class="reward croc-rw">' +
     '<h1>' + L('didIt') + '</h1>' + crocImg(G.done !== 'E', 'pic animal croc-reward' + (G.l > G.r ? ' flip' : '')) +
     '<div class="sumcard"><div class="bigeq cmp-eq"><span class="s">' + G.l + '</span><span>' + sign + '</span><span class="a">' + G.r + '</span></div></div>' +
+    '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+
+/* =====================================================================
+   NUMBER TRAIN (penguins): the cars are numbered in order; put the missing numbers back.
+   Tap the right card in the first questions of a round, drag cards onto the cars in the later ones.
+   ===================================================================== */
+/* where each penguin sits in a car, in % of the car (the car image is 358x221) */
+var PG_POS = { 1:{ l:12.0, w:79.6, b:63.3 }, 2:{ l:12.8, w:83.0, b:58.4 }, 3:{ l:8.1, w:91.6, b:63.8 } };
+function trainImg(cls){ return '<img class="' + (cls || 'loco') + '" src="train/loco.png" alt="' + esc(L('trainAlt')) + '" draggable="false">'; }
+function trainPlan(){
+  var small = S.maxSum <= 5;
+  return [{ m:'tap', g:1 }, { m:'tap', g:1 }, { m:'drag', g:small ? 1 : 2 }, { m:'drag', g:2 }, { m:'drag', g:small ? 2 : 3 }];
+}
+function startTrain(){ G = { game:'train', q:0, earned:0, startStars:S.stars, plan:trainPlan() }; trainQuestion(); }
+function shuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function trainQuestion(){
+  var step = G.plan[G.q] || { m:'tap', g:1 }, small = S.maxSum <= 5;
+  var n = small ? 5 : 6, start = small ? 1 : 1 + Math.floor(Math.random() * 5);
+  var seq = []; for (var i = 0; i < n; i++) seq.push(start + i);
+  /* gaps: never two side by side; the very first question keeps the first car, so counting starts easy */
+  var gaps, tries = 0;
+  do {
+    gaps = shuffle(seq.map(function(_, i){ return i; })).slice(0, step.g).sort(function(a, b){ return a - b; });
+    var ok = gaps.every(function(g, k){ return k === 0 || g - gaps[k - 1] > 1; }) && !(G.q === 0 && gaps[0] === 0);
+    if (G.prevGaps && G.prevGaps.join() === gaps.join() && G.prevStart === start) ok = false;
+  } while (!ok && ++tries < 200);
+  G.prevGaps = gaps; G.prevStart = start;
+  var missing = gaps.map(function(i){ return seq[i]; });
+  /* cards: the missing numbers plus look-alikes (neighbours, often a number already on the train) */
+  var pool = [], lo = Math.max(0, seq[0] - 1), hi = Math.min(10, seq[n - 1] + 1);
+  for (var v = lo; v <= hi; v++) if (missing.indexOf(v) < 0) pool.push(v);
+  pool.sort(function(a, b){ return Math.abs(a - missing[0]) - Math.abs(b - missing[0]) + (Math.random() - 0.5) * 2.5; });
+  var extra = pool.slice(0, step.m === 'tap' ? 2 : 1);
+  var pg = [], last = 0;
+  for (var c = 0; c < n; c++) { var p; do { p = 1 + Math.floor(Math.random() * 3); } while (p === last); pg.push(p); last = p; }
+  G.mode = step.m; G.seq = seq; G.gaps = gaps; G.filled = {}; G.pg = pg; G.sel = null;
+  G.cards = shuffle(missing.concat(extra)).map(function(v, k){ return { v:v, id:k, used:false }; });
+  G.lock = false; G.done = false; G.bubble2 = ''; G.enter = true;
+  screen = 'train'; closeOverlay(); renderTrain();
+  say(G.mode === 'drag' ? L('sTrainDrag') : G.q === 0 ? L('sTrainAsk') : L('sTrainAsk2'));
+}
+function trainCarHtml(i){
+  var gap = G.gaps.indexOf(i) >= 0, filled = G.filled[i], p = PG_POS[G.pg[i]], showPg = !gap || filled;
+  return '<div class="tcar' + (gap ? ' gap' : '') + (filled ? ' filled' : '') + '" data-i="' + i + '"' + (gap && !filled ? ' data-act="train-slot" data-v="' + i + '" role="button" aria-label="' + esc(L('trainSlot')) + '"' : '') + '>' +
+    (showPg ? '<img class="pg" src="train/p' + G.pg[i] + '.png" alt="" draggable="false" style="left:' + p.l + '%;width:' + p.w + '%;bottom:' + p.b + '%">' : '') +
+    '<img class="car" src="train/car.png" alt="" draggable="false">' +
+    (gap && !filled ? '<span class="tslot">?</span>' : '<span class="tnum' + (gap ? ' new' : '') + '">' + G.seq[i] + '</span>') +
+  '</div>';
+}
+function renderTrain(){
+  document.body.classList.add('railbg');
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var cars = ''; for (var c = 0; c < G.seq.length; c++) cars += trainCarHtml(c);
+  var cards = G.cards.map(function(k){ return '<button class="tcard' + (k.used ? ' used' : '') + (G.sel === k.id ? ' sel' : '') + '" data-card="' + k.id + '"' + (k.used ? ' disabled tabindex="-1"' : '') + '>' + k.v + '</button>'; }).join('');
+  app.innerHTML = '<section class="screen traingame ' + G.mode + 'mode">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('train-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.mode === 'drag' ? L('trainAskDrag') : L('trainAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="train-stage"><div class="train-wrap"><div class="train' + (G.enter && !reduceMotion ? ' enter moving' : '') + '">' +
+      '<div class="loco-box">' + trainImg() + '<span class="puffs" aria-hidden="true"><i></i><i></i><i></i></span></div>' + cars +
+    '</div></div></div>' +
+    '<div class="train-tray">' + cards + '</div>' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M22 30a32 32 0 0 1 30-18"/><path class="rh-arrow" d="M45 6l7 6-7 7"/></svg><b>' + L('rotateHint') + '</b></div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  sizeTrain();
+  var tr = document.querySelector('.train');
+  if (G.enter) { G.enter = false; setTimeout(function(){ if (tr) tr.classList.remove('enter', 'moving'); }, 1700); }
+  document.querySelectorAll('.tcard').forEach(function(b){ b.addEventListener('pointerdown', trainCardDown); b.addEventListener('click', function(e){ if (e.detail === 0) trainCardTap(+b.getAttribute('data-card')); }); });
+}
+/* one size unit (a car's width) so the whole train fits the stage */
+function sizeTrain(){
+  var st = document.querySelector('.train-stage'), tr = document.querySelector('.train'); if (!st || !tr) return;
+  var n = G.seq.length, w = Math.min(innerWidth, 1400) - (innerWidth > 700 ? 88 : 40), h = st.clientHeight;
+  var u = Math.min(w / (1.986 + n * 1.134), h / 2.1, 190);
+  tr.style.setProperty('--u', Math.max(40, Math.floor(u)) + 'px');
+}
+window.addEventListener('resize', function(){ if (screen === 'train' && G) sizeTrain(); });
+function trainCardTap(id){
+  if (!G || G.lock || G.done) return;
+  var k = G.cards[id]; if (!k || k.used) return;
+  var open = G.gaps.filter(function(i){ return !G.filled[i]; });
+  if (G.mode === 'tap' || open.length === 1) { trainPlace(id, open[0]); return; }
+  G.sel = G.sel === id ? null : id;
+  document.querySelectorAll('.tcard').forEach(function(b){ b.classList.toggle('sel', +b.getAttribute('data-card') === G.sel); });
+  document.querySelector('.traingame').classList.toggle('picking', G.sel !== null);
+}
+function trainSlot(i){ if (G && G.sel !== null && !G.lock) trainPlace(G.sel, +i); }
+/* drag a card with finger or mouse; a short press without moving is a tap */
+function trainCardDown(e){
+  if (!G || G.lock || G.done || (e.button && e.button !== 0)) return;
+  var btn = e.currentTarget, id = +btn.getAttribute('data-card'), k = G.cards[id]; if (!k || k.used) return;
+  e.preventDefault();
+  var sx = e.clientX, sy = e.clientY, ghost = null, r = btn.getBoundingClientRect(), over = null;
+  function move(ev){
+    var dx = ev.clientX - sx, dy = ev.clientY - sy;
+    if (!ghost) {
+      if (Math.abs(dx) + Math.abs(dy) < 8) return;
+      ghost = btn.cloneNode(true); ghost.className = 'tcard ghost-card'; ghost.style.width = r.width + 'px'; ghost.style.height = r.height + 'px';
+      document.body.appendChild(ghost); btn.classList.add('lifted');
+    }
+    ghost.style.transform = 'translate(' + (r.left + dx) + 'px,' + (r.top + dy) + 'px) scale(1.12) rotate(-4deg)';
+    var el = document.elementFromPoint(ev.clientX, ev.clientY), car = el && el.closest ? el.closest('.tcar.gap:not(.filled)') : null;
+    if (car !== over) { if (over) over.classList.remove('over'); over = car; if (over) over.classList.add('over'); }
+  }
+  function up(ev){
+    document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
+    if (over) over.classList.remove('over');
+    if (!ghost) { trainCardTap(id); return; }
+    if (over) { ghost.remove(); btn.classList.remove('lifted'); trainPlace(id, +over.getAttribute('data-i'), { x:ev.clientX - r.width / 2, y:ev.clientY - r.height / 2 }); return; }
+    /* dropped elsewhere: float back to the tray */
+    ghost.style.transition = 'transform .25s ease-out'; ghost.style.transform = 'translate(' + r.left + 'px,' + r.top + 'px)';
+    setTimeout(function(){ ghost.remove(); btn.classList.remove('lifted'); }, 260);
+  }
+  document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
+}
+function trainPlace(id, i, from){
+  if (!G || G.lock || G.done) return;
+  var k = G.cards[id], btn = document.querySelector('.tcard[data-card="' + id + '"]'), car = document.querySelector('.tcar[data-i="' + i + '"]');
+  if (!k || !btn || !car) return;
+  clearSay();
+  G.sel = null; document.querySelectorAll('.tcard.sel').forEach(function(b){ b.classList.remove('sel'); });
+  var sec = document.querySelector('.traingame'); if (sec) sec.classList.remove('picking');
+  if (G.seq[i] === k.v && !G.filled[i]) {
+    k.used = true; G.filled[i] = true;
+    var slot = car.querySelector('.tslot'), br = btn.getBoundingClientRect(), sr = (slot || car).getBoundingClientRect();
+    var fly = btn.cloneNode(true); fly.className = 'tcard ghost-card'; fly.style.width = br.width + 'px'; fly.style.height = br.height + 'px';
+    var fx = from ? from.x : br.left, fy = from ? from.y : br.top;
+    fly.style.transform = 'translate(' + fx + 'px,' + fy + 'px)'; document.body.appendChild(fly);
+    btn.classList.add('used'); btn.disabled = true;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      fly.style.transition = 'transform .38s cubic-bezier(.4,0,.3,1),opacity .38s';
+      fly.style.transform = 'translate(' + (sr.left + sr.width / 2 - br.width / 2) + 'px,' + (sr.top + sr.height / 2 - br.height / 2) + 'px) scale(.7)';
+    }); });
+    setTimeout(function(){
+      fly.remove(); if (screen !== 'train') return;
+      var tmp = document.createElement('div'); tmp.innerHTML = trainCarHtml(i); var nc = tmp.firstChild;
+      nc.classList.add('arrive'); car.replaceWith(nc);
+      var done = G.gaps.every(function(g){ return G.filled[g]; });
+      if (done) trainWin(); else { say(L('sTrainGood')); G.bubble2 = ''; }
+    }, reduceMotion ? 50 : 400);
+  } else {
+    G.lock = true;
+    btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope');
+    say(L('sTrainWrong'));
+    /* count along the cars; the empty ones get a little wiggle and a pause */
+    var q = G.q, cars = [].slice.call(document.querySelectorAll('.tcar')), idx = 0;
+    function step(){
+      if (screen !== 'train' || !G || G.q !== q || G.done) return;
+      document.querySelectorAll('.tcar.lit').forEach(function(c){ c.classList.remove('lit'); });
+      if (idx >= cars.length) { G.lock = false; say(G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); return; }
+      var c = cars[idx], ci = +c.getAttribute('data-i'); idx++;
+      c.classList.add('lit');
+      var known = G.gaps.indexOf(ci) < 0 || G.filled[ci];
+      if (known) say(P(String(G.seq[ci]), 'count', G.seq[ci]));
+      setTimeout(step, known ? 560 : 900);
+    }
+    setTimeout(step, 1300);
+  }
+}
+function trainWin(){
+  G.lock = true; G.done = true;
+  S.stars++; G.earned++; save();
+  G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, G.bubble2Kind);
+  say([P(L('toot'), 'cheer')].concat(G.seq.map(function(v){ return P(String(v), 'count', v); })));
+  /* light the cars one by one as the numbers are read, then the train pulls out to the left */
+  var cars = [].slice.call(document.querySelectorAll('.tcar'));
+  cars.forEach(function(c, i){ setTimeout(function(){ c.classList.add('lit'); setTimeout(function(){ c.classList.remove('lit'); }, 420); }, 700 + i * 480); });
+  var leaveAt = 900 + cars.length * 480;
+  setTimeout(function(){ var tr = document.querySelector('.train'); if (tr && !reduceMotion) tr.classList.add('moving', 'leave'); }, leaveAt);
+  setTimeout(showTrainReward, leaveAt + (reduceMotion ? 300 : 1700));
+}
+function showTrainReward(){
+  if (screen !== 'train') return;
+  var last = G.q + 1 >= ROUND;
+  overlay('<div class="reward croc-rw train-rw">' +
+    '<h1>' + L('didIt') + '</h1>' + trainImg('pic animal train-reward') +
+    '<div class="sumcard"><div class="bigeq seq-eq">' + G.seq.map(function(v, i){ return '<span class="' + (G.gaps.indexOf(i) >= 0 ? 'a' : 't') + '">' + v + '</span>'; }).join('') + '</div></div>' +
     '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
 }
@@ -2659,7 +2909,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -3623,6 +3873,9 @@ document.addEventListener('click', function(e){
     case 'frog': startFrog(); break;
     case 'tower': startTower(); break;
     case 'croc': startCroc(); break;
+    case 'train': startTrain(); break;
+    case 'train-repeat': say(G && G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); break;
+    case 'train-slot': trainSlot(b.getAttribute('data-v')); break;
     case 'croc-repeat': say(G && G.mode === 'num' ? L('sCrocAskNum') : L('sCrocAsk2')); break;
     case 'croc-pick': crocPick(b.getAttribute('data-v')); break;
     case 'group': homeGroup = b.getAttribute('data-v'); show('home'); break;
@@ -3692,7 +3945,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
