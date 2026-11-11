@@ -716,6 +716,11 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 img.stk{object-fit:contain}
 .sticker.special{animation:shine 2.4s ease-in-out infinite}
 @keyframes shine{0%,100%{transform:rotate(var(--rot)) scale(1)}50%{transform:rotate(var(--rot)) scale(1.06)}}
+.sticker-zoom{position:fixed;inset:0;z-index:80;background:rgba(247,241,234,.94);display:flex;align-items:center;justify-content:center;padding:6vmin;cursor:zoom-out;animation:fade .2s}
+.sticker-zoom.out{opacity:0;transition:opacity .2s}
+.sticker-zoom .zoomed{width:min(88vw, 125vh) !important;height:auto !important;max-width:none !important;max-height:80vh !important;aspect-ratio:auto;transform:none;filter:drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 10px 14px rgba(90,62,51,.25))}
+.sticker-zoom .zoomed.rb-img{aspect-ratio:1.45/1;max-height:80vh;width:min(88vw, calc(80vh * 1.45)) !important}
+.sticker-zoom img.zoomed{object-fit:contain;height:80vh !important}
 </style>
 </head>
 <body>
@@ -2717,7 +2722,18 @@ document.addEventListener('click', function(e){
       else show(gardenFrom && gardenFrom.screen && gardenFrom.screen !== 'garden' ? gardenFrom.screen : 'home');
       break;
     case 'book': show('book'); break;
-    case 'sticker': b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle'); break;
+    case 'sticker': {
+      /* show the sticker big, over the whole screen; any tap closes it */
+      var art = b.querySelector('.stk'); if (!art) break;
+      var zoom = document.createElement('div'); zoom.className = 'sticker-zoom'; zoom.setAttribute('role', 'dialog'); zoom.setAttribute('aria-modal', 'true');
+      zoom.setAttribute('aria-label', b.getAttribute('aria-label') || '');
+      var big = art.cloneNode(true); big.classList.add('zoomed'); zoom.appendChild(big);
+      var from = b.getBoundingClientRect();
+      zoom.addEventListener('click', function(ev){ ev.stopPropagation(); zoom.classList.add('out'); setTimeout(function(){ zoom.remove(); }, 220); });
+      document.body.appendChild(zoom);
+      try { big.animate([{ transform:'translate(' + (from.left + from.width / 2 - innerWidth / 2) + 'px,' + (from.top + from.height / 2 - innerHeight / 2) + 'px) scale(.2)', opacity:.6 }, { transform:'translate(0px,0px) scale(1)', opacity:1 }], { duration:280, easing:'cubic-bezier(.2,.9,.3,1.2)' }); } catch(e) {}
+      break;
+    }
     case 'garden-say':
       var nR = rainbowProgress(S.stars).done.length, left = PER_STRIPE - S.stars % PER_STRIPE;
       say(S.stars ? L('sGarden', S.stars).concat(nR ? [L('sRainbows', nR)] : []).concat([L('sSun', left)]) : L('sGarden', 0)); break;
