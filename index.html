@@ -986,6 +986,15 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .nummode .fish{opacity:0;transition:opacity .4s}
 .nummode.reveal .fish{opacity:1}
 .nummode.reveal .numcard{top:12%;font-size:clamp(40px,9dvh,80px);transition:top .4s,font-size .4s}
+/* croc: Same sits under the croc (the third choice); the comparison below is flat text, not buttons */
+.croc-mid{flex-direction:column;gap:clamp(10px,2.4dvh,22px)}
+.croc-mid .same-btn{position:relative;z-index:5}
+.cmp .n{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;min-width:.8em}
+.cmp{font-size:clamp(30px,6dvh,56px);gap:clamp(6px,1.2vw,12px)}
+.cmp .n:empty{display:none}
+.crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp{color:rgba(90,62,51,.35)}
+.crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp .sign{color:rgba(90,62,51,.35)}
+.croc-under{min-height:clamp(40px,7dvh,64px)}
 </style>
 </head>
 <body>
@@ -2215,12 +2224,12 @@ function renderCroc(){
     '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.mode === 'num' ? L('crocAskNum') : L('crocAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
     '<div class="croc-stage">' +
       '<button class="water" id="pondL" data-act="croc-pick" data-v="L" aria-label="' + esc(G.mode === 'num' ? String(G.l) : L('leftSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.l + '</span>' : '') + fishHtml(G.fishL, 'L') + '</button>' +
-      '<div class="croc-mid">' + (d === 'L' || d === 'R' ? crocImg(true, 'croc-img open' + (d === 'L' ? ' flip' : '')) : crocImg(false)) + '</div>' +
+      '<div class="croc-mid">' + (d === 'L' || d === 'R' ? crocImg(true, 'croc-img open' + (d === 'L' ? ' flip' : '')) : crocImg(false)) +
+        '<button class="same-btn" data-act="croc-pick" data-v="E"' + (d ? ' disabled' : '') + '><b>=</b> ' + L('sameBtn') + '</button></div>' +
       '<button class="water" id="pondR" data-act="croc-pick" data-v="R" aria-label="' + esc(G.mode === 'num' ? String(G.r) : L('rightSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.r + '</span>' : '') + fishHtml(G.fishR, 'R') + '</button>' +
     '</div>' +
     '<div class="croc-under">' +
       '<div class="cmp" aria-live="off"><span class="n">' + (d ? G.l : '?') + '</span><span class="sign' + (d ? ' shown' : '') + '">' + sign + '</span><span class="n">' + (d ? G.r : '?') + '</span></div>' +
-      '<button class="same-btn" data-act="croc-pick" data-v="E"' + (d ? ' disabled' : '') + '><b>=</b> ' + L('sameBtn') + '</button>' +
     '</div>' +
     '<div class="rotate-hint" role="alert"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="8" width="24" height="44" rx="5"/><path d="M29 46h6"/><path d="M50 26a14 14 0 0 1 0 14"/><path d="M50 40l-4-1 1-4"/></svg><b>' + L('rotateHint') + '</b></div>' +
     '</section>';
