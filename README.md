@@ -9,7 +9,7 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 ## What's inside
 
 - **Three games**, each teaching a different addition idea
-  - **Feed the Monster**: drag blue cookies onto a plate that already has red ones (adding two groups)
+  - **Feed the Unicorn**: drag blue cookies onto a plate that already has red ones (adding two groups)
   - **Ten Frame**: fill the egg carton, then say how many eggs you added (making 10)
   - **Bus Stop**: some snails were on the bus, more got on; how many now? (counting on)
 - **Colour coding everywhere**: red = what was already there, blue = what you add, matching the numbers in the sum
@@ -21,9 +21,9 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 
 ## iPad
 
-| Home | Feed the Monster | You did it! |
+| Home | Feed the Unicorn | You did it! |
 |---|---|---|
-| <img src="docs/screenshots/ipad-03-home.png" width="270" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="270" alt="Feed the Monster"> | <img src="docs/screenshots/ipad-05-bravo.png" width="270" alt="You did it!"> |
+| <img src="docs/screenshots/ipad-03-home.png" width="270" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="270" alt="Feed the Unicorn"> | <img src="docs/screenshots/ipad-05-bravo.png" width="270" alt="You did it!"> |
 
 | Ten Frame | Bus Stop | Your rainbow |
 |---|---|---|
@@ -35,9 +35,9 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 
 ## iPhone
 
-| Name | Pick a buddy | Home | Feed the Monster | You did it! |
+| Name | Pick a buddy | Home | Feed the Unicorn | You did it! |
 |---|---|---|---|---|
-| <img src="docs/screenshots/phone-01-name.png" width="150" alt="Name"> | <img src="docs/screenshots/phone-02-buddy.png" width="150" alt="Pick a buddy"> | <img src="docs/screenshots/phone-03-home.png" width="150" alt="Home"> | <img src="docs/screenshots/phone-04-feed.png" width="150" alt="Feed the Monster"> | <img src="docs/screenshots/phone-05-bravo.png" width="150" alt="You did it!"> |
+| <img src="docs/screenshots/phone-01-name.png" width="150" alt="Name"> | <img src="docs/screenshots/phone-02-buddy.png" width="150" alt="Pick a buddy"> | <img src="docs/screenshots/phone-03-home.png" width="150" alt="Home"> | <img src="docs/screenshots/phone-04-feed.png" width="150" alt="Feed the Unicorn"> | <img src="docs/screenshots/phone-05-bravo.png" width="150" alt="You did it!"> |
 
 | Ten Frame | Bus Stop | Your rainbow | Sticker book | For grown-ups |
 |---|---|---|---|---|
