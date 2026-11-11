@@ -957,7 +957,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .croc-img.flip.chomp{--cf:scaleX(-1)}
 .croc-img.flip{transform:scaleX(-1)}
 /* home header */
-.home-bar{align-items:flex-start}
+.home-bar{align-items:center}
 .corner-av{width:clamp(56px,9dvh,84px) !important;height:clamp(56px,9dvh,84px) !important;flex:none}
 .corner-av .av-edit{width:clamp(22px,3.4dvh,30px);height:clamp(22px,3.4dvh,30px)}
 .hero-solo{justify-content:flex-start;margin-top:clamp(4px,1.6dvh,14px)}
@@ -968,6 +968,10 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .group-title h1{margin:0;font-size:clamp(19px,min(5.4vw,5.6dvh),48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .grp-pics img.grp-uni{height:108%;max-width:40%}   /* unicorn ~35% bigger than before */
 .sk-add .sk-name{white-space:normal;max-width:7.5em;text-align:center;line-height:1.15}
+/* screen padding: 36-44px top and sides on iPad, 20-24px on phones */
+#app{padding-top:max(clamp(20px,4.4dvh,44px),env(safe-area-inset-top));padding-left:max(clamp(20px,3.8vw,44px),env(safe-area-inset-left));padding-right:max(clamp(20px,3.8vw,44px),env(safe-area-inset-right))}
+@media (min-width:700px) and (min-height:600px){ #app{padding-top:max(clamp(36px,4.4dvh,44px),env(safe-area-inset-top));padding-left:max(clamp(36px,3.8vw,44px),env(safe-area-inset-left));padding-right:max(clamp(36px,3.8vw,44px),env(safe-area-inset-right))} }
+@media (orientation:landscape) and (max-height:500px){ #app{padding-top:max(12px,env(safe-area-inset-top));padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))} }
 </style>
 </head>
 <body>
@@ -2086,7 +2090,7 @@ function renderHome(){
     hero = '';
   } else {
     /* top: the buddy sits in the top-left corner, the greeting gets its own line */
-    bar = '<div class="bar home-bar">' + avatarBtn('home-av corner-av') + starChip + gear + '</div>';
+    bar = '<div class="bar home-bar">' + avatarBtn('home-av corner-av') + '<div class="group-right">' + starChip + gear + '</div></div>';
     hero = '<div class="hero hero-solo"><h1>' + esc(L('letsPlay', S.name)) + '</h1></div>';
   }
   var body;
@@ -3414,8 +3418,7 @@ function renderGarden(){
   var goal = !n ? L('firstFlower') : (justFinished ? L('rainbowDone') : L('toSun', PER_STRIPE - q));
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="garden-back" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button>' +
-    '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div>' +
-    '<span class="round bar-spacer" aria-hidden="true"></span></div>' +
+    '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div></div>' +
     '<div class="garden-head"><h1>' + esc(L('gardenOf')) + '</h1></div>' +
     '<div class="sky" role="img" aria-label="' + esc(L('flowersN', n) + ' · ' + goal) + '">' +
       '<div class="rb">' + rainbowSvg(idx, filled, 'rainbow') + '</div>' +
