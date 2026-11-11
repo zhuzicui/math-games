@@ -765,10 +765,11 @@ img.stk{object-fit:contain}
 .kidscroll::-webkit-scrollbar{display:none}
 .kpill{flex:none}
 .kpill{display:flex;align-items:center;background:var(--card);border:4px solid var(--edge);border-radius:999px;min-height:64px;box-sizing:border-box}
-.kpill.on{border-color:var(--ink)}
+.kpill.on{border-color:var(--ink);background:var(--ink)}
+.kpill.on .kp-main,.kpill.on .kp-edit{color:#fff}
 .kp-main{display:flex;align-items:center;gap:10px;background:none;border:0;padding:6px 16px 6px 6px;font:inherit;color:var(--ink);cursor:pointer}
 .kp-main b{font-size:20px;font-weight:800;max-width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kp-av{width:46px;height:46px;flex:none;border:3px solid var(--edge);border-radius:50%;background:#fff;overflow:hidden}
+.kp-av{width:46px;height:46px;flex:none;border:0;border-radius:50%;background:#fff;overflow:hidden}
 .kpill:not(.on) .kp-main{opacity:.75}
 .kp-edit{background:none;border:0;padding:0 16px 0 2px;color:var(--ink);cursor:pointer;align-self:stretch;display:flex;align-items:center}
 .kp-edit svg{width:22px;height:22px}
@@ -2763,7 +2764,7 @@ function renderParents(){
         '<span class="kp-av">' + avatarFace(k.avatarPicked ? k.avatar : 'av17') + '</span><b>' + esc(k.name || '—') + '</b></button>' +
       (on ? '<button class="kp-edit" data-act="kid-edit" data-v="' + k.id + '" aria-label="' + esc(L('editKid', k.name || '')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>' : '') +
     '</div>';
-  }).join('') + '</div><button class="kp-add" data-act="kid-add" aria-label="' + esc(L('addKid')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>';
+  }).join('') + '<button class="kp-add" data-act="kid-add" aria-label="' + esc(L('addKid')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>';
   if (ptab !== 'settings') ptab = 'progress';
   if (ptab === 'progress') {
     body = '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
