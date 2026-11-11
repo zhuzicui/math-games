@@ -726,6 +726,30 @@ img.stk{object-fit:contain}
 .langsel select{flex:1;width:100%;min-width:0}
 .settings{row-gap:clamp(10px,2.2dvh,22px) !important}
 .settings .field{margin-top:0 !important;gap:10px}
+/* ===== children ===== */
+.parents .tabs{max-width:620px}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:clamp(10px,2dvh,16px);align-content:start;overflow-y:auto;flex:1;min-height:0;padding:4px 2px 10px}
+.kid-card{position:relative;display:flex;align-items:stretch;background:var(--card);border:4px solid var(--edge);border-radius:24px;box-shadow:0 5px 0 var(--edge);min-height:92px}
+.kid-card.on{border-color:#6EA6D1;box-shadow:0 5px 0 #6EA6D1}
+.kid-main{flex:1;display:flex;align-items:center;gap:14px;padding:12px 14px;background:none;border:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;min-width:0}
+.kid-av{width:64px;height:64px;flex:none;border:3px solid var(--edge);border-radius:50%}
+.kid-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.kid-txt b{font-family:var(--display);font-weight:800;font-size:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kid-stars{display:flex;align-items:center;gap:4px;font-weight:800;font-size:15px;color:var(--ink2)}
+.kid-stars svg{width:18px;height:18px}
+.kid-badge{align-self:flex-start;white-space:nowrap;background:#DDEFF8;color:#2F6E9E;border-radius:999px;padding:2px 10px;font-weight:800;font-size:13px}
+.kid-edit{flex:none;width:52px;border:0;border-left:3px solid var(--edge);background:none;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:0 20px 20px 0}
+.kid-edit svg{width:22px;height:22px}
+.kid-add{align-items:center;justify-content:center;gap:10px;border-style:dashed;box-shadow:none;background:transparent;cursor:pointer;font:inherit;color:var(--ink);font-family:var(--display);font-size:20px}
+.kid-plus{width:40px;height:40px;border-radius:50%;background:#9DCBEC;color:#1F3B52;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1}
+.kid-dialog{display:flex;flex-direction:column;gap:12px;width:min(440px,90vw)}
+.kid-dialog .name-input{width:100%;box-sizing:border-box}
+.kid-dialog .row.two{display:flex;flex-wrap:nowrap;gap:10px;width:100%}.kid-dialog .row.two .big-btn{flex:1 1 0;min-width:0;padding-left:8px;padding-right:8px}
+.kid-dialog{max-height:calc(100dvh - 40px);overflow-y:auto;gap:10px}
+.kid-dialog h2{margin:0}
+@media (max-height:500px){.kid-dialog{gap:6px;padding:14px 18px}.kid-dialog .name-input,.kid-dialog .big-btn{min-height:0;height:48px;font-size:20px}}
+.kid-dialog .kid-del{color:#B5604A;align-self:center}
+.kid-dialog .kid-del.armed{font-weight:800}
 </style>
 </head>
 <body>
@@ -755,7 +779,32 @@ function load(){
 }
 var S = load();
 if (!S.avatarPicked || !/^av\d\d$/.test(S.avatar || '')) S.avatar = 'av17';   /* until the child picks one, the koala is their buddy */
-function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+/* ---------- children: each has their own name, buddy, stars, stickers, progress and level ----------
+   The active child's values live directly on S (so the games read S.stars etc.); S.kids keeps everyone. */
+var KID_FIELDS = ['name', 'avatar', 'avatarPicked', 'stars', 'facts', 'maxSum'];
+function kidFromS(id){ var k = { id: id }; KID_FIELDS.forEach(function(f){ k[f] = S[f]; }); return k; }
+if (!S.kids || !S.kids.length) { S.kids = [kidFromS('k' + Date.now().toString(36))]; S.active = S.kids[0].id; }   /* existing progress becomes the first child */
+function activeKid(){ for (var i = 0; i < S.kids.length; i++) if (S.kids[i].id === S.active) return S.kids[i]; S.active = S.kids[0].id; return S.kids[0]; }
+function save(){
+  try { var k = activeKid(); KID_FIELDS.forEach(function(f){ k[f] = S[f]; }); localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {}
+}
+function switchKid(id){
+  save();
+  for (var i = 0; i < S.kids.length; i++) if (S.kids[i].id === id) { var k = S.kids[i]; S.active = id; KID_FIELDS.forEach(function(f){ S[f] = k[f]; }); }
+  if (!S.facts) S.facts = {}; if (!S.maxSum) S.maxSum = 5; if (!S.stars) S.stars = 0;
+  save();
+}
+function addKid(name){
+  save();
+  var k = { id: 'k' + Date.now().toString(36), name: name, avatar: 'av17', avatarPicked: false, stars: 0, facts: {}, maxSum: S.maxSum || 5 };
+  S.kids.push(k); switchKid(k.id); return k;
+}
+function deleteKid(id){
+  if (S.kids.length < 2) return;
+  S.kids = S.kids.filter(function(k){ return k.id !== id; });
+  if (S.active === id) { S.active = S.kids[0].id; var k = S.kids[0]; KID_FIELDS.forEach(function(f){ S[f] = k[f]; }); }
+  save();
+}
 
 /* ---------- languages ---------- */
 var LANGS = [['en', 'English'], ['fr', 'Français'], ['es', 'Español'], ['zh', '中文 · 普通话'], ['yue', '中文 · 廣東話'], ['ja', '日本語'], ['ko', '한국어']];
@@ -841,6 +890,7 @@ en: {
   sFrogRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' makes ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('I landed on ' + t + '.', 'calm'), P('Try again!', 'cheer')]; },
   specialSticker: 'Special sticker!',
+  tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -917,6 +967,7 @@ fr: {
   sFrogRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ', ça fait ' + t + ' !', 'proud')]; },
   sFrogWrong: function(t){ return [P('Je suis arrivée sur le ' + t + '.', 'calm'), P('Essaie encore !', 'cheer')]; },
   specialSticker: 'Autocollant spécial\u00a0!',
+  tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -993,6 +1044,7 @@ es: {
   sFrogRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' son ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('Caí en el ' + t + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; },
   specialSticker: '¡Pegatina especial!',
+  tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1069,6 +1121,7 @@ zh: {
   sFrogRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳到了' + t + '。', 'calm'), P('再试一次！', 'cheer')]; },
   specialSticker: '特别贴纸！',
+  tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1145,6 +1198,7 @@ ja: {
   sFrogRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + 'に ついたよ。', 'calm'), P('もういちど やってみよう！', 'cheer')]; },
   specialSticker: 'とくべつな シール！',
+  tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1221,6 +1275,7 @@ yue: {
   sFrogRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳咗去' + t + '。', 'calm'), P('再試多次！', 'cheer')]; },
   specialSticker: '特別貼紙！',
+  tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1297,6 +1352,7 @@ ko: {
   sFrogRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + '에 도착했어요.', 'calm'), P('다시 해 봐요!', 'cheer')]; },
   specialSticker: '특별 스티커!',
+  tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1554,7 +1610,7 @@ function renderStart(){
     (known
       ? '<h1>' + esc(L('hiName', S.name)) + '</h1>' +
         '<button class="big-btn" data-act="its-me">' + L('itsMe') + '</button>' +
-        '<button class="link-btn" data-act="not-me">' + esc(L('notMe', S.name)) + '</button>'
+        ''
       : '<h1>' + L('whatName') + '</h1>' +
         '<form id="nameForm" class="nameform" autocomplete="off">' +
           '<label class="sr" for="kidName">' + L('yourName') + '</label>' +
@@ -2623,6 +2679,24 @@ function gate(){
 
 /* ---------- parent view ---------- */
 var resetArmed = false, ptab = 'progress';
+/* add a child (id null) or edit one: name, buddy, delete */
+function kidDialog(id){
+  var k = null; if (id) for (var i = 0; i < S.kids.length; i++) if (S.kids[i].id === id) k = S.kids[i];
+  var o = overlay('<form class="gate kid-dialog" id="kidForm" autocomplete="off"><h2>' + (k ? L('editKid', k.name || '') : L('addKid')) + '</h2>' +
+    '<label class="lab" for="kidDlgName">' + L('childName') + '</label>' +
+    '<input id="kidDlgName" class="name-input" type="text" maxlength="20" spellcheck="false" autocapitalize="words" value="' + esc(k ? k.name : '') + '" placeholder="' + esc(L('typeName')) + '">' +
+    (k ? '<button type="button" class="big-btn plain" data-act="kid-buddy" data-v="' + k.id + '">' + L('changeBuddy') + '</button>' : '') +
+    '<div class="row two"><button type="button" class="big-btn plain" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn">' + (k ? L('saveBtn') : L('next')) + '</button></div>' +
+    (k && S.kids.length > 1 ? '<button type="button" class="link-btn kid-del" data-act="kid-del" data-v="' + k.id + '">' + L('deleteKid') + '</button>' : '') +
+    '</form>');
+  var inp = document.getElementById('kidDlgName'); if (inp) setTimeout(function(){ inp.focus(); }, 50);
+  document.getElementById('kidForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = inp.value.trim().slice(0, 20); if (!v) { inp.focus(); return; }
+    if (k) { k.name = v; if (k.id === S.active) S.name = v; save(); closeOverlay(); renderParents(); }
+    else { addKid(v); closeOverlay(); avatarReturn = 'parents'; show('avatar'); }   /* new child: pick their buddy next */
+  });
+}
 function renderParents(){
   var max = S.maxSum, list = allFacts(max), got = 0;
   list.forEach(function(p){ if (factState(p[0], p[1]) === 'got') got++; });
@@ -2642,7 +2716,19 @@ function renderParents(){
     : L('tipDefault');
   var suggest = (max === 5 && got >= 8) ? '<p class="tip" style="margin-top:8px">' + L('ready') + '</p>' : '';
   var body;
-  if (ptab === 'progress') {
+  if (ptab === 'kids') {
+    body = '<div class="kids">' + S.kids.map(function(k){
+      var on = k.id === S.active;
+      return '<div class="kid-card' + (on ? ' on' : '') + '">' +
+        '<button class="kid-main" data-act="kid-use" data-v="' + k.id + '" aria-pressed="' + on + '">' +
+          '<span class="kid-av">' + avatarFace(k.avatarPicked ? k.avatar : 'av17') + '</span>' +
+          '<span class="kid-txt"><b>' + esc(k.name || '—') + '</b><span class="kid-stars">' + ICON.star + ' ' + (k.stars || 0) + '</span>' +
+          (on ? '<span class="kid-badge">' + L('playingNow') + '</span>' : '') + '</span></button>' +
+        '<button class="kid-edit" data-act="kid-edit" data-v="' + k.id + '" aria-label="' + esc(L('editKid', k.name || '')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>' +
+      '</div>';
+    }).join('') +
+    '<button class="kid-card kid-add" data-act="kid-add"><span class="kid-plus">+</span><b>' + L('addKid') + '</b></button></div>';
+  } else if (ptab === 'progress') {
     body = '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
       '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
       '<div class="facts-wrap"><div class="facts' + (cols > 9 ? ' many' : '') + '" style="grid-template-columns:repeat(' + (cols + 1) + ',minmax(0,1fr));grid-template-rows:repeat(' + (cols + 1) + ',minmax(0,1fr))">' + grid + '</div></div></div>' +
@@ -2652,8 +2738,7 @@ function renderParents(){
     body = '<div class="card settings">' +
       '<div class="field"><span class="lab">' + L('language') + '</span>' + langPicker() +
         (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div>' +
-      '<div class="field"><label for="nameInput" class="lab">' + L('childName') + '</label><input id="nameInput" type="text" maxlength="20" placeholder="' + esc(L('shownHome')) + '" value="' + esc(S.name) + '"></div>' +
-      '<div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
+      '<div class="field"><span class="lab">' + L('biggest') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
       '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
       (hasSpeech ? (function(){
@@ -2671,7 +2756,7 @@ function renderParents(){
   app.innerHTML = '<section class="screen parents">' +
     '<div class="bar"><div><h1>' + L('grownUps') + '</h1></div>' +
     '<button class="big-btn plain back-kid" data-act="home">' + L('backKid') + '</button></div>' +
-    '<div class="tabs" role="tablist"><button role="tab" data-act="ptab" data-v="progress" aria-selected="' + (ptab === 'progress') + '">' + esc(L('progressOf', S.name)) + '</button><button role="tab" data-act="ptab" data-v="settings" aria-selected="' + (ptab === 'settings') + '">' + L('tabSettings') + '</button></div>' +
+    '<div class="tabs" role="tablist"><button role="tab" data-act="ptab" data-v="kids" aria-selected="' + (ptab === 'kids') + '">' + L('tabKids') + '</button><button role="tab" data-act="ptab" data-v="progress" aria-selected="' + (ptab === 'progress') + '">' + esc(L('progressOf', S.name)) + '</button><button role="tab" data-act="ptab" data-v="settings" aria-selected="' + (ptab === 'settings') + '">' + L('tabSettings') + '</button></div>' +
     '<div class="pbody">' + body + '</div></section>';
   var inp = document.getElementById('nameInput');
   if (inp) inp.addEventListener('input', function(){ S.name = inp.value.trim(); save(); });
@@ -2711,7 +2796,7 @@ document.addEventListener('click', function(e){
       document.querySelectorAll('.av-opt').forEach(function(x){ x.setAttribute('aria-checked', String(x === b)); });
       b.classList.remove('picked'); void b.offsetWidth; b.classList.add('picked');
       break;
-    case 'avatar-done': show(avatarReturn === 'start' ? 'start' : 'home'); break;
+    case 'avatar-done': if (avatarReturn === 'parents') { ptab = 'kids'; show('parents'); } else show(avatarReturn === 'start' ? 'start' : 'home'); break;
     case 'bus-repeat': busAskAloud(); break;
     case 'bus-pick': busPick(+b.getAttribute('data-v')); break;
     case 'ten-repeat': tenAskAloud(); break;
@@ -2750,14 +2835,23 @@ document.addEventListener('click', function(e){
     case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
-    case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
+    case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'kids'; show('parents'); } else closeOverlay(); break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
+    case 'kid-use': switchKid(b.getAttribute('data-v')); renderParents(); break;
+    case 'kid-add': kidDialog(null); break;
+    case 'kid-edit': kidDialog(b.getAttribute('data-v')); break;
+    case 'kid-buddy': { var kd = b.getAttribute('data-v'); closeOverlay(); switchKid(kd); avatarReturn = 'parents'; show('avatar'); break; }
+    case 'kid-del': {
+      var kd2 = b.getAttribute('data-v');
+      if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = L('deleteConfirm'); break; }
+      deleteKid(kd2); closeOverlay(); renderParents(); break;
+    }
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
     case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
-      else { resetArmed = false; var keep = { name:S.name, voice:S.voice, maxSum:S.maxSum, lang:S.lang }; S = load(); S.stars = 0; S.facts = {}; S.name = keep.name; S.voice = keep.voice; S.maxSum = keep.maxSum; S.lang = keep.lang; save(); renderParents(); }
+      else { resetArmed = false; S.stars = 0; S.facts = {}; save(); renderParents(); }   /* only the active child's progress */
       break;
   }
 });
