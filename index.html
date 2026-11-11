@@ -752,6 +752,10 @@ img.stk{object-fit:contain}
 .kid-dialog .kid-del.armed{font-weight:800}
 /* game titles: same first-line baseline whether they take one line or two */
 .tile .tl{display:block;height:2.2em;line-height:1.1;overflow:visible}
+/* settings: one card per group */
+.setgrid{flex:1;align-self:stretch;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(10px,2dvh,16px);align-content:start;padding:2px 2px 10px}
+@media (orientation:landscape){ .setgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+.setgrid > .settings{grid-template-columns:minmax(0,1fr) !important;margin:0;box-sizing:border-box;min-width:0}
 </style>
 </head>
 <body>
@@ -2736,11 +2740,11 @@ function renderParents(){
       '<div class="card tipcard"><h2>' + L('tryHome') + '</h2><p class="tip">' + tip + '</p>' + suggest +
       '<p class="tip small">' + L('caption') + '</p></div>';
   } else {
-    body = '<div class="card settings">' +
+    body = '<div class="setgrid"><div class="card settings">' +
       '<div class="field"><span class="lab">' + L('language') + '</span>' + langPicker() +
-        (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div>' +
-      '<div class="field"><span class="lab">' + L('biggest') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
-      '<div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
+        (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div></div>' +
+      '<div class="card settings"><div class="field"><span class="lab">' + L('biggest') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
+      '</div><div class="card settings"><div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
       (hasSpeech ? (function(){
         /* only the kinds of voice this device actually has for this language can be picked */
@@ -2750,9 +2754,9 @@ function renderParents(){
           '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF ? '' : ' disabled') + '>' + L('female') + '</button>' +
           '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
       })() : '') +
-      '<div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
+      '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
-    '</div>';
+    '</div></div>';
   }
   app.innerHTML = '<section class="screen parents">' +
     '<div class="bar"><div><h1>' + L('grownUps') + '</h1></div>' +
