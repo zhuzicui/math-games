@@ -792,6 +792,9 @@ img.stk{object-fit:contain}
 .settings .seg4{gap:4px}
 @container (max-width:440px){ .settings .seg4{border-radius:26px} .settings .seg4 button{border-radius:20px} }
 .settings .field.off .lab{opacity:.45}
+@keyframes nope{0%,100%{transform:translateX(0)}15%{transform:translateX(-14px)}30%{transform:translateX(12px)}45%{transform:translateX(-9px)}60%{transform:translateX(7px)}75%{transform:translateX(-4px)}90%{transform:translateX(2px)}}
+.gate.nope{animation:nope .45s ease-out}
+@media (prefers-reduced-motion:reduce){.gate.nope{animation:none}}
 </style>
 </head>
 <body>
@@ -2897,7 +2900,10 @@ document.addEventListener('click', function(e){
     case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
-    case 'gate-ans': if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); } else closeOverlay(); break;
+    case 'gate-ans':
+      if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); }
+      else { var gbox = b.closest('.gate'); if (gbox) { gbox.classList.remove('nope'); void gbox.offsetWidth; gbox.classList.add('nope'); } if (navigator.vibrate) try { navigator.vibrate(80); } catch(e) {} }   /* wrong: shake, stay open */
+      break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
     case 'kid-use': switchKid(b.getAttribute('data-v')); renderParents(); break;
     case 'kid-add': kidDialog(null); break;
