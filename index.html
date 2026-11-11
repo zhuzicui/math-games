@@ -1007,14 +1007,14 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
 @keyframes starIn{from{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}}
 .dots span.pop{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
-body.railbg,body.railbg #app{background:linear-gradient(180deg,#D7ECF4 0%,#E6F3F1 52%,#DCEBCF 78%,#D1E4C1 100%) fixed}
+body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/cover no-repeat fixed}
 .tile.traint{background:#DDEDF0;border-color:#A7CBD2;box-shadow:0 7px 0 #A7CBD2}
 .tile.traint .train-pic{height:auto;width:62%;max-height:clamp(70px,22dvh,190px);object-fit:contain}
 .traingame{gap:clamp(4px,1.2dvh,12px)}
 .train-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .train-wrap{position:relative;width:100%;display:flex;justify-content:center;padding-bottom:calc(var(--u,80px)*.16)}
 .train-wrap::after{content:'';position:absolute;left:50%;bottom:0;width:100vw;transform:translateX(-50%);height:calc(var(--u,80px)*.2);z-index:0;
-  background:linear-gradient(#6E6158,#6E6158) top/100% 24% no-repeat,repeating-linear-gradient(90deg,#B08F6E 0 calc(var(--u,80px)*.1),transparent 0 calc(var(--u,80px)*.32)) bottom/100% 70% no-repeat}
+  background:linear-gradient(#9AA4B6,#9AA4B6) top/100% 24% no-repeat,repeating-linear-gradient(90deg,#C9D2DE 0 calc(var(--u,80px)*.1),transparent 0 calc(var(--u,80px)*.32)) bottom/100% 70% no-repeat}
 .train{--u:80px;display:flex;align-items:flex-end;gap:calc(var(--u)*.134);position:relative;z-index:1;margin-bottom:calc(var(--u)*-.01)}
 .train.enter{animation:trainIn 1.6s cubic-bezier(.2,.75,.3,1) both}
 .train.leave{transition:transform 1.6s cubic-bezier(.55,0,.8,.6);transform:translateX(-130vw)}
@@ -1022,15 +1022,15 @@ body.railbg,body.railbg #app{background:linear-gradient(180deg,#D7ECF4 0%,#E6F3F
 .train.moving .loco-box,.train.moving .tcar{animation:chug .26s ease-in-out infinite alternate}
 .train.moving .tcar:nth-child(odd){animation-delay:-.13s}
 @keyframes chug{to{transform:translateY(calc(var(--u)*-.025))}}
-.loco-box{position:relative;width:calc(var(--u)*1.986);flex:none}
+.loco-box{position:relative;width:calc(var(--u)*2.0);flex:none}
 .loco-box .loco{width:100%;height:auto;display:block}
-.puffs{position:absolute;left:22%;top:13%;width:0;height:0;pointer-events:none}
+.puffs{position:absolute;left:26%;top:15%;width:0;height:0;pointer-events:none}
 .puffs i{position:absolute;left:calc(var(--u)*-.14);top:calc(var(--u)*-.14);width:calc(var(--u)*.28);height:calc(var(--u)*.28);border-radius:50%;background:#fff;opacity:0}
 .train.moving .puffs i{animation:puff 1s ease-out infinite}
 .train.moving .puffs i:nth-child(2){animation-delay:.33s}.train.moving .puffs i:nth-child(3){animation-delay:.66s}
 @keyframes puff{0%{opacity:.9;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(calc(var(--u)*.5),calc(var(--u)*-.7)) scale(1.6)}}
-.tcar{position:relative;width:var(--u);aspect-ratio:358/221;flex:none}
-.tcar::before{content:'';position:absolute;right:100%;width:calc(var(--u)*.16);top:40%;height:max(2px,calc(var(--u)*.045));background:#323337}
+.tcar{position:relative;width:var(--u);aspect-ratio:358/222;flex:none}
+.tcar::before{content:'';position:absolute;right:100%;width:calc(var(--u)*.16);top:47%;height:max(3px,calc(var(--u)*.07));background:#D6D6D2}
 .tcar .car{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:block}
 .tcar .pg{position:absolute;height:auto;z-index:1}
 .tcar.arrive .pg{animation:pgpop .55s cubic-bezier(.3,1.6,.6,1) both}
@@ -2400,8 +2400,8 @@ function showCrocReward(){
    NUMBER TRAIN (penguins): the cars are numbered in order; put the missing numbers back.
    Tap the right card in the first questions of a round, drag cards onto the cars in the later ones.
    ===================================================================== */
-/* where each penguin sits in a car, in % of the car (the car image is 358x221) */
-var PG_POS = { 1:{ l:12.0, w:79.6, b:63.3 }, 2:{ l:12.8, w:83.0, b:58.4 }, 3:{ l:8.1, w:91.6, b:63.8 } };
+/* where each penguin sits in a car, in % of the car (the car image is 358x222) */
+var PG_POS = { 1:{ l:7.7, w:80.0, b:39.9 }, 2:{ l:14.3, w:78.1, b:53.3 }, 3:{ l:-6.2, w:110.4, b:44.3 } };
 function trainImg(cls){ return '<img class="' + (cls || 'loco') + '" src="train/loco.png" alt="' + esc(L('trainAlt')) + '" draggable="false">'; }
 function trainPlan(){
   var small = S.maxSum <= 5;
@@ -2470,7 +2470,7 @@ function renderTrain(){
 function sizeTrain(){
   var st = document.querySelector('.train-stage'), tr = document.querySelector('.train'); if (!st || !tr) return;
   var n = G.seq.length, w = Math.min(innerWidth, 1400) - (innerWidth > 700 ? 88 : 40), h = st.clientHeight;
-  var u = Math.min(w / (1.986 + n * 1.134), h / 2.1, 190);
+  var u = Math.min(w / (2.0 + n * 1.134), h / 2.0, 190);
   tr.style.setProperty('--u', Math.max(40, Math.floor(u)) + 'px');
 }
 window.addEventListener('resize', function(){ if (screen === 'train' && G) sizeTrain(); });
