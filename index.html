@@ -798,14 +798,11 @@ img.stk{object-fit:contain}
 .choice{display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-sizing:border-box;line-height:1;text-align:center;-webkit-appearance:none;appearance:none;font-variant-numeric:tabular-nums}
 /* ===== Tower ===== */
 .tile.towert{background:#FCE6CF;border-color:#EDBF91;box-shadow:0 7px 0 #EDBF91}
-/* five games: three on top, two centred underneath (iPad); one row on a phone held sideways; 2 + 2 + 1 on a phone */
-.tiles.five{grid-template-columns:repeat(6,minmax(0,1fr))}
-.tiles.five .tile{grid-column:span 2}
-.tiles.five{gap:clamp(14px,3.4dvh,28px);margin-bottom:clamp(6px,2.4dvh,24px)}
-.hero + .games{margin-top:clamp(8px,2.6dvh,24px)}   /* breathing room under the greeting */
-.tiles.five .tile:nth-child(4){grid-column:2 / span 2}
-@media (orientation:landscape) and (max-height:600px){ .tiles.five{grid-template-columns:repeat(5,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} }
-@media (orientation:portrait) and (max-width:600px){ .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} .tiles.five .tile:last-child{grid-column:1 / -1} }
+/* six games: 3 + 3 (iPad), one row on a phone held sideways, 2 + 2 + 2 on a phone */
+.tile.writet{background:#EEE7F5;border-color:#CDBDE2;box-shadow:0 7px 0 #CDBDE2}
+.tiles.six{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,3.4dvh,28px);margin-bottom:clamp(6px,2.4dvh,24px)}
+@media (orientation:landscape) and (max-height:600px){ .tiles.six{grid-template-columns:repeat(6,minmax(0,1fr))} }
+@media (orientation:portrait) and (max-width:600px){ .tiles.six{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .tower .momo-row .tigerpic{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
 .tower .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent;border-radius:16px;padding:0 .15em;min-width:1.4em;text-align:center}
 .tower .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
@@ -848,6 +845,9 @@ img.stk{object-fit:contain}
 .mini-blk{display:inline-block;width:clamp(26px,4.4dvh,36px);height:clamp(18px,3dvh,24px);box-sizing:border-box;border:3px solid;border-radius:6px}
 .mini-blk.r{background:#E9917A;border-color:#C46F58}.mini-blk.b{background:#A7D0E8;border-color:#3B78A0}
 @media (prefers-reduced-motion:reduce){ .twr.blue,.twr.landed,.tw-flag,.blk.pulse{animation:none} }
+.tile.writet{position:relative}
+.dev-badge{position:absolute;top:clamp(6px,1.4dvh,12px);right:clamp(6px,1.4dvh,12px);max-width:calc(100% - 16px);background:#FFFFFF;border:3px solid #CDBDE2;color:#5E4688;border-radius:999px;padding:3px 10px;font-family:Nunito,var(--display);font-weight:800;font-size:clamp(11px,1.7dvh,14px);line-height:1.15;text-align:center}
+@media (max-width:600px),(max-height:600px){ .dev-badge{top:-11px;right:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% + 8px);font-size:10px;padding:2px 7px;border-width:2px;z-index:2} }
 </style>
 </head>
 <body>
@@ -997,6 +997,8 @@ en: {
   sTowerHow: [P('How tall is it now?', 'ask')],
   sTowerRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
   sTowerWrong: [P('Let’s count the blocks.', 'calm')], sTowerTry: [P('Try again!', 'cheer')],
+  gWrite: 'Write It',
+  devBadge: 'Still under development',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1082,6 +1084,8 @@ fr: {
   sTowerHow: [P('Elle mesure combien maintenant ?', 'ask')],
   sTowerRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
   sTowerWrong: [P('Comptons les blocs.', 'calm')], sTowerTry: [P('Essaie encore !', 'cheer')],
+  gWrite: 'J’écris',
+  devBadge: 'En cours de développement',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1167,6 +1171,8 @@ es: {
   sTowerHow: [P('¿Qué tan alta es ahora?', 'ask')],
   sTowerRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
   sTowerWrong: [P('Vamos a contar los bloques.', 'calm')], sTowerTry: [P('¡Inténtalo otra vez!', 'cheer')],
+  gWrite: 'A escribir',
+  devBadge: 'Todavía en desarrollo',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1252,6 +1258,8 @@ zh: {
   sTowerHow: [P('现在有多高？', 'ask')],
   sTowerRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sTowerWrong: [P('我们来数一数积木。', 'calm')], sTowerTry: [P('再试一次！', 'cheer')],
+  gWrite: '写数字',
+  devBadge: '还在开发中',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1337,6 +1345,8 @@ ja: {
   sTowerHow: [P('いま どのくらい たかい？', 'ask')],
   sTowerRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sTowerWrong: [P('ブロックを かぞえてみよう。', 'calm')], sTowerTry: [P('もういちど やってみよう！', 'cheer')],
+  gWrite: 'すうじを かこう',
+  devBadge: 'まだ じゅんびちゅう',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1422,6 +1432,8 @@ yue: {
   sTowerHow: [P('而家有幾高？', 'ask')],
   sTowerRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sTowerWrong: [P('我哋數吓啲積木。', 'calm')], sTowerTry: [P('再試多次！', 'cheer')],
+  gWrite: '寫數字',
+  devBadge: '仲喺開發緊',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1507,6 +1519,8 @@ ko: {
   sTowerHow: [P('이제 얼마나 높을까요?', 'ask')],
   sTowerRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sTowerWrong: [P('블록을 세어 봐요.', 'calm')], sTowerTry: [P('다시 해 봐요!', 'cheer')],
+  gWrite: '숫자 쓰기',
+  devBadge: '아직 개발 중',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1830,12 +1844,13 @@ function renderHome(){
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
-    '<div class="games"><div class="tiles five">' +
+    '<div class="games"><div class="tiles six">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + '<span class="tl">' + L('gFeed') + '</span></button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + '<span class="tl">' + L('gTen') + '</span></button>' +
       '<button class="tile bus" data-act="bus">' + critter('snail') + '<span class="tl">' + L('gBus') + '</span></button>' +
       '<button class="tile frogt" data-act="frog">' + critter('frog') + '<span class="tl">' + L('gFrog') + '</span></button>' +
       '<button class="tile towert" data-act="tower">' + critter('tiger') + '<span class="tl">' + L('gTower') + '</span></button>' +
+      '<button class="tile writet" data-act="write"><span class="dev-badge">' + L('devBadge') + '</span>' + critter('hedgehog') + '<span class="tl">' + L('gWrite') + '</span></button>' +
     '</div></div></section>';
 }
 
@@ -3143,6 +3158,7 @@ document.addEventListener('click', function(e){
     case 'bus': startBus(); break;
     case 'frog': startFrog(); break;
     case 'tower': startTower(); break;
+    case 'write': clearSay(); location.href = 'write-test.html'; break;
     case 'tower-repeat': towerAskAloud(); break;
     case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
     case 'frog-repeat': frogAskAloud(); break;
