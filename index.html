@@ -742,13 +742,13 @@ img.stk{object-fit:contain}
 .kid-edit svg{width:22px;height:22px}
 .kid-add{align-items:center;justify-content:center;gap:10px;border-style:dashed;box-shadow:none;background:transparent;cursor:pointer;font:inherit;color:var(--ink);font-family:var(--display);font-size:20px}
 .kid-plus{width:40px;height:40px;border-radius:50%;background:#9DCBEC;color:#1F3B52;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1}
-.kid-dialog{display:flex;flex-direction:column;gap:12px;width:min(440px,90vw)}
-.kid-dialog .name-input{width:100%;box-sizing:border-box}
-.kid-dialog .row.two{display:flex;flex-wrap:nowrap;gap:10px;width:100%}.kid-dialog .row.two .big-btn{flex:1 1 0;min-width:0;padding-left:8px;padding-right:8px}
-.kid-dialog{max-height:calc(100dvh - 40px);overflow-y:auto;gap:10px}
-.kid-dialog h2{margin:0}
-@media (max-height:500px){.kid-dialog{gap:6px;padding:14px 18px}.kid-dialog .name-input,.kid-dialog .big-btn{min-height:0;height:48px;font-size:20px}}
-.kid-dialog .kid-del{color:#B5604A;align-self:center}
+.kid-dialog{display:flex;flex-direction:column;gap:8px;width:min(400px,90vw);text-align:left;padding:20px;max-height:calc(100dvh - 40px);overflow-y:auto}
+.kid-dialog h2{margin:0 0 6px;font-size:22px}
+.kid-dialog .lab{font-weight:800;font-size:15px}
+.kid-dialog .kid-name{font:inherit;font-size:17px;font-weight:700;padding:10px 14px;border-radius:20px;border:4px solid var(--edge);background:#fff;color:var(--ink);width:100%;box-sizing:border-box;user-select:text;-webkit-user-select:text}
+.kid-dialog .kid-name:focus{outline:none;border-color:#6EA6D1}
+.kid-dialog .row.two{display:flex;flex-wrap:nowrap;gap:10px;width:100%;margin-top:8px}.kid-dialog .row.two .big-btn{flex:1 1 0;min-width:0}
+.kid-dialog .kid-del{color:#B5604A;align-self:center;margin-top:4px}
 .kid-dialog .kid-del.armed{font-weight:800}
 </style>
 </head>
@@ -2684,9 +2684,8 @@ function kidDialog(id){
   var k = null; if (id) for (var i = 0; i < S.kids.length; i++) if (S.kids[i].id === id) k = S.kids[i];
   var o = overlay('<form class="gate kid-dialog" id="kidForm" autocomplete="off"><h2>' + (k ? L('editKid', k.name || '') : L('addKid')) + '</h2>' +
     '<label class="lab" for="kidDlgName">' + L('childName') + '</label>' +
-    '<input id="kidDlgName" class="name-input" type="text" maxlength="20" spellcheck="false" autocapitalize="words" value="' + esc(k ? k.name : '') + '" placeholder="' + esc(L('typeName')) + '">' +
-    (k ? '<button type="button" class="big-btn plain" data-act="kid-buddy" data-v="' + k.id + '">' + L('changeBuddy') + '</button>' : '') +
-    '<div class="row two"><button type="button" class="big-btn plain" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn">' + (k ? L('saveBtn') : L('next')) + '</button></div>' +
+    '<input id="kidDlgName" class="kid-name" type="text" maxlength="20" spellcheck="false" autocapitalize="words" value="' + esc(k ? k.name : '') + '" placeholder="' + esc(L('typeName')) + '">' +
+    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid">' + (k ? L('saveBtn') : L('next')) + '</button></div>' +
     (k && S.kids.length > 1 ? '<button type="button" class="link-btn kid-del" data-act="kid-del" data-v="' + k.id + '">' + L('deleteKid') + '</button>' : '') +
     '</form>');
   var inp = document.getElementById('kidDlgName'); if (inp) setTimeout(function(){ inp.focus(); }, 50);
@@ -2840,7 +2839,6 @@ document.addEventListener('click', function(e){
     case 'kid-use': switchKid(b.getAttribute('data-v')); renderParents(); break;
     case 'kid-add': kidDialog(null); break;
     case 'kid-edit': kidDialog(b.getAttribute('data-v')); break;
-    case 'kid-buddy': { var kd = b.getAttribute('data-v'); closeOverlay(); switchKid(kd); avatarReturn = 'parents'; show('avatar'); break; }
     case 'kid-del': {
       var kd2 = b.getAttribute('data-v');
       if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = L('deleteConfirm'); break; }
