@@ -750,7 +750,7 @@ img.stk{object-fit:contain}
 .kid-dialog .kid-del{color:#B5604A;align-self:center;margin-top:4px}
 .kid-dialog .kid-del.armed{font-weight:800}
 /* game titles: same first-line baseline whether they take one line or two */
-.tile .tl{display:block;height:2.2em;line-height:1.1;overflow:visible}
+.tile .tl{display:block;height:2.2em;line-height:1.1;overflow:visible;margin-top:12px}
 /* settings: one card per group */
 .setgrid{flex:1;align-self:stretch;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(10px,2dvh,16px);align-content:start;padding:2px 2px 10px}
 @media (orientation:landscape){ .setgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
@@ -796,6 +796,58 @@ img.stk{object-fit:contain}
 @media (prefers-reduced-motion:reduce){.gate.nope{animation:none}}
 /* answer tiles: centre the number exactly (older iPad Safari adds its own button padding) */
 .choice{display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-sizing:border-box;line-height:1;text-align:center;-webkit-appearance:none;appearance:none;font-variant-numeric:tabular-nums}
+/* ===== Tower ===== */
+.tile.towert{background:#FCE6CF;border-color:#EDBF91;box-shadow:0 7px 0 #EDBF91}
+/* five games: three on top, two centred underneath (iPad); one row on a phone held sideways; 2 + 2 + 1 on a phone */
+.tiles.five{grid-template-columns:repeat(6,minmax(0,1fr))}
+.tiles.five .tile{grid-column:span 2}
+.tiles.five{gap:clamp(14px,3.4dvh,28px);margin-bottom:clamp(6px,2.4dvh,24px)}
+.hero + .games{margin-top:clamp(8px,2.6dvh,24px)}   /* breathing room under the greeting */
+.tiles.five .tile:nth-child(4){grid-column:2 / span 2}
+@media (orientation:landscape) and (max-height:600px){ .tiles.five{grid-template-columns:repeat(5,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} }
+@media (orientation:portrait) and (max-width:600px){ .tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.five .tile,.tiles.five .tile:nth-child(4){grid-column:auto} .tiles.five .tile:last-child{grid-column:1 / -1} }
+.tower .momo-row .tigerpic{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
+.tower .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent;border-radius:16px;padding:0 .15em;min-width:1.4em;text-align:center}
+.tower .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
+.yard{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column;gap:clamp(10px,2dvh,18px);--b:40px}
+.yard-col{flex:1;min-height:0;display:flex;flex-direction:column}
+.yard-main{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--b) * .5);padding:0 8px}
+.tw-shelf{flex:none;height:clamp(14px,2.4dvh,22px);background:#D9B48F;border-radius:12px;box-shadow:0 6px 0 #BF9773}
+.ruler{flex:none;display:flex;flex-direction:column-reverse;width:var(--b);background:var(--card);border-radius:calc(var(--b) * .28);box-shadow:0 0 0 3px var(--edge);overflow:hidden}
+.ruler span{height:var(--b);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:calc(var(--b) * .42);color:var(--ink2);border-top:1px solid #EFE3D6;transition:background .2s,color .2s}
+.ruler span:last-child{border-top:0}
+.ruler span.hi{background:var(--ink);color:#fff}
+.ruler span.ok{background:#4F7A3B;color:#fff}
+.ruler span.mark{background:#FBE7B0;color:var(--ink)}
+.twr{flex:none;position:relative;display:flex;flex-direction:column-reverse;width:var(--tw, calc(var(--b) * 2.3));padding:0;margin:0;border:0;background:none;font:inherit}
+.tw-core{position:relative;display:flex;align-items:flex-end;gap:calc(var(--b) * .5)}
+.twr.blue{position:absolute;left:calc(100% + var(--b) * .9);bottom:0}
+.twr.blue{cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;animation:nudge 2.4s ease-in-out 1.2s infinite}
+.twr.blue.dragging{cursor:grabbing;z-index:20;animation:none;filter:drop-shadow(0 10px 8px rgba(90,62,51,.25))}
+@keyframes nudge{0%,70%,100%{transform:translateY(0)}78%{transform:translateY(-10px)}86%{transform:translateY(0)}92%{transform:translateY(-4px)}}
+.blk{display:block;height:var(--b);box-sizing:border-box;border:max(3px,calc(var(--b) * .07)) solid;border-radius:calc(var(--b) * .2);box-shadow:inset 0 calc(var(--b) * -.12) 0 rgba(0,0,0,.08)}
+.blk.r{background:#E9917A;border-color:#C46F58}
+.blk.b{background:#A7D0E8;border-color:#3B78A0}
+.blk.pulse{animation:blkpulse .5s ease-out}
+@keyframes blkpulse{40%{transform:scale(1.08);filter:brightness(1.12)}}
+.tw-ghost{display:block;height:calc(var(--b) * var(--a));box-sizing:border-box;border:4px dashed #8DB6D0;border-radius:calc(var(--b) * .2);background:transparent;transition:background .15s,border-color .15s}
+.tw-ghost.near{background:rgba(167,208,232,.45);border-color:#3B78A0}
+.twr.landed{animation:landed .45s ease-out}
+@keyframes landed{0%{transform:scaleY(.94)}40%{transform:scaleY(1.03) rotate(-1.2deg)}70%{transform:rotate(.8deg)}100%{transform:none}}
+.twr.cheer .blk{animation:blkpulse .5s ease-out}
+.tw-guide{position:absolute;right:100%;top:0;width:calc(var(--b) * .5);border-top:4px dotted var(--ink)}
+.tw-flag{position:absolute;bottom:100%;left:50%;width:calc(var(--b) * 1.25);margin-left:-3px;animation:flagup .45s cubic-bezier(.3,1.4,.6,1) both}
+.tw-flag svg{display:block;width:100%;height:auto}
+@keyframes flagup{from{transform:translateY(30%) scale(.4);opacity:0}}
+.tw-choices{display:flex;justify-content:center;gap:clamp(10px,3vw,24px)}
+.tw-choices.wait{visibility:hidden}
+@media (orientation:landscape) and (min-width:600px){
+  .yard{position:relative}
+  .tw-choices{position:absolute;right:0;top:0;bottom:0;flex-direction:column;justify-content:center;padding-bottom:4dvh}
+}
+.mini-blk{display:inline-block;width:clamp(26px,4.4dvh,36px);height:clamp(18px,3dvh,24px);box-sizing:border-box;border:3px solid;border-radius:6px}
+.mini-blk.r{background:#E9917A;border-color:#C46F58}.mini-blk.b{background:#A7D0E8;border-color:#3B78A0}
+@media (prefers-reduced-motion:reduce){ .twr.blue,.twr.landed,.tw-flag,.blk.pulse{animation:none} }
 </style>
 </head>
 <body>
@@ -819,7 +871,7 @@ img.stk{object-fit:contain}
 /* ---------- storage ---------- */
 var KEY = 'feed-the-monster-v1';
 function load(){
-  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', name:'', avatar:'av17', facts:{}, lang:'fr' };
+  var d = { stars:0, maxSum:5, voice:true, voiceType:'female', voiceRate:'medium', name:'', avatar:'av17', facts:{}, lang:'fr' };
   try { var r = JSON.parse(localStorage.getItem(KEY) || 'null'); if (r) for (var k in r) d[k] = r[k]; } catch(e) {}
   return d;
 }
@@ -939,6 +991,12 @@ en: {
   tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   back: 'Back',
   nextStep: 'Next',
+  speed: 'Speed', rate_slow: 'Slower', rate_medium: 'Medium', rate_fast: 'Faster',
+  towerAlt: 'Tiger', towerPut: 'Put the blue tower on top!', towerHow: 'How tall is it now?',
+  sTowerAsk: function(s, a){ return [P('Here are ' + s + ' red ' + pl(s, 'block', 'blocks') + ' and ' + a + ' blue ' + pl(a, 'block', 'blocks') + '.', 'calm'), P('Put the blue tower on top!', 'ask')]; },
+  sTowerHow: [P('How tall is it now?', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
+  sTowerWrong: [P('Let’s count the blocks.', 'calm')], sTowerTry: [P('Try again!', 'cheer')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1018,6 +1076,12 @@ fr: {
   tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   back: 'Retour',
   nextStep: 'Suivant',
+  speed: 'Vitesse', rate_slow: 'Plus lente', rate_medium: 'Moyenne', rate_fast: 'Plus rapide',
+  towerAlt: 'Tigre', towerPut: 'Mets la tour bleue dessus\u00a0!', towerHow: 'Elle mesure combien\u00a0?',
+  sTowerAsk: function(s, a){ return [P('Voici ' + s + (s === 1 ? ' bloc rouge' : ' blocs rouges') + ' et ' + a + (a === 1 ? ' bloc bleu.' : ' blocs bleus.'), 'calm'), P('Mets la tour bleue dessus !', 'ask')]; },
+  sTowerHow: [P('Elle mesure combien maintenant ?', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
+  sTowerWrong: [P('Comptons les blocs.', 'calm')], sTowerTry: [P('Essaie encore !', 'cheer')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1097,6 +1161,12 @@ es: {
   tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   back: 'Volver',
   nextStep: 'Siguiente',
+  speed: 'Velocidad', rate_slow: 'Más lenta', rate_medium: 'Media', rate_fast: 'Más rápida',
+  towerAlt: 'Tigre', towerPut: '¡Pon la torre azul encima!', towerHow: '¿Qué tan alta es ahora?',
+  sTowerAsk: function(s, a){ return [P('Aquí hay ' + s + (s === 1 ? ' bloque rojo' : ' bloques rojos') + ' y ' + a + (a === 1 ? ' bloque azul.' : ' bloques azules.'), 'calm'), P('¡Pon la torre azul encima!', 'ask')]; },
+  sTowerHow: [P('¿Qué tan alta es ahora?', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
+  sTowerWrong: [P('Vamos a contar los bloques.', 'calm')], sTowerTry: [P('¡Inténtalo otra vez!', 'cheer')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1176,6 +1246,12 @@ zh: {
   tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   back: '返回',
   nextStep: '下一步',
+  speed: '语速', rate_slow: '慢一点', rate_medium: '中等', rate_fast: '快一点',
+  towerAlt: '小老虎', towerPut: '把蓝色的塔放到上面！', towerHow: '现在有多高？',
+  sTowerAsk: function(s, a){ return [P('这里有' + s + '块红积木和' + a + '块蓝积木。', 'calm'), P('把蓝色的塔放到上面！', 'ask')]; },
+  sTowerHow: [P('现在有多高？', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
+  sTowerWrong: [P('我们来数一数积木。', 'calm')], sTowerTry: [P('再试一次！', 'cheer')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1255,6 +1331,12 @@ ja: {
   tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   back: 'もどる',
   nextStep: 'つぎへ',
+  speed: 'はやさ', rate_slow: 'ゆっくり', rate_medium: 'ふつう', rate_fast: 'はやい',
+  towerAlt: 'トラ', towerPut: 'あおい タワーを うえに のせてね！', towerHow: 'いま どのくらい たかい？',
+  sTowerAsk: function(s, a){ return [P('あかい ブロックが ' + s + 'こ、あおい ブロックが ' + a + 'こ あるよ。', 'calm'), P('あおい タワーを うえに のせてね！', 'ask')]; },
+  sTowerHow: [P('いま どのくらい たかい？', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
+  sTowerWrong: [P('ブロックを かぞえてみよう。', 'calm')], sTowerTry: [P('もういちど やってみよう！', 'cheer')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1334,6 +1416,12 @@ yue: {
   tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   back: '返回',
   nextStep: '下一步',
+  speed: '語速', rate_slow: '慢啲', rate_medium: '中等', rate_fast: '快啲',
+  towerAlt: '小老虎', towerPut: '將藍色座塔放上面！', towerHow: '而家有幾高？',
+  sTowerAsk: function(s, a){ return [P('呢度有' + s + '粒紅積木同' + a + '粒藍積木。', 'calm'), P('將藍色座塔放上面！', 'ask')]; },
+  sTowerHow: [P('而家有幾高？', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
+  sTowerWrong: [P('我哋數吓啲積木。', 'calm')], sTowerTry: [P('再試多次！', 'cheer')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1413,6 +1501,12 @@ ko: {
   tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   back: '뒤로',
   nextStep: '다음',
+  speed: '속도', rate_slow: '느리게', rate_medium: '보통', rate_fast: '빠르게',
+  towerAlt: '호랑이', towerPut: '파란 탑을 위에 올려 보세요!', towerHow: '이제 얼마나 높을까요?',
+  sTowerAsk: function(s, a){ return [P('빨간 블록 ' + s + '개와 파란 블록 ' + a + '개가 있어요.', 'calm'), P('파란 탑을 위에 올려 보세요!', 'ask')]; },
+  sTowerHow: [P('이제 얼마나 높을까요?', 'ask')],
+  sTowerRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
+  sTowerWrong: [P('블록을 세어 봐요.', 'calm')], sTowerTry: [P('다시 해 봐요!', 'cheer')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1548,6 +1642,7 @@ function syncMute(){ document.body.classList.toggle('muted', !S.voice); document
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
 function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
+var RATE_MUL = { slow: 0.8, medium: 1, fast: 1.22 };
 function say(parts, onEach, gap){
   var arr = (Array.isArray(parts) ? parts : [parts]).map(function(p){ return typeof p === 'string' ? P(p, 'calm') : p; });
   gap = gap || 800;
@@ -1569,7 +1664,8 @@ function say(parts, onEach, gap){
       if (voice) u.voice = voice;
       u.lang = voice ? voice.lang : SPEECH_LANG[lang];
       u.pitch = Math.max(0.5, Math.min(2, pitch));
-      u.rate = Math.max(0.55, Math.min(1.3, rate));
+      rate *= RATE_MUL[S.voiceRate] || 1;   /* grown-ups' speed setting */
+      u.rate = Math.max(0.45, Math.min(1.6, rate));
       u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
       if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
       try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch(e) {}
@@ -1691,6 +1787,7 @@ function render(){
   else if (screen === 'ten') renderTen();
   else if (screen === 'bus') renderBus();
   else if (screen === 'frog') renderFrog();
+  else if (screen === 'tower') renderTower();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
@@ -1733,16 +1830,13 @@ function renderHome(){
     '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
-    '<div class="games"><div class="tiles four">' +
+    '<div class="games"><div class="tiles five">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + '<span class="tl">' + L('gFeed') + '</span></button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + '<span class="tl">' + L('gTen') + '</span></button>' +
       '<button class="tile bus" data-act="bus">' + critter('snail') + '<span class="tl">' + L('gBus') + '</span></button>' +
       '<button class="tile frogt" data-act="frog">' + critter('frog') + '<span class="tl">' + L('gFrog') + '</span></button>' +
-    '</div>' +
-    '<div class="soon-wrap"><div class="soon-title">' + L('soon') + '</div>' +
-    '<div class="soon one">' +
-      '<button data-act="soon" data-g="gTower">' + critter('bear') + L('gTower') + '</button>' +
-    '</div></div></div></section>';
+      '<button class="tile towert" data-act="tower">' + critter('tiger') + '<span class="tl">' + L('gTower') + '</span></button>' +
+    '</div></div></section>';
 }
 
 /* ---------- game ---------- */
@@ -2085,7 +2179,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -2685,6 +2779,167 @@ function showFrogReward(){
 }
 window.addEventListener('resize', function(){ if (screen === 'frog' && G) { layoutPond(); placeFrog(G.pos, false); } });
 
+/* =====================================================================
+   TOWER (tower): stack the blue tower on the red one, then read how tall it is
+   ===================================================================== */
+function tigerImg(cls){ return '<img class="' + (cls || 'momo tigerpic') + '" src="animals/tiger.png" alt="' + esc(L('towerAlt')) + '" draggable="false">'; }
+function startTower(){ G = { game:'tower', q:0, earned:0, startStars:S.stars }; towerQuestion(); }
+function towerQuestion(){
+  var p = pickFrog();
+  G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
+  G.R = S.maxSum <= 5 ? 6 : S.maxSum <= 10 ? 10 : 20;          /* ruler length */
+  G.stacked = false; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.done = false; G.opts = null;
+  screen = 'tower'; closeOverlay(); renderTower();
+  towerAskAloud();
+}
+function towerAskAloud(){ say(G.stacked ? L('sTowerHow') : L('sTowerAsk', G.s, G.a)); }
+function towerBlocks(n, kind, from){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="blk ' + kind + '" data-i="' + (from + i + 1) + '"></span>'; return h; }
+function renderTower(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var ruler = '';
+  for (var n = 1; n <= G.R; n++) ruler += '<span data-n="' + n + '" class="' + (G.done && n === G.t ? 'ok' : G.stacked && n === G.t ? 'hi' : '') + '">' + n + '</span>';
+  var opts = G.opts || (G.opts = choiceOpts(G.t, S.maxSum));
+  var choices = '<div class="tw-choices' + (G.stacked ? '' : ' wait') + '" role="group" aria-label="' + esc(L('towerHow')) + '">' + opts.map(function(n){
+    var cls = 'choice' + (G.tried[n] ? ' tried' : '') + (G.done && n === G.t ? ' right' : '');
+    var dis = G.tried[n] || (G.done && n !== G.t) || !G.stacked;
+    return '<button class="' + cls + '" data-act="tw-pick" data-v="' + n + '"' + (dis ? ' disabled' : '') + '>' + n + '</button>';
+  }).join('') + '</div>';
+  var flag = '<span class="tw-flag" aria-hidden="true"><svg viewBox="0 0 80 96" fill="none"><path d="M6 94V6" stroke="#5A3E33" stroke-width="6" stroke-linecap="round"/><path d="M8 8L70 24L8 42Z" fill="#E9917A" stroke="#C46F58" stroke-width="5" stroke-linejoin="round"/></svg></span>';
+  var towers = G.stacked
+    ? '<div class="twr stacked" id="twStack">' + towerBlocks(G.s, 'r', 0) + towerBlocks(G.a, 'b', G.s) +
+        '<i class="tw-guide" aria-hidden="true"></i>' + (G.done ? flag : '') + '</div>'
+    : '<div class="twr" id="twRed">' + towerBlocks(G.s, 'r', 0) + '<span class="tw-ghost" id="twGhost" style="--a:' + G.a + '"></span></div>' +
+      '<button class="twr blue" id="twBlue" aria-label="' + esc(L('towerPut')) + '">' + towerBlocks(G.a, 'b', G.s) + '</button>';
+  app.innerHTML = '<section class="screen tower">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('tower-repeat', L('hearAgain')) + '</div>' +
+    '<div class="stage">' +
+      '<div class="left"><div class="momo-row"><div id="momo">' + tigerImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(G.stacked ? L('towerHow') : L('towerPut')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+        '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox' + (G.done ? ' solved' : '') + '" id="towerT">' + (G.done ? G.t : '?') + '</span></div></div>' +
+      '<div class="yard" id="yard"><div class="yard-col"><div class="yard-main" id="yardMain">' +
+        '<div class="tw-core"><div class="ruler" aria-hidden="true">' + ruler + '</div>' + towers + '</div></div><div class="tw-shelf"></div></div>' + choices +
+      '</div>' +
+    '</div></section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  layoutYard();
+  bindTowerDrag();
+}
+/* three answers around the total, inside 2..max */
+function choiceOpts(t, max){
+  var lo = Math.max(2, Math.min(t - 1, max - 2)), o = [lo, lo + 1, lo + 2];
+  if (o.indexOf(t) < 0) o = [t - 1, t, t + 1];
+  return o;
+}
+/* block size: the full ruler (plus room for the flag) fits the height; both towers fit the width */
+function layoutYard(){
+  var y = document.getElementById('yard'), m = document.getElementById('yardMain'); if (!y || !m) return;
+  var H = m.clientHeight, W = m.clientWidth;
+  /* the ruler + red tower stay centred; the blue tower waits to their right, the answers (landscape) sit at the far right */
+  var ch = document.querySelector('.tw-choices'), side = ch && getComputedStyle(ch).position === 'absolute' ? ch.offsetWidth + 16 : 0;
+  var half = W / 2 - side;
+  var b = Math.floor(Math.min(H / (G.R + 1.6), 66)), tw;
+  for (; b > 14; b--) {
+    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
+    if ((1.5 * b + tw) / 2 + 0.9 * b + tw <= half) break;
+  }
+  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
+  if ((1.5 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.75 * b - 0.9 * b) / 1.5));
+  y.style.setProperty('--b', b + 'px');
+  y.style.setProperty('--tw', tw + 'px');
+}
+function bindTowerDrag(){
+  var el = document.getElementById('twBlue'); if (!el) return;
+  var st = null;
+  el.addEventListener('pointerdown', function(e){
+    if (G.lock || G.stacked) return;
+    st = { x:e.clientX, y:e.clientY, dx:0, dy:0, moved:false, id:e.pointerId };
+    try { el.setPointerCapture(e.pointerId); } catch(_) {}
+    el.classList.add('dragging'); el.style.transition = 'none';
+  });
+  el.addEventListener('pointermove', function(e){
+    if (!st || e.pointerId !== st.id) return;
+    st.dx = e.clientX - st.x; st.dy = e.clientY - st.y;
+    if (Math.abs(st.dx) + Math.abs(st.dy) > 8) st.moved = true;
+    el.style.transform = 'translate(' + st.dx + 'px,' + st.dy + 'px)';
+    var g = document.getElementById('twGhost'); if (g) g.classList.toggle('near', nearGhost(el));
+  });
+  function up(e){
+    if (!st || (e && e.pointerId !== st.id)) return;
+    var s0 = st; st = null; el.classList.remove('dragging');
+    if (!s0.moved || nearGhost(el)) stackTower(el, s0.dx, s0.dy);    /* a tap stacks it too */
+    else { el.style.transition = 'transform .3s cubic-bezier(.3,1.4,.6,1)'; el.style.transform = ''; var g = document.getElementById('twGhost'); if (g) g.classList.remove('near'); }
+  }
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('click', function(e){ if (e.detail === 0) stackTower(el, 0, 0); });   /* keyboard */
+}
+function nearGhost(el){
+  var g = document.getElementById('twGhost'); if (!g) return false;
+  var a = el.getBoundingClientRect(), r = g.getBoundingClientRect();
+  var cx = (a.left + a.right) / 2 - (r.left + r.right) / 2, cy = a.bottom - r.bottom;
+  return Math.abs(cx) < r.width * 0.9 && Math.abs(cy) < Math.max(r.height, 80);
+}
+function stackTower(el, dx, dy){
+  if (G.lock || G.stacked) return;
+  G.lock = true; clearSay();
+  var g = document.getElementById('twGhost'), a = el.getBoundingClientRect(), r = g ? g.getBoundingClientRect() : a;
+  var tx = dx + (r.left - a.left), ty = dy + (r.bottom - a.bottom);
+  el.style.transition = reduceMotion ? 'none' : 'transform .32s cubic-bezier(.3,1.2,.6,1)';
+  el.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+  setTimeout(function(){
+    if (screen !== 'tower' || !G) return;
+    G.stacked = true; G.lock = false; renderTower();
+    var t = document.getElementById('twStack'); if (t) t.classList.add('landed');
+    say(L('sTowerHow'));
+  }, reduceMotion ? 30 : 360);
+}
+function towerPick(n){
+  if (!G || G.lock || !G.stacked || G.done || G.tried[n]) return;
+  var right = n === G.t;
+  if (G.first) { record(right); G.first = false; }
+  clearSay();
+  if (right) {
+    G.done = true; G.lock = true;
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum';
+    S.stars++; G.earned++; save();
+    renderTower();
+    var t = document.getElementById('twStack'); if (t) t.classList.add('cheer');
+    say(L('sTowerRight', G.s, G.a, G.t));
+    setTimeout(showTowerReward, 1900);
+  } else {
+    G.tried[n] = true; G.lock = true;
+    renderTower();
+    /* count the blocks one by one, the ruler lighting up with them */
+    var k = 0, q = G.q;
+    say(L('sTowerWrong'));
+    function step(){
+      if (screen !== 'tower' || !G || G.q !== q) return;
+      document.querySelectorAll('.tower .blk.pulse, .tower .ruler span.mark').forEach(function(x){ x.classList.remove('pulse'); x.classList.remove('mark'); });
+      if (k >= G.t) { G.lock = false; say(L('sTowerTry')); return; }
+      k++;
+      var b = document.querySelector('.tower .blk[data-i="' + k + '"]'), rc = document.querySelector('.tower .ruler span[data-n="' + k + '"]');
+      if (b) { void b.offsetWidth; b.classList.add('pulse'); }
+      if (rc && !rc.classList.contains('hi')) rc.classList.add('mark');
+      say(P(String(k), 'count', k));
+      setTimeout(step, 620);
+    }
+    setTimeout(step, 1300);
+  }
+}
+function showTowerReward(){
+  if (screen !== 'tower') return;
+  var last = G.q + 1 >= ROUND;
+  function blocks(n, kind){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="mini-blk ' + kind + '"></span>'; return h; }
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1>' + tigerImg('pic animal') +
+    '<div class="sumcard"><div class="groups"><div class="g">' + blocks(G.s, 'r') + '</div>+<div class="g">' + blocks(G.a, 'b') + '</div></div>' +
+    '<div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.t)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.t + '</span></div></div>' +
+    '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+window.addEventListener('resize', function(){ if (screen === 'tower' && G) layoutYard(); });
+
 /* ---------- garden ---------- */
 var PER_STRIPE = 5;
 /* draws rainbow `idx` with `filled` stripes coloured (outer first); unfilled parts use `empty` */
@@ -2842,7 +3097,9 @@ function renderParents(){
         var cur = S.voiceType === 'male' ? (okM || !okF ? 'male' : 'female') : (okF || !okM ? 'female' : 'male');
         return '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('voiceType') + '</span><div class="seg">' +
           '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF && S.voice ? '' : ' disabled') + '>' + L('female') + '</button>' +
-          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM && S.voice ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
+          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM && S.voice ? '' : ' disabled') + '>' + L('male') + '</button></div></div>' +
+          '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('speed') + '</span><div class="seg">' +
+          ['slow', 'medium', 'fast'].map(function(r){ return '<button data-act="vrate" data-v="' + r + '" aria-pressed="' + ((S.voiceRate || 'medium') === r) + '"' + (S.voice ? '' : ' disabled') + '>' + L('rate_' + r) + '</button>'; }).join('') + '</div></div>';
       })() : '') +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
@@ -2885,6 +3142,9 @@ document.addEventListener('click', function(e){
     case 'ten': startTen(); break;
     case 'bus': startBus(); break;
     case 'frog': startFrog(); break;
+    case 'tower': startTower(); break;
+    case 'tower-repeat': towerAskAloud(); break;
+    case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
     case 'frog-repeat': frogAskAloud(); break;
     case 'frog-pick': frogPick(+b.getAttribute('data-v')); break;
     case 'avatar': avatarReturn = screen === 'start' ? 'start' : 'home'; show('avatar'); break;
@@ -2929,7 +3189,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
@@ -2947,6 +3207,7 @@ document.addEventListener('click', function(e){
     }
     case 'max': S.maxSum = +b.getAttribute('data-v'); save(); renderParents(); break;
     case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
+    case 'vrate': S.voiceRate = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
