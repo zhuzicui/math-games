@@ -857,7 +857,7 @@ en: {
   noSpeech: 'This browser can’t speak aloud. Try Safari or Chrome.',
   langName: { en: 'English', fr: 'French', es: 'Spanish', zh: 'Mandarin', yue: 'Cantonese', ja: 'Japanese', ko: 'Korean' },
   noVoice: function(name){ return 'This device has no ' + name + ' voice installed, so instructions won’t be read aloud.'; },
-  progressLab: 'Progress', reset: 'Reset progress', resetConfirm: 'Tap again to erase all progress', savedHere: 'Saved in this browser on this device only.',
+  progressLab: 'Progress', reset: 'Reset progress', resetConfirm: function(a,b){ return 'Tap again to confirm erasing all progress (' + a + ' + ' + b + ')'; }, savedHere: 'Saved in this browser on this device only.',
   sAskName: [P('Hi!', 'cheer'), P('What’s your name?', 'ask'), P('A grown-up can help you type it.', 'calm')],
   sIsThatYou: function(n){ return [P('Hi, ' + n + '!', 'cheer'), P('Is that you?', 'ask')]; },
   sNeedName: [P('Type your name, then tap “Let’s go!”', 'calm')],
@@ -934,7 +934,7 @@ fr: {
   noSpeech: 'Ce navigateur ne peut pas parler. Essayez Safari ou Chrome.',
   langName: { en: 'anglaise', fr: 'française', es: 'espagnole', zh: 'mandarin', yue: 'cantonaise', ja: 'japonaise', ko: 'coréenne' },
   noVoice: function(name){ return 'Cet appareil n’a pas de voix ' + name + ' installée : les consignes ne seront pas lues à voix haute.'; },
-  progressLab: 'Progrès', reset: 'Réinitialiser les progrès', resetConfirm: 'Touchez encore pour tout effacer', savedHere: 'Enregistré dans ce navigateur, sur cet appareil seulement.',
+  progressLab: 'Progrès', reset: 'Réinitialiser les progrès', resetConfirm: function(a,b){ return 'Touchez encore pour confirmer l’effacement de toute la progression (' + a + ' + ' + b + ')'; }, savedHere: 'Enregistré dans ce navigateur, sur cet appareil seulement.',
   sAskName: [P('Coucou !', 'cheer'), P('Comment t’appelles-\u2060tu\u00a0?', 'ask'), P('Un adulte peut t’aider à l’écrire.', 'calm')],
   sIsThatYou: function(n){ return [P('Coucou ' + n + ' !', 'cheer'), P('C’est toi ?', 'ask')]; },
   sNeedName: [P('Écris ton prénom, puis touche « C’est parti ! »', 'calm')],
@@ -1011,7 +1011,7 @@ es: {
   noSpeech: 'Este navegador no puede leer en voz alta. Prueba Safari o Chrome.',
   langName: { en: 'inglés', fr: 'francés', es: 'español', zh: 'mandarín', yue: 'cantonés', ja: 'japonés', ko: 'coreano' },
   noVoice: function(name){ return 'Este dispositivo no tiene voz en ' + name + ', así que las instrucciones no se leerán en voz alta.'; },
-  progressLab: 'Progreso', reset: 'Borrar el progreso', resetConfirm: 'Toca otra vez para borrar todo el progreso', savedHere: 'Guardado solo en este navegador, en este dispositivo.',
+  progressLab: 'Progreso', reset: 'Borrar el progreso', resetConfirm: function(a,b){ return 'Toca otra vez para confirmar que quieres borrar todo el progreso (' + a + ' + ' + b + ')'; }, savedHere: 'Guardado solo en este navegador, en este dispositivo.',
   sAskName: [P('¡Hola!', 'cheer'), P('¿Cómo te llamas?', 'ask'), P('Un adulto te puede ayudar a escribirlo.', 'calm')],
   sIsThatYou: function(n){ return [P('¡Hola, ' + n + '!', 'cheer'), P('¿Eres tú?', 'ask')]; },
   sNeedName: [P('Escribe tu nombre y toca «¡Vamos!»', 'calm')],
@@ -1088,7 +1088,7 @@ zh: {
   noSpeech: '这个浏览器不能朗读，请试试 Safari 或 Chrome。',
   langName: { en: '英语', fr: '法语', es: '西班牙语', zh: '普通话', yue: '粤语', ja: '日语', ko: '韩语' },
   noVoice: function(name){ return '这台设备没有安装' + name + '语音，提示不会朗读出来。'; },
-  progressLab: '进度', reset: '重置进度', resetConfirm: '再点一次即可清除所有进度', savedHere: '进度只保存在这台设备的浏览器里。',
+  progressLab: '进度', reset: '重置进度', resetConfirm: function(a,b){ return '再点一次，确认清除所有进度（' + a + ' + ' + b + '）'; }, savedHere: '进度只保存在这台设备的浏览器里。',
   sAskName: [P('你好！', 'cheer'), P('你叫什么名字？', 'ask'), P('可以请大人帮你输入。', 'calm')],
   sIsThatYou: function(n){ return [P('你好，' + n + '！', 'cheer'), P('是你吗？', 'ask')]; },
   sNeedName: [P('输入你的名字，然后点“出发”！', 'calm')],
@@ -1165,7 +1165,7 @@ ja: {
   noSpeech: 'このブラウザは読み上げができません。Safari か Chrome をお試しください。',
   langName: { en: '英語', fr: 'フランス語', es: 'スペイン語', zh: '中国語（普通話）', yue: '広東語', ja: '日本語', ko: '韓国語' },
   noVoice: function(name){ return 'この端末には' + name + 'の音声が入っていないため、読み上げされません。'; },
-  progressLab: '進み具合', reset: '進み具合をリセット', resetConfirm: 'もう一度タップすると、すべての記録が消えます', savedHere: '記録はこの端末のブラウザにだけ保存されます。',
+  progressLab: '進み具合', reset: '進み具合をリセット', resetConfirm: function(a,b){ return 'もう一度タップして、すべての記録の削除を確定します（' + a + ' + ' + b + '）'; }, savedHere: '記録はこの端末のブラウザにだけ保存されます。',
   sAskName: [P('こんにちは！', 'cheer'), P('おなまえは？', 'ask'), P('おとなの ひとに いれて もらってね。', 'calm')],
   sIsThatYou: function(n){ return [P('こんにちは、' + n + '！', 'cheer'), P('あなたかな？', 'ask')]; },
   sNeedName: [P('なまえを いれて、「はじめよう」を おしてね！', 'calm')],
@@ -1242,7 +1242,7 @@ yue: {
   noSpeech: '呢個瀏覽器唔可以讀出聲，請試吓 Safari 或者 Chrome。',
   langName: { en: '英文', fr: '法文', es: '西班牙文', zh: '普通話', yue: '廣東話', ja: '日文', ko: '韓文' },
   noVoice: function(name){ return '呢部機冇安裝' + name + '語音，提示唔會讀出嚟。'; },
-  progressLab: '進度', reset: '重設進度', resetConfirm: '再撳一次就會清除所有進度', savedHere: '進度只會儲存喺呢部機嘅瀏覽器。',
+  progressLab: '進度', reset: '重設進度', resetConfirm: function(a,b){ return '再撳一次，確認清除所有進度（' + a + ' + ' + b + '）'; }, savedHere: '進度只會儲存喺呢部機嘅瀏覽器。',
   sAskName: [P('你好！', 'cheer'), P('你叫咩名呀？', 'ask'), P('可以請大人幫你打。', 'calm')],
   sIsThatYou: function(n){ return [P('你好，' + n + '！', 'cheer'), P('係咪你呀？', 'ask')]; },
   sNeedName: [P('打你個名，然後撳「出發」！', 'calm')],
@@ -1319,7 +1319,7 @@ ko: {
   noSpeech: '이 브라우저는 소리 내어 읽을 수 없어요. Safari나 Chrome을 사용해 보세요.',
   langName: { en: '영어', fr: '프랑스어', es: '스페인어', zh: '중국어(보통화)', yue: '광둥어', ja: '일본어', ko: '한국어' },
   noVoice: function(name){ return '이 기기에 ' + name + ' 음성이 없어서 안내를 읽어 줄 수 없어요.'; },
-  progressLab: '학습 현황', reset: '기록 초기화', resetConfirm: '한 번 더 누르면 모든 기록이 지워져요', savedHere: '기록은 이 기기의 브라우저에만 저장돼요.',
+  progressLab: '학습 현황', reset: '기록 초기화', resetConfirm: function(a,b){ return '한 번 더 눌러 모든 기록 삭제를 확인하세요 (' + a + ' + ' + b + ')'; }, savedHere: '기록은 이 기기의 브라우저에만 저장돼요.',
   sAskName: [P('안녕!', 'cheer'), P('이름이 뭐예요?', 'ask'), P('어른이 써 줄 수 있어요.', 'calm')],
   sIsThatYou: function(n){ return [P('안녕, ' + n + '!', 'cheer'), P('너 맞니?', 'ask')]; },
   sNeedName: [P('이름을 쓰고 “시작”을 눌러요!', 'calm')],
@@ -2754,7 +2754,7 @@ function renderParents(){
           '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF ? '' : ' disabled') + '>' + L('female') + '</button>' +
           '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
       })() : '') +
-      '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm') : L('reset')) + '</button>' +
+      '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + (S.kids.length > 1 && S.name ? ' · ' + esc(S.name) : '') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
     '</div></div>';
   }
