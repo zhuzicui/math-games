@@ -818,7 +818,8 @@ img.stk{object-fit:contain}
 .ruler span.ok{background:#4F7A3B;color:#fff}
 .ruler span.mark{background:#FBE7B0;color:var(--ink)}
 .twr{flex:none;position:relative;display:flex;flex-direction:column-reverse;width:var(--tw, calc(var(--b) * 2.3));padding:0;margin:0;border:0;background:none;font:inherit}
-.twr + .twr{margin-left:calc(var(--b) * .9)}
+.tw-core{position:relative;display:flex;align-items:flex-end;gap:calc(var(--b) * .5)}
+.twr.blue{position:absolute;left:calc(100% + var(--b) * .9);bottom:0}
 .twr.blue{cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;animation:nudge 2.4s ease-in-out 1.2s infinite}
 .twr.blue.dragging{cursor:grabbing;z-index:20;animation:none;filter:drop-shadow(0 10px 8px rgba(90,62,51,.25))}
 @keyframes nudge{0%,70%,100%{transform:translateY(0)}78%{transform:translateY(-10px)}86%{transform:translateY(0)}92%{transform:translateY(-4px)}}
@@ -839,8 +840,8 @@ img.stk{object-fit:contain}
 .tw-choices{display:flex;justify-content:center;gap:clamp(10px,3vw,24px)}
 .tw-choices.wait{visibility:hidden}
 @media (orientation:landscape) and (min-width:600px){
-  .yard{flex-direction:row;align-items:stretch}
-  .tw-choices{flex-direction:column;justify-content:center;padding-bottom:4dvh}
+  .yard{position:relative}
+  .tw-choices{position:absolute;right:0;top:0;bottom:0;flex-direction:column;justify-content:center;padding-bottom:4dvh}
 }
 .mini-blk{display:inline-block;width:clamp(26px,4.4dvh,36px);height:clamp(18px,3dvh,24px);box-sizing:border-box;border:3px solid;border-radius:6px}
 .mini-blk.r{background:#E9917A;border-color:#C46F58}.mini-blk.b{background:#A7D0E8;border-color:#3B78A0}
@@ -2816,7 +2817,7 @@ function renderTower(){
       '<div class="left"><div class="momo-row"><div id="momo">' + tigerImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(G.stacked ? L('towerHow') : L('towerPut')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox' + (G.done ? ' solved' : '') + '" id="towerT">' + (G.done ? G.t : '?') + '</span></div></div>' +
       '<div class="yard" id="yard"><div class="yard-col"><div class="yard-main" id="yardMain">' +
-        '<div class="ruler" aria-hidden="true">' + ruler + '</div>' + towers + '</div><div class="tw-shelf"></div></div>' + choices +
+        '<div class="tw-core"><div class="ruler" aria-hidden="true">' + ruler + '</div>' + towers + '</div></div><div class="tw-shelf"></div></div>' + choices +
       '</div>' +
     '</div></section>';
   setBubble2(G.bubble2, G.bubble2Kind);
@@ -2833,10 +2834,18 @@ function choiceOpts(t, max){
 function layoutYard(){
   var y = document.getElementById('yard'), m = document.getElementById('yardMain'); if (!y || !m) return;
   var H = m.clientHeight, W = m.clientWidth;
-  var b = Math.floor(Math.min(H / (G.R + 1.6), W / 7.2, 66));
-  b = Math.max(14, b);
+  /* the ruler + red tower stay centred; the blue tower waits to their right, the answers (landscape) sit at the far right */
+  var ch = document.querySelector('.tw-choices'), side = ch && getComputedStyle(ch).position === 'absolute' ? ch.offsetWidth + 16 : 0;
+  var half = W / 2 - side;
+  var b = Math.floor(Math.min(H / (G.R + 1.6), 66)), tw;
+  for (; b > 14; b--) {
+    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
+    if ((1.5 * b + tw) / 2 + 0.9 * b + tw <= half) break;
+  }
+  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
+  if ((1.5 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.75 * b - 0.9 * b) / 1.5));
   y.style.setProperty('--b', b + 'px');
-  y.style.setProperty('--tw', Math.round(Math.min(W * 0.3, Math.max(b * 2.3, 110))) + 'px');   /* thin blocks at 20 still look like a tower */
+  y.style.setProperty('--tw', tw + 'px');
 }
 function bindTowerDrag(){
   var el = document.getElementById('twBlue'); if (!el) return;
