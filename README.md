@@ -1,6 +1,6 @@
 # Momo Math
 
-A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn, fill an egg carton to make 10, and count snails on a bus. Mistakes aren't failures: Momo just counts with you, out loud.
+A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn, fill an egg carton to make 10, count snails on a bus, hop a frog along a number line and stack block towers with a tiger. Mistakes aren't failures: the animals just count with you, out loud.
 
 **Try it:** https://math-games-neon.vercel.app (free, no account; add it to your home screen for a full-screen app)
 
@@ -8,16 +8,19 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 
 ## What's inside
 
-- **Three games**, each teaching a different addition idea
+- **Five games**, each teaching a different addition idea
   - **Feed the Unicorn**: drag blue cookies onto a plate that already has red ones (adding two groups)
   - **Ten Frame**: fill the egg carton, then say how many eggs you added (making 10)
   - **Bus Stop**: some snails were on the bus, more got on; how many now? (counting on)
+  - **Frog Hops**: guess where the frog lands, then watch it hop along the number line (the number line)
+  - **Tower**: stack the blue tower on the red one and read its height on the ruler (addition as length)
+  - **Write It** (still under development): a hedgehog asks for a number and the child writes it with a finger; an on-device reader learns her handwriting
 - **Colour coding everywhere**: red = what was already there, blue = what you add, matching the numbers in the sum
 - **Kind feedback**: a wrong answer triggers counting together, never a buzzer
 - **Rewards**: stars colour in rainbows; finished rainbows become stickers in a sticker book
 - **Buddies**: kids pick one of 25 animal avatars
-- **Voice in 6 languages**: English, Français, 普通话, 廣東話, 日本語, 한국어 (device voices, female or male)
-- **For grown-ups** (behind a simple maths gate): a progress grid of every fact, a "try at home" tip, sums up to 5, 10, 15 or 20
+- **Voice in 7 languages**: English, Français, Español, 普通话, 廣東話, 日本語, 한국어 (device voices, female or male, slower / medium / faster)
+- **For grown-ups** (behind a simple maths gate): a profile for each child, a progress grid of every fact, a "try at home" tip, sums up to 5, 10, 15 or 20
 
 ## iPad
 
@@ -25,23 +28,27 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
 |---|---|---|
 | <img src="docs/screenshots/ipad-03-home.png" width="270" alt="Home"> | <img src="docs/screenshots/ipad-04-feed.png" width="270" alt="Feed the Unicorn"> | <img src="docs/screenshots/ipad-05-bravo.png" width="270" alt="You did it!"> |
 
-| Ten Frame | Bus Stop | Your rainbow |
+| Ten Frame | Bus Stop | Frog Hops |
 |---|---|---|
-| <img src="docs/screenshots/ipad-06-tenframe.png" width="270" alt="Ten Frame"> | <img src="docs/screenshots/ipad-07-bus.png" width="270" alt="Bus Stop"> | <img src="docs/screenshots/ipad-08-rainbow.png" width="270" alt="Your rainbow"> |
+| <img src="docs/screenshots/ipad-06-tenframe.png" width="270" alt="Ten Frame"> | <img src="docs/screenshots/ipad-07-bus.png" width="270" alt="Bus Stop"> | <img src="docs/screenshots/ipad-11-frog.png" width="270" alt="Frog Hops"> |
 
-| Sticker book | Pick your buddy | For grown-ups |
+| Tower | Your rainbow | Sticker book |
 |---|---|---|
-| <img src="docs/screenshots/ipad-09-stickers.png" width="270" alt="Sticker book"> | <img src="docs/screenshots/ipad-02-buddy.png" width="270" alt="Pick your buddy"> | <img src="docs/screenshots/ipad-10-grownups.png" width="270" alt="For grown-ups"> |
+| <img src="docs/screenshots/ipad-12-tower.png" width="270" alt="Tower"> | <img src="docs/screenshots/ipad-08-rainbow.png" width="270" alt="Your rainbow"> | <img src="docs/screenshots/ipad-09-stickers.png" width="270" alt="Sticker book"> |
+
+| What's your name? | Pick your buddy | For grown-ups |
+|---|---|---|
+| <img src="docs/screenshots/ipad-01-name.png" width="270" alt="What's your name?"> | <img src="docs/screenshots/ipad-02-buddy.png" width="270" alt="Pick your buddy"> | <img src="docs/screenshots/ipad-10-grownups.png" width="270" alt="For grown-ups"> |
 
 ## iPhone
 
-| Name | Pick a buddy | Home | Feed the Unicorn | You did it! |
-|---|---|---|---|---|
-| <img src="docs/screenshots/phone-01-name.png" width="150" alt="Name"> | <img src="docs/screenshots/phone-02-buddy.png" width="150" alt="Pick a buddy"> | <img src="docs/screenshots/phone-03-home.png" width="150" alt="Home"> | <img src="docs/screenshots/phone-04-feed.png" width="150" alt="Feed the Unicorn"> | <img src="docs/screenshots/phone-05-bravo.png" width="150" alt="You did it!"> |
+| Home | Feed the Unicorn | You did it! | Ten Frame | Bus Stop | Frog Hops |
+|---|---|---|---|---|---|
+| <img src="docs/screenshots/phone-03-home.png" width="125" alt="Home"> | <img src="docs/screenshots/phone-04-feed.png" width="125" alt="Feed the Unicorn"> | <img src="docs/screenshots/phone-05-bravo.png" width="125" alt="You did it!"> | <img src="docs/screenshots/phone-06-tenframe.png" width="125" alt="Ten Frame"> | <img src="docs/screenshots/phone-07-bus.png" width="125" alt="Bus Stop"> | <img src="docs/screenshots/phone-11-frog.png" width="125" alt="Frog Hops"> |
 
-| Ten Frame | Bus Stop | Your rainbow | Sticker book | For grown-ups |
-|---|---|---|---|---|
-| <img src="docs/screenshots/phone-06-tenframe.png" width="150" alt="Ten Frame"> | <img src="docs/screenshots/phone-07-bus.png" width="150" alt="Bus Stop"> | <img src="docs/screenshots/phone-08-rainbow.png" width="150" alt="Your rainbow"> | <img src="docs/screenshots/phone-09-stickers.png" width="150" alt="Sticker book"> | <img src="docs/screenshots/phone-10-grownups.png" width="150" alt="For grown-ups"> |
+| Tower | Your rainbow | Sticker book | What's your name? | Pick your buddy | For grown-ups |
+|---|---|---|---|---|---|
+| <img src="docs/screenshots/phone-12-tower.png" width="125" alt="Tower"> | <img src="docs/screenshots/phone-08-rainbow.png" width="125" alt="Your rainbow"> | <img src="docs/screenshots/phone-09-stickers.png" width="125" alt="Sticker book"> | <img src="docs/screenshots/phone-01-name.png" width="125" alt="What's your name?"> | <img src="docs/screenshots/phone-02-buddy.png" width="125" alt="Pick your buddy"> | <img src="docs/screenshots/phone-10-grownups.png" width="125" alt="For grown-ups"> |
 
 ## How it's built
 
@@ -51,7 +58,9 @@ A single `index.html` (plain HTML, CSS and JavaScript, no framework, no build st
 |---|---|
 | `index.html` | The whole app |
 | `animals/`, `avatars/`, `stars/`, `cookies/`, `eggs/` | Characters, buddy faces, stars, cookies and eggs |
-| `rainbows.js` | Rainbow stickers |
+| `rainbows.js`, `rainbows-more.js`, `stickers/` | Rainbow stickers and the special animal stickers |
+| `write-test.html`, `digits-model.js` | Write It (in development): the writing pad and the small on-device digit reader |
+| `tools/digits/` | How the digit reader was made (synthetic finger-drawn digits + training) |
 | `fonts/` | Fonts for Chinese, Cantonese, Japanese and Korean (only downloaded when used) |
 | `icons/`, `favicon.ico`, `manifest.webmanifest` | Home-screen and browser icons, app name |
 | `og-image.png` | Preview picture when the link is shared (1200×630) |
