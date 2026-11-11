@@ -1425,8 +1425,32 @@ var hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in win
    silent word to unlock speech for the rest of the visit. */
 if (hasSpeech) (function(){
   var done = false;
+  /* On iPhone the silent switch mutes web speech through the speaker (headphones still work).
+     A playing <audio> element moves the page into "media playback", which the switch doesn't mute,
+     so on iOS we loop a tiny silent clip while the page is visible. */
+  var IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch(e) {}
+  var hush = null;
+  function silentWav(){
+    var n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+    function str(o, t){ for (var i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); }
+    str(0, 'RIFF'); v.setUint32(4, 36 + n, true); str(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); str(36, 'data'); v.setUint32(40, n, true);
+    for (var i = 44; i < b.length; i++) b[i] = 128;   /* 8-bit silence */
+    var bin = ''; for (var j = 0; j < b.length; j++) bin += String.fromCharCode(b[j]);
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  function startHush(){
+    if (!IOS) return;
+    try {
+      if (!hush) { hush = document.createElement('audio'); hush.src = silentWav(); hush.loop = true; hush.setAttribute('playsinline', ''); hush.setAttribute('x-webkit-airplay', 'deny'); }
+      var pr = hush.play(); if (pr && pr.catch) pr.catch(function(){});
+    } catch(e) {}
+  }
+  document.addEventListener('visibilitychange', function(){ if (!hush) return; if (document.hidden) hush.pause(); else startHush(); });
   function unlockSpeech(){
     if (done) return; done = true;
+    startHush();
     try { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch(e) {}
     ['touchend', 'pointerup', 'click', 'keydown'].forEach(function(t){ document.removeEventListener(t, unlockSpeech, true); });
   }
