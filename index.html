@@ -2745,6 +2745,7 @@ function kidDialog(id){
   });
 }
 function renderParents(){
+  var oldSc = document.querySelector('.screen.parents'), keepY = oldSc ? oldSc.scrollTop : 0;   /* re-rendering after a tap keeps the scroll position */
   var max = S.maxSum, list = allFacts(max), got = 0;
   list.forEach(function(p){ if (factState(p[0], p[1]) === 'got') got++; });
   var cols = max - 1;
@@ -2806,6 +2807,7 @@ function renderParents(){
     '<div class="pbody">' + body + '</div></section>';
   var inp = document.getElementById('nameInput');
   if (inp) inp.addEventListener('input', function(){ S.name = inp.value.trim(); save(); });
+  if (keepY) { var sc = document.querySelector('.screen.parents'); if (sc) sc.scrollTop = keepY; }
 }
 
 /* ---------- actions ---------- */
