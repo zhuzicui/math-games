@@ -1102,9 +1102,8 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .bead-ghost .bd{width:80%;height:80%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(71,28,14,.25))}
 @media (prefers-reduced-motion:reduce){ .necklace .octo,.necklace.dance,.bslot.empty.next,.bslot.hop{animation:none} }
 /* Kindergarten home tile: croc, penguin and octopus share the space */
-.group-kinder .grp-pics .croc-pic{max-width:44%}
-.group-kinder .grp-pics img.grp-train{max-width:24%;height:86%}
-.group-kinder .grp-pics img.grp-octo{max-width:22%;height:66%}
+.grp-pics img.grp-solo{height:100%;max-width:90%}
+.group-add .grp-pics img.grp-solo{height:116%}
 .bead-tray{transition:opacity .4s}
 .bead-tray.gone{opacity:0;pointer-events:none}
 </style>
@@ -2289,8 +2288,8 @@ function renderHome(){
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
-      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="animals/penguin.png" alt=""><img class="grp-octo" src="animals/octopus.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
-      '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
+      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics"><img class="grp-solo" src="animals/penguin.png" alt=""></span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-solo" src="animals/unicorn.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
   /* long group names on a narrow phone: shrink the title until it fits beside the stars */
