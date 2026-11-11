@@ -891,7 +891,7 @@ img.stk{object-fit:contain}
 .grp-pics{display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,1vw,12px);height:clamp(70px,22dvh,190px);max-width:94%}
 .grp-pics img{height:80%;width:auto;max-width:32%;object-fit:contain}
 .grp-pics img:nth-child(2){height:100%}
-.grp-pics .croc-pic{height:auto;width:min(100%,clamp(180px,34vw,420px));max-width:100%;max-height:100%}
+.grp-pics .croc-pic{height:auto;width:min(100%,clamp(180px,34vw,420px));max-width:62%;max-height:100%;align-self:center}
 .grp-name{display:block;font-size:clamp(26px,min(6vw,5.4dvh),46px);margin-top:clamp(8px,2dvh,18px)}
 .grp-eg{display:block;font-size:clamp(16px,2.6dvh,22px);color:var(--ink2);opacity:.8;margin-top:4px}
 @media (orientation:landscape) and (max-height:500px){ .grp-pics{height:clamp(50px,26dvh,120px)} .grp-name{margin-top:4px} }
@@ -2216,11 +2216,11 @@ function renderHome(){
     '</div></div>';
   else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile croct" data-act="croc">' + crocImg(false, 'pic animal croc-pic') + '<span class="tl">' + L('gCroc') + '</span></button>' +
-      '<button class="tile traint" data-act="train">' + trainImg('pic animal train-pic') + '<span class="tl">' + L('gTrain') + '</span></button>' +
+      '<button class="tile traint" data-act="train">' + critter('penguin') + '<span class="tl">' + L('gTrain') + '</span></button>' +
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
-      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="train/loco.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="animals/penguin.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
       '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
