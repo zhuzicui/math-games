@@ -791,6 +791,7 @@ img.stk{object-fit:contain}
 .seg button:disabled{opacity:.35}
 .settings .seg4{gap:4px}
 @container (max-width:440px){ .settings .seg4{border-radius:26px} .settings .seg4 button{border-radius:20px} }
+.settings .field.off .lab{opacity:.45}
 </style>
 </head>
 <body>
@@ -1416,6 +1417,18 @@ function applyLang(){ document.documentElement.lang = HTML_LANG[S.lang] || 'en';
 
 /* ---------- speech: best voice per language + expressive delivery ---------- */
 var hasSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+/* iPhone/iPad only let a page talk after it has spoken once inside a tap. Lines that start after a
+   short delay (a new question, the reward) were silently dropped, so on the first touch we say a
+   silent word to unlock speech for the rest of the visit. */
+if (hasSpeech) (function(){
+  var done = false;
+  function unlockSpeech(){
+    if (done) return; done = true;
+    try { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch(e) {}
+    ['touchend', 'pointerup', 'click', 'keydown'].forEach(function(t){ document.removeEventListener(t, unlockSpeech, true); });
+  }
+  ['touchend', 'pointerup', 'click', 'keydown'].forEach(function(t){ document.addEventListener(t, unlockSpeech, true); });
+})();
 var VOICES = {};
 var NOVELTY = /(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy)/i;
 /* the Web Speech API doesn't say whether a voice is female or male, so we go by the voice's name */
@@ -1524,6 +1537,7 @@ function say(parts, onEach, gap){
       u.rate = Math.max(0.55, Math.min(1.3, rate));
       u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
       if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
+      try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch(e) {}
       speechSynthesis.speak(u);
     });
     setTalking(true);
@@ -2791,9 +2805,9 @@ function renderParents(){
         /* only the kinds of voice this device actually has for this language can be picked */
         var okF = hasVoiceType(S.lang, 'female'), okM = hasVoiceType(S.lang, 'male');
         var cur = S.voiceType === 'male' ? (okM || !okF ? 'male' : 'female') : (okF || !okM ? 'female' : 'male');
-        return '<div class="field"><span class="lab">' + L('voiceType') + '</span><div class="seg">' +
-          '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF ? '' : ' disabled') + '>' + L('female') + '</button>' +
-          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
+        return '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('voiceType') + '</span><div class="seg">' +
+          '<button data-act="vtype" data-v="female" aria-pressed="' + (cur === 'female') + '"' + (okF && S.voice ? '' : ' disabled') + '>' + L('female') + '</button>' +
+          '<button data-act="vtype" data-v="male" aria-pressed="' + (cur === 'male') + '"' + (okM && S.voice ? '' : ' disabled') + '>' + L('male') + '</button></div></div>';
       })() : '') +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
@@ -2801,7 +2815,7 @@ function renderParents(){
   }
   app.innerHTML = '<section class="screen parents">' +
     '<div class="bar"><div><h1>' + L('grownUps') + '</h1></div>' +
-    '<button class="big-btn plain back-kid" data-act="home">' + L('back') + '</button></div>' +
+    '<button class="big-btn plain back-kid" data-act="home">' + L('backKid') + '</button></div>' +
     kidRow +
     '<div class="utabs" role="tablist"><button role="tab" data-act="ptab" data-v="progress" aria-selected="' + (ptab === 'progress') + '">' + L('tabProgress') + '</button><button role="tab" data-act="ptab" data-v="settings" aria-selected="' + (ptab === 'settings') + '">' + L('tabSettings') + '</button></div>' +
     '<div class="pbody">' + body + '</div></section>';
