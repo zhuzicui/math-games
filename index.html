@@ -1070,7 +1070,7 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .necklace .octo{position:absolute;z-index:3;height:auto;animation:octobob 3s ease-in-out infinite;transform-origin:50% 90%}
 .necklace.worn .octo{animation:none}
 .necklace .string{transition:opacity .4s}
-.necklace.worn .string{opacity:0}
+.necklace .string{z-index:4}
 .necklace.dance{animation:octodance .55s ease-in-out 3;transform-origin:50% 60%}
 @keyframes octobob{50%{transform:translateY(-6px) rotate(-2deg)}}
 @keyframes octodance{25%{transform:rotate(-5deg) translateY(-10px)}75%{transform:rotate(5deg) translateY(-10px)}}
@@ -1099,10 +1099,6 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .group-kinder .grp-pics .croc-pic{max-width:44%}
 .group-kinder .grp-pics img.grp-train{max-width:24%;height:86%}
 .group-kinder .grp-pics img.grp-octo{max-width:22%;height:66%}
-.necklace .loop{position:absolute;overflow:visible;opacity:0;transition:opacity .8s 1.2s;pointer-events:none}
-.necklace .loop path{fill:none;stroke:#7A4A35;stroke-width:3}
-.necklace .loop-back{z-index:1}.necklace .loop-front{z-index:5}
-.necklace.worn .loop{opacity:1}
 .bead-tray{transition:opacity .4s}
 .bead-tray.gone{opacity:0;pointer-events:none}
 </style>
@@ -2737,36 +2733,29 @@ function layoutBeads(){
     sl.style.left = Math.round(x - u / 2) + 'px'; sl.style.top = Math.round(y - u / 2) + 'px';
   });
 }
-/* make room for the star: the tray fades and the octopus glides down below the star (star goes higher if the screen is short) */
+/* the star appears below the octopus (the tray fades to make room) */
 function beadMakeRoom(){
-  var stg = document.querySelector('.bead-stage'), oc = document.querySelector('.necklace .octo'), tray = document.querySelector('.bead-tray');
-  if (!stg || !oc) return;
+  var oc = document.querySelector('.necklace .octo'), tray = document.querySelector('.bead-tray');
   if (tray) tray.classList.add('gone');
+  if (!oc) return;
   var H = innerHeight, star = Math.min(Math.max(80, H * 0.24), 200), half = (star + Math.max(28, Math.min(48, H * 0.06))) / 2;
-  var r = oc.getBoundingClientRect(), loopBottom = r.top + r.height * 0.86, starTop = H * 0.46;
-  var want = starTop + half + 10 - r.top, room = H - 10 - loopBottom, shift = Math.max(0, Math.min(want, room));
-  if (shift < want) G.starTop = Math.max(star / 2 + 10, starTop - (want - shift));
-  stg.style.transition = 'transform .7s ease-in-out'; stg.style.transform = 'translateY(' + Math.round(shift) + 'px)';
+  G.starTop = Math.min(H - half - 6, oc.getBoundingClientRect().bottom + 12 + half);
 }
-/* the finished necklace slides into a loop around the octopus: back half behind it, front half in front */
+/* the finished necklace shrinks to the octopus's width and hangs on its front, just under the face */
 function wrapBeads(animate){
   var nk = document.querySelector('.necklace'); if (!nk || !G || !G.lay) return;
   var L0 = G.lay, ocTop = L0.lift + Math.round(L0.u * 0.75) - L0.oh;
-  var cx = L0.w / 2, cy = ocTop + L0.oh * 0.70, rx = L0.ow * 0.47, ry = L0.ow * 0.12, bs = Math.round(L0.u * 0.44);
-  /* the loop of string: back half behind the octopus, front half in front */
-  ['back', 'front'].forEach(function(side){
-    var el = nk.querySelector('.loop-' + side);
-    if (!el) { el = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); el.setAttribute('class', 'loop loop-' + side); el.setAttribute('viewBox', '0 0 100 100'); el.setAttribute('preserveAspectRatio', 'none');
-      el.innerHTML = '<path d="' + (side === 'back' ? 'M0,50 A50,50 0 0 1 100,50' : 'M0,50 A50,50 0 0 0 100,50') + '" vector-effect="non-scaling-stroke"/>'; nk.appendChild(el); }
-    el.style.left = Math.round(cx - rx) + 'px'; el.style.top = Math.round(cy - ry) + 'px'; el.style.width = Math.round(rx * 2) + 'px'; el.style.height = Math.round(ry * 2) + 'px';
-  });
-  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length;
+  var bw = L0.ow * 1.05, bx = L0.w / 2 - bw / 2, by = ocTop + L0.oh * 0.5, bh = L0.oh * 0.3;
+  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length, bs = Math.round(Math.min(L0.u * 0.6, bw * 1.25 / n));
+  var ease = 'cubic-bezier(.45,0,.3,1)', dur = animate ? '1.6s ' : '0s ';
+  var svg = nk.querySelector('.string');
+  svg.style.transition = animate ? 'left ' + dur + ease + ',top ' + dur + ease + ',width ' + dur + ease + ',height ' + dur + ease : '';
+  svg.style.left = Math.round(bx) + 'px'; svg.style.top = Math.round(by) + 'px'; svg.style.width = Math.round(bw) + 'px'; svg.style.height = Math.round(bh) + 'px';
   sl.forEach(function(el, i){
-    var a = Math.PI / 2 + (i - (n - 1) / 2) * (2 * Math.PI / n), x = cx + rx * Math.cos(a), y = cy + ry * Math.sin(a);
-    if (animate) { el.style.transition = 'left 1.6s cubic-bezier(.45,0,.3,1),top 1.6s cubic-bezier(.45,0,.3,1),width 1.6s,height 1.6s'; el.style.transitionDelay = (Math.abs(i - (n - 1) / 2) * 90) + 'ms'; }
+    var x = bx + bs * 0.35 + (bw - bs * 0.7) * (n > 1 ? i / (n - 1) : 0.5), t = (x - (bx + bw / 2)) / (bw / 2), y = by + 2 + (bh - 2) * Math.sqrt(Math.max(0, 1 - t * t));
+    if (animate) el.style.transition = 'left ' + dur + ease + ',top ' + dur + ease + ',width ' + dur + ease + ',height ' + dur + ease;
     el.style.left = Math.round(x - bs / 2) + 'px'; el.style.top = Math.round(y - bs / 2) + 'px';
-    el.style.width = bs + 'px'; el.style.height = bs + 'px';
-    el.style.zIndex = Math.sin(a) > 0 ? 6 : 1;
+    el.style.width = bs + 'px'; el.style.height = bs + 'px'; el.style.zIndex = 5;
   });
   nk.classList.add('worn');
 }
@@ -2845,9 +2834,8 @@ function beadWin(){
   G.worn = true;
   document.querySelectorAll('.bslot').forEach(function(s){ s.classList.remove('snap', 'next'); });
   setTimeout(function(){ if (screen === 'beads') wrapBeads(!reduceMotion); }, 450);
-  setTimeout(function(){ if (screen === 'beads') beadMakeRoom(); }, 2500);
-  setTimeout(function(){ var nk = document.querySelector('.necklace'); if (nk && screen === 'beads') nk.classList.add('dance'); }, 3200);
-  setTimeout(function(){ starToDot('beads'); }, 4300);
+  setTimeout(function(){ var nk = document.querySelector('.necklace'); if (nk && screen === 'beads') nk.classList.add('dance'); }, 2400);
+  setTimeout(function(){ if (screen === 'beads') { beadMakeRoom(); starToDot('beads'); } }, 3400);
 }
 
 /* ---------- game ---------- */
