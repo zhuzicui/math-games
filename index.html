@@ -851,7 +851,7 @@ img.stk{object-fit:contain}
 /* ===== kid switcher on the "That's me" screen ===== */
 .start-av.pop{animation:avpop .35s ease-out}
 @keyframes avpop{0%{transform:scale(.85)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
-.sk-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,2.6vw,28px);margin-top:clamp(8px,3dvh,32px);max-width:min(100%,760px)}
+.sk-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:clamp(12px,2.6vw,28px);margin-top:clamp(8px,3dvh,32px);max-width:min(100%,760px)}
 .sk-kid{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent}
 .sk-face{width:clamp(56px,10dvh,84px);height:clamp(56px,10dvh,84px);border-radius:50%;background:#fff;border:4px solid var(--edge);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .12s;box-sizing:border-box}
 .sk-face svg,.sk-face img{width:100%;height:100%}
@@ -881,6 +881,120 @@ img.stk{object-fit:contain}
 .addbuddy .av-opt{position:relative}
 .av-check{position:absolute;top:-2px;right:-2px;width:30%;height:30%;min-width:26px;min-height:26px;border-radius:50%;background:#6EA6D1;border:3px solid #fff;display:flex;align-items:center;justify-content:center}
 .av-check svg{width:70%;height:70%}
+/* ===== home: two groups ===== */
+.tiles.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,3.4dvh,28px);margin-bottom:clamp(6px,2.4dvh,24px)}
+.tiles.groups{display:grid !important;grid-auto-rows:minmax(0,1fr);align-items:stretch;justify-items:stretch}
+.tiles.groups .tile{width:auto;max-width:none;flex:none}
+@media (orientation:portrait){ .tiles.groups{grid-template-columns:1fr} }
+.tile.group-add{background:#FBE3D6;border-color:#EDBFA6;box-shadow:0 7px 0 #EDBFA6}
+.tile.group-kinder{background:#E4F0D9;border-color:#B5D49F;box-shadow:0 7px 0 #B5D49F}
+.grp-pics{display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,1vw,12px);height:clamp(70px,22dvh,190px);max-width:94%}
+.grp-pics img{height:80%;width:auto;max-width:32%;object-fit:contain}
+.grp-pics img:nth-child(2){height:100%}
+.grp-pics .croc-pic{height:auto;width:min(100%,clamp(180px,34vw,420px));max-width:100%;max-height:100%}
+.grp-name{display:block;font-size:clamp(26px,min(6vw,5.4dvh),46px);margin-top:clamp(8px,2dvh,18px)}
+.grp-eg{display:block;font-size:clamp(16px,2.6dvh,22px);color:var(--ink2);opacity:.8;margin-top:4px}
+@media (orientation:landscape) and (max-height:500px){ .grp-pics{height:clamp(50px,26dvh,120px)} .grp-name{margin-top:4px} }
+.tile.croct{background:#E4F0D9;border-color:#B5D49F;box-shadow:0 7px 0 #B5D49F}
+.tile.croct .croc-pic{height:auto;width:86%;max-height:clamp(50px,15dvh,140px);object-fit:contain}
+.tile.soon-tile{background:transparent;border-style:dashed;border-color:var(--edge);box-shadow:none;color:var(--ink2);cursor:default}
+.soon-plus{font-size:clamp(40px,8dvh,70px);line-height:1;opacity:.6}
+/* ===== Hungry Crocodile ===== */
+.crocgame{gap:clamp(6px,1.6dvh,14px)}
+.croc-ask{display:flex;flex-direction:column;align-items:center;gap:6px}
+.croc-ask .bubble{max-width:min(92vw,640px)}
+.croc-stage{flex:1;min-height:0;display:flex;align-items:center;gap:clamp(8px,1.6vw,20px)}
+/* the whole screen is water; each half is a big invisible tap area */
+body.waterbg,body.waterbg #app{background:linear-gradient(180deg,#D6ECF5 0%,#BFE0EE 55%,#A9D3E6 100%) fixed}
+body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.55;background:
+  radial-gradient(60px 6px at 18% 28%,#fff 40%,transparent 41%),radial-gradient(90px 6px at 72% 18%,#fff 40%,transparent 41%),
+  radial-gradient(70px 6px at 84% 70%,#fff 40%,transparent 41%),radial-gradient(80px 6px at 30% 82%,#fff 40%,transparent 41%),
+  radial-gradient(50px 5px at 52% 60%,#fff 40%,transparent 41%)}
+.water{flex:1;align-self:stretch;position:relative;min-width:0;border:0;background:transparent;border-radius:40px;padding:0;cursor:pointer;overflow:visible;transition:background .2s}
+.water:active:not(:disabled){background:rgba(255,255,255,.18)}
+.water:disabled{cursor:default}
+.water:focus-visible{outline:4px solid rgba(255,255,255,.8);outline-offset:-4px}
+.croc-mid .croc-img:not(.open){animation:paddle 3s ease-in-out infinite}
+@keyframes paddle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-1deg)}}
+.croc-mid::after{content:'';position:absolute;left:8%;right:8%;bottom:8%;height:10px;border-radius:50%;background:rgba(255,255,255,.45);filter:blur(2px);z-index:-1}
+.waterbg .bar .round,.waterbg .bubble,.waterbg .cmp .n,.waterbg .same-btn{box-shadow:0 5px 0 rgba(90,130,160,.25)}
+.fish{position:absolute;height:auto;transform:translate(0,-50%) scaleX(var(--flip,1));animation:swim 5s ease-in-out infinite;pointer-events:none;will-change:transform}
+/* swim forward a little (the way the fish faces), wiggling, then drift back; transform-only so older iPads animate it too */
+@keyframes swim{
+  0%,100%{transform:translate(0,-50%) scaleX(var(--flip,1)) rotate(0deg)}
+  15%{transform:translate(calc(var(--fx,20px) * .25),calc(-50% + var(--fy,-6px) * .3)) scaleX(var(--flip,1)) rotate(var(--fr,3deg))}
+  30%{transform:translate(calc(var(--fx,20px) * .55),calc(-50% + var(--fy,-6px) * .8)) scaleX(var(--flip,1)) rotate(calc(var(--fr,3deg) * -1))}
+  50%{transform:translate(var(--fx,20px),calc(-50% + var(--fy,-6px))) scaleX(var(--flip,1)) rotate(var(--fr,3deg))}
+  70%{transform:translate(calc(var(--fx,20px) * .6),calc(-50% + var(--fy,-6px) * .4)) scaleX(var(--flip,1)) rotate(calc(var(--fr,3deg) * -1))}
+  85%{transform:translate(calc(var(--fx,20px) * .25),calc(-50% + var(--fy,-6px) * -.2)) scaleX(var(--flip,1)) rotate(0deg)}
+}
+.fish.counted{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 6px #FFD54A) brightness(1.08)}
+.count-tag{position:absolute;transform:translate(-30%,-120%);background:#5A3E33;color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(14px,2.4dvh,22px);min-width:1.5em;height:1.5em;border-radius:999px;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;animation:pop .3s}
+.water.eaten .fish{opacity:0}
+.croc-mid{flex:none;width:clamp(150px,27vw,330px);display:flex;align-items:center;justify-content:center;position:relative;z-index:4}
+.croc-img{width:100%;height:auto;display:block;transition:transform .3s}
+.croc-img.open{animation:lunge .5s ease-out}
+.croc-img.open.flip{transform:scaleX(-1);animation-name:lungeL}
+@keyframes lunge{0%{transform:translateX(0)}40%{transform:translateX(14px) rotate(-3deg)}100%{transform:none}}
+@keyframes lungeL{0%{transform:scaleX(-1)}40%{transform:scaleX(-1) translateX(14px) rotate(-3deg)}100%{transform:scaleX(-1)}}
+.same .croc-img{animation:nod .6s ease-in-out}
+@keyframes nod{30%{transform:translateY(-6px)}60%{transform:translateY(2px)}}
+.croc-under{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,36px);padding-bottom:4px}
+.cmp{display:flex;align-items:center;gap:clamp(8px,1.6vw,16px);font-family:var(--display);font-weight:800;font-size:clamp(34px,7dvh,64px);line-height:1}
+.cmp .n{min-width:1.3em;text-align:center;background:var(--card);border:4px solid var(--edge);border-radius:18px;padding:2px 10px}
+.cmp .sign{min-width:1.1em;text-align:center;color:var(--ink2)}
+.cmp .sign.shown{color:#4F7A3B;animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
+@keyframes signpop{from{transform:scale(.2);opacity:0}}
+.same-btn{display:flex;align-items:center;gap:8px;min-height:clamp(48px,8dvh,64px);padding:0 22px;border-radius:999px;border:4px solid var(--edge);background:var(--card);box-shadow:0 5px 0 var(--edge);font-family:var(--display);font-weight:800;font-size:clamp(18px,3dvh,26px);color:var(--ink);cursor:pointer}
+.same-btn b{font-size:1.3em;line-height:1}
+.same-btn:disabled{opacity:.4;cursor:default}
+.same .same-btn{opacity:1;border-color:#A9CB97;background:#E3F1DA;box-shadow:0 5px 0 #A9CB97;color:#4F7A3B}
+.rotate-hint{display:none}
+@media (orientation:portrait) and (max-width:600px){
+  .crocgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
+  .rotate-hint svg{width:96px;height:96px;animation:tilt 2s ease-in-out infinite}
+  .rotate-hint b{font-family:var(--display);font-size:28px}
+}
+@keyframes tilt{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+.croc-reward{width:auto !important;max-width:min(40vw,320px) !important;height:auto !important;max-height:26dvh !important;object-fit:contain}
+.cmp-eq .s{color:var(--ink)} .cmp-eq .a{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){ .croc-img.open,.cmp .sign.shown{animation:none} .fish{animation-duration:9s !important} }
+.croc-reward.flip{transform:scaleX(-1)}
+.croc-img.chomp{animation:chomp .26s ease-out}
+@keyframes chomp{50%{transform:var(--cf,scaleX(1)) scale(1.05,.95)}}
+.croc-img.flip.chomp{--cf:scaleX(-1)}
+.croc-img.flip{transform:scaleX(-1)}
+/* home header */
+.home-bar{align-items:center}
+.corner-av{width:clamp(56px,9dvh,84px) !important;height:clamp(56px,9dvh,84px) !important;flex:none}
+.corner-av .av-edit{width:clamp(22px,3.4dvh,30px);height:clamp(22px,3.4dvh,30px)}
+.hero-solo{justify-content:flex-start;margin-top:clamp(4px,1.6dvh,14px)}
+.hero-solo h1{margin:0;font-size:clamp(30px,min(9vw,7dvh),64px)}
+.group-bar{position:relative}
+.group-title{display:flex;align-items:center;gap:clamp(10px,2vw,18px);min-width:0;flex:1;justify-content:flex-start}
+.group-right{display:flex;align-items:center;gap:clamp(8px,1.6vw,14px);flex:none}
+.group-title h1{margin:0;font-size:clamp(19px,min(5.4vw,5.6dvh),48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.grp-pics img.grp-uni{height:108%;max-width:40%}   /* unicorn ~35% bigger than before */
+.sk-add .sk-name{white-space:normal;max-width:7.5em;text-align:center;line-height:1.15}
+/* screen padding: 36-44px top and sides on iPad, 20-24px on phones */
+#app{padding-top:max(clamp(20px,4.4dvh,44px),env(safe-area-inset-top));padding-left:max(clamp(20px,3.8vw,44px),env(safe-area-inset-left));padding-right:max(clamp(20px,3.8vw,44px),env(safe-area-inset-right))}
+@media (min-width:700px) and (min-height:600px){ #app{padding-top:max(clamp(36px,4.4dvh,44px),env(safe-area-inset-top));padding-left:max(clamp(36px,3.8vw,44px),env(safe-area-inset-left));padding-right:max(clamp(36px,3.8vw,44px),env(safe-area-inset-right))} }
+@media (orientation:landscape) and (max-height:500px){ #app{padding-top:max(12px,env(safe-area-inset-top));padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))} }
+/* croc: number questions */
+.numcard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:1.4em;padding:.05em .3em;border-radius:.42em;background:#FFFCF7;border:5px solid #9CC6E3;box-shadow:0 6px 0 rgba(90,130,160,.3);font-family:var(--display);font-weight:800;font-size:clamp(64px,16dvh,140px);line-height:1.15;color:var(--ink);text-align:center;animation:numbob 3.4s ease-in-out infinite;z-index:2}
+@keyframes numbob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 8px)) rotate(-2deg)}}
+.nummode .fish{opacity:0;transition:opacity .4s}
+.nummode.reveal .fish{opacity:1}
+.nummode.reveal .numcard{top:12%;font-size:clamp(40px,9dvh,80px);transition:top .4s,font-size .4s}
+/* croc: Same sits under the croc (the third choice); the comparison below is flat text, not buttons */
+.croc-mid{flex-direction:column;gap:clamp(10px,2.4dvh,22px)}
+.croc-mid .same-btn{position:relative;z-index:5}
+.cmp .n{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;min-width:.8em}
+.cmp{font-size:clamp(30px,6dvh,56px);gap:clamp(6px,1.2vw,12px)}
+.cmp .n:empty{display:none}
+.crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp{color:rgba(90,62,51,.35)}
+.crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp .sign{color:rgba(90,62,51,.35)}
+.croc-under{min-height:clamp(40px,7dvh,64px)}
 </style>
 </head>
 <body>
@@ -1033,6 +1147,11 @@ en: {
   gWrite: 'Write It',
   devBadge: 'Still under development',
   switchTo: function(n){ return 'Switch to ' + n; }, addShort: 'Add', holdText: 'Press and hold the button for 3 seconds to add a new kid.', holdLabel: 'Hold', keepHolding: 'Keep holding…', stepOf: function(a, b){ return 'Step ' + a + ' of ' + b; }, theirName: 'What’s their name?', nameLabel: 'Name', namePh: 'Kid’s first name', buddyFor: function(n){ return 'Pick a buddy for ' + n; }, addName: function(n){ return 'Add ' + n; }, backLabel: 'Back',
+  gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways',
+  sCrocAsk: [P('The crocodile is very hungry!', 'cheer'), P('He always eats the side with more fish. Which side will he eat?', 'ask')], sCrocAsk2: [P('Which side has more fish?', 'ask')],
+  sCrocRight: function(b, s){ return [P('Chomp!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
+  sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
+  crocAskNum: 'Which number is bigger?', sCrocAskNum: [P('Which number is bigger?', 'ask')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1121,6 +1240,11 @@ fr: {
   gWrite: 'J’écris',
   devBadge: 'En cours de développement',
   switchTo: function(n){ return 'Passer à ' + n; }, addShort: 'Ajouter', holdText: 'Garde le bouton enfoncé 3 secondes pour ajouter un enfant.', holdLabel: 'Tenir', keepHolding: 'Continue d’appuyer…', stepOf: function(a, b){ return 'Étape ' + a + ' sur ' + b; }, theirName: 'Comment s’appelle-t-il\u00a0?', nameLabel: 'Prénom', namePh: 'Prénom de l’enfant', buddyFor: function(n){ return 'Choisis un copain pour ' + n; }, addName: function(n){ return 'Ajouter ' + n; }, backLabel: 'Retour',
+  gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone',
+  sCrocAsk: [P('Le crocodile a très faim !', 'cheer'), P('Il mange toujours le côté qui a le plus de poissons. Lequel va-t-il manger ?', 'ask')], sCrocAsk2: [P('Quel côté a le plus de poissons ?', 'ask')],
+  sCrocRight: function(b, s){ return [P('Crac !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
+  sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
+  crocAskNum: 'Quel nombre est le plus grand\u00a0?', sCrocAskNum: [P('Quel nombre est le plus grand ?', 'ask')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1209,6 +1333,11 @@ es: {
   gWrite: 'A escribir',
   devBadge: 'Todavía en desarrollo',
   switchTo: function(n){ return 'Cambiar a ' + n; }, addShort: 'Añadir', holdText: 'Mantén pulsado el botón 3 segundos para añadir un niño.', holdLabel: 'Mantén', keepHolding: 'Sigue pulsando…', stepOf: function(a, b){ return 'Paso ' + a + ' de ' + b; }, theirName: '¿Cómo se llama?', nameLabel: 'Nombre', namePh: 'Nombre del niño', buddyFor: function(n){ return 'Elige un amigo para ' + n; }, addName: function(n){ return 'Añadir a ' + n; }, backLabel: 'Atrás',
+  gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono',
+  sCrocAsk: [P('¡El cocodrilo tiene mucha hambre!', 'cheer'), P('Siempre se come el lado con más peces. ¿Cuál se comerá?', 'ask')], sCrocAsk2: [P('¿Qué lado tiene más peces?', 'ask')],
+  sCrocRight: function(b, s){ return [P('¡Ñam!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
+  sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
+  crocAskNum: '¿Qué número es más grande?', sCrocAskNum: [P('¿Qué número es más grande?', 'ask')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1297,6 +1426,11 @@ zh: {
   gWrite: '写数字',
   devBadge: '还在开发中',
   switchTo: function(n){ return '换成' + n; }, addShort: '添加', holdText: '按住按钮3秒，添加一个孩子。', holdLabel: '按住', keepHolding: '继续按住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '孩子叫什么名字？', nameLabel: '名字', namePh: '孩子的名字', buddyFor: function(n){ return '给' + n + '选一个小伙伴'; }, addName: function(n){ return '添加' + n; }, backLabel: '返回',
+  gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来',
+  sCrocAsk: [P('鳄鱼好饿呀！', 'cheer'), P('它总是吃鱼多的那一边。它会吃哪一边呢？', 'ask')], sCrocAsk2: [P('哪边的鱼多？', 'ask')],
+  sCrocRight: function(b, s){ return [P('啊呜！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
+  sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
+  crocAskNum: '哪个数字更大？', sCrocAskNum: [P('哪个数字更大？', 'ask')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1385,6 +1519,11 @@ ja: {
   gWrite: 'すうじを かこう',
   devBadge: 'まだ じゅんびちゅう',
   switchTo: function(n){ return n + 'に かえる'; }, addShort: 'ついか', holdText: 'ボタンを 3びょう おしつづけると こどもを ついかできます。', holdLabel: 'おしつづける', keepHolding: 'そのまま…', stepOf: function(a, b){ return 'ステップ ' + a + '/' + b; }, theirName: 'おなまえは？', nameLabel: 'なまえ', namePh: 'こどもの なまえ', buddyFor: function(n){ return n + 'の なかまを えらぼう'; }, addName: function(n){ return n + 'を ついか'; }, backLabel: 'もどる',
+  gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね',
+  sCrocAsk: [P('ワニは おなかが ぺこぺこ！', 'cheer'), P('いつも さかなが おおい ほうを たべるよ。どっちを たべるかな？', 'ask')], sCrocAsk2: [P('どっちの さかなが おおい？', 'ask')],
+  sCrocRight: function(b, s){ return [P('パクッ！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
+  sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
+  crocAskNum: 'どっちの かずが おおきい？', sCrocAskNum: [P('どっちの かずが おおきい？', 'ask')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1473,6 +1612,11 @@ yue: {
   gWrite: '寫數字',
   devBadge: '仲喺開發緊',
   switchTo: function(n){ return '轉做' + n; }, addShort: '加', holdText: '撳住個掣3秒，就可以加小朋友。', holdLabel: '撳住', keepHolding: '繼續撳住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '小朋友叫咩名？', nameLabel: '名', namePh: '小朋友嘅名', buddyFor: function(n){ return '幫' + n + '揀個好朋友'; }, addName: function(n){ return '加' + n; }, backLabel: '返回',
+  gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫',
+  sCrocAsk: [P('鱷魚好肚餓呀！', 'cheer'), P('佢成日食魚多啲嗰邊。佢會食邊邊呢？', 'ask')], sCrocAsk2: [P('邊邊啲魚多啲？', 'ask')],
+  sCrocRight: function(b, s){ return [P('啊嗚！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
+  sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
+  crocAskNum: '邊個數字大啲？', sCrocAskNum: [P('邊個數字大啲？', 'ask')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1561,6 +1705,11 @@ ko: {
   gWrite: '숫자 쓰기',
   devBadge: '아직 개발 중',
   switchTo: function(n){ return n + '(으)로 바꾸기'; }, addShort: '추가', holdText: '버튼을 3초 동안 누르고 있으면 아이를 추가할 수 있어요.', holdLabel: '누르기', keepHolding: '계속 누르세요…', stepOf: function(a, b){ return a + '/' + b + '단계'; }, theirName: '아이 이름이 뭐예요?', nameLabel: '이름', namePh: '아이 이름', buddyFor: function(n){ return n + '의 친구를 골라요'; }, addName: function(n){ return n + ' 추가'; }, backLabel: '뒤로',
+  gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요',
+  sCrocAsk: [P('악어가 너무 배고파요!', 'cheer'), P('악어는 항상 물고기가 더 많은 쪽을 먹어요. 어느 쪽을 먹을까요?', 'ask')], sCrocAsk2: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
+  sCrocRight: function(b, s){ return [P('냠!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
+  sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
+  crocAskNum: '어느 숫자가 더 커요?', sCrocAskNum: [P('어느 숫자가 더 커요?', 'ask')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1835,6 +1984,7 @@ function render(){
   applyLang(); syncMute();
   document.body.classList.toggle('skybg', screen === 'garden');
   document.body.classList.toggle('bookbg', screen === 'book');
+  document.body.classList.toggle('waterbg', screen === 'croc');
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
@@ -1842,6 +1992,7 @@ function render(){
   else if (screen === 'bus') renderBus();
   else if (screen === 'frog') renderFrog();
   else if (screen === 'tower') renderTower();
+  else if (screen === 'croc') renderCroc();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -1886,7 +2037,7 @@ function startKidRow(){
     return '<button class="sk-kid" data-act="start-switch" data-v="' + k.id + '" aria-label="' + esc(L('switchTo', k.name || '')) + '">' +
       '<span class="sk-face">' + avatarFace(k.avatarPicked ? k.avatar : 'av17') + '</span><span class="sk-name">' + esc(k.name || '') + '</span></button>';
   }).join('') +
-  '<button class="sk-kid sk-add" data-act="start-add" aria-label="' + esc(L('addKid')) + '"><span class="sk-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="sk-name">' + L('addShort') + '</span></button></div>';
+  '<button class="sk-kid sk-add" data-act="start-add" aria-label="' + esc(L('addKid')) + '"><span class="sk-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="sk-name">' + L('addKid') + '</span></button></div>';
 }
 var pendingKid = null;   /* { name, avatar } while a grown-up is adding a kid */
 var HOLD_MS = 3000;
@@ -1957,20 +2108,209 @@ function renderAddBuddy(){
 }
 
 /* ---------- home ---------- */
+var homeGroup = null;   /* null = the two group tiles; 'add' | 'kinder' = that group's games */
 function renderHome(){
-  app.innerHTML = '<section class="screen">' +
-    '<div class="bar"><span class="small-round bar-spacer" aria-hidden="true"></span>' +
-    '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>' +
-    '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
-    '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
-    '<div class="games"><div class="tiles six">' +
+  var starChip = '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>';
+  var gear = '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button>';
+  var bar, hero;
+  if (homeGroup) {
+    /* group page: back, then the group's name with the stars beside it, no avatar */
+    bar = '<div class="bar group-bar"><div class="group-title"><button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
+      '<h1>' + esc(homeGroup === 'add' ? L('gAddition') : L('gKinder')) + '</h1></div><div class="group-right">' + starChip + gear + '</div></div>';
+    hero = '';
+  } else {
+    /* top: the buddy sits in the top-left corner, the greeting gets its own line */
+    bar = '<div class="bar home-bar">' + avatarBtn('home-av corner-av') + '<div class="group-right">' + starChip + gear + '</div></div>';
+    hero = '<div class="hero hero-solo"><h1>' + esc(L('letsPlay', S.name)) + '</h1></div>';
+  }
+  var body;
+  if (homeGroup === 'add') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + '<span class="tl">' + L('gFeed') + '</span></button>' +
       '<button class="tile ten" data-act="ten">' + critter('chick') + '<span class="tl">' + L('gTen') + '</span></button>' +
       '<button class="tile bus" data-act="bus">' + critter('snail') + '<span class="tl">' + L('gBus') + '</span></button>' +
       '<button class="tile frogt" data-act="frog">' + critter('frog') + '<span class="tl">' + L('gFrog') + '</span></button>' +
       '<button class="tile towert" data-act="tower">' + critter('tiger') + '<span class="tl">' + L('gTower') + '</span></button>' +
       '<button class="tile writet" data-act="write"><span class="dev-badge">' + L('devBadge') + '</span>' + critter('hedgehog') + '<span class="tl">' + L('gWrite') + '</span></button>' +
-    '</div></div></section>';
+    '</div></div>';
+  else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
+      '<button class="tile croct" data-act="croc">' + crocImg(false, 'pic animal croc-pic') + '<span class="tl">' + L('gCroc') + '</span></button>' +
+      '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
+    '</div></div>';
+  else body = '<div class="games"><div class="tiles groups">' +
+      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
+    '</div></div>';
+  app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
+  /* long group names on a narrow phone: shrink the title until it fits beside the stars */
+  var gt = document.querySelector('.group-title h1');
+  if (gt) { var fs = parseFloat(getComputedStyle(gt).fontSize); while (gt.scrollWidth > gt.clientWidth + 1 && fs > 15) { fs -= 1; gt.style.fontSize = fs + 'px'; } }
+}
+
+/* =====================================================================
+   HUNGRY CROCODILE (croc): which side has more fish? The croc always eats the bigger side.
+   ===================================================================== */
+var FISH_N = 12, FISH_LEFT = [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1];   /* which fish drawings face left */
+function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" src="animals/croc-' + (open ? 'open' : 'closed') + '.png" alt="' + esc(L('crocAlt')) + '" draggable="false">'; }
+/* each round of 5 mixes kinds of question: 'easy' (clear difference), 'close' (1-2 apart, fish sizes that mislead),
+   'num' (just two numbers; the fish appear only if the child needs to count), 'eq' (same on both sides) */
+function crocPlan(){
+  var small = S.maxSum <= 5, rest = small ? ['easy', 'num', 'easy'] : ['close', 'num', 'close'];
+  rest.push(Math.random() < 0.6 ? 'eq' : (small ? 'easy' : 'easy'));
+  rest.sort(function(){ return Math.random() - 0.5; });
+  return ['easy'].concat(rest);
+}
+function startCroc(){ G = { game:'croc', q:0, earned:0, startStars:S.stars, plan:crocPlan() }; crocQuestion(); }
+function crocNumbers(kind){
+  var small = S.maxSum <= 5, max = small ? 5 : 10, a, b, n = 0;
+  function r(lo){ return lo + Math.floor(Math.random() * (max - lo + 1)); }
+  if (kind === 'eq') { a = r(2); return [a, a]; }
+  do {
+    a = r(1); b = r(1); n++;
+    var d = Math.abs(a - b);
+    var ok = a !== b && (kind === 'easy' ? d >= (small ? 2 : 3) : kind === 'close' ? d <= 2 && Math.min(a, b) >= 3 : true);
+  } while ((!ok || (G.prev && G.prev[0] === a && G.prev[1] === b)) && n < 200);
+  return [a, b];
+}
+/* scatter n fish in a pond: jittered grid, random sizes; when sizes mislead (bigger fish on the smaller side) that's on purpose */
+function pondFish(n, big, side){
+  /* scatter fish freely over each half of the screen; fish near the outer edge may poke out of the frame */
+  var hw = Math.max(120, (innerWidth - Math.min(330, innerWidth * 0.27)) / 2), hh = Math.max(120, innerHeight * 0.58), asp = hw / hh;
+  var base = Math.min(42, 100 * Math.sqrt(0.32 / (n * asp)) * 1.15);          /* fish width in % of the half, so n fish fill ~ a third of it */
+  var out = [];
+  for (var i = 0; i < n; i++) {
+    var sc = big ? 0.9 + Math.random() * 0.35 : 0.6 + Math.random() * 0.4, w = base * sc, hPct = w * 0.62 * asp;
+    var best = null, bestD = -1;
+    for (var t = 0; t < 40; t++) {
+      var x = side === 'L' ? -w * 0.25 + Math.random() * (100 - w * 0.9) : w * 0.1 + Math.random() * (100 - w * 0.85);
+      var y = 4 + Math.random() * 92;
+      var d = Infinity;
+      out.forEach(function(o){ var dx = (o.x + o.w / 2) - (x + w / 2), dy = (o.y - y) / asp; d = Math.min(d, Math.sqrt(dx * dx + dy * dy) - (o.w + w) * 0.42); });
+      if (d > bestD) { bestD = d; best = [x, y]; }
+      if (d > 4) break;
+    }
+    var f = 1 + Math.floor(Math.random() * FISH_N);
+    out.push({ f:f, x:best[0], y:best[1], w:w, flip:Math.random() < 0.5, d:(Math.random() * 4).toFixed(2),
+      dur:(4 + Math.random() * 4).toFixed(1), dx:Math.round(16 + Math.random() * 22), dy:Math.round((Math.random() - 0.5) * 18), rot:(2 + Math.random() * 3).toFixed(1) });
+  }
+  return out;
+}
+function crocQuestion(){
+  var kind = (G.plan && G.plan[G.q]) || 'easy';
+  var p = crocNumbers(kind); G.prev = p;
+  G.kind = kind; G.mode = kind === 'num' ? 'num' : 'fish'; G.reveal = false;
+  G.l = p[0]; G.r = p[1]; G.first = true; G.lock = false; G.done = null; G.bubble2 = '';
+  /* close calls give the smaller side the bigger fish, so children count instead of judging by size */
+  var trick = kind === 'close' || (S.maxSum > 5 && kind !== 'num' && Math.random() < 0.3);
+  G.fishL = pondFish(G.l, trick ? G.l < G.r : Math.random() < 0.5, 'L');
+  G.fishR = pondFish(G.r, trick ? G.r < G.l : Math.random() < 0.5, 'R');
+  screen = 'croc'; closeOverlay(); renderCroc();
+  say(G.mode === 'num' ? L('sCrocAskNum') : G.q === 0 ? L('sCrocAsk') : L('sCrocAsk2'));
+}
+function fishHtml(list, side){
+  return list.map(function(o, i){
+    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + ((FISH_LEFT[o.f - 1] ? -1 : 1) * (o.flip ? -1 : 1) * o.dx) + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
+  }).join('');
+}
+function renderCroc(){
+  document.body.classList.add('waterbg');
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var d = G.done, sign = d ? (G.l > G.r ? '&gt;' : G.l < G.r ? '&lt;' : '=') : '?';
+  var cls = d === 'L' ? ' eat-left' : d === 'R' ? ' eat-right' : d === 'E' ? ' same' : '';
+  app.innerHTML = '<section class="screen crocgame' + cls + (G.mode === 'num' ? ' nummode' : '') + (G.reveal ? ' reveal' : '') + '">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('croc-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.mode === 'num' ? L('crocAskNum') : L('crocAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="croc-stage">' +
+      '<button class="water" id="pondL" data-act="croc-pick" data-v="L" aria-label="' + esc(G.mode === 'num' ? String(G.l) : L('leftSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.l + '</span>' : '') + fishHtml(G.fishL, 'L') + '</button>' +
+      '<div class="croc-mid">' + (d === 'L' || d === 'R' ? crocImg(true, 'croc-img open' + (d === 'L' ? ' flip' : '')) : crocImg(false)) +
+        '<button class="same-btn" data-act="croc-pick" data-v="E"' + (d ? ' disabled' : '') + '><b>=</b> ' + L('sameBtn') + '</button></div>' +
+      '<button class="water" id="pondR" data-act="croc-pick" data-v="R" aria-label="' + esc(G.mode === 'num' ? String(G.r) : L('rightSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.r + '</span>' : '') + fishHtml(G.fishR, 'R') + '</button>' +
+    '</div>' +
+    '<div class="croc-under">' +
+      '<div class="cmp" aria-live="off"><span class="n">' + (d ? G.l : '?') + '</span><span class="sign' + (d ? ' shown' : '') + '">' + sign + '</span><span class="n">' + (d ? G.r : '?') + '</span></div>' +
+    '</div>' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="8" width="24" height="44" rx="5"/><path d="M29 46h6"/><path d="M50 26a14 14 0 0 1 0 14"/><path d="M50 40l-4-1 1-4"/></svg><b>' + L('rotateHint') + '</b></div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+}
+function crocPick(v){
+  if (!G || G.lock || G.done) return;
+  var right = G.l > G.r ? 'L' : G.l < G.r ? 'R' : 'E';
+  clearSay();
+  if (v === right) {
+    G.lock = true; G.done = v;
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum';
+    S.stars++; G.earned++; save();
+    if (v === 'E') { renderCroc(); say(L('sCrocSame', G.l)); setTimeout(showCrocReward, 2600); }
+    else {
+      /* in place: the croc turns to the bigger side and opens wide, then the fish swim into its mouth one by one */
+      var stage = document.querySelector('.crocgame'); stage.classList.add(v === 'L' ? 'eat-left' : 'eat-right');
+      var img = document.querySelector('.croc-mid .croc-img'); img.src = 'animals/croc-open.png'; img.className = 'croc-img open' + (v === 'L' ? ' flip' : '');
+      document.querySelectorAll('.crocgame .water, .crocgame .same-btn').forEach(function(x){ x.disabled = true; });
+      var cmp = document.querySelector('.cmp'); if (cmp) { var ns = cmp.querySelectorAll('.n'), sg = cmp.querySelector('.sign'); ns[0].textContent = G.l; ns[1].textContent = G.r; sg.innerHTML = G.l > G.r ? '&gt;' : '&lt;'; sg.classList.add('shown'); }
+      setBubble2(G.bubble2, G.bubble2Kind);
+      var big = Math.max(G.l, G.r), small = Math.min(G.l, G.r);
+      say(L('sCrocRight', big, small));
+      var fish = [].slice.call(document.querySelectorAll('#' + (v === 'L' ? 'pondL' : 'pondR') + (G.mode === 'num' && !G.reveal ? ' .numcard' : ' .fish, #' + (v === 'L' ? 'pondL' : 'pondR') + ' .numcard')));
+      /* nearest fish first */
+      var mid = img.getBoundingClientRect(), mx = v === 'L' ? mid.left + mid.width * 0.1 : mid.right - mid.width * 0.1, my = mid.top + mid.height * 0.55;
+      fish.sort(function(a, b){ var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return Math.abs(ra.left + ra.width / 2 - mx) - Math.abs(rb.left + rb.width / 2 - mx); });
+      var step = Math.min(260, 1500 / Math.max(1, fish.length)), dur = reduceMotion ? 300 : 650;
+      fish.forEach(function(f, i){
+        var r = f.getBoundingClientRect(), dx = mx - (r.left + r.width / 2), dy = my - (r.top + r.height / 2);
+        var o = f.getAttribute('data-i') ? G[v === 'L' ? 'fishL' : 'fishR'][+f.getAttribute('data-i') - 1] : null;
+        var toward = o ? (v === 'L' ? 1 : -1) * (FISH_LEFT[o.f - 1] ? -1 : 1) : 1;   /* fish swim facing the croc; a number card just flies in */
+        f.style.animation = 'none';
+        if (f.animate && !reduceMotion) {
+          f.animate([
+            { transform:'translate(0,-50%) scaleX(' + toward + ')', opacity:1 },
+            { transform:'translate(' + (dx * 0.7) + 'px,calc(-50% + ' + (dy * 0.7) + 'px)) scaleX(' + toward + ') scale(.85)', opacity:1, offset:0.7 },
+            { transform:'translate(' + dx + 'px,calc(-50% + ' + dy + 'px)) scaleX(' + toward + ') scale(.25)', opacity:0 }
+          ], { duration:dur, delay:300 + i * step, easing:'ease-in', fill:'forwards' });
+        } else setTimeout(function(){ f.style.transition = 'opacity .3s'; f.style.opacity = '0'; }, 300 + i * step);
+      });
+      var eatEnd = 300 + fish.length * step + dur;
+      /* gulp: a quick chomp once the last fish is in */
+      setTimeout(function(){ if (screen !== 'croc') return; img.src = 'animals/croc-closed.png'; img.classList.add('chomp'); setTimeout(function(){ if (screen === 'croc') { img.src = 'animals/croc-open.png'; img.classList.remove('chomp'); } }, 260); }, eatEnd);
+      setTimeout(showCrocReward, eatEnd + 1300);
+    }
+
+  } else {
+    G.lock = true;
+    if (G.first) G.first = false;
+    if (G.mode === 'num' && !G.reveal) { G.reveal = true; var sec = document.querySelector('.crocgame'); if (sec) sec.classList.add('reveal'); }
+    say(L('sCrocWrong'));
+    /* count each side, fish by fish, then ask again */
+    var q = G.q, seq = [];
+    ['pondL', 'pondR'].forEach(function(id){ var pd = document.getElementById(id); if (pd) [].slice.call(pd.querySelectorAll('.fish')).forEach(function(f, i){ seq.push({ f:f, n:i + 1, pond:pd, last:i === pd.querySelectorAll('.fish').length - 1 }); }); });
+    var k = 0;
+    function step(){
+      if (screen !== 'croc' || !G || G.q !== q || G.done) return;
+      if (k >= seq.length) {
+        document.querySelectorAll('.crocgame .fish.counted').forEach(function(f){ f.classList.remove('counted'); });
+        document.querySelectorAll('.crocgame .count-tag').forEach(function(t){ t.remove(); });
+        G.lock = false; say(L('sCrocTry')); return;
+      }
+      var it = seq[k++];
+      it.f.classList.add('counted');
+      var tag = document.createElement('span'); tag.className = 'count-tag'; tag.textContent = it.n;
+      tag.style.left = it.f.style.left; tag.style.top = it.f.style.top; it.pond.appendChild(tag);
+      say(P(String(it.n), 'count', it.n));
+      setTimeout(step, it.last ? 900 : 520);
+    }
+    setTimeout(step, 1200);
+  }
+}
+function showCrocReward(){
+  if (screen !== 'croc') return;
+  var last = G.q + 1 >= ROUND, sign = G.l > G.r ? '&gt;' : G.l < G.r ? '&lt;' : '=';
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1>' + crocImg(G.done !== 'E', 'pic animal croc-reward' + (G.l > G.r ? ' flip' : '')) +
+    '<div class="sumcard"><div class="bigeq cmp-eq"><span class="s">' + G.l + '</span><span>' + sign + '</span><span class="a">' + G.r + '</span></div></div>' +
+    '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
 }
 
 /* ---------- game ---------- */
@@ -2313,7 +2653,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -3122,8 +3462,7 @@ function renderGarden(){
   var goal = !n ? L('firstFlower') : (justFinished ? L('rainbowDone') : L('toSun', PER_STRIPE - q));
   app.innerHTML = '<section class="screen">' +
     '<div class="bar"><button class="round" data-act="garden-back" aria-label="' + esc(L('backGames')) + '">' + ICON.back + '</button>' +
-    '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div>' +
-    '<span class="round bar-spacer" aria-hidden="true"></span></div>' +
+    '<div class="chip" aria-label="' + esc(L('stars', n)) + '">' + ICON.star + '<span>' + n + '</span></div></div>' +
     '<div class="garden-head"><h1>' + esc(L('gardenOf')) + '</h1></div>' +
     '<div class="sky" role="img" aria-label="' + esc(L('flowersN', n) + ' · ' + goal) + '">' +
       '<div class="rb">' + rainbowSvg(idx, filled, 'rainbow') + '</div>' +
@@ -3267,7 +3606,7 @@ document.addEventListener('click', function(e){
   }
   switch (act) {
     case 'name-say': say(S.name && !askName ? L('sIsThatYou', S.name) : L('sAskName')); break;
-    case 'its-me': show('home'); break;
+    case 'its-me': homeGroup = null; show('home'); break;
     case 'not-me': askName = true; renderStart(); var ki = document.getElementById('kidName'); if (ki) ki.focus(); break;
     case 'skip-name': askName = false; show('home'); break;
     case 'hello': say(L('sHello', S.name)); break;
@@ -3277,6 +3616,11 @@ document.addEventListener('click', function(e){
     case 'bus': startBus(); break;
     case 'frog': startFrog(); break;
     case 'tower': startTower(); break;
+    case 'croc': startCroc(); break;
+    case 'croc-repeat': say(G && G.mode === 'num' ? L('sCrocAskNum') : L('sCrocAsk2')); break;
+    case 'croc-pick': crocPick(b.getAttribute('data-v')); break;
+    case 'group': homeGroup = b.getAttribute('data-v'); show('home'); break;
+    case 'home-top': homeGroup = null; show('home'); break;
     case 'start-switch': {
       switchKid(b.getAttribute('data-v')); renderStart();
       var av = document.querySelector('.start-av'); if (av) { av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
@@ -3342,7 +3686,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
