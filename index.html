@@ -951,7 +951,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .same .same-btn{opacity:1;border-color:#A9CB97;background:#E3F1DA;box-shadow:0 5px 0 #A9CB97;color:#4F7A3B}
 .rotate-hint{display:none}
 @media (orientation:portrait) and (max-width:600px){
-  .crocgame .rotate-hint,.traingame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
+  .crocgame .rotate-hint,.traingame .rotate-hint,.beadgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
   .rotate-hint svg{width:110px;height:110px;overflow:visible}
   .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tilt 2.4s ease-in-out infinite}
   .rotate-hint b{font-family:var(--display);font-size:28px}
@@ -1061,6 +1061,42 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .reward.round-rw{flex-direction:column !important;flex-wrap:nowrap !important;align-items:center;text-align:center}
 .reward.round-rw .sumcard{flex:none !important;min-width:0 !important;width:auto;align-items:center}
 @media (orientation:landscape) and (max-height:600px){ .reward.round-rw{gap:4px} .reward.round-rw h1{font-size:clamp(26px,8dvh,44px)} .reward.round-rw .pic{max-height:20dvh !important;width:auto !important;height:20dvh !important} .reward.round-rw .sumcard{padding-top:6px;padding-bottom:6px;gap:2px} }
+
+/* ---------- bead necklace ---------- */
+.tile.beadt{background:#FBE3EA;border-color:#F0B7C7;box-shadow:0 7px 0 #F0B7C7}
+.beadgame{gap:clamp(4px,1.2dvh,12px)}
+.bead-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;border-radius:28px;transition:background .2s}
+.bead-stage.over{background:rgba(255,212,81,.14)}
+.bead-row{display:flex;align-items:flex-start;gap:4px}
+.bead-row .octo{height:auto;flex:none;margin-top:-6%;animation:octobob 3s ease-in-out infinite;transform-origin:50% 90%}
+.bead-row .octo.dance{animation:octodance .5s ease-in-out 4}
+@keyframes octobob{50%{transform:translateY(-6px) rotate(-2deg)}}
+@keyframes octodance{25%{transform:rotate(-8deg) translateY(-6px)}75%{transform:rotate(8deg) translateY(-6px)}}
+.necklace{position:relative;flex:none}
+.necklace .string{position:absolute;left:0;width:100%;overflow:visible}
+.necklace .string path{fill:none;stroke:#7A4A35;stroke-width:3;stroke-linecap:round}
+.bslot{position:absolute;width:var(--u);height:var(--u);display:flex;align-items:center;justify-content:center}
+.bslot .bd{width:92%;height:92%;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(71,28,14,.18))}
+.bslot.empty{border-radius:50%;border:3px dashed #C9A893;background:rgba(255,252,247,.7);transform:scale(.72)}
+.bslot.empty.next{border-color:#E8708F;background:#FFF1F4;animation:slotnext 1s ease-in-out infinite}
+@keyframes slotnext{50%{transform:scale(.82)}}
+.bslot.snap{animation:beadsnap .4s cubic-bezier(.3,1.6,.6,1)}
+@keyframes beadsnap{from{transform:scale(.6)}}
+.bslot.lit .bd{transform:scale(1.22);transition:transform .15s}
+.bslot.empty.lit{animation:nope .6s}
+.bslot.hop{animation:beadhop .5s ease-in-out 2}
+@keyframes beadhop{50%{transform:translateY(-22%)}}
+.bead-tray{display:flex;justify-content:center;align-items:center;gap:clamp(14px,3vw,32px);min-height:clamp(70px,16dvh,120px);padding-bottom:4px}
+.btray{width:clamp(64px,15dvh,110px);height:clamp(64px,15dvh,110px);border-radius:24px;border:4px solid var(--edge);background:#FFFCF7;box-shadow:0 5px 0 var(--edge);display:flex;align-items:center;justify-content:center;padding:8px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.btray .bd{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.btray.nope{animation:nope .5s}
+.bead-ghost{position:fixed;left:0;top:0;z-index:70;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.bead-ghost .bd{width:80%;height:80%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(71,28,14,.25))}
+@media (prefers-reduced-motion:reduce){ .bead-row .octo,.bslot.empty.next,.bslot.hop{animation:none} }
+/* Kindergarten home tile: croc, penguin and octopus share the space */
+.group-kinder .grp-pics .croc-pic{max-width:44%}
+.group-kinder .grp-pics img.grp-train{max-width:24%;height:86%}
+.group-kinder .grp-pics img.grp-octo{max-width:22%;height:66%}
 </style>
 </head>
 <body>
@@ -1220,6 +1256,9 @@ en: {
   crocAskNum: 'Which number is bigger?', sCrocAskNum: [P('Which number is bigger?', 'ask')],
   gTrain: 'Number Train', trainAlt: 'Penguin train', trainAsk: 'Which number is missing?', trainAskDrag: 'Drag the numbers onto the train', trainSlot: 'Empty car', toot: 'Toot toot!',
   sTrainAsk: [P('All aboard the number train!', 'cheer'), P('Some numbers are missing. Which number is missing?', 'ask')], sTrainAsk2: [P('Which number is missing?', 'ask')], sTrainDrag: [P('Drag each number to its car!', 'ask')], sTrainGood: [P('Yes!', 'cheer')], sTrainWrong: [P('Hmm, let’s count the cars together.', 'calm')],
+  gBeads: 'Bead Necklace', octoAlt: 'Octopus', beadAsk: 'What comes next?',
+  sBeadAsk: [P('Let’s make a necklace!', 'cheer'), P('Look at the pattern. What comes next?', 'ask')], sBeadAsk2: [P('What comes next?', 'ask')], sBeadWrong: [P('Hmm, let’s sing the pattern.', 'calm')], sBeadDone: [P('Beautiful!', 'cheer')],
+  beadN: { heart:'heart', star:'star', orange:'orange', smile:'smile', wink:'wink', flower:'flower', flower2:'flower', flower3:'flower', pinkheart:'heart' },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1315,6 +1354,9 @@ fr: {
   crocAskNum: 'Quel nombre est le plus grand\u00a0?', sCrocAskNum: [P('Quel nombre est le plus grand ?', 'ask')],
   gTrain: 'Le train des nombres', trainAlt: 'Train des pingouins', trainAsk: 'Quel nombre manque\u00a0?', trainAskDrag: 'Glisse les nombres dans le train', trainSlot: 'Wagon vide', toot: 'Tchou tchou\u00a0!',
   sTrainAsk: [P('Tout le monde à bord du train des nombres !', 'cheer'), P('Il manque des nombres. Lequel manque ?', 'ask')], sTrainAsk2: [P('Quel nombre manque ?', 'ask')], sTrainDrag: [P('Glisse chaque nombre dans son wagon !', 'ask')], sTrainGood: [P('Oui !', 'cheer')], sTrainWrong: [P('Hmm, comptons les wagons ensemble.', 'calm')],
+  gBeads: 'Le collier de perles', octoAlt: 'Pieuvre', beadAsk: 'Qu’est-ce qui vient ensuite\u00a0?',
+  sBeadAsk: [P('Faisons un collier !', 'cheer'), P('Regarde le motif. Qu’est-ce qui vient ensuite ?', 'ask')], sBeadAsk2: [P('Qu’est-ce qui vient ensuite ?', 'ask')], sBeadWrong: [P('Hmm, chantons le motif.', 'calm')], sBeadDone: [P('Magnifique !', 'cheer')],
+  beadN: { heart:'cœur', star:'étoile', orange:'orange', smile:'sourire', wink:'clin d’œil', flower:'fleur', flower2:'fleur', flower3:'fleur', pinkheart:'cœur' },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1410,6 +1452,9 @@ es: {
   crocAskNum: '¿Qué número es más grande?', sCrocAskNum: [P('¿Qué número es más grande?', 'ask')],
   gTrain: 'El tren de los números', trainAlt: 'Tren de pingüinos', trainAsk: '¿Qué número falta?', trainAskDrag: 'Arrastra los números al tren', trainSlot: 'Vagón vacío', toot: '¡Chu chu!',
   sTrainAsk: [P('¡Todos a bordo del tren de los números!', 'cheer'), P('Faltan algunos números. ¿Cuál falta?', 'ask')], sTrainAsk2: [P('¿Qué número falta?', 'ask')], sTrainDrag: [P('¡Arrastra cada número a su vagón!', 'ask')], sTrainGood: [P('¡Sí!', 'cheer')], sTrainWrong: [P('Mmm, contemos los vagones juntos.', 'calm')],
+  gBeads: 'El collar de cuentas', octoAlt: 'Pulpo', beadAsk: '¿Qué sigue?',
+  sBeadAsk: [P('¡Hagamos un collar!', 'cheer'), P('Mira el patrón. ¿Qué sigue?', 'ask')], sBeadAsk2: [P('¿Qué sigue?', 'ask')], sBeadWrong: [P('Mmm, cantemos el patrón.', 'calm')], sBeadDone: [P('¡Precioso!', 'cheer')],
+  beadN: { heart:'corazón', star:'estrella', orange:'naranja', smile:'sonrisa', wink:'guiño', flower:'flor', flower2:'flor', flower3:'flor', pinkheart:'corazón' },
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1505,6 +1550,9 @@ zh: {
   crocAskNum: '哪个数字更大？', sCrocAskNum: [P('哪个数字更大？', 'ask')],
   gTrain: '数字火车', trainAlt: '企鹅火车', trainAsk: '缺了哪个数字？', trainAskDrag: '把数字拖到火车上', trainSlot: '空车厢', toot: '呜呜！',
   sTrainAsk: [P('数字火车要出发啦！', 'cheer'), P('有些数字不见了。缺了哪个数字？', 'ask')], sTrainAsk2: [P('缺了哪个数字？', 'ask')], sTrainDrag: [P('把每个数字拖到它的车厢里！', 'ask')], sTrainGood: [P('对啦！', 'cheer')], sTrainWrong: [P('嗯，我们一起数一数车厢。', 'calm')],
+  gBeads: '串珠项链', octoAlt: '章鱼', beadAsk: '下一个是什么？',
+  sBeadAsk: [P('我们来做项链吧！', 'cheer'), P('看看规律。下一个是什么？', 'ask')], sBeadAsk2: [P('下一个是什么？', 'ask')], sBeadWrong: [P('嗯，我们一起唱一唱规律。', 'calm')], sBeadDone: [P('真漂亮！', 'cheer')],
+  beadN: { heart:'爱心', star:'星星', orange:'橙子', smile:'笑脸', wink:'眨眼', flower:'花朵', flower2:'花朵', flower3:'花朵', pinkheart:'爱心' },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1600,6 +1648,9 @@ ja: {
   crocAskNum: 'どっちの かずが おおきい？', sCrocAskNum: [P('どっちの かずが おおきい？', 'ask')],
   gTrain: 'かずの きしゃ', trainAlt: 'ペンギンの きしゃ', trainAsk: 'どの かずが ないかな？', trainAskDrag: 'かずを きしゃに いれてね', trainSlot: 'からっぽの しゃりょう', toot: 'ポッポー！',
   sTrainAsk: [P('かずの きしゃが しゅっぱつするよ！', 'cheer'), P('かずが たりないね。どの かずが ないかな？', 'ask')], sTrainAsk2: [P('どの かずが ないかな？', 'ask')], sTrainDrag: [P('かずを ただしい しゃりょうに いれてね！', 'ask')], sTrainGood: [P('そう！', 'cheer')], sTrainWrong: [P('うーん、いっしょに かぞえてみよう。', 'calm')],
+  gBeads: 'ビーズの ネックレス', octoAlt: 'タコ', beadAsk: 'つぎは なにかな？',
+  sBeadAsk: [P('ネックレスを つくろう！', 'cheer'), P('じゅんばんを よく みてね。つぎは なにかな？', 'ask')], sBeadAsk2: [P('つぎは なにかな？', 'ask')], sBeadWrong: [P('うーん、いっしょに となえてみよう。', 'calm')], sBeadDone: [P('きれい！', 'cheer')],
+  beadN: { heart:'ハート', star:'ほし', orange:'オレンジ', smile:'にこにこ', wink:'ウインク', flower:'おはな', flower2:'おはな', flower3:'おはな', pinkheart:'ハート' },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1695,6 +1746,9 @@ yue: {
   crocAskNum: '邊個數字大啲？', sCrocAskNum: [P('邊個數字大啲？', 'ask')],
   gTrain: '數字火車', trainAlt: '企鵝火車', trainAsk: '唔見咗邊個數字？', trainAskDrag: '將數字拖上火車', trainSlot: '空車卡', toot: '嘟嘟！',
   sTrainAsk: [P('數字火車開車喇！', 'cheer'), P('有啲數字唔見咗。唔見咗邊個數字？', 'ask')], sTrainAsk2: [P('唔見咗邊個數字？', 'ask')], sTrainDrag: [P('將每個數字拖去佢嘅車卡！', 'ask')], sTrainGood: [P('啱喇！', 'cheer')], sTrainWrong: [P('嗯，我哋一齊數下啲車卡。', 'calm')],
+  gBeads: '串珠頸鏈', octoAlt: '八爪魚', beadAsk: '跟住係咩？',
+  sBeadAsk: [P('我哋一齊整條頸鏈！', 'cheer'), P('睇下規律。跟住係咩？', 'ask')], sBeadAsk2: [P('跟住係咩？', 'ask')], sBeadWrong: [P('嗯，我哋一齊唱下個規律。', 'calm')], sBeadDone: [P('好靚呀！', 'cheer')],
+  beadN: { heart:'心心', star:'星星', orange:'橙', smile:'笑臉', wink:'眨眼', flower:'花', flower2:'花', flower3:'花', pinkheart:'心心' },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1790,6 +1844,9 @@ ko: {
   crocAskNum: '어느 숫자가 더 커요?', sCrocAskNum: [P('어느 숫자가 더 커요?', 'ask')],
   gTrain: '숫자 기차', trainAlt: '펭귄 기차', trainAsk: '어떤 숫자가 빠졌을까요?', trainAskDrag: '숫자를 기차에 끌어다 놓아요', trainSlot: '빈 칸', toot: '칙칙폭폭!',
   sTrainAsk: [P('숫자 기차 출발해요!', 'cheer'), P('숫자가 빠졌어요. 어떤 숫자가 빠졌을까요?', 'ask')], sTrainAsk2: [P('어떤 숫자가 빠졌을까요?', 'ask')], sTrainDrag: [P('숫자를 알맞은 칸에 끌어다 놓아요!', 'ask')], sTrainGood: [P('맞아요!', 'cheer')], sTrainWrong: [P('음, 같이 기차 칸을 세어 봐요.', 'calm')],
+  gBeads: '구슬 목걸이', octoAlt: '문어', beadAsk: '다음엔 뭐가 올까요?',
+  sBeadAsk: [P('목걸이를 만들어요!', 'cheer'), P('규칙을 보세요. 다음엔 뭐가 올까요?', 'ask')], sBeadAsk2: [P('다음엔 뭐가 올까요?', 'ask')], sBeadWrong: [P('음, 같이 규칙을 불러 봐요.', 'calm')], sBeadDone: [P('예뻐요!', 'cheer')],
+  beadN: { heart:'하트', star:'별', orange:'오렌지', smile:'웃음', wink:'윙크', flower:'꽃', flower2:'꽃', flower3:'꽃', pinkheart:'하트' },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2075,6 +2132,7 @@ function render(){
   else if (screen === 'tower') renderTower();
   else if (screen === 'croc') renderCroc();
   else if (screen === 'train') renderTrain();
+  else if (screen === 'beads') renderBeads();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2217,10 +2275,11 @@ function renderHome(){
   else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile croct" data-act="croc">' + crocImg(false, 'pic animal croc-pic') + '<span class="tl">' + L('gCroc') + '</span></button>' +
       '<button class="tile traint" data-act="train">' + critter('penguin') + '<span class="tl">' + L('gTrain') + '</span></button>' +
+      '<button class="tile beadt" data-act="beads">' + critter('octopus') + '<span class="tl">' + L('gBeads') + '</span></button>' +
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
-      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="animals/penguin.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '<img class="grp-train" src="animals/penguin.png" alt=""><img class="grp-octo" src="animals/octopus.png" alt="">' + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
       '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
@@ -2568,9 +2627,10 @@ function trainWin(){
   setTimeout(function(){ var tr = document.querySelector('.train'); if (tr && !reduceMotion) tr.classList.add('moving', 'leave'); }, leaveAt);
   setTimeout(trainStar, leaveAt + (reduceMotion ? 300 : 1500));
 }
-function trainStar(){
-  if (screen !== 'train' || !G) return;
-  var q = G.q, dot = document.querySelectorAll('.traingame .dots span')[q];
+function trainStar(){ starToDot('train'); }
+function starToDot(scr){
+  if (screen !== scr || !G) return;
+  var q = G.q, dot = document.querySelectorAll('.screen .dots span')[q];
   var st = document.createElement('div'); st.className = 'star-pop'; st.innerHTML = starImg(q + S.stars) + '<b>+1</b>';
   document.body.appendChild(st);
   setTimeout(function(){
@@ -2583,7 +2643,7 @@ function trainStar(){
   setTimeout(function(){
     st.remove(); if (dot) { dot.className = 'done'; dot.classList.add('pop'); }
   }, 1500);
-  setTimeout(function(){ if (screen === 'train' && G && G.q === q) next(); }, 2000);
+  setTimeout(function(){ if (screen === scr && G && G.q === q) next(); }, 2000);
 }
 function showTrainReward(){
   if (screen !== 'train') return;
@@ -2593,6 +2653,152 @@ function showTrainReward(){
     '<div class="sumcard"><div class="bigeq seq-eq">' + G.seq.map(function(v, i){ return '<span class="' + (G.gaps.indexOf(i) >= 0 ? 'a' : 't') + '">' + v + '</span>'; }).join('') + '</div></div>' +
     '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
+}
+
+/* =====================================================================
+   BEAD NECKLACE (octopus): finish the pattern. AB, then AAB / ABB, ABC, AABB.
+   Tap the next bead or drag it onto the necklace. A wrong bead bounces off and the
+   octopus sings the pattern so far, then asks again.
+   ===================================================================== */
+var BEAD_NAMED = ['heart', 'star', 'orange', 'smile', 'wink', 'flower'], BEAD_EXTRA = ['flower2', 'flower3', 'pinkheart'];
+function beadImg(k, cls){ return '<img class="' + (cls || 'bd') + '" src="beads/' + k + '.png" alt="" draggable="false">'; }
+function octoImg(cls){ return '<img class="' + (cls || 'octo') + '" src="animals/octopus.png" alt="' + esc(L('octoAlt')) + '" draggable="false">'; }
+function beadName(k){ var n = L('beadN'); return (n && n[k]) || k; }
+function beadPlan(){
+  var mid = Math.random() < 0.5 ? 'AAB' : 'ABB';
+  return ['AB', 'AB', mid, 'ABC', shuffle(['AABB', 'ABC', mid === 'AAB' ? 'ABB' : 'AAB'])[0]];
+}
+function startBeads(){ G = { game:'beads', q:0, earned:0, startStars:S.stars, plan:beadPlan() }; beadQuestion(); }
+function beadQuestion(){
+  var pat = G.plan[G.q] || 'AB', letters = [];
+  pat.split('').forEach(function(ch){ if (letters.indexOf(ch) < 0) letters.push(ch); });
+  var pick, tries = 0;
+  do { pick = shuffle(BEAD_NAMED.slice()).slice(0, letters.length); } while (G.prevFirst && pick[0] === G.prevFirst && ++tries < 20);
+  G.prevFirst = pick[0];
+  var map = {}; letters.forEach(function(ch, i){ map[ch] = pick[i]; });
+  var unit = pat.split('').map(function(ch){ return map[ch]; }), L0 = unit.length;
+  var shown = L0 === 2 ? 6 : L0 === 3 ? 6 : 8, blanks = L0 === 3 ? 3 : 2;
+  var seq = []; for (var i = 0; i < shown + blanks; i++) seq.push(unit[i % L0]);
+  var others = shuffle(BEAD_NAMED.concat(BEAD_EXTRA).filter(function(k){ return pick.indexOf(k) < 0; }));
+  G.mode = 'bead'; G.pat = pat; G.unit = unit; G.seq = seq; G.filled = shown; G.shown = shown;
+  G.choices = shuffle(pick.concat(others.slice(0, 1)));
+  G.lock = false; G.done = false; G.bubble2 = '';
+  screen = 'beads'; closeOverlay(); renderBeads();
+  say(G.q === 0 ? L('sBeadAsk') : L('sBeadAsk2'));
+}
+function renderBeads(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var slots = G.seq.map(function(k, i){
+    return i < G.filled ? '<div class="bslot on" data-i="' + i + '">' + beadImg(k) + '</div>' : '<div class="bslot empty' + (i === G.filled ? ' next' : '') + '" data-i="' + i + '"></div>';
+  }).join('');
+  var tray = G.choices.map(function(k){ return '<button class="btray" data-bead="' + k + '" aria-label="' + esc(beadName(k)) + '">' + beadImg(k) + '</button>'; }).join('');
+  app.innerHTML = '<section class="screen beadgame">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('bead-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(L('beadAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="bead-stage"><div class="bead-row">' + octoImg() +
+      '<div class="necklace"><svg class="string" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0,2 A50,98 0 0 0 100,2" vector-effect="non-scaling-stroke"/></svg>' + slots + '</div>' +
+    '</div></div>' +
+    '<div class="bead-tray">' + tray + '</div>' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M22 30a32 32 0 0 1 30-18"/><path class="rh-arrow" d="M45 6l7 6-7 7"/></svg><b>' + L('rotateHint') + '</b></div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  layoutBeads();
+  document.querySelectorAll('.btray').forEach(function(b){ b.addEventListener('pointerdown', beadDown); b.addEventListener('click', function(e){ if (e.detail === 0) beadPick(b.getAttribute('data-bead')); }); });
+}
+/* beads sit on a gently sagging string: an elliptical arc, same curve as the svg string */
+function layoutBeads(){
+  var st = document.querySelector('.bead-stage'), nk = document.querySelector('.necklace'), oc = document.querySelector('.bead-row .octo');
+  if (!st || !nk || !G) return;
+  var n = G.seq.length, W = Math.min(innerWidth, 1400) - (innerWidth > 700 ? 88 : 40), H = st.clientHeight;
+  var u = Math.floor(Math.max(30, Math.min((W) / (n * 1.08 + 0.6 + 1.9), H / 2.0, 120)));
+  var w = Math.round(n * u * 1.08 + u * 0.6), sag = Math.round(u * 0.85);
+  nk.style.width = w + 'px'; nk.style.height = (sag + u) + 'px'; nk.style.setProperty('--u', u + 'px');
+  var svg = nk.querySelector('.string'); svg.style.height = (sag + u / 2) + 'px'; svg.style.top = '0px';
+  if (oc) oc.style.width = Math.round(u * 1.7) + 'px';
+  var sh = sag + u / 2 - 2;
+  nk.querySelectorAll('.bslot').forEach(function(s, i){
+    var x = u * 0.3 + u * 1.08 * (i + 0.5), t = (x - w / 2) / (w / 2), y = 2 + (sh - 2) * Math.sqrt(Math.max(0, 1 - t * t));
+    s.style.left = Math.round(x - u / 2) + 'px'; s.style.top = Math.round(y - u / 2) + 'px';
+  });
+}
+window.addEventListener('resize', function(){ if (screen === 'beads' && G) layoutBeads(); });
+function beadDown(e){
+  if (!G || G.lock || G.done || (e.button && e.button !== 0)) return;
+  var btn = e.currentTarget, k = btn.getAttribute('data-bead'); e.preventDefault();
+  var sx = e.clientX, sy = e.clientY, ghost = null, r = btn.getBoundingClientRect();
+  function move(ev){
+    var dx = ev.clientX - sx, dy = ev.clientY - sy;
+    if (!ghost) {
+      if (Math.abs(dx) + Math.abs(dy) < 8) return;
+      ghost = document.createElement('div'); ghost.className = 'bead-ghost'; ghost.innerHTML = beadImg(k);
+      ghost.style.width = r.width + 'px'; ghost.style.height = r.height + 'px'; document.body.appendChild(ghost);
+    }
+    ghost.style.transform = 'translate(' + (r.left + dx) + 'px,' + (r.top + dy) + 'px) scale(1.1)';
+    var nk = document.querySelector('.bead-stage'); if (nk) nk.classList.toggle('over', ev.clientY < nk.getBoundingClientRect().bottom);
+  }
+  function up(ev){
+    document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
+    var stg = document.querySelector('.bead-stage'); if (stg) stg.classList.remove('over');
+    if (!ghost) { beadPick(k); return; }
+    var sr = stg ? stg.getBoundingClientRect() : null;
+    if (sr && ev.clientY < sr.bottom) { ghost.remove(); beadPick(k, { x:ev.clientX - r.width / 2, y:ev.clientY - r.height / 2, w:r.width, h:r.height }); return; }
+    ghost.style.transition = 'transform .25s ease-out'; ghost.style.transform = 'translate(' + r.left + 'px,' + r.top + 'px)';
+    setTimeout(function(){ ghost.remove(); }, 260);
+  }
+  document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
+}
+function beadPick(k, from){
+  if (!G || G.lock || G.done) return;
+  var i = G.filled, slot = document.querySelector('.bslot[data-i="' + i + '"]'), btn = document.querySelector('.btray[data-bead="' + k + '"]');
+  if (!slot || !btn) return;
+  clearSay();
+  if (G.seq[i] === k) {
+    G.filled++;
+    var br = from || btn.getBoundingClientRect(), sr = slot.getBoundingClientRect();
+    var fly = document.createElement('div'); fly.className = 'bead-ghost'; fly.innerHTML = beadImg(k);
+    fly.style.width = (br.w || br.width) + 'px'; fly.style.height = (br.h || br.height) + 'px';
+    fly.style.transform = 'translate(' + (br.x != null ? br.x : br.left) + 'px,' + (br.y != null ? br.y : br.top) + 'px)'; document.body.appendChild(fly);
+    var bw = br.w || br.width, bh = br.h || br.height;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      fly.style.transition = 'transform .32s cubic-bezier(.4,0,.3,1)';
+      fly.style.transform = 'translate(' + (sr.left + sr.width / 2 - bw / 2) + 'px,' + (sr.top + sr.height / 2 - bh / 2) + 'px) scale(' + (sr.width / bw).toFixed(3) + ')';
+    }); });
+    G.lock = true;
+    setTimeout(function(){
+      fly.remove(); if (screen !== 'beads') return;
+      slot.className = 'bslot on snap'; slot.innerHTML = beadImg(k);
+      var nx = document.querySelector('.bslot[data-i="' + G.filled + '"]'); if (nx) nx.classList.add('next');
+      G.lock = false;
+      if (G.filled >= G.seq.length) beadWin(); else say(P(beadName(k), 'cheer'));
+    }, reduceMotion ? 40 : 330);
+  } else {
+    G.lock = true;
+    btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope');
+    say(L('sBeadWrong'));
+    /* sing the pattern: each bead lights up as it is named, then the empty spot wiggles */
+    var q = G.q, j = 0, upto = G.filled;
+    function step(){
+      if (screen !== 'beads' || !G || G.q !== q || G.done) return;
+      document.querySelectorAll('.bslot.lit').forEach(function(s){ s.classList.remove('lit'); });
+      if (j > upto) { G.lock = false; say(L('sBeadAsk2')); return; }
+      var s = document.querySelector('.bslot[data-i="' + j + '"]'); if (s) s.classList.add('lit');
+      if (j < upto) say(P(beadName(G.seq[j]), 'calm'));
+      j++; setTimeout(step, j > upto ? 1100 : 650);
+    }
+    setTimeout(step, 1400);
+  }
+}
+function beadWin(){
+  G.lock = true; G.done = true;
+  S.stars++; G.earned++; save();
+  G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, G.bubble2Kind);
+  say(L('sBeadDone'));
+  var oc = document.querySelector('.bead-row .octo'); if (oc) oc.classList.add('dance');
+  document.querySelectorAll('.bslot').forEach(function(s, i){ s.style.animationDelay = (i * 70) + 'ms'; s.classList.remove('snap'); s.classList.add('hop'); });
+  setTimeout(function(){ starToDot('beads'); }, 1500);
 }
 
 /* ---------- game ---------- */
@@ -2935,7 +3141,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -3900,6 +4106,8 @@ document.addEventListener('click', function(e){
     case 'tower': startTower(); break;
     case 'croc': startCroc(); break;
     case 'train': startTrain(); break;
+    case 'beads': startBeads(); break;
+    case 'bead-repeat': say(L('sBeadAsk2')); break;
     case 'train-repeat': say(G && G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); break;
     case 'train-slot': trainSlot(b.getAttribute('data-v')); break;
     case 'croc-repeat': say(G && G.mode === 'num' ? L('sCrocAskNum') : L('sCrocAsk2')); break;
@@ -3971,7 +4179,7 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else startRound(); break;
+    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
     case 'gate': gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
