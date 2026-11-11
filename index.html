@@ -784,6 +784,13 @@ img.stk{object-fit:contain}
 .parents .tipcard{overflow:visible}
 .parents .setgrid{flex:1 1 auto;width:100%;overflow:visible}
 @media (orientation:landscape) and (min-width:600px){ .parents .pbody{align-items:flex-start} }
+/* grouped (segmented) buttons: one outlined track, the chosen one filled dark brown */
+.seg{gap:4px;padding:4px;border:4px solid var(--edge);border-radius:999px;background:var(--card)}
+.seg button{border:0 !important;background:transparent;min-height:38px;border-radius:999px;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg button:disabled{opacity:.35}
+.settings .seg4{gap:4px}
+@container (max-width:440px){ .settings .seg4{border-radius:26px} .settings .seg4 button{border-radius:20px} }
 </style>
 </head>
 <body>
