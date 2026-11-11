@@ -750,6 +750,8 @@ img.stk{object-fit:contain}
 .kid-dialog .row.two{display:flex;flex-wrap:nowrap;gap:10px;width:100%;margin-top:8px}.kid-dialog .row.two .big-btn{flex:1 1 0;min-width:0}
 .kid-dialog .kid-del{color:#B5604A;align-self:center;margin-top:4px}
 .kid-dialog .kid-del.armed{font-weight:800}
+/* game titles: same first-line baseline whether they take one line or two */
+.tile .tl{display:block;height:2.2em;line-height:1.1;overflow:visible}
 </style>
 </head>
 <body>
@@ -1637,10 +1639,10 @@ function renderHome(){
     '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button></div>' +
     '<div class="hero">' + avatarBtn('home-av') + '<div><h1>' + esc(L('letsPlay', S.name)) + '</h1></div></div>' +
     '<div class="games"><div class="tiles four">' +
-      '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + L('gFeed') + '</button>' +
-      '<button class="tile ten" data-act="ten">' + critter('chick') + L('gTen') + '</button>' +
-      '<button class="tile bus" data-act="bus">' + critter('snail') + L('gBus') + '</button>' +
-      '<button class="tile frogt" data-act="frog">' + critter('frog') + L('gFrog') + '</button>' +
+      '<button class="tile feed" data-act="play">' + momo('hungry').replace('class="momo"', 'class="pic animal"') + '<span class="tl">' + L('gFeed') + '</span></button>' +
+      '<button class="tile ten" data-act="ten">' + critter('chick') + '<span class="tl">' + L('gTen') + '</span></button>' +
+      '<button class="tile bus" data-act="bus">' + critter('snail') + '<span class="tl">' + L('gBus') + '</span></button>' +
+      '<button class="tile frogt" data-act="frog">' + critter('frog') + '<span class="tl">' + L('gFrog') + '</span></button>' +
     '</div>' +
     '<div class="soon-wrap"><div class="soon-title">' + L('soon') + '</div>' +
     '<div class="soon one">' +
