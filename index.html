@@ -919,7 +919,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .croc-mid::after{content:'';position:absolute;left:8%;right:8%;bottom:8%;height:10px;border-radius:50%;background:rgba(255,255,255,.45);filter:blur(2px);z-index:-1}
 .waterbg .bar .round,.waterbg .bubble,.waterbg .cmp .n,.waterbg .same-btn{box-shadow:0 5px 0 rgba(90,130,160,.25)}
 .fish{position:absolute;height:auto;transform:translate(0,-50%) scaleX(var(--flip,1));animation:swim 3.2s ease-in-out infinite;pointer-events:none}
-@keyframes swim{0%,100%{translate:0 0}50%{translate:4px -4px}}
+@keyframes swim{0%,100%{translate:0 0;rotate:0deg}35%{translate:var(--fx,6px) var(--fy,-4px);rotate:var(--fr,2deg)}70%{translate:calc(var(--fx,6px) * -.5) calc(var(--fy,-4px) * .6);rotate:calc(var(--fr,2deg) * -.6)}}
 .fish.counted{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 6px #FFD54A) brightness(1.08)}
 .count-tag{position:absolute;transform:translate(-30%,-120%);background:#5A3E33;color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(14px,2.4dvh,22px);min-width:1.5em;height:1.5em;border-radius:999px;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;animation:pop .3s}
 .water.eaten .fish{opacity:0}
@@ -951,6 +951,11 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .croc-reward{width:auto !important;max-width:min(40vw,320px) !important;height:auto !important;max-height:26dvh !important;object-fit:contain}
 .cmp-eq .s{color:var(--ink)} .cmp-eq .a{color:var(--ink)}
 @media (prefers-reduced-motion:reduce){ .fish,.croc-img.open,.cmp .sign.shown{animation:none} }
+.croc-reward.flip{transform:scaleX(-1)}
+.croc-img.chomp{animation:chomp .26s ease-out}
+@keyframes chomp{50%{transform:var(--cf,scaleX(1)) scale(1.05,.95)}}
+.croc-img.flip.chomp{--cf:scaleX(-1)}
+.croc-img.flip{transform:scaleX(-1)}
 </style>
 </head>
 <body>
@@ -2098,21 +2103,25 @@ function crocNumbers(){
   return [a, b];
 }
 /* scatter n fish in a pond: jittered grid, random sizes; when sizes mislead (bigger fish on the smaller side) that's on purpose */
-function pondFish(n, big){
-  /* lay the fish out to the shape of each half of the screen (tall halves on a portrait iPad get fewer columns, so bigger fish) */
+function pondFish(n, big, side){
+  /* scatter fish freely over each half of the screen; fish near the outer edge may poke out of the frame */
   var hw = Math.max(120, (innerWidth - Math.min(330, innerWidth * 0.27)) / 2), hh = Math.max(120, innerHeight * 0.58), asp = hw / hh;
-  var cols = Math.max(1, Math.min(n, Math.round(Math.sqrt(n * asp * 1.25)))), rows = Math.ceil(n / cols), cells = [];
-  for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) cells.push([r, c]);
-  cells.sort(function(){ return Math.random() - 0.5; });
+  var base = Math.min(42, 100 * Math.sqrt(0.32 / (n * asp)) * 1.15);          /* fish width in % of the half, so n fish fill ~ a third of it */
   var out = [];
   for (var i = 0; i < n; i++) {
-    var cell = cells[i], cw = 100 / cols, ch = 100 / rows;
-    var sc = big ? 0.85 + Math.random() * 0.3 : 0.55 + Math.random() * 0.4;
-    var w = Math.min(cw * 0.86 * sc, 46, (100 / rows) * 0.9 * sc * (hh / hw) * 1.6);   /* fish are ~1.6x wider than tall: keep them inside their row */
-    var x = cell[1] * cw + (cw - w) / 2 + (Math.random() - 0.5) * cw * 0.12;
-    var y = cell[0] * ch + ch / 2 + (Math.random() - 0.5) * ch * 0.22;
+    var sc = big ? 0.9 + Math.random() * 0.35 : 0.6 + Math.random() * 0.4, w = base * sc, hPct = w * 0.62 * asp;
+    var best = null, bestD = -1;
+    for (var t = 0; t < 40; t++) {
+      var x = side === 'L' ? -w * 0.25 + Math.random() * (100 - w * 0.9) : w * 0.1 + Math.random() * (100 - w * 0.85);
+      var y = 4 + Math.random() * 92;
+      var d = Infinity;
+      out.forEach(function(o){ var dx = (o.x + o.w / 2) - (x + w / 2), dy = (o.y - y) / asp; d = Math.min(d, Math.sqrt(dx * dx + dy * dy) - (o.w + w) * 0.42); });
+      if (d > bestD) { bestD = d; best = [x, y]; }
+      if (d > 4) break;
+    }
     var f = 1 + Math.floor(Math.random() * FISH_N);
-    out.push({ f:f, x:x, y:y, w:w, flip:Math.random() < 0.5, d:(Math.random() * 2).toFixed(2) });
+    out.push({ f:f, x:best[0], y:best[1], w:w, flip:Math.random() < 0.5, d:(Math.random() * 4).toFixed(2),
+      dur:(4 + Math.random() * 4).toFixed(1), dx:Math.round((Math.random() - 0.5) * 28), dy:Math.round((Math.random() - 0.5) * 16), rot:((Math.random() - 0.5) * 10).toFixed(1) });
   }
   return out;
 }
@@ -2121,14 +2130,14 @@ function crocQuestion(){
   G.l = p[0]; G.r = p[1]; G.first = true; G.lock = false; G.done = null; G.bubble2 = '';
   /* sometimes give the smaller side the bigger fish, so children count instead of judging by size */
   var trick = S.maxSum > 5 && Math.random() < 0.5;
-  G.fishL = pondFish(G.l, trick ? G.l < G.r : Math.random() < 0.5);
-  G.fishR = pondFish(G.r, trick ? G.r < G.l : Math.random() < 0.5);
+  G.fishL = pondFish(G.l, trick ? G.l < G.r : Math.random() < 0.5, 'L');
+  G.fishR = pondFish(G.r, trick ? G.r < G.l : Math.random() < 0.5, 'R');
   screen = 'croc'; closeOverlay(); renderCroc();
   say(G.q === 0 ? L('sCrocAsk') : L('sCrocAsk2'));
 }
 function fishHtml(list, side){
   return list.map(function(o, i){
-    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';animation-delay:-' + o.d + 's">';
+    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + o.dx + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
   }).join('');
 }
 function renderCroc(){
@@ -2163,25 +2172,40 @@ function crocPick(v){
     G.lock = true; G.done = v;
     G.bubble2 = L('bravo'); G.bubble2Kind = 'yum';
     S.stars++; G.earned++; save();
-    if (v === 'E') { renderCroc(); say(L('sCrocSame', G.l)); }
+    if (v === 'E') { renderCroc(); say(L('sCrocSame', G.l)); setTimeout(showCrocReward, 2600); }
     else {
-      /* the croc turns to the bigger side, opens wide and the fish swim into its mouth */
-      var pond = document.getElementById(v === 'L' ? 'pondL' : 'pondR'), mid = document.querySelector('.croc-mid'), m = mid.getBoundingClientRect();
-      var fish = pond ? [].slice.call(pond.querySelectorAll('.fish')) : [], rects = fish.map(function(f){ return f.getBoundingClientRect(); });
-      renderCroc();
-      var p2 = document.getElementById(v === 'L' ? 'pondL' : 'pondR');
-      if (p2 && !reduceMotion) {
-        [].slice.call(p2.querySelectorAll('.fish')).forEach(function(f, i){
-          var r = rects[i]; if (!r) return;
-          var tx = (v === 'L' ? m.left + m.width * 0.15 : m.right - m.width * 0.15) - (r.left + r.width / 2), ty = (m.top + m.height * 0.45) - (r.top + r.height / 2);
-          f.style.transition = 'transform .45s ease-in ' + (i * 0.06) + 's, opacity .45s ease-in ' + (i * 0.06) + 's';
-          requestAnimationFrame(function(){ requestAnimationFrame(function(){ f.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(.2)'; f.style.opacity = '0'; }); });
-        });
-      } else if (p2) p2.classList.add('eaten');
+      /* in place: the croc turns to the bigger side and opens wide, then the fish swim into its mouth one by one */
+      var stage = document.querySelector('.crocgame'); stage.classList.add(v === 'L' ? 'eat-left' : 'eat-right');
+      var img = document.querySelector('.croc-mid .croc-img'); img.src = 'animals/croc-open.png'; img.className = 'croc-img open' + (v === 'L' ? ' flip' : '');
+      document.querySelectorAll('.crocgame .water, .crocgame .same-btn').forEach(function(x){ x.disabled = true; });
+      var cmp = document.querySelector('.cmp'); if (cmp) { var ns = cmp.querySelectorAll('.n'), sg = cmp.querySelector('.sign'); ns[0].textContent = G.l; ns[1].textContent = G.r; sg.innerHTML = G.l > G.r ? '&gt;' : '&lt;'; sg.classList.add('shown'); }
+      setBubble2(G.bubble2, G.bubble2Kind);
       var big = Math.max(G.l, G.r), small = Math.min(G.l, G.r);
       say(L('sCrocRight', big, small));
+      var fish = [].slice.call(document.querySelectorAll('#' + (v === 'L' ? 'pondL' : 'pondR') + ' .fish'));
+      /* nearest fish first */
+      var mid = img.getBoundingClientRect(), mx = v === 'L' ? mid.left + mid.width * 0.1 : mid.right - mid.width * 0.1, my = mid.top + mid.height * 0.55;
+      fish.sort(function(a, b){ var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return Math.abs(ra.left + ra.width / 2 - mx) - Math.abs(rb.left + rb.width / 2 - mx); });
+      var step = Math.min(260, 1500 / Math.max(1, fish.length)), dur = reduceMotion ? 300 : 650;
+      fish.forEach(function(f, i){
+        var r = f.getBoundingClientRect(), dx = mx - (r.left + r.width / 2), dy = my - (r.top + r.height / 2);
+        var o = G[v === 'L' ? 'fishL' : 'fishR'][+f.getAttribute('data-i') - 1];
+        var faceRight = FISH_LEFT[o.f - 1] ? -1 : 1, toward = (v === 'L' ? 1 : -1) * faceRight;   /* swim facing the croc */
+        f.style.animation = 'none';
+        if (f.animate && !reduceMotion) {
+          f.animate([
+            { transform:'translate(0,-50%) scaleX(' + toward + ')', opacity:1 },
+            { transform:'translate(' + (dx * 0.7) + 'px,calc(-50% + ' + (dy * 0.7) + 'px)) scaleX(' + toward + ') scale(.85)', opacity:1, offset:0.7 },
+            { transform:'translate(' + dx + 'px,calc(-50% + ' + dy + 'px)) scaleX(' + toward + ') scale(.25)', opacity:0 }
+          ], { duration:dur, delay:300 + i * step, easing:'ease-in', fill:'forwards' });
+        } else setTimeout(function(){ f.style.transition = 'opacity .3s'; f.style.opacity = '0'; }, 300 + i * step);
+      });
+      var eatEnd = 300 + fish.length * step + dur;
+      /* gulp: a quick chomp once the last fish is in */
+      setTimeout(function(){ if (screen !== 'croc') return; img.src = 'animals/croc-closed.png'; img.classList.add('chomp'); setTimeout(function(){ if (screen === 'croc') { img.src = 'animals/croc-open.png'; img.classList.remove('chomp'); } }, 260); }, eatEnd);
+      setTimeout(showCrocReward, eatEnd + 1300);
     }
-    setTimeout(showCrocReward, 2600);
+
   } else {
     G.lock = true;
     if (G.first) G.first = false;
@@ -2211,7 +2235,7 @@ function showCrocReward(){
   if (screen !== 'croc') return;
   var last = G.q + 1 >= ROUND, sign = G.l > G.r ? '&gt;' : G.l < G.r ? '&lt;' : '=';
   overlay('<div class="reward">' +
-    '<h1>' + L('didIt') + '</h1>' + crocImg(G.done !== 'E', 'pic animal croc-reward') +
+    '<h1>' + L('didIt') + '</h1>' + crocImg(G.done !== 'E', 'pic animal croc-reward' + (G.l > G.r ? ' flip' : '')) +
     '<div class="sumcard"><div class="bigeq cmp-eq"><span class="s">' + G.l + '</span><span>' + sign + '</span><span class="a">' + G.r + '</span></div></div>' +
     '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
