@@ -848,6 +848,39 @@ img.stk{object-fit:contain}
 .tile.writet{position:relative}
 .dev-badge{position:absolute;top:clamp(6px,1.4dvh,12px);right:clamp(6px,1.4dvh,12px);max-width:calc(100% - 16px);background:#FFFFFF;border:3px solid #CDBDE2;color:#5E4688;border-radius:999px;padding:3px 10px;font-family:Nunito,var(--display);font-weight:800;font-size:clamp(11px,1.7dvh,14px);line-height:1.15;text-align:center}
 @media (max-width:600px),(max-height:600px){ .dev-badge{top:-11px;right:auto;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% + 8px);font-size:10px;padding:2px 7px;border-width:2px;z-index:2} }
+/* ===== kid switcher on the "That's me" screen ===== */
+.start-av.pop{animation:avpop .35s ease-out}
+@keyframes avpop{0%{transform:scale(.85)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
+.sk-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(12px,2.6vw,28px);margin-top:clamp(8px,3dvh,32px);max-width:min(100%,760px)}
+.sk-kid{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent}
+.sk-face{width:clamp(56px,10dvh,84px);height:clamp(56px,10dvh,84px);border-radius:50%;background:#fff;border:4px solid var(--edge);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .12s;box-sizing:border-box}
+.sk-face svg,.sk-face img{width:100%;height:100%}
+.sk-kid:active .sk-face{transform:scale(.94)}
+.sk-name{font-weight:800;font-size:clamp(13px,1.9dvh,16px);max-width:9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sk-add .sk-face{background:transparent;border-style:dashed}
+.sk-add .sk-face svg{width:42%;height:42%}
+/* hold-to-confirm gate */
+.hold-gate{align-items:center;max-width:520px}
+.hold-gate p{font-size:17px;font-weight:700;line-height:1.35}
+.hold-btn{position:relative;width:168px;height:168px;border-radius:50%;border:0;background:var(--card);box-shadow:0 6px 0 var(--edge);padding:0;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:transform .15s}
+.hold-btn.holding{transform:scale(.97)}
+.hold-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.hold-ring circle{fill:none;stroke-width:10}
+.hold-ring .track{stroke:#EFE3D6}
+.hold-ring .fill{stroke:#6EA6D1;stroke-linecap:round}
+.hold-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--ink);pointer-events:none}
+.hold-in svg{width:40px;height:40px}
+.hold-in b{font-family:var(--display);font-weight:800;font-size:26px;line-height:1}
+.hold-hint{min-height:1.3em;margin:0;color:var(--ink2);font-size:15px !important}
+/* add a kid */
+.step-of{display:block;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.add-step .kid-name{font-size:22px;padding:14px 16px}
+.big-btn:disabled{opacity:.45;cursor:default;transform:none}
+.addbuddy .ab-title{text-align:center;min-width:0}
+.addbuddy .ab-title h1{margin:2px 0 0}
+.addbuddy .av-opt{position:relative}
+.av-check{position:absolute;top:-2px;right:-2px;width:30%;height:30%;min-width:26px;min-height:26px;border-radius:50%;background:#6EA6D1;border:3px solid #fff;display:flex;align-items:center;justify-content:center}
+.av-check svg{width:70%;height:70%}
 </style>
 </head>
 <body>
@@ -999,6 +1032,7 @@ en: {
   sTowerWrong: [P('Let’s count the blocks.', 'calm')], sTowerTry: [P('Try again!', 'cheer')],
   gWrite: 'Write It',
   devBadge: 'Still under development',
+  switchTo: function(n){ return 'Switch to ' + n; }, addShort: 'Add', holdText: 'Press and hold the button for 3 seconds to add a new kid.', holdLabel: 'Hold', keepHolding: 'Keep holding…', stepOf: function(a, b){ return 'Step ' + a + ' of ' + b; }, theirName: 'What’s their name?', nameLabel: 'Name', namePh: 'Kid’s first name', buddyFor: function(n){ return 'Pick a buddy for ' + n; }, addName: function(n){ return 'Add ' + n; }, backLabel: 'Back',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1086,6 +1120,7 @@ fr: {
   sTowerWrong: [P('Comptons les blocs.', 'calm')], sTowerTry: [P('Essaie encore !', 'cheer')],
   gWrite: 'J’écris',
   devBadge: 'En cours de développement',
+  switchTo: function(n){ return 'Passer à ' + n; }, addShort: 'Ajouter', holdText: 'Garde le bouton enfoncé 3 secondes pour ajouter un enfant.', holdLabel: 'Tenir', keepHolding: 'Continue d’appuyer…', stepOf: function(a, b){ return 'Étape ' + a + ' sur ' + b; }, theirName: 'Comment s’appelle-t-il\u00a0?', nameLabel: 'Prénom', namePh: 'Prénom de l’enfant', buddyFor: function(n){ return 'Choisis un copain pour ' + n; }, addName: function(n){ return 'Ajouter ' + n; }, backLabel: 'Retour',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1173,6 +1208,7 @@ es: {
   sTowerWrong: [P('Vamos a contar los bloques.', 'calm')], sTowerTry: [P('¡Inténtalo otra vez!', 'cheer')],
   gWrite: 'A escribir',
   devBadge: 'Todavía en desarrollo',
+  switchTo: function(n){ return 'Cambiar a ' + n; }, addShort: 'Añadir', holdText: 'Mantén pulsado el botón 3 segundos para añadir un niño.', holdLabel: 'Mantén', keepHolding: 'Sigue pulsando…', stepOf: function(a, b){ return 'Paso ' + a + ' de ' + b; }, theirName: '¿Cómo se llama?', nameLabel: 'Nombre', namePh: 'Nombre del niño', buddyFor: function(n){ return 'Elige un amigo para ' + n; }, addName: function(n){ return 'Añadir a ' + n; }, backLabel: 'Atrás',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1260,6 +1296,7 @@ zh: {
   sTowerWrong: [P('我们来数一数积木。', 'calm')], sTowerTry: [P('再试一次！', 'cheer')],
   gWrite: '写数字',
   devBadge: '还在开发中',
+  switchTo: function(n){ return '换成' + n; }, addShort: '添加', holdText: '按住按钮3秒，添加一个孩子。', holdLabel: '按住', keepHolding: '继续按住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '孩子叫什么名字？', nameLabel: '名字', namePh: '孩子的名字', buddyFor: function(n){ return '给' + n + '选一个小伙伴'; }, addName: function(n){ return '添加' + n; }, backLabel: '返回',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1347,6 +1384,7 @@ ja: {
   sTowerWrong: [P('ブロックを かぞえてみよう。', 'calm')], sTowerTry: [P('もういちど やってみよう！', 'cheer')],
   gWrite: 'すうじを かこう',
   devBadge: 'まだ じゅんびちゅう',
+  switchTo: function(n){ return n + 'に かえる'; }, addShort: 'ついか', holdText: 'ボタンを 3びょう おしつづけると こどもを ついかできます。', holdLabel: 'おしつづける', keepHolding: 'そのまま…', stepOf: function(a, b){ return 'ステップ ' + a + '/' + b; }, theirName: 'おなまえは？', nameLabel: 'なまえ', namePh: 'こどもの なまえ', buddyFor: function(n){ return n + 'の なかまを えらぼう'; }, addName: function(n){ return n + 'を ついか'; }, backLabel: 'もどる',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1434,6 +1472,7 @@ yue: {
   sTowerWrong: [P('我哋數吓啲積木。', 'calm')], sTowerTry: [P('再試多次！', 'cheer')],
   gWrite: '寫數字',
   devBadge: '仲喺開發緊',
+  switchTo: function(n){ return '轉做' + n; }, addShort: '加', holdText: '撳住個掣3秒，就可以加小朋友。', holdLabel: '撳住', keepHolding: '繼續撳住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '小朋友叫咩名？', nameLabel: '名', namePh: '小朋友嘅名', buddyFor: function(n){ return '幫' + n + '揀個好朋友'; }, addName: function(n){ return '加' + n; }, backLabel: '返回',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1521,6 +1560,7 @@ ko: {
   sTowerWrong: [P('블록을 세어 봐요.', 'calm')], sTowerTry: [P('다시 해 봐요!', 'cheer')],
   gWrite: '숫자 쓰기',
   devBadge: '아직 개발 중',
+  switchTo: function(n){ return n + '(으)로 바꾸기'; }, addShort: '추가', holdText: '버튼을 3초 동안 누르고 있으면 아이를 추가할 수 있어요.', holdLabel: '누르기', keepHolding: '계속 누르세요…', stepOf: function(a, b){ return a + '/' + b + '단계'; }, theirName: '아이 이름이 뭐예요?', nameLabel: '이름', namePh: '아이 이름', buddyFor: function(n){ return n + '의 친구를 골라요'; }, addName: function(n){ return n + ' 추가'; }, backLabel: '뒤로',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -1803,6 +1843,7 @@ function render(){
   else if (screen === 'frog') renderFrog();
   else if (screen === 'tower') renderTower();
   else if (screen === 'avatar') renderAvatar();
+  else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
@@ -1818,7 +1859,7 @@ function renderStart(){
     (known
       ? '<h1>' + esc(L('hiName', S.name)) + '</h1>' +
         '<button class="big-btn" data-act="its-me">' + L('itsMe') + '</button>' +
-        ''
+        startKidRow()
       : '<h1>' + L('whatName') + '</h1>' +
         '<form id="nameForm" class="nameform" autocomplete="off">' +
           '<label class="sr" for="kidName">' + L('yourName') + '</label>' +
@@ -1835,6 +1876,84 @@ function renderStart(){
     S.name = v; save(); askName = false;
     avatarReturn = 'home'; show('avatar');
   });
+}
+
+/* ---------- "That's me?" screen: switch kids with one tap, add a kid behind a 3-second hold ---------- */
+function capName(n){ n = (n || '').trim(); return n ? n.charAt(0).toUpperCase() + n.slice(1) : n; }
+function startKidRow(){
+  var others = S.kids.filter(function(k){ return k.id !== S.active; });
+  return '<div class="sk-row">' + others.map(function(k){
+    return '<button class="sk-kid" data-act="start-switch" data-v="' + k.id + '" aria-label="' + esc(L('switchTo', k.name || '')) + '">' +
+      '<span class="sk-face">' + avatarFace(k.avatarPicked ? k.avatar : 'av17') + '</span><span class="sk-name">' + esc(k.name || '') + '</span></button>';
+  }).join('') +
+  '<button class="sk-kid sk-add" data-act="start-add" aria-label="' + esc(L('addKid')) + '"><span class="sk-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="sk-name">' + L('addShort') + '</span></button></div>';
+}
+var pendingKid = null;   /* { name, avatar } while a grown-up is adding a kid */
+var HOLD_MS = 3000;
+function holdGate(){
+  var R = 74, C = 2 * Math.PI * R;
+  overlay('<div class="gate hold-gate"><h2>' + L('grownOnly') + '</h2><p>' + L('holdText') + '</p>' +
+    '<button class="hold-btn" id="holdBtn" aria-label="' + esc(L('holdLabel')) + '">' +
+      '<svg class="hold-ring" viewBox="0 0 168 168" aria-hidden="true"><circle cx="84" cy="84" r="' + R + '" class="track"/><circle cx="84" cy="84" r="' + R + '" class="fill" id="holdFill" style="stroke-dasharray:' + C + ';stroke-dashoffset:' + C + '"/></svg>' +
+      '<span class="hold-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 15.5v2"/></svg><b id="holdTxt">' + L('holdLabel') + '</b></span></button>' +
+    '<p class="hold-hint" id="holdHint">&nbsp;</p>' +
+    '<button class="link-btn" data-act="close">' + L('cancel') + '</button></div>');
+  var btn = document.getElementById('holdBtn'), fill = document.getElementById('holdFill'), txt = document.getElementById('holdTxt'), hint = document.getElementById('holdHint');
+  var t0 = 0, raf = 0, pid = null;
+  function reset(){
+    cancelAnimationFrame(raf); raf = 0; pid = null; t0 = 0;
+    fill.style.strokeDashoffset = C; txt.textContent = L('holdLabel'); hint.innerHTML = '&nbsp;'; btn.classList.remove('holding');
+  }
+  function tick(now){
+    if (!btn.isConnected) { cancelAnimationFrame(raf); return; }     /* screen went away: stop */
+    var p = Math.min(1, (now - t0) / HOLD_MS);
+    fill.style.strokeDashoffset = C * (1 - p);
+    txt.textContent = String(Math.max(1, Math.ceil((HOLD_MS - (now - t0)) / 1000)));
+    if (p >= 1) { raf = 0; closeOverlay(); addStep1(''); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  btn.addEventListener('pointerdown', function(e){
+    e.preventDefault(); if (raf) return;
+    pid = e.pointerId; try { btn.setPointerCapture(pid); } catch(_) {}
+    t0 = performance.now(); btn.classList.add('holding'); hint.textContent = L('keepHolding');
+    raf = requestAnimationFrame(tick);
+  });
+  /* lifting the finger, sliding off and a system cancel all count as letting go */
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function(t){ btn.addEventListener(t, function(){ if (raf) reset(); }); });
+  btn.addEventListener('pointermove', function(e){
+    if (!raf) return; var r = btn.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) reset();
+  });
+  btn.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  btn.addEventListener('click', function(e){ e.preventDefault(); });
+}
+function addStep1(name){
+  overlay('<form class="gate kid-dialog add-step" id="addForm" autocomplete="off">' +
+    '<span class="step-of">' + L('stepOf', 1, 2) + '</span><h2>' + L('theirName') + '</h2>' +
+    '<label class="lab" for="addName">' + L('nameLabel') + '</label>' +
+    '<input id="addName" class="kid-name" type="text" maxlength="20" spellcheck="false" autocapitalize="words" autocomplete="off" placeholder="' + esc(L('namePh')) + '" value="' + esc(name || '') + '">' +
+    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid" id="addNext"' + ((name || '').trim() ? '' : ' disabled') + '>' + L('nextStep') + '</button></div></form>');
+  var inp = document.getElementById('addName'), nx = document.getElementById('addNext');
+  setTimeout(function(){ inp.focus(); }, 50);
+  inp.addEventListener('input', function(){ nx.disabled = !inp.value.trim(); });
+  document.getElementById('addForm').addEventListener('submit', function(e){
+    e.preventDefault(); var v = capName(inp.value.slice(0, 20)); if (!v) return;
+    pendingKid = { name: v, avatar: pendingKid && pendingKid.name === v ? pendingKid.avatar : null };
+    show('addbuddy');
+  });
+}
+function renderAddBuddy(){
+  if (!pendingKid) { show('start'); return; }
+  var ids = avatarIds(), sel = pendingKid.avatar;
+  app.innerHTML = '<section class="screen avatarscreen addbuddy">' +
+    '<div class="bar av-bar"><button class="round" data-act="add-back" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
+      '<div class="ab-title"><span class="step-of">' + L('stepOf', 2, 2) + '</span><h1>' + esc(L('buddyFor', pendingKid.name)) + '</h1></div>' +
+      '<button class="round" data-act="add-close" aria-label="' + esc(L('cancel')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+    '<div class="av-area"><div class="av-grid" role="radiogroup" aria-label="' + esc(L('buddyFor', pendingKid.name)) + '">' +
+      ids.map(function(id, i){ return '<button class="av-opt' + (sel === id ? ' sel' : '') + '" role="radio" data-act="add-pick" data-v="' + id + '" aria-checked="' + (sel === id) + '" aria-label="' + esc(L('buddyN', i + 1)) + '">' + avatarFace(id) + (sel === id ? '<span class="av-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>' : '') + '</button>'; }).join('') +
+    '</div></div>' +
+    '<button class="big-btn" data-act="add-done"' + (sel ? '' : ' disabled') + '>' + esc(L('addName', pendingKid.name)) + '</button>' +
+    '</section>';
 }
 
 /* ---------- home ---------- */
@@ -3158,6 +3277,24 @@ document.addEventListener('click', function(e){
     case 'bus': startBus(); break;
     case 'frog': startFrog(); break;
     case 'tower': startTower(); break;
+    case 'start-switch': {
+      switchKid(b.getAttribute('data-v')); renderStart();
+      var av = document.querySelector('.start-av'); if (av) { av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
+      var me = document.querySelector('[data-act=its-me]'); if (me) me.focus();
+      break;
+    }
+    case 'start-add': holdGate(); break;
+    case 'add-back': { var nm = pendingKid ? pendingKid.name : ''; show('start'); addStep1(nm); break; }
+    case 'add-close': pendingKid = null; show('start'); break;
+    case 'add-pick': if (pendingKid) { pendingKid.avatar = b.getAttribute('data-v'); renderAddBuddy(); var sb = document.querySelector('.av-opt.sel'); if (sb) sb.focus(); } break;
+    case 'add-done': {
+      if (!pendingKid || !pendingKid.avatar) break;
+      var pk = pendingKid; pendingKid = null;
+      addKid(pk.name); S.avatar = pk.avatar; S.avatarPicked = true; save(); askName = false;
+      show('start');
+      var av2 = document.querySelector('.start-av'); if (av2) av2.classList.add('pop');
+      break;
+    }
     case 'write': clearSay(); location.href = 'write-test.html'; break;
     case 'tower-repeat': towerAskAloud(); break;
     case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
