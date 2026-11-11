@@ -965,6 +965,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .group-bar{position:relative}
 .group-title{display:flex;align-items:center;gap:clamp(10px,2vw,18px);min-width:0;flex:1;justify-content:center}
 .group-title h1{margin:0;font-size:clamp(19px,min(5.4vw,5.6dvh),48px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.grp-pics img.grp-uni{height:108%;max-width:40%}   /* unicorn ~35% bigger than before */
 </style>
 </head>
 <body>
@@ -2100,8 +2101,8 @@ function renderHome(){
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
-      '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
       '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics">' + crocImg(false, 'croc-pic') + '</span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
+      '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-uni" src="animals/unicorn.png" alt=""><img src="animals/chick.png" alt=""><img src="animals/tiger.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
   /* long group names on a narrow phone: shrink the title until it fits beside the stars */
