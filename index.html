@@ -460,10 +460,9 @@ body.muted .speakbtn{background:#F3E9E2}
 .table .loose .cookie{transition:filter .25s,opacity .25s}
 
 /* ===== Chinese display font (only downloaded when Chinese characters are shown) ===== */
-@font-face{font-family:'Lemi MuHe';src:url(fonts/lemi-muhe.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
-  unicode-range:U+2E80-2FDF,U+3000-303F,U+3040-30FF,U+3100-312F,U+3190-31FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF}
-html:lang(zh){--display:'Baloo 2','Lemi MuHe','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
-html:lang(zh) body,html:lang(zh) .parents{font-family:Nunito,'Lemi MuHe','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
+@font-face{font-family:'Chiron GoRound SC';src:url(fonts/chiron-zh.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+html:lang(zh){--display:'Baloo 2','Chiron GoRound SC','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
+html:lang(zh) body,html:lang(zh) .parents{font-family:Nunito,'Chiron GoRound SC','PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif}
 
 /* ===== Japanese: Zen Maru Gothic (SIL OFL), only downloaded when Japanese is shown ===== */
 @font-face{font-family:'Zen Maru Gothic';src:url(fonts/zen-maru-gothic-bold.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:swap;
