@@ -939,6 +939,7 @@ en: {
   specialSticker: 'Special sticker!',
   tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   back: 'Back',
+  nextStep: 'Next',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1017,6 +1018,7 @@ fr: {
   specialSticker: 'Autocollant spécial\u00a0!',
   tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   back: 'Retour',
+  nextStep: 'Suivant',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1095,6 +1097,7 @@ es: {
   specialSticker: '¡Pegatina especial!',
   tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   back: 'Volver',
+  nextStep: 'Siguiente',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1173,6 +1176,7 @@ zh: {
   specialSticker: '特别贴纸！',
   tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   back: '返回',
+  nextStep: '下一步',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1251,6 +1255,7 @@ ja: {
   specialSticker: 'とくべつな シール！',
   tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   back: 'もどる',
+  nextStep: 'つぎへ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1329,6 +1334,7 @@ yue: {
   specialSticker: '特別貼紙！',
   tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   back: '返回',
+  nextStep: '下一步',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1407,6 +1413,7 @@ ko: {
   specialSticker: '특별 스티커!',
   tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   back: '뒤로',
+  nextStep: '다음',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2776,7 +2783,7 @@ function kidDialog(id){
   var o = overlay('<form class="gate kid-dialog" id="kidForm" autocomplete="off"><h2>' + (k ? L('editKid', k.name || '') : L('addKid')) + '</h2>' +
     '<label class="lab" for="kidDlgName">' + L('childName') + '</label>' +
     '<input id="kidDlgName" class="kid-name" type="text" maxlength="20" spellcheck="false" autocapitalize="words" value="' + esc(k ? k.name : '') + '" placeholder="' + esc(L('typeName')) + '">' +
-    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid">' + (k ? L('saveBtn') : L('next')) + '</button></div>' +
+    '<div class="row two"><button type="button" class="big-btn plain back-kid" data-act="close">' + L('cancel') + '</button><button type="submit" class="big-btn back-kid">' + (k ? L('saveBtn') : L('nextStep')) + '</button></div>' +
     (k && S.kids.length > 1 ? '<button type="button" class="link-btn kid-del" data-act="kid-del" data-v="' + k.id + '">' + L('deleteKid') + '</button>' : '') +
     '</form>');
   var inp = document.getElementById('kidDlgName'); if (inp) setTimeout(function(){ inp.focus(); }, 50);
