@@ -1002,10 +1002,17 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .reward.croc-rw .croc-reward{max-height:min(26dvh,220px) !important;max-width:min(60vw,360px) !important}
 @media (orientation:landscape) and (max-height:600px){ .reward.croc-rw{gap:6px} .reward.croc-rw .croc-reward{max-height:24dvh !important} .reward.croc-rw h1{font-size:clamp(26px,8dvh,44px)} }
 /* ---------- number train ---------- */
-.star-pop{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .55s cubic-bezier(.3,1.6,.6,1) both}
+.star-pop{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .95s cubic-bezier(.3,.7,.4,1) both;transform-origin:50% 100%}
 .star-pop img{width:clamp(80px,24dvh,200px);height:auto;filter:drop-shadow(0 8px 10px rgba(120,90,40,.25))}
 .star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
-@keyframes starIn{from{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}}
+@keyframes starIn{
+  0%{transform:translate(-50%,-50%) translateY(-38vh) scale(.5) rotate(-25deg);opacity:0}
+  35%{opacity:1}
+  52%{transform:translate(-50%,-50%) translateY(0) scale(1.18,.82) rotate(0)}
+  66%{transform:translate(-50%,-50%) translateY(-14%) scale(.94,1.08)}
+  80%{transform:translate(-50%,-50%) translateY(0) scale(1.07,.93)}
+  90%{transform:translate(-50%,-50%) translateY(-4%) scale(.98,1.02)}
+  100%{transform:translate(-50%,-50%) translateY(0) scale(1)}}
 .dots span.pop{animation:signpop .45s cubic-bezier(.3,1.6,.6,1)}
 body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/cover no-repeat fixed}
 .tile.traint{background:#DDEDF0;border-color:#A7CBD2;box-shadow:0 7px 0 #A7CBD2}
@@ -2644,11 +2651,11 @@ function starToDot(scr){
       st.animate([{ transform:'translate(-50%,-50%) scale(1)' }, { transform:'translate(calc(-50% + ' + (d.left + d.width / 2 - a.left - a.width / 2) + 'px),calc(-50% + ' + (d.top + d.height / 2 - a.top - a.height / 2) + 'px)) scale(.12)', opacity:.6 }],
         { duration:600, easing:'cubic-bezier(.5,0,.7,.4)', fill:'forwards' });
     }
-  }, 900);
+  }, 1150);
   setTimeout(function(){
     st.remove(); if (dot) { dot.className = 'done'; dot.classList.add('pop'); }
-  }, 1500);
-  setTimeout(function(){ if (screen === scr && G && G.q === q) next(); }, 2000);
+  }, 1750);
+  setTimeout(function(){ if (screen === scr && G && G.q === q) next(); }, 2250);
 }
 function showTrainReward(){
   if (screen !== 'train') return;
@@ -2745,8 +2752,8 @@ function beadMakeRoom(){
 function wrapBeads(animate){
   var nk = document.querySelector('.necklace'); if (!nk || !G || !G.lay) return;
   var L0 = G.lay, ocTop = L0.lift + Math.round(L0.u * 0.75) - L0.oh;
-  var bw = L0.ow * 0.89, bx = L0.w / 2 - bw / 2, by = ocTop + L0.oh * 0.52, bh = L0.oh * 0.26;
-  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length, bs = Math.round(Math.min(L0.u * 0.51, bw * 1.25 / n));
+  var bw = L0.ow * 0.76, bx = L0.w / 2 - bw / 2, by = ocTop + L0.oh * 0.54, bh = L0.oh * 0.22;
+  var sl = [].slice.call(nk.querySelectorAll('.bslot')), n = sl.length, bs = Math.round(Math.min(L0.u * 0.43, bw * 1.25 / n));
   var ease = 'cubic-bezier(.45,0,.3,1)', dur = animate ? '1.6s ' : '0s ';
   var svg = nk.querySelector('.string');
   svg.style.transition = animate ? 'left ' + dur + ease + ',top ' + dur + ease + ',width ' + dur + ease + ',height ' + dur + ease : '';
