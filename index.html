@@ -2244,13 +2244,13 @@ function crocPlan(){
 }
 function startCroc(){ G = { game:'croc', q:0, earned:0, startStars:S.stars, plan:crocPlan() }; crocQuestion(); }
 function crocNumbers(kind){
-  var small = S.maxSum <= 5, max = small ? 5 : 10, a, b, n = 0;
+  var small = S.maxSum <= 5, max = Math.min(20, S.maxSum || 5), a, b, n = 0;
   function r(lo){ return lo + Math.floor(Math.random() * (max - lo + 1)); }
   if (kind === 'eq') { a = r(2); return [a, a]; }
   do {
     a = r(1); b = r(1); n++;
     var d = Math.abs(a - b);
-    var ok = a !== b && (kind === 'easy' ? d >= (small ? 2 : 3) : kind === 'close' ? d <= 2 && Math.min(a, b) >= 3 : true);
+    var ok = a !== b && (kind === 'easy' ? d >= (small ? 2 : max > 10 ? 4 : 3) : kind === 'close' ? d <= 2 && Math.min(a, b) >= 3 : true);
   } while ((!ok || (G.prev && G.prev[0] === a && G.prev[1] === b)) && n < 200);
   return [a, b];
 }
@@ -2411,7 +2411,7 @@ function startTrain(){ G = { game:'train', q:0, earned:0, startStars:S.stars, pl
 function shuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function trainQuestion(){
   var step = G.plan[G.q] || { m:'tap', g:1 }, small = S.maxSum <= 5;
-  var n = small ? 5 : 6, start = small ? 1 : 1 + Math.floor(Math.random() * 5);
+  var max = Math.min(20, S.maxSum || 5), n = small ? 5 : 6, start = small ? 1 : 1 + Math.floor(Math.random() * (max - 5));
   var seq = []; for (var i = 0; i < n; i++) seq.push(start + i);
   /* gaps: never two side by side; the very first question keeps the first car, so counting starts easy */
   var gaps, tries = 0;
@@ -2423,7 +2423,7 @@ function trainQuestion(){
   G.prevGaps = gaps; G.prevStart = start;
   var missing = gaps.map(function(i){ return seq[i]; });
   /* cards: the missing numbers plus look-alikes (neighbours, often a number already on the train) */
-  var pool = [], lo = Math.max(0, seq[0] - 1), hi = Math.min(10, seq[n - 1] + 1);
+  var pool = [], lo = Math.max(0, seq[0] - 1), hi = Math.min(max, seq[n - 1] + 1);
   for (var v = lo; v <= hi; v++) if (missing.indexOf(v) < 0) pool.push(v);
   pool.sort(function(a, b){ return Math.abs(a - missing[0]) - Math.abs(b - missing[0]) + (Math.random() - 0.5) * 2.5; });
   var extra = pool.slice(0, step.m === 'tap' ? 2 : 1);
