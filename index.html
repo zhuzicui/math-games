@@ -1002,9 +1002,9 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .reward.croc-rw .croc-reward{max-height:min(26dvh,220px) !important;max-width:min(60vw,360px) !important}
 @media (orientation:landscape) and (max-height:600px){ .reward.croc-rw{gap:6px} .reward.croc-rw .croc-reward{max-height:24dvh !important} .reward.croc-rw h1{font-size:clamp(26px,8dvh,44px)} }
 /* ---------- number train ---------- */
-.star-pop{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .95s cubic-bezier(.3,.7,.4,1) both;transform-origin:50% 100%}
-.star-pop img{width:clamp(80px,24dvh,200px);height:auto;filter:drop-shadow(0 8px 10px rgba(120,90,40,.25))}
-.star-pop b{font-family:var(--display);font-weight:800;font-size:clamp(28px,6dvh,48px);color:#B07A1E;margin-top:-6px}
+.star-pop{--sp:clamp(80px,24dvh,200px);width:calc(var(--sp)*1.45);height:calc(var(--sp)*1.45);border-radius:50%;background:#fff;box-shadow:0 10px 26px rgba(90,62,51,.22),0 2px 6px rgba(90,62,51,.12);justify-content:center;position:fixed;left:50%;top:46%;transform:translate(-50%,-50%);z-index:80;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:starIn .95s cubic-bezier(.3,.7,.4,1) both;transform-origin:50% 100%}
+.star-pop img{width:calc(var(--sp)*.86);height:auto;margin-top:calc(var(--sp)*.04);filter:drop-shadow(0 4px 6px rgba(120,90,40,.18))}
+.star-pop b{font-family:var(--display);font-weight:800;font-size:calc(var(--sp)*.2);line-height:1;color:#B07A1E;margin-top:calc(var(--sp)*-.04)}
 @keyframes starIn{
   0%{transform:translate(-50%,-50%) translateY(-38vh) scale(.5) rotate(-25deg);opacity:0}
   35%{opacity:1}
@@ -2745,7 +2745,7 @@ function beadMakeRoom(){
   var oc = document.querySelector('.necklace .octo'), tray = document.querySelector('.bead-tray');
   if (tray) tray.classList.add('gone');
   if (!oc) return;
-  var H = innerHeight, star = Math.min(Math.max(80, H * 0.24), 200), half = (star + Math.max(28, Math.min(48, H * 0.06))) / 2;
+  var H = innerHeight, star = Math.min(Math.max(80, H * 0.24), 200), half = star * 1.45 / 2;
   G.starTop = Math.min(H - half - 6, oc.getBoundingClientRect().bottom + 12 + half);
 }
 /* the finished necklace shrinks to the octopus's width and hangs on its front, just under the face */
