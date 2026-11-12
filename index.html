@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.042409">
+<meta name="build" content="2026-11-12.054659">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -953,7 +953,7 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .same .same-btn{opacity:1;border-color:#A9CB97;background:#E3F1DA;box-shadow:0 5px 0 #A9CB97;color:#4F7A3B}
 .rotate-hint{display:none}
 @media (orientation:portrait) and (max-width:600px){
-  .crocgame .rotate-hint,.traingame .rotate-hint,.beadgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
+  .crocgame .rotate-hint,.traingame .rotate-hint,.beadgame .rotate-hint,.birdgame .rotate-hint,.marketgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;color:var(--ink)}
   .rotate-hint svg{width:110px;height:110px;overflow:visible}
   .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tilt 2.4s ease-in-out infinite}
   .rotate-hint b{font-family:var(--display);font-size:28px}
@@ -1196,6 +1196,72 @@ body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1
 .update-pill{position:fixed;left:50%;top:max(8px,env(safe-area-inset-top));transform:translateX(-50%);z-index:90;display:inline-flex;align-items:center;gap:8px;max-width:92vw;padding:8px 16px;border-radius:999px;border:3px solid #3B78A0;background:#EAF4FB;color:#1F3B52;font-family:var(--display);font-weight:800;font-size:clamp(13px,2.2dvh,17px);line-height:1.1;box-shadow:0 4px 12px rgba(31,59,82,.22);animation:pillin .4s ease-out}
 .update-pill svg{width:1.1em;height:1.1em;flex:none}
 @keyframes pillin{from{transform:translate(-50%,-140%)}}
+
+/* ---------- bird on a wire ---------- */
+body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F3 60%,#F3F1E6 100%) fixed}
+.tile.birdt{background:#E1EEF8;border-color:#A9CBE6;box-shadow:0 7px 0 #A9CBE6}
+.tile.mini.birdt{box-shadow:0 4px 0 #A9CBE6}
+.birdgame{gap:clamp(4px,1.2dvh,12px)}
+.bw-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:visible}
+.bw-scene{position:relative;flex:none;--u:80px}
+.bw-wire{position:absolute;left:calc(var(--u) * -.2);right:calc(var(--u) * -.2);height:max(3px,calc(var(--u) * .045));background:#4A4038;border-radius:4px}
+.bw-pole{position:absolute;width:max(8px,calc(var(--u) * .13));bottom:calc(var(--u) * -.3);background:#B58D68;border-radius:6px;box-shadow:inset -3px 0 0 rgba(0,0,0,.12)}
+.bw-pole.l{left:calc(var(--u) * -.32)}.bw-pole.r{right:calc(var(--u) * -.32)}
+.wbird{position:absolute;width:auto;transform:translate(-50%,0);transform-origin:50% 90%;pointer-events:none;z-index:2}
+.wbird.flip{transform:translate(-50%,0) scaleX(-1)}
+.wbird.away{visibility:hidden}
+.wbird.hover{animation:birdhover 1s ease-in-out infinite;z-index:3}
+.wbird.hover.flip{animation-name:birdhoverF}
+@keyframes birdhover{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -.8)) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -1.0)) rotate(4deg)}}
+@keyframes birdhoverF{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -.8)) scaleX(-1) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -1.0)) scaleX(-1) rotate(4deg)}}
+.wbird.antsy{animation:birdantsy .5s ease-in-out infinite}
+.wbird.antsy.flip{animation-name:birdantsyF}
+@keyframes birdantsy{0%,100%{transform:translate(-50%,0) rotate(-7deg)}50%{transform:translate(-50%,-10%) rotate(7deg)}}
+@keyframes birdantsyF{0%,100%{transform:translate(-50%,0) scaleX(-1) rotate(-7deg)}50%{transform:translate(-50%,-10%) scaleX(-1) rotate(7deg)}}
+.wbird.hop{animation:birdhop .5s ease-out}
+.wbird.hop.flip{animation-name:birdhopF}
+@keyframes birdhop{40%{transform:translate(-50%,-28%) scale(1.08)}}
+@keyframes birdhopF{40%{transform:translate(-50%,-28%) scaleX(-1) scale(1.08)}}
+.bw-choices{display:flex;justify-content:center;gap:clamp(12px,3vw,26px);min-height:clamp(64px,13dvh,110px);align-items:center;padding-bottom:4px}
+.bw-choices.wait{visibility:hidden}
+.bw-choices .choice.nope{animation:nope .5s}
+@media (prefers-reduced-motion:reduce){ .wbird.hover,.wbird.antsy,.wbird.hop{animation:none} }
+
+/* ---------- market day ---------- */
+.tile.markett{background:#F6E7D3;border-color:#E2C49C;box-shadow:0 7px 0 #E2C49C}
+.tile.mini.markett{box-shadow:0 4px 0 #E2C49C}
+.marketgame{gap:clamp(4px,1.2dvh,12px)}
+.mk-ask{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,16px);flex:none}
+.mk-host{height:clamp(54px,14dvh,130px);width:auto;flex:none}
+.mk-host.cheer{animation:octodance .5s ease-in-out 3;transform-origin:50% 90%}
+.mk-pile{flex:1;min-height:0;display:flex;flex-wrap:wrap;align-items:center;align-content:center;justify-content:center;gap:clamp(8px,2.4vw,26px)}
+.mk-item{width:clamp(56px,min(13vw,19dvh),170px);height:clamp(56px,min(13vw,19dvh),170px);padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:20px;transition:transform .15s}
+.mk-item img{max-width:100%;max-height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 4px 3px rgba(71,28,14,.18))}
+.mk-item.sel{transform:translateY(-8px) scale(1.1);background:rgba(255,241,194,.9);box-shadow:0 0 0 4px #F2C640}
+.mk-item.gone{visibility:hidden}
+.mk-item.lifted{opacity:.25}
+.mk-item.nope{animation:nope .5s}
+.mk-ghost{position:fixed;left:0;top:0;z-index:70;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.mk-ghost img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 10px 8px rgba(71,28,14,.25))}
+.mk-bins{flex:none;display:flex;justify-content:center;align-items:flex-end;gap:clamp(12px,4vw,48px);padding-top:clamp(20px,8dvh,70px);padding-bottom:max(4px,calc(28px - var(--padb,20px)))}
+.mk-bin{--bw:clamp(120px,min(26vw,44dvh),300px);position:relative;width:var(--bw);height:calc(var(--bw) * .671);padding:0;border:0;background:none;cursor:pointer;font:inherit;color:inherit}
+.mk-bins.n3 .mk-bin{--bw:clamp(104px,min(24vw,40dvh),270px)}
+/* the food sits behind the basket picture, so it peeks out over the rim (the rim is 29% down the picture) */
+.mk-in{position:absolute;left:14%;right:14%;top:-22%;height:66%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;z-index:0}
+.mk-in img{height:100%;max-width:34%;object-fit:contain;object-position:bottom;margin:0 -2%}
+.mk-front{position:absolute;inset:0;z-index:1;background:url(market/basket.png) center / 100% 100% no-repeat;display:flex;align-items:center;justify-content:center;pointer-events:none;filter:drop-shadow(0 5px 4px rgba(71,28,14,.18))}
+.mk-label{position:relative;margin-top:26%;display:flex;align-items:center;justify-content:center;gap:6px;min-width:36%;max-width:74%;height:40%;padding:0 10px;border-radius:14px;background:#FFFCF7;border:3px solid #E6D5C4;font-family:var(--display);font-weight:800;font-size:clamp(12px,calc(var(--bw) * .085),24px);line-height:1}
+.mk-label img{height:86%;width:auto;max-width:100%;object-fit:contain}
+.mk-swatch{width:calc(var(--bw) * .17);height:calc(var(--bw) * .17);border-radius:50%;border:3px solid rgba(0,0,0,.14)}
+.mk-eg{display:flex;height:100%;align-items:center;gap:2px}.mk-eg img{height:74%}
+.mk-bin.c-red .mk-label{background:#FBE1DE}.mk-bin.c-yellow .mk-label{background:#FCF1C9}.mk-bin.c-green .mk-label{background:#E2F0D9}.mk-bin.c-purple .mk-label{background:#EBE0F2}
+.mk-bin.over .mk-front,.picking .mk-bin .mk-front{filter:drop-shadow(0 0 0 #F2C640) drop-shadow(0 0 6px #F2C640) drop-shadow(0 0 3px #F2C640)}
+.mk-bin.plop{animation:mkplop .35s ease-out}
+@keyframes mkplop{40%{transform:translateY(5%) scale(1.05,.94)}}
+.mk-bin.nope{animation:nope .5s}
+.mk-bin.hint{animation:mkhint .9s ease-in-out}
+@keyframes mkhint{25%,75%{transform:translateY(-10%)}50%{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){ .mk-bin.plop,.mk-bin.hint,.mk-host.cheer{animation:none} }
 </style>
 </head>
 <body>
@@ -1364,6 +1430,11 @@ en: {
   otherGames: 'Other games',
   myStarsBtn: 'My stars',
   updatePill: 'New version · tap to update',
+  gBird: 'Bird on a Wire', birdLook: 'Look at the birds!', birdAsk: 'How many now?', birdSoonMore: 'One more is coming! How many then?', birdSoonLess: 'One is flying away! How many then?',
+  sBirdStart: function(n){ return [P(n === 1 ? 'There is 1 bird on the wire.' : 'There are ' + n + ' birds on the wire.', 'calm')]; }, sBirdMore: [P('One more comes.', 'calm'), P('How many now?', 'ask')], sBirdLess: [P('One flies away.', 'calm'), P('How many now?', 'ask')], sBirdSoonMore: [P('One more is coming.', 'calm'), P('How many will there be?', 'ask')], sBirdSoonLess: [P('One is going to fly away.', 'calm'), P('How many will be left?', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('Yes!', 'cheer'), P((more ? 'One more than ' : 'One less than ') + n + ' is ' + t + '!', 'proud')]; }, sBirdWrong: [P('Hmm, let’s count the birds.', 'calm')],
+  gMarket: 'Market Day', mkAlt: 'Raccoon', mkColour: 'Sort by colour!', mkKind: 'Put the same ones together!', mkFood: 'Fruit or vegetable?', mkFruits: 'Fruits', mkVeggies: 'Vegetables', mkItem: 'Food', mkBasket: 'Basket', mkColN: { red:'Red', yellow:'Yellow', green:'Green', purple:'Purple' },
+  sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1468,6 +1539,11 @@ fr: {
   otherGames: 'Autres jeux',
   myStarsBtn: 'Mes étoiles',
   updatePill: 'Nouvelle version · touche pour mettre à jour',
+  gBird: 'Les oiseaux sur le fil', birdLook: 'Regarde les oiseaux\u00a0!', birdAsk: 'Combien maintenant\u00a0?', birdSoonMore: 'Un de plus arrive\u00a0! Ça fera combien\u00a0?', birdSoonLess: 'Un oiseau va s’envoler\u00a0! Il en restera combien\u00a0?',
+  sBirdStart: function(n){ return [P('Il y a ' + n + ' ' + pl(n, 'oiseau', 'oiseaux') + ' sur le fil.', 'calm')]; }, sBirdMore: [P('Un de plus arrive.', 'calm'), P('Combien maintenant ?', 'ask')], sBirdLess: [P('Un oiseau s’envole.', 'calm'), P('Combien maintenant ?', 'ask')], sBirdSoonMore: [P('Un de plus arrive.', 'calm'), P('Ça fera combien ?', 'ask')], sBirdSoonLess: [P('Un oiseau va s’envoler.', 'calm'), P('Il en restera combien ?', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('Oui !', 'cheer'), P((more ? 'Un de plus que ' : 'Un de moins que ') + n + ', ça fait ' + t + ' !', 'proud')]; }, sBirdWrong: [P('Hmm, comptons les oiseaux.', 'calm')],
+  gMarket: 'Jour de marché', mkAlt: 'Raton laveur', mkColour: 'Trie par couleur\u00a0!', mkKind: 'Mets les mêmes ensemble\u00a0!', mkFood: 'Fruit ou légume\u00a0?', mkFruits: 'Fruits', mkVeggies: 'Légumes', mkItem: 'Aliment', mkBasket: 'Panier', mkColN: { red:'Rouge', yellow:'Jaune', green:'Vert', purple:'Violet' },
+  sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1572,6 +1648,11 @@ es: {
   otherGames: 'Otros juegos',
   myStarsBtn: 'Mis estrellas',
   updatePill: 'Nueva versión · toca para actualizar',
+  gBird: 'Pájaros en el cable', birdLook: '¡Mira los pájaros!', birdAsk: '¿Cuántos hay ahora?', birdSoonMore: '¡Viene uno más! ¿Cuántos habrá?', birdSoonLess: '¡Uno se va volando! ¿Cuántos quedarán?',
+  sBirdStart: function(n){ return [P(n === 1 ? 'Hay 1 pájaro en el cable.' : 'Hay ' + n + ' pájaros en el cable.', 'calm')]; }, sBirdMore: [P('Llega uno más.', 'calm'), P('¿Cuántos hay ahora?', 'ask')], sBirdLess: [P('Uno se va volando.', 'calm'), P('¿Cuántos hay ahora?', 'ask')], sBirdSoonMore: [P('Viene uno más.', 'calm'), P('¿Cuántos habrá?', 'ask')], sBirdSoonLess: [P('Uno se va a ir volando.', 'calm'), P('¿Cuántos quedarán?', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('¡Sí!', 'cheer'), P((more ? 'Uno más que ' : 'Uno menos que ') + n + ' es ' + t + '.', 'proud')]; }, sBirdWrong: [P('Mmm, contemos los pájaros.', 'calm')],
+  gMarket: 'Día de mercado', mkAlt: 'Mapache', mkColour: '¡Ordena por color!', mkKind: '¡Junta los que son iguales!', mkFood: '¿Fruta o verdura?', mkFruits: 'Frutas', mkVeggies: 'Verduras', mkItem: 'Alimento', mkBasket: 'Cesta', mkColN: { red:'Rojo', yellow:'Amarillo', green:'Verde', purple:'Morado' },
+  sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1676,6 +1757,11 @@ zh: {
   otherGames: '其他游戏',
   myStarsBtn: '我的星星',
   updatePill: '有新版本 · 点这里更新',
+  gBird: '电线上的小鸟', birdLook: '看看小鸟！', birdAsk: '现在有几只？', birdSoonMore: '又要飞来一只！会有几只？', birdSoonLess: '有一只要飞走了！还剩几只？',
+  sBirdStart: function(n){ return [P('电线上有' + n + '只小鸟。', 'calm')]; }, sBirdMore: [P('又飞来一只。', 'calm'), P('现在有几只？', 'ask')], sBirdLess: [P('飞走了一只。', 'calm'), P('现在有几只？', 'ask')], sBirdSoonMore: [P('又要飞来一只。', 'calm'), P('会有几只？', 'ask')], sBirdSoonLess: [P('有一只要飞走了。', 'calm'), P('还剩几只？', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('对啦！', 'cheer'), P('比' + n + (more ? '多一个是' : '少一个是') + t + '！', 'proud')]; }, sBirdWrong: [P('嗯，我们一起数一数小鸟。', 'calm')],
+  gMarket: '赶集日', mkAlt: '小浣熊', mkColour: '按颜色分一分！', mkKind: '把一样的放在一起！', mkFood: '水果还是蔬菜？', mkFruits: '水果', mkVeggies: '蔬菜', mkItem: '食物', mkBasket: '篮子', mkColN: { red:'红色', yellow:'黄色', green:'绿色', purple:'紫色' },
+  sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1780,6 +1866,11 @@ ja: {
   otherGames: 'ほかの ゲーム',
   myStarsBtn: 'わたしの ほし',
   updatePill: 'あたらしい バージョン · タップで こうしん',
+  gBird: 'でんせんの ことり', birdLook: 'ことりを みてね！', birdAsk: 'いま なんわ？', birdSoonMore: 'もう いちわ くるよ！ なんわに なる？', birdSoonLess: 'いちわ とんでいくよ！ なんわ のこる？',
+  sBirdStart: function(n){ return [P('でんせんに ことりが ' + n + 'わ いるよ。', 'calm')]; }, sBirdMore: [P('もう いちわ きたよ。', 'calm'), P('いま なんわ？', 'ask')], sBirdLess: [P('いちわ とんでいったよ。', 'calm'), P('いま なんわ？', 'ask')], sBirdSoonMore: [P('もう いちわ くるよ。', 'calm'), P('なんわに なるかな？', 'ask')], sBirdSoonLess: [P('いちわ とんでいくよ。', 'calm'), P('なんわ のこるかな？', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('せいかい！', 'cheer'), P(n + (more ? ' より ひとつ おおいと ' : ' より ひとつ すくないと ') + t + '！', 'proud')]; }, sBirdWrong: [P('うーん、いっしょに かぞえてみよう。', 'calm')],
+  gMarket: 'いちばの ひ', mkAlt: 'アライグマ', mkColour: 'いろで わけてね！', mkKind: 'おなじ ものを あつめてね！', mkFood: 'くだもの？ やさい？', mkFruits: 'くだもの', mkVeggies: 'やさい', mkItem: 'たべもの', mkBasket: 'かご', mkColN: { red:'あか', yellow:'きいろ', green:'みどり', purple:'むらさき' },
+  sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1884,6 +1975,11 @@ yue: {
   otherGames: '其他遊戲',
   myStarsBtn: '我嘅星星',
   updatePill: '有新版本 · 撳呢度更新',
+  gBird: '電線上嘅雀仔', birdLook: '睇下啲雀仔！', birdAsk: '而家有幾多隻？', birdSoonMore: '又有一隻飛嚟！會有幾多隻？', birdSoonLess: '有一隻要飛走喇！仲剩幾多隻？',
+  sBirdStart: function(n){ return [P('電線上有' + n + '隻雀仔。', 'calm')]; }, sBirdMore: [P('又飛嚟一隻。', 'calm'), P('而家有幾多隻？', 'ask')], sBirdLess: [P('飛走咗一隻。', 'calm'), P('而家有幾多隻？', 'ask')], sBirdSoonMore: [P('又有一隻飛嚟。', 'calm'), P('會有幾多隻？', 'ask')], sBirdSoonLess: [P('有一隻要飛走喇。', 'calm'), P('仲剩幾多隻？', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('啱喇！', 'cheer'), P('比' + n + (more ? '多一個係' : '少一個係') + t + '！', 'proud')]; }, sBirdWrong: [P('嗯，我哋一齊數下啲雀仔。', 'calm')],
+  gMarket: '趁墟日', mkAlt: '浣熊', mkColour: '跟顏色分一分！', mkKind: '將一樣嘅放埋一齊！', mkFood: '生果定蔬菜？', mkFruits: '生果', mkVeggies: '蔬菜', mkItem: '食物', mkBasket: '籃', mkColN: { red:'紅色', yellow:'黃色', green:'綠色', purple:'紫色' },
+  sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1988,6 +2084,11 @@ ko: {
   otherGames: '다른 게임',
   myStarsBtn: '내 별',
   updatePill: '새 버전 · 눌러서 업데이트',
+  gBird: '전깃줄 위의 새', birdLook: '새들을 보세요!', birdAsk: '지금 몇 마리일까요?', birdSoonMore: '한 마리가 더 와요! 몇 마리가 될까요?', birdSoonLess: '한 마리가 날아가요! 몇 마리 남을까요?',
+  sBirdStart: function(n){ return [P('전깃줄에 새가 ' + n + '마리 있어요.', 'calm')]; }, sBirdMore: [P('한 마리가 더 왔어요.', 'calm'), P('지금 몇 마리일까요?', 'ask')], sBirdLess: [P('한 마리가 날아갔어요.', 'calm'), P('지금 몇 마리일까요?', 'ask')], sBirdSoonMore: [P('한 마리가 더 와요.', 'calm'), P('몇 마리가 될까요?', 'ask')], sBirdSoonLess: [P('한 마리가 날아가요.', 'calm'), P('몇 마리 남을까요?', 'ask')],
+  sBirdRight: function(n, t, more){ return [P('맞아요!', 'cheer'), P(n + '보다 하나 ' + (more ? '많으면 ' : '적으면 ') + t + '!', 'proud')]; }, sBirdWrong: [P('음, 같이 새를 세어 봐요.', 'calm')],
+  gMarket: '장날', mkAlt: '너구리', mkColour: '색깔별로 나눠요!', mkKind: '같은 것끼리 모아요!', mkFood: '과일일까요, 채소일까요?', mkFruits: '과일', mkVeggies: '채소', mkItem: '먹을거리', mkBasket: '바구니', mkColN: { red:'빨강', yellow:'노랑', green:'초록', purple:'보라' },
+  sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2267,6 +2368,7 @@ function render(){
   document.body.classList.toggle('bookbg', screen === 'book');
   document.body.classList.toggle('waterbg', screen === 'croc');
   document.body.classList.toggle('railbg', screen === 'train');
+  document.body.classList.toggle('birdbg', screen === 'birds');
   document.body.classList.toggle('nightbg', screen === 'locked');
   /* the strip behind the phone's clock and battery takes the colour of the top of the page */
   var topCol = { locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC' }[screen] || '#F7F1EA';
@@ -2283,6 +2385,8 @@ function render(){
   else if (screen === 'train') renderTrain();
   else if (screen === 'beads') renderBeads();
   else if (screen === 'write') renderWrite();
+  else if (screen === 'birds') renderBirds();
+  else if (screen === 'market') renderMarket();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2365,7 +2469,7 @@ function syncDaynight(){
 }
 function timerTick(){
   /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
-  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write'].indexOf(screen) >= 0;
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write', 'birds', 'market'].indexOf(screen) >= 0;
   if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
   if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
   syncDaynight();
@@ -2544,6 +2648,8 @@ function renderHome(){
       '<button class="tile croct" data-act="croc">' + critter('croc-icon') + '<span class="tl">' + L('gCroc') + '</span></button>' +
       '<button class="tile traint" data-act="train">' + critter('penguin') + '<span class="tl">' + L('gTrain') + '</span></button>' +
       '<button class="tile beadt" data-act="beads">' + critter('octopus') + '<span class="tl">' + L('gBeads') + '</span></button>' +
+      '<button class="tile birdt" data-act="birds">' + critter('bird') + '<span class="tl">' + L('gBird') + '</span></button>' +
+      '<button class="tile markett" data-act="market">' + critter('raccoon') + '<span class="tl">' + L('gMarket') + '</span></button>' +
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
@@ -2865,22 +2971,8 @@ function trainPlace(id, i, from){
       if (done) trainWin(); else { say(L('sTrainGood')); G.bubble2 = ''; }
     }, reduceMotion ? 50 : 400);
   } else {
-    G.lock = true;
+    /* wrong card: it just shakes; the child can try another straight away */
     btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope');
-    say(L('sTrainWrong'));
-    /* count along the cars; the empty ones get a little wiggle and a pause */
-    var q = G.q, cars = [].slice.call(document.querySelectorAll('.tcar')), idx = 0;
-    function step(){
-      if (screen !== 'train' || !G || G.q !== q || G.done) return;
-      document.querySelectorAll('.tcar.lit').forEach(function(c){ c.classList.remove('lit'); });
-      if (idx >= cars.length) { G.lock = false; say(G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); return; }
-      var c = cars[idx], ci = +c.getAttribute('data-i'); idx++;
-      c.classList.add('lit');
-      var known = G.gaps.indexOf(ci) < 0 || G.filled[ci];
-      if (known) say(P(String(G.seq[ci]), 'count', G.seq[ci]));
-      setTimeout(step, known ? 560 : 900);
-    }
-    setTimeout(step, 1300);
   }
 }
 function trainWin(){
@@ -3278,6 +3370,306 @@ function showWriteReward(){
   confetti();
 }
 
+/* =====================================================================
+   BIRD ON A WIRE: one more / one less.
+   Birds sit on a wire; one flies in or one flies away. How many now?
+   First questions: watch it happen, then answer. Later ones: predict before the bird moves.
+   Above 10 birds a second wire appears (ten on the first).
+   ===================================================================== */
+var BIRD_ART = ['a1', 'a2', 'a4', 'a5', 'a6', 'a7', 'a8', 'b1', 'b2', 'b3', 'b4', 'b6'];
+function birdPlan(){ return shuffle([['watch', 1], ['watch', -1]]).concat(shuffle([['guess', 1], ['guess', -1]])).concat([['guess', Math.random() < 0.5 ? 1 : -1]]); }
+function startBirds(){ G = { game:'birds', q:0, earned:0, startStars:S.stars, plan:birdPlan() }; birdQuestion(); }
+function birdQuestion(){
+  var step = G.plan[G.q] || ['watch', 1], max = Math.min(20, S.maxSum || 5), d = step[1], n, tries = 0;
+  do { n = d > 0 ? 1 + Math.floor(Math.random() * (max - 1)) : 2 + Math.floor(Math.random() * (max - 1)); } while (n === G.prevN && ++tries < 20);
+  G.prevN = n;
+  G.mode = step[0]; G.d = d; G.n = n; G.t = n + d; G.moved = false; G.asked = false;
+  var art = [], last = '';
+  for (var i = 0; i < Math.max(n, G.t); i++) { var a; do { a = BIRD_ART[Math.floor(Math.random() * BIRD_ART.length)]; } while (a === last); art.push([a, Math.random() < 0.5]); last = a; }
+  G.art = art;
+  var lo = Math.max(0, Math.min(G.t - 1, max - 2)); G.opts = [lo, lo + 1, lo + 2];
+  G.first = true; G.lock = true; G.tried = {}; G.done = false; G.bubble2 = '';
+  screen = 'birds'; closeOverlay(); renderBirds();
+  var q = G.q;
+  if (G.mode === 'watch') {
+    say(L('sBirdStart', n));
+    setTimeout(function(){ if (!birdLive(q)) return; birdMove(function(){ if (!birdLive(q)) return; birdAsk(); }); say(d > 0 ? L('sBirdMore') : L('sBirdLess')); }, S.voice ? 2600 : 1400);
+  } else {
+    say(L('sBirdStart', n).concat(d > 0 ? L('sBirdSoonMore') : L('sBirdSoonLess')));
+    setTimeout(function(){ if (birdLive(q)) birdAsk(); }, 900);
+  }
+}
+function birdLive(q){ return screen === 'birds' && G && G.game === 'birds' && G.q === q; }
+function birdAsk(){
+  G.asked = true; G.lock = false;
+  var b = document.getElementById('bubble'); if (b) b.textContent = birdBubble();
+  var ch = document.querySelector('.bw-choices'); if (ch) ch.classList.remove('wait');
+  document.querySelectorAll('.bw-choices .choice').forEach(function(c){ if (!G.tried[+c.getAttribute('data-v')]) c.disabled = false; });
+}
+function birdBubble(){ return G.mode === 'guess' && !G.moved ? (G.d > 0 ? L('birdSoonMore') : L('birdSoonLess')) : L('birdAsk'); }
+function renderBirds(){
+  document.body.classList.add('birdbg');
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var birds = '', shown = G.moved ? G.t : G.n;
+  for (var k = 0; k < G.art.length; k++) {
+    var here = k < shown, extra = !G.moved && G.d > 0 && k === G.n, leaving = !G.moved && G.d < 0 && k === G.n - 1;
+    if (!here && !extra) continue;
+    birds += '<img class="wbird' + (G.art[k][1] ? ' flip' : '') + (extra ? (G.mode === 'guess' ? ' hover' : ' away') : '') + (leaving && G.mode === 'guess' ? ' antsy' : '') + '" data-k="' + k + '" src="birds/' + G.art[k][0] + '.png" alt="" draggable="false">';
+  }
+  var choices = G.opts.map(function(v){
+    var cls = 'choice' + (G.tried[v] ? ' tried' : '') + (G.done && v === G.t ? ' right' : '');
+    return '<button class="' + cls + '" data-act="bird-pick" data-v="' + v + '"' + (G.tried[v] || !G.asked || (G.done && v !== G.t) ? ' disabled' : '') + '>' + v + '</button>';
+  }).join('');
+  app.innerHTML = '<section class="screen birdgame">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('bird-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.asked ? birdBubble() : L('birdLook')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="bw-stage"><div class="bw-scene" id="bwScene">' + birds + '</div></div>' +
+    '<div class="bw-choices' + (G.asked ? '' : ' wait') + '" role="group" aria-label="' + esc(L('birdAsk')) + '">' + choices + '</div>' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M22 30a32 32 0 0 1 30-18"/><path class="rh-arrow" d="M45 6l7 6-7 7"/></svg><b>' + L('rotateHint') + '</b></div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  layoutBirds();
+}
+/* where slot k sits: ten to a wire, wires stacked; returns the centre x and the wire's y inside the scene */
+function birdSlot(k){
+  var L0 = G.lay, row = Math.floor(k / 10), col = k % 10;
+  return { x: L0.x0 + (col + 0.5) * L0.step, y: L0.y0 + row * L0.rowH };
+}
+function layoutBirds(){
+  var sc = document.getElementById('bwScene'), st = sc && sc.parentNode; if (!sc || !G) return;
+  var total = G.art.length, rows = Math.ceil(total / 10), cols = rows > 1 ? 10 : Math.max(total, 5);
+  var W = st.clientWidth, H = st.clientHeight;
+  var u = Math.floor(Math.max(26, Math.min((W - 40) / (cols * 1.12 + 0.6), H / (rows * 1.5 + 0.55), 150)));
+  var step = u * 1.12, wireW = cols * step + u * 0.6, rowH = u * 1.5, sceneH = rows * rowH + u * 0.55;
+  sc.style.width = Math.round(wireW) + 'px'; sc.style.height = Math.round(sceneH) + 'px'; sc.style.setProperty('--u', u + 'px');
+  G.lay = { u:u, step:step, x0: u * 0.3, y0: u * 1.22, rowH: rowH, w: wireW };
+  sc.querySelectorAll('.bw-wire,.bw-pole').forEach(function(e){ e.remove(); });
+  for (var r = 0; r < rows; r++) { var wEl = document.createElement('i'); wEl.className = 'bw-wire'; wEl.style.top = Math.round(G.lay.y0 + r * rowH) + 'px'; sc.insertBefore(wEl, sc.firstChild); }
+  ['l', 'r'].forEach(function(side){ var pEl = document.createElement('i'); pEl.className = 'bw-pole ' + side; pEl.style.top = Math.round(G.lay.y0 - u * 0.5) + 'px'; sc.insertBefore(pEl, sc.firstChild); });
+  sc.querySelectorAll('.wbird').forEach(function(b){
+    var k = +b.getAttribute('data-k'), s = birdSlot(k);
+    b.style.height = u + 'px'; b.style.left = Math.round(s.x) + 'px'; b.style.top = Math.round(s.y - u * 0.97) + 'px';
+  });
+}
+window.addEventListener('resize', function(){ if (screen === 'birds' && G && G.game === 'birds') layoutBirds(); });
+/* the one bird flies in (lands on the next free spot) or the last bird flies away */
+function birdMove(done){
+  if (G.moved) { done && done(); return; }
+  G.moved = true;
+  var sc = document.getElementById('bwScene'), k = G.d > 0 ? G.n : G.n - 1, b = sc && sc.querySelector('.wbird[data-k="' + k + '"]');
+  if (!b) { done && done(); return; }
+  var u = G.lay.u, flip = b.classList.contains('flip') ? ' scaleX(-1)' : '', DUR = reduceMotion ? 1 : 1300;
+  b.classList.remove('hover', 'antsy', 'away');
+  var far = 'translate(-50%,0) translate(' + Math.round(G.lay.w * 0.45 + u * 2) + 'px,' + Math.round(-u * 2.6 - (parseFloat(b.style.top) || 0)) + 'px)' + flip, home = 'translate(-50%,0)' + flip;
+  function fin(){ if (G.d < 0 && b.parentNode) b.remove(); else b.style.transform = ''; done && done(); }
+  if (!b.animate || reduceMotion) { fin(); return; }
+  var kf = G.d > 0
+    ? [{ transform: far + ' rotate(-10deg)' }, { transform: 'translate(-50%,0) translate(' + Math.round(u * 0.6) + 'px,' + Math.round(-u * 0.9) + 'px)' + flip + ' rotate(8deg)', offset: .7 }, { transform: home + ' scale(1.06,.9)', offset: .9 }, { transform: home }]
+    : [{ transform: home }, { transform: home + ' scale(1.08,.86)', offset: .12 }, { transform: 'translate(-50%,0) translate(' + Math.round(u * 0.5) + 'px,' + Math.round(-u * 1.1) + 'px)' + flip + ' rotate(-12deg)', offset: .4 }, { transform: far + ' rotate(-6deg)' }];
+  var an = b.animate(kf, { duration: DUR, easing: 'ease-in-out', fill: 'forwards' }), ended = false;
+  function end(){ if (ended) return; ended = true; try { an.cancel(); } catch(e) {} fin(); }
+  an.onfinish = end; setTimeout(end, DUR + 150);
+}
+/* count the birds on the wire out loud, each one hopping as its number is said */
+function birdCount(done){
+  var q = G.q, list = [].slice.call(document.querySelectorAll('#bwScene .wbird')).sort(function(a, b){ return +a.getAttribute('data-k') - +b.getAttribute('data-k'); }), i = 0;
+  function step(){
+    if (!birdLive(q)) return;
+    if (i >= list.length) { setTimeout(function(){ if (birdLive(q)) done(); }, 400); return; }
+    var b = list[i]; i++;
+    b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop');
+    say(P(String(i), 'count', i));
+    setTimeout(step, 620);
+  }
+  step();
+}
+function birdPick(v){
+  if (!G || G.lock || G.done || !G.asked || G.tried[v]) return;
+  var right = v === G.t, q = G.q, btn = document.querySelector('.bw-choices .choice[data-v="' + v + '"]');
+  if (G.first) { record2('bird' + (G.d > 0 ? '+' : '-') + G.n, right); G.first = false; }
+  G.lock = true; clearSay();
+  if (right) {
+    G.done = true;
+    if (btn) btn.classList.add('right');
+    document.querySelectorAll('.bw-choices .choice').forEach(function(c){ if (c !== btn) c.disabled = true; });
+    S.stars++; G.earned++; save();
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    birdMove(function(){
+      if (!birdLive(q)) return;
+      var b = document.getElementById('bubble'); if (b) b.textContent = L('birdAsk');
+      say(L('sBirdRight', G.n, G.t, G.d > 0));
+      setTimeout(function(){ if (birdLive(q)) starToDot('birds'); }, S.voice ? 2300 : 1300);
+    });
+  } else {
+    G.tried[v] = true;
+    if (btn) { btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope', 'tried'); btn.disabled = true; }
+    say(L('sBirdWrong'));
+    setTimeout(function(){
+      if (!birdLive(q)) return;
+      birdMove(function(){
+        if (!birdLive(q)) return;
+        var b = document.getElementById('bubble'); if (b) b.textContent = L('birdAsk');
+        birdCount(function(){ G.lock = false; say(P(L('birdAsk'), 'ask')); });
+      });
+    }, 1300);
+  }
+}
+function record2(){ /* one more / one less is not an addition fact: nothing to add to the grown-ups' chart */ }
+
+/* =====================================================================
+   MARKET DAY (raccoon): sorting. Drag (or tap, then tap a basket) each fruit or vegetable into its basket.
+   Levels in a round: by colour (2 baskets), by colour (3), same ones together, a mix, then fruit or vegetable.
+   ===================================================================== */
+var MK_COL = {
+  red:    ['apple', 'strawberry', 'cherries', 'tomato', 'chilli'],
+  yellow: ['banana', 'lemon', 'pepper', 'corn', 'starfruit', 'pineapple'],
+  green:  ['broccoli', 'cabbage', 'cucumber', 'peas', 'guava', 'greenchilli'],
+  purple: ['plum', 'eggplant', 'fig', 'beet']
+};
+var MK_SWATCH = { red:'#E4574E', yellow:'#F2C640', green:'#6FAE55', purple:'#7B5196' };
+var MK_KINDS = ['apple', 'banana', 'lemon', 'strawberry', 'broccoli', 'pear', 'orange', 'plum', 'onion', 'potato'];
+/* fruit or vegetable: only the clear-cut ones (no tomato, cucumber, pepper, pumpkin, olives or corn) */
+var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon'];
+var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'beet', 'radish', 'garlic'];
+function racImg(cls){ return '<img class="' + (cls || 'mk-host') + '" src="animals/raccoon.png" alt="' + esc(L('mkAlt')) + '" draggable="false">'; }
+function foodImg(k){ return '<img src="market/' + k + '.png" alt="" draggable="false">'; }
+function marketPlan(){ return ['col2', 'col3', 'kind', Math.random() < 0.5 ? 'col3' : 'kind3', 'food']; }
+function startMarket(){ G = { game:'market', q:0, earned:0, startStars:S.stars, plan:marketPlan() }; marketQuestion(); }
+function marketQuestion(){
+  var mode = G.plan[G.q] || 'col2', bins = [], items = [];
+  function take(list, n){ return shuffle(list.slice()).slice(0, n); }
+  if (mode === 'col2' || mode === 'col3') {
+    var nb = mode === 'col2' ? 2 : 3, cols = take(Object.keys(MK_COL), nb), per = nb === 2 ? 3 : 2;
+    cols.forEach(function(c, bi){ bins.push({ type:'col', key:c }); take(MK_COL[c], per).forEach(function(k){ items.push({ k:k, bin:bi }); }); });
+  } else if (mode === 'kind' || mode === 'kind3') {
+    var nk = mode === 'kind' ? 2 : 3, kinds = take(MK_KINDS, nk), each = nk === 2 ? 3 : 2;
+    kinds.forEach(function(k, bi){ bins.push({ type:'kind', key:k }); for (var i = 0; i < each; i++) items.push({ k:k, bin:bi }); });
+  } else {
+    var fr = take(MK_FRUIT, 5), vg = take(MK_VEG, 5);
+    bins.push({ type:'food', key:'fruit', eg:fr.slice(3) }, { type:'food', key:'veg', eg:vg.slice(3) });
+    fr.slice(0, 3).forEach(function(k){ items.push({ k:k, bin:0 }); }); vg.slice(0, 3).forEach(function(k){ items.push({ k:k, bin:1 }); });
+    if (Math.random() < 0.5) bins.reverse(), items.forEach(function(it){ it.bin = 1 - it.bin; });
+  }
+  G.mode = mode; G.bins = bins; G.items = shuffle(items).map(function(it, i){ it.id = i; it.placed = false; return it; });
+  G.sel = null; G.lock = false; G.done = false; G.miss = 0; G.bubble2 = '';
+  screen = 'market'; closeOverlay(); renderMarket();
+  say(marketSay());
+}
+function marketSay(){ return G.mode === 'food' ? L('sMkFood') : G.mode.indexOf('kind') === 0 ? L('sMkKind') : L('sMkColour'); }
+function marketAsk(){ return G.mode === 'food' ? L('mkFood') : G.mode.indexOf('kind') === 0 ? L('mkKind') : L('mkColour'); }
+function binLabel(b){
+  if (b.type === 'col') return '<span class="mk-swatch" style="background:' + MK_SWATCH[b.key] + '"></span>';
+  if (b.type === 'kind') return foodImg(b.key);
+  return '<span class="mk-eg">' + b.eg.map(foodImg).join('') + '</span><b>' + L(b.key === 'fruit' ? 'mkFruits' : 'mkVeggies') + '</b>';
+}
+function binName(b){ return b.type === 'col' ? L('mkColN')[b.key] : b.type === 'food' ? L(b.key === 'fruit' ? 'mkFruits' : 'mkVeggies') : ''; }
+function renderMarket(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var pile = G.items.map(function(it){
+    return '<button class="mk-item' + (it.placed ? ' gone' : '') + (G.sel === it.id ? ' sel' : '') + '" data-id="' + it.id + '"' + (it.placed ? ' disabled tabindex="-1"' : '') + ' aria-label="' + esc(L('mkItem')) + '">' + foodImg(it.k) + '</button>';
+  }).join('');
+  var bins = G.bins.map(function(b, bi){
+    var inside = G.items.filter(function(it){ return it.placed && it.bin === bi; }).map(function(it){ return foodImg(it.k); }).join('');
+    return '<button class="mk-bin ' + b.type + (b.type === 'col' ? ' c-' + b.key : '') + '" data-act="mk-bin" data-v="' + bi + '" aria-label="' + esc(binName(b) || L('mkBasket')) + '">' +
+      '<span class="mk-in">' + inside + '</span><span class="mk-front"><span class="mk-label">' + binLabel(b) + '</span></span></button>';
+  }).join('');
+  app.innerHTML = '<section class="screen marketgame">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('mk-repeat', L('hearAgain')) + '</div>' +
+    '<div class="mk-ask">' + racImg() + '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(marketAsk()) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+    '<div class="mk-pile" id="mkPile">' + pile + '</div>' +
+    '<div class="mk-bins n' + G.bins.length + '">' + bins + '</div>' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M22 30a32 32 0 0 1 30-18"/><path class="rh-arrow" d="M45 6l7 6-7 7"/></svg><b>' + L('rotateHint') + '</b></div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  document.querySelectorAll('.mk-item').forEach(function(b){ b.addEventListener('pointerdown', marketDown); b.addEventListener('click', function(e){ if (e.detail === 0) marketTap(+b.getAttribute('data-id')); }); });
+}
+function marketTap(id){
+  if (!G || G.lock || G.done) return;
+  G.sel = G.sel === id ? null : id;
+  document.querySelectorAll('.mk-item').forEach(function(b){ b.classList.toggle('sel', +b.getAttribute('data-id') === G.sel); });
+  var sec = document.querySelector('.marketgame'); if (sec) sec.classList.toggle('picking', G.sel !== null);
+}
+function marketBin(bi){ if (G && G.sel !== null && !G.lock) marketDrop(G.sel, +bi); }
+function marketDown(e){
+  if (!G || G.lock || G.done || (e.button && e.button !== 0)) return;
+  var btn = e.currentTarget, id = +btn.getAttribute('data-id'), it = G.items[id]; if (!it || it.placed) return;
+  e.preventDefault();
+  var sx = e.clientX, sy = e.clientY, ghost = null, r = btn.getBoundingClientRect(), over = null;
+  function binAt(x, y){ var el = document.elementFromPoint(x, y); return el && el.closest ? el.closest('.mk-bin') : null; }
+  function move(ev){
+    var dx = ev.clientX - sx, dy = ev.clientY - sy;
+    if (!ghost) {
+      if (Math.abs(dx) + Math.abs(dy) < 8) return;
+      ghost = document.createElement('div'); ghost.className = 'mk-ghost'; ghost.innerHTML = foodImg(it.k);
+      ghost.style.width = r.width + 'px'; ghost.style.height = r.height + 'px'; document.body.appendChild(ghost); btn.classList.add('lifted');
+    }
+    ghost.style.transform = 'translate(' + (r.left + dx) + 'px,' + (r.top + dy) + 'px) scale(1.12) rotate(-5deg)';
+    var b = binAt(ev.clientX, ev.clientY);
+    if (b !== over) { if (over) over.classList.remove('over'); over = b; if (over) over.classList.add('over'); }
+  }
+  function up(ev){
+    document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
+    if (over) over.classList.remove('over');
+    if (!ghost) { marketTap(id); return; }
+    var b = binAt(ev.clientX, ev.clientY);
+    if (b) { ghost.remove(); btn.classList.remove('lifted'); marketDrop(id, +b.getAttribute('data-v'), { x:ev.clientX - r.width / 2, y:ev.clientY - r.height / 2 }); return; }
+    ghost.style.transition = 'transform .25s ease-out'; ghost.style.transform = 'translate(' + r.left + 'px,' + r.top + 'px)';
+    setTimeout(function(){ ghost.remove(); btn.classList.remove('lifted'); }, 260);
+  }
+  document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
+}
+function marketDrop(id, bi, from){
+  if (!G || G.lock || G.done) return;
+  var it = G.items[id], btn = document.querySelector('.mk-item[data-id="' + id + '"]'), bin = document.querySelector('.mk-bin[data-v="' + bi + '"]');
+  if (!it || it.placed || !btn || !bin) return;
+  clearSay();
+  G.sel = null; document.querySelectorAll('.mk-item.sel').forEach(function(b){ b.classList.remove('sel'); });
+  var sec = document.querySelector('.marketgame'); if (sec) sec.classList.remove('picking');
+  var br = btn.getBoundingClientRect(), q = G.q;
+  if (it.bin === bi) {
+    it.placed = true; btn.classList.add('gone'); btn.disabled = true;
+    var tr = bin.querySelector('.mk-in').getBoundingClientRect();
+    var fly = document.createElement('div'); fly.className = 'mk-ghost'; fly.innerHTML = foodImg(it.k);
+    fly.style.width = br.width + 'px'; fly.style.height = br.height + 'px';
+    fly.style.transform = 'translate(' + (from ? from.x : br.left) + 'px,' + (from ? from.y : br.top) + 'px)'; document.body.appendChild(fly);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      fly.style.transition = 'transform .34s cubic-bezier(.4,0,.3,1)';
+      fly.style.transform = 'translate(' + (tr.left + tr.width / 2 - br.width / 2) + 'px,' + (tr.top + tr.height / 2 - br.height / 2) + 'px) scale(.5)';
+    }); });
+    setTimeout(function(){
+      fly.remove(); if (screen !== 'market' || !G || G.q !== q) return;
+      bin.querySelector('.mk-in').insertAdjacentHTML('beforeend', foodImg(it.k));
+      bin.classList.remove('plop'); void bin.offsetWidth; bin.classList.add('plop');
+      if (G.items.every(function(x){ return x.placed; })) marketWin();
+      else { var nm = binName(G.bins[bi]); if (nm) say(P(nm, 'cheer')); }
+    }, reduceMotion ? 40 : 350);
+  } else {
+    G.miss++;
+    bin.classList.remove('nope'); void bin.offsetWidth; bin.classList.add('nope');
+    btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope');
+    /* after a miss, say where it does belong (colour or fruit/vegetable); for "same ones", the right basket wiggles */
+    var right = G.bins[it.bin], nm2 = binName(right);
+    say(nm2 ? [P(L('sMkNope'), 'calm'), P(nm2, 'calm')] : P(L('sMkNope'), 'calm'));
+    var rb = document.querySelector('.mk-bin[data-v="' + it.bin + '"]');
+    if (rb && G.miss >= 2) setTimeout(function(){ if (screen === 'market') { rb.classList.remove('hint'); void rb.offsetWidth; rb.classList.add('hint'); } }, 500);
+  }
+}
+function marketWin(){
+  G.lock = true; G.done = true;
+  S.stars++; G.earned++; save();
+  G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+  var h = document.querySelector('.mk-host'); if (h) h.classList.add('cheer');
+  document.querySelectorAll('.mk-bin').forEach(function(b, i){ setTimeout(function(){ b.classList.remove('plop'); void b.offsetWidth; b.classList.add('plop'); }, 150 * i); });
+  say(L('sMkDone'));
+  var q = G.q; setTimeout(function(){ if (screen === 'market' && G && G.q === q) starToDot('market'); }, S.voice ? 1900 : 1200);
+}
+
 /* ---------- game ---------- */
 var G = null;
 var ROUND = 5;
@@ -3642,15 +4034,15 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else if (G.game === 'birds') birdQuestion(); else if (G.game === 'market') marketQuestion(); else newQuestion();
 }
 /* small tiles for the other games of the same group (Addition or Kindergarten): one tap starts that game */
 var GAME_TILES = {
   add:    [['play', 'feed', 'unicorn', 'gFeed'], ['ten', 'ten', 'chick', 'gTen'], ['bus', 'bus', 'snail', 'gBus'], ['frog', 'frogt', 'frog', 'gFrog'], ['tower', 'towert', 'tiger', 'gTower'], ['write', 'writet', 'hedgehog', 'gWrite']],
-  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads']]
+  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads'], ['birds', 'birdt', 'bird', 'gBird'], ['market', 'markett', 'raccoon', 'gMarket']]
 };
 function otherGames(){
-  var cur = G.game || 'play', grp = ['croc', 'train', 'beads'].indexOf(cur) >= 0 ? 'kinder' : 'add';
+  var cur = G.game || 'play', grp = ['croc', 'train', 'beads', 'birds', 'market'].indexOf(cur) >= 0 ? 'kinder' : 'add';
   return '<div class="mini-tiles" role="group" aria-label="' + esc(L('otherGames')) + '">' + GAME_TILES[grp].filter(function(t){ return t[0] !== cur; }).map(function(t){
     return '<button class="tile mini ' + t[1] + '" data-act="' + t[0] + '" aria-label="' + esc(L(t[3])) + '"><img src="animals/' + t[2] + '.png" alt="" draggable="false"></button>';
   }).join('') + '</div>';
@@ -4633,6 +5025,12 @@ document.addEventListener('click', function(e){
     case 'croc': startCroc(); break;
     case 'train': startTrain(); break;
     case 'beads': startBeads(); break;
+    case 'birds': startBirds(); break;
+    case 'market': startMarket(); break;
+    case 'mk-bin': marketBin(b.getAttribute('data-v')); break;
+    case 'mk-repeat': say(marketSay()); break;
+    case 'bird-pick': birdPick(+b.getAttribute('data-v')); break;
+    case 'bird-repeat': say(G.asked ? P(L('birdAsk'), 'ask') : L('sBirdStart', G.n)); break;
     case 'bead-repeat': say(L('sBeadAsk2')); break;
     case 'train-repeat': say(G && G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); break;
     case 'train-slot': trainSlot(b.getAttribute('data-v')); break;
@@ -4710,7 +5108,7 @@ document.addEventListener('click', function(e){
     case 'check': check(); break;
     case 'next': next(); break;
     case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
-      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else startRound(); break;
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else if (G && G.game === 'birds') startBirds(); else if (G && G.game === 'market') startMarket(); else startRound(); break;
     case 'gate': gateFor = 'parents'; gate(); break;
     case 'update-now': if (newBuild) doUpdate(); break;
     case 'timer-set': startSession(+b.getAttribute('data-v')); break;
