@@ -1145,7 +1145,15 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .lockscreen .big-btn svg{width:30px;height:30px}
 .lock-sub{font-family:var(--display);font-weight:700;font-size:clamp(18px,3.6dvh,28px);color:var(--ink2);margin:0}
 .timer-av.sleepy{filter:saturate(.75)}
-.lock-moon{width:clamp(40px,8dvh,64px);height:clamp(40px,8dvh,64px);border-radius:50%;box-shadow:inset clamp(-18px,-3dvh,-12px) 0 0 0 #F3D98B;transform:rotate(-20deg)}
+.lockscreen{position:relative}
+.lockscreen > *:not(.night-sky){position:relative;z-index:1}
+.night-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky-moon{position:absolute;left:50%;top:4%;width:clamp(56px,13vmin,120px);margin-left:clamp(60px,16vmin,150px);animation:moonwiggle 7s ease-in-out infinite}
+.sky-star{position:absolute;height:auto;min-width:22px;transform:translate(-50%,-50%) rotate(var(--rot,0deg));animation:skytwinkle var(--tw,3s) ease-in-out var(--td,0s) infinite,skywiggle var(--wg,5s) ease-in-out var(--wd,0s) infinite}
+@keyframes skytwinkle{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes skywiggle{0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) - var(--amp,8deg)))}50%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) + var(--amp,8deg)))}}
+@keyframes moonwiggle{0%,100%{transform:rotate(3deg)}50%{transform:rotate(13deg)}}
+@media (prefers-reduced-motion:reduce){ .sky-star,.sky-moon{animation:none} }
 #daynight{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));width:30px;height:30px;border-radius:50%;z-index:40;pointer-events:none;overflow:hidden;
   background:color-mix(in srgb,#F7C948 calc((1 - var(--p,0)) * 100%),#E9E4D4);box-shadow:0 0 0 3px rgba(255,255,255,.7),0 2px 6px rgba(90,62,51,.2);--p:0}
 #daynight i{position:absolute;inset:0;border-radius:50%;background:#5B6B8C;transform:translateX(calc(105% - var(--p,0) * 75%));transition:transform 1s linear}
@@ -2238,14 +2246,32 @@ function renderTimer(){
     '<button class="link-btn" data-act="timer-none">' + ICON.lock + ' ' + L('noTimer') + '</button>' +
     '</section>';
 }
+/* hand-drawn moon and stars spread around the lock screen; each star twinkles and wiggles at its own pace */
+var SKY = [ ['star1', 8, 14, 9], ['star3', 22, 40, 5], ['star2', 12, 72, 6], ['star6', 30, 86, 8], ['star3', 46, 8, 4.5],
+            ['star2', 90, 9, 7], ['star1', 86, 34, 8], ['star6', 78, 52, 5.5], ['star3', 92, 74, 5], ['star1', 66, 88, 7.5], ['star2', 52, 94, 4.5] ];
+function nightSky(){
+  var h = '<div class="night-sky" aria-hidden="true"><img class="sky-moon" src="night/moon.png" alt="">';
+  SKY.forEach(function(st){
+    var r = Math.random;
+    h += '<img class="sky-star" src="night/' + st[0] + '.png" alt="" style="left:' + st[1] + '%;top:' + st[2] + '%;width:' + st[3] + 'vmin;' +
+      '--tw:' + (2.2 + r() * 2.6).toFixed(2) + 's;--td:' + (-r() * 4).toFixed(2) + 's;--wg:' + (3 + r() * 4).toFixed(2) + 's;--wd:' + (-r() * 5).toFixed(2) + 's;--rot:' + Math.round(r() * 40 - 20) + 'deg;--amp:' + Math.round(6 + r() * 8) + 'deg">';
+  });
+  return h + '</div>';
+}
 function renderLocked(){
   app.innerHTML = '<section class="screen lockscreen">' +
-    '<div class="lock-moon" aria-hidden="true"></div>' +
+    nightSky() +
     avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av sleepy"') +
     '<h1>' + L('lockTitle') + '</h1><p class="lock-sub">' + L('lockSub') + '</p>' +
     '<button class="big-btn green" data-act="garden">' + ICON.star + ' ' + L('seeGarden') + '</button>' +
     '<button class="link-btn" data-act="lock-grown">' + ICON.lock + ' ' + L('grownOnly') + '</button>' +
     '</section>';
+  /* on narrow screens, drop any star that would sit on the text or the buttons */
+  var boxes = [].map.call(document.querySelectorAll('.lockscreen > *:not(.night-sky)'), function(e){ return e.getBoundingClientRect(); });
+  document.querySelectorAll('.sky-star').forEach(function(st){
+    var r = st.getBoundingClientRect(), pad = 6;
+    if (boxes.some(function(q){ return !(r.right < q.left - pad || r.left > q.right + pad || r.bottom < q.top - pad || r.top > q.bottom + pad); })) st.remove();
+  });
 }
 /* the little sun in the corner slowly turns into a moon as the time runs out (no numbers) */
 function syncDaynight(){
