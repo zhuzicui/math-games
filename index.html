@@ -1112,6 +1112,9 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .frog .donebtn.ready{animation:donepulse 1.2s ease-in-out infinite}
 @keyframes donepulse{50%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){ .frog .donebtn.ready{animation:none} }
+.big-btn.auto{position:relative;overflow:hidden;isolation:isolate}
+.big-btn.auto .fill{position:absolute;inset:0;z-index:-1;background:var(--cta-d);opacity:.75;transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+[dir=rtl] .big-btn.auto .fill{transform-origin:100% 50%}
 </style>
 </head>
 <body>
@@ -1992,10 +1995,11 @@ var STYLE = {
   oops:  { p: 1.32, r: 0.86 },
   count: { p: 1.05, r: 0.82 }
 };
-var sayTimers = [];
+var sayTimers = [], sayBusy = false, sayEndAt = 0, sayDone = null;   /* is a line being spoken, and roughly when it ends */
+function sayFinished(){ sayBusy = false; if (sayDone) { var f = sayDone; sayDone = null; f(); } }
 function syncMute(){ document.body.classList.toggle('muted', !S.voice); document.querySelectorAll('.speakbtn').forEach(function(x){ x.setAttribute('aria-pressed', String(!S.voice)); }); }
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
-function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
+function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); sayBusy = false; }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
 var RATE_MUL = { slow: 0.8, medium: 1, fast: 1.22 };
 function say(parts, onEach, gap){
@@ -2022,11 +2026,13 @@ function say(parts, onEach, gap){
       rate *= RATE_MUL[S.voiceRate] || 1;   /* grown-ups' speed setting */
       u.rate = Math.max(0.45, Math.min(1.6, rate));
       u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
-      if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
+      if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); sayFinished(); };
       try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch(e) {}
       speechSynthesis.speak(u);
     });
     setTalking(true);
+    var cjk = /zh|yue|ja|ko/.test(lang), mul = RATE_MUL[S.voiceRate] || 1;
+    sayBusy = true; sayEndAt = Date.now() + arr.reduce(function(t, p){ return t + 350 + p.t.length * (cjk ? 260 : 80); }, 0) / mul;
     /* safety net: some browsers never fire onend */
     var est = arr.reduce(function(t, p){ return t + 400 + p.t.length * 95; }, 0) + 1500;
     sayTimers.push(setTimeout(function(){ try { if (!speechSynthesis.speaking) setTalking(false); else sayTimers.push(setTimeout(function(){ setTalking(false); }, est)); } catch(e) { setTalking(false); } }, est));
@@ -3168,7 +3174,31 @@ function closeOverlay(){ document.querySelectorAll('.flying').forEach(function(f
 function overlay(html){ closeOverlay(); var o = document.createElement('div'); o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.innerHTML = html; document.body.appendChild(o);
   /* reward groups: at most 5 per row, filled from the left, so they're easy to count */
   o.querySelectorAll('.groups .g').forEach(function(g){ g.style.setProperty('--cols', Math.min(5, g.children.length)); });
-  var b = o.querySelector('button'); if (b) b.focus(); return o; }
+  var b = o.querySelector('button'); if (b) b.focus(); autoNext(o); return o; }
+/* "You did it" pages move on by themselves: the Next button fills up while the sum is read out, then the next question comes.
+   Tapping Next skips ahead; opening the star sky (or leaving) cancels it because the page is gone. */
+function autoNext(o){
+  var btn = o.querySelector('.reward:not(.round-rw) [data-act="next"]'); if (!btn) return;
+  var fill = document.createElement('i'); fill.className = 'fill'; btn.classList.add('auto'); btn.insertBefore(fill, btn.firstChild);
+  var t0 = Date.now(), MIN = 1500, gone = false;
+  var dur = Math.max(MIN, Math.min(9000, sayBusy ? sayEndAt - t0 + 300 : 0));
+  function alive(){ return !gone && document.body.contains(o) && document.body.contains(btn); }
+  function go(){ if (!alive()) return; gone = true; sayDone = null; next(); }
+  function finish(){            /* top the bar up quickly, then go */
+    if (!alive()) return;
+    fill.style.transition = 'transform .25s linear'; fill.style.transform = 'scaleX(1)'; setTimeout(go, 280);
+  }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ fill.style.transition = 'transform ' + dur + 'ms linear'; fill.style.transform = 'scaleX(.96)'; }); });
+  /* the voice finished early: go as soon as the minimum time has passed */
+  if (sayBusy) sayDone = function(){ if (alive()) setTimeout(finish, Math.max(0, MIN - (Date.now() - t0))); };
+  /* the bar is full: go, unless the voice is still talking (then wait for it, a few seconds at most) */
+  setTimeout(function wait(){
+    if (!alive()) return;
+    var talking = false; try { talking = sayBusy && hasSpeech && speechSynthesis.speaking; } catch(e) {}
+    if (talking && Date.now() - t0 < dur + 4000) { setTimeout(wait, 150); return; }
+    finish();
+  }, dur);
+}
 function confetti(){
   var c = document.createElement('div'); c.className = 'confetti'; c.setAttribute('aria-hidden', 'true');
   var cols = ['#F6C9B4','#F7D98C','#B9D3E3','#E9917A','#A9C99F','#E6DDEF'], h = '';
