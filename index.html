@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.175334">
+<meta name="build" content="2026-11-12.175546">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1304,6 +1304,9 @@ body.bflybg,body.bflybg #app{background:#1B1450}
 .bflygame .bubble{background:rgba(255,252,247,.96)}
 @media (prefers-reduced-motion:reduce){ .bf .wing,.bf-art img{animation-duration:1.4s} }
 </style>
+<!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -2708,7 +2711,6 @@ function renderHome(){
       '<button class="tile birdt" data-act="birds">' + critter('bird') + '<span class="tl">' + L('gBird') + '</span></button>' +
       '<button class="tile markett" data-act="market">' + critter('raccoon') + '<span class="tl">' + L('gMarket') + '</span></button>' +
       '<button class="tile bflyt" data-act="bfly">' + critter('butterfly') + '<span class="tl">' + L('gBfly') + '</span></button>' +
-      '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
       '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics"><img class="grp-solo" src="animals/penguin.png" alt=""></span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
@@ -3597,13 +3599,13 @@ var MK_COL = {
   red:    ['apple', 'strawberry', 'cherries', 'tomato', 'chilli'],
   yellow: ['banana', 'lemon', 'pepper', 'corn', 'starfruit', 'pineapple'],
   green:  ['broccoli', 'cabbage', 'cucumber', 'peas', 'guava', 'greenchilli'],
-  purple: ['plum', 'eggplant', 'fig', 'beet']
+  purple: ['plum', 'eggplant', 'fig']
 };
 var MK_SWATCH = { red:'#E4574E', yellow:'#F2C640', green:'#6FAE55', purple:'#7B5196' };
 var MK_KINDS = ['apple', 'banana', 'lemon', 'strawberry', 'broccoli', 'pear', 'orange', 'plum', 'onion', 'potato'];
 /* fruit or vegetable: only the clear-cut ones (no tomato, cucumber, pepper, pumpkin, olives or corn) */
 var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon'];
-var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'beet', 'radish', 'garlic'];
+var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'radish', 'garlic'];
 function racImg(cls){ return '<img class="' + (cls || 'mk-host') + '" src="animals/raccoon.png" alt="' + esc(L('mkAlt')) + '" draggable="false">'; }
 function foodImg(k){ return '<img src="market/' + k + '.png" alt="" draggable="false">'; }
 function marketPlan(){ return ['col2', 'col3', 'kind', Math.random() < 0.5 ? 'col3' : 'kind3', 'food']; }
