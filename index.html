@@ -1130,6 +1130,26 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
   .tower.tall .bubble b{white-space:normal;font-size:clamp(17px,2.1vw,30px)}
   .tower.tall .eq{font-size:clamp(34px,4.6vw,60px)}
 }
+
+/* ---------- play timer ---------- */
+.timerscreen,.lockscreen{align-items:center;justify-content:center;text-align:center;gap:clamp(10px,2.4dvh,22px)}
+.timer-av{width:clamp(84px,18dvh,150px) !important;height:clamp(84px,18dvh,150px) !important;flex:none}
+.timerscreen h1,.lockscreen h1{font-family:var(--display);font-size:clamp(26px,5.4dvh,46px);margin:0;line-height:1.15}
+.timer-opts{display:flex;gap:clamp(14px,4vw,32px);justify-content:center}
+.timer-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:clamp(120px,26vw,200px);min-height:clamp(96px,22dvh,170px);padding:8px 18px;gap:2px}
+.timer-btn b{font-size:clamp(44px,11dvh,84px);line-height:1}
+.timer-btn span{font-size:clamp(16px,3.2dvh,24px)}
+.timerscreen .link-btn,.lockscreen .link-btn{display:inline-flex;align-items:center;gap:6px}
+.timerscreen .link-btn svg,.lockscreen .link-btn svg{width:18px;height:18px}
+.lockscreen .big-btn{display:inline-flex;align-items:center;gap:10px}
+.lockscreen .big-btn svg{width:30px;height:30px}
+.lock-sub{font-family:var(--display);font-weight:700;font-size:clamp(18px,3.6dvh,28px);color:var(--ink2);margin:0}
+.timer-av.sleepy{filter:saturate(.75)}
+.lock-moon{width:clamp(40px,8dvh,64px);height:clamp(40px,8dvh,64px);border-radius:50%;box-shadow:inset clamp(-18px,-3dvh,-12px) 0 0 0 #F3D98B;transform:rotate(-20deg)}
+#daynight{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));width:30px;height:30px;border-radius:50%;z-index:40;pointer-events:none;overflow:hidden;
+  background:color-mix(in srgb,#F7C948 calc((1 - var(--p,0)) * 100%),#E9E4D4);box-shadow:0 0 0 3px rgba(255,255,255,.7),0 2px 6px rgba(90,62,51,.2);--p:0}
+#daynight i{position:absolute;inset:0;border-radius:50%;background:#5B6B8C;transform:translateX(calc(105% - var(--p,0) * 75%));transition:transform 1s linear}
+#daynight.night{background:#E9E4D4}
 </style>
 </head>
 <body>
@@ -1292,6 +1312,7 @@ en: {
   gBeads: 'Bead Necklace', octoAlt: 'Octopus', beadAsk: 'What comes next?',
   sBeadAsk: [P('Let’s make a necklace!', 'cheer'), P('Look at the pattern. What comes next?', 'ask')], sBeadAsk2: [P('What comes next?', 'ask')], sBeadWrong: [P('Hmm, let’s sing the pattern.', 'calm')], sBeadDone: [P('Beautiful!', 'cheer')],
   beadN: { heart:'heart', star:'star', orange:'orange', smile:'smile', wink:'wink', flower:'flower', flower2:'flower', flower3:'flower', pinkheart:'heart' },
+  timerTitle: 'How long can we play today?', timerMin: 'minutes', noTimer: 'No timer', lockTitle: 'All done for today!', lockSub: 'See you next time!', allDone: 'All done', sLock: [P('All done for today!', 'calm'), P('See you next time!', 'cheer')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1390,6 +1411,7 @@ fr: {
   gBeads: 'Le collier de perles', octoAlt: 'Pieuvre', beadAsk: 'Qu’est-ce qui vient ensuite\u00a0?',
   sBeadAsk: [P('Faisons un collier !', 'cheer'), P('Regarde le motif. Qu’est-ce qui vient ensuite ?', 'ask')], sBeadAsk2: [P('Qu’est-ce qui vient ensuite ?', 'ask')], sBeadWrong: [P('Hmm, chantons le motif.', 'calm')], sBeadDone: [P('Magnifique !', 'cheer')],
   beadN: { heart:'cœur', star:'étoile', orange:'orange', smile:'sourire', wink:'clin d’œil', flower:'fleur', flower2:'fleur', flower3:'fleur', pinkheart:'cœur' },
+  timerTitle: 'On joue combien de temps aujourd’hui\u00a0?', timerMin: 'minutes', noTimer: 'Sans minuteur', lockTitle: 'C’est fini pour aujourd’hui\u00a0!', lockSub: 'À la prochaine\u00a0!', allDone: 'Terminé', sLock: [P('C’est fini pour aujourd’hui !', 'calm'), P('À la prochaine !', 'cheer')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1488,6 +1510,7 @@ es: {
   gBeads: 'El collar de cuentas', octoAlt: 'Pulpo', beadAsk: '¿Qué sigue?',
   sBeadAsk: [P('¡Hagamos un collar!', 'cheer'), P('Mira el patrón. ¿Qué sigue?', 'ask')], sBeadAsk2: [P('¿Qué sigue?', 'ask')], sBeadWrong: [P('Mmm, cantemos el patrón.', 'calm')], sBeadDone: [P('¡Precioso!', 'cheer')],
   beadN: { heart:'corazón', star:'estrella', orange:'naranja', smile:'sonrisa', wink:'guiño', flower:'flor', flower2:'flor', flower3:'flor', pinkheart:'corazón' },
+  timerTitle: '¿Cuánto tiempo jugamos hoy?', timerMin: 'minutos', noTimer: 'Sin temporizador', lockTitle: '¡Se acabó por hoy!', lockSub: '¡Hasta la próxima!', allDone: 'Terminar', sLock: [P('¡Se acabó por hoy!', 'calm'), P('¡Hasta la próxima!', 'cheer')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1586,6 +1609,7 @@ zh: {
   gBeads: '串珠项链', octoAlt: '章鱼', beadAsk: '下一个是什么？',
   sBeadAsk: [P('我们来做项链吧！', 'cheer'), P('看看规律。下一个是什么？', 'ask')], sBeadAsk2: [P('下一个是什么？', 'ask')], sBeadWrong: [P('嗯，我们一起唱一唱规律。', 'calm')], sBeadDone: [P('真漂亮！', 'cheer')],
   beadN: { heart:'爱心', star:'星星', orange:'橙子', smile:'笑脸', wink:'眨眼', flower:'花朵', flower2:'花朵', flower3:'花朵', pinkheart:'爱心' },
+  timerTitle: '今天玩多久？', timerMin: '分钟', noTimer: '不计时', lockTitle: '今天玩好啦！', lockSub: '下次再见！', allDone: '好了', sLock: [P('今天玩好啦！', 'calm'), P('下次再见！', 'cheer')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1684,6 +1708,7 @@ ja: {
   gBeads: 'ビーズの ネックレス', octoAlt: 'タコ', beadAsk: 'つぎは なにかな？',
   sBeadAsk: [P('ネックレスを つくろう！', 'cheer'), P('じゅんばんを よく みてね。つぎは なにかな？', 'ask')], sBeadAsk2: [P('つぎは なにかな？', 'ask')], sBeadWrong: [P('うーん、いっしょに となえてみよう。', 'calm')], sBeadDone: [P('きれい！', 'cheer')],
   beadN: { heart:'ハート', star:'ほし', orange:'オレンジ', smile:'にこにこ', wink:'ウインク', flower:'おはな', flower2:'おはな', flower3:'おはな', pinkheart:'ハート' },
+  timerTitle: 'きょうは どのくらい あそぶ？', timerMin: 'ふん', noTimer: 'タイマーなし', lockTitle: 'きょうは おしまい！', lockSub: 'また こんどね！', allDone: 'おしまい', sLock: [P('きょうは おしまい！', 'calm'), P('また こんどね！', 'cheer')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1782,6 +1807,7 @@ yue: {
   gBeads: '串珠頸鏈', octoAlt: '八爪魚', beadAsk: '跟住係咩？',
   sBeadAsk: [P('我哋一齊整條頸鏈！', 'cheer'), P('睇下規律。跟住係咩？', 'ask')], sBeadAsk2: [P('跟住係咩？', 'ask')], sBeadWrong: [P('嗯，我哋一齊唱下個規律。', 'calm')], sBeadDone: [P('好靚呀！', 'cheer')],
   beadN: { heart:'心心', star:'星星', orange:'橙', smile:'笑臉', wink:'眨眼', flower:'花', flower2:'花', flower3:'花', pinkheart:'心心' },
+  timerTitle: '今日玩幾耐？', timerMin: '分鐘', noTimer: '唔計時', lockTitle: '今日玩完喇！', lockSub: '下次再見！', allDone: '得喇', sLock: [P('今日玩完喇！', 'calm'), P('下次再見！', 'cheer')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1880,6 +1906,7 @@ ko: {
   gBeads: '구슬 목걸이', octoAlt: '문어', beadAsk: '다음엔 뭐가 올까요?',
   sBeadAsk: [P('목걸이를 만들어요!', 'cheer'), P('규칙을 보세요. 다음엔 뭐가 올까요?', 'ask')], sBeadAsk2: [P('다음엔 뭐가 올까요?', 'ask')], sBeadWrong: [P('음, 같이 규칙을 불러 봐요.', 'calm')], sBeadDone: [P('예뻐요!', 'cheer')],
   beadN: { heart:'하트', star:'별', orange:'오렌지', smile:'웃음', wink:'윙크', flower:'꽃', flower2:'꽃', flower3:'꽃', pinkheart:'하트' },
+  timerTitle: '오늘은 얼마나 놀까요?', timerMin: '분', noTimer: '타이머 없이', lockTitle: '오늘은 여기까지!', lockSub: '다음에 또 만나요!', allDone: '끝', sLock: [P('오늘은 여기까지!', 'calm'), P('다음에 또 만나요!', 'cheer')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2152,7 +2179,7 @@ function speakBtn(act, label){
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 var app = document.getElementById('app');
 var screen = 'start';
-function show(name){ screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
+function show(name){ name = playGate(name); screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
 function render(){
   applyLang(); syncMute();
   document.body.classList.toggle('skybg', screen === 'garden');
@@ -2174,7 +2201,71 @@ function render(){
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
+  else if (screen === 'timer') renderTimer();
+  else if (screen === 'locked') renderLocked();
+  syncDaynight();
 }
+
+/* =====================================================================
+   PLAY TIMER: a grown-up picks 10 or 15 minutes (or "no timer", behind the sum gate) when a play session starts.
+   A session lasts 4 hours from when it was set; after that the app asks again.
+   When time is up the child finishes the round in progress, then the games lock. Stars and stickers stay open.
+   ===================================================================== */
+var SESSION_MS = 4 * 60 * 60 * 1000, gateFor = 'parents';
+function sessOk(){ return !!(S.sess && S.sess.start && Date.now() - S.sess.start < SESSION_MS && Date.now() >= S.sess.start); }
+function timeUp(){ return sessOk() && S.sess.end && Date.now() >= S.sess.end; }
+function startSession(mins){
+  var now = Date.now();
+  S.sess = { start: now, mins: mins, end: mins ? now + mins * 60000 : 0 };
+  save(); homeGroup = null; show('home');
+}
+/* where a request for the games really goes: the timer question first, the lock once time is up */
+function playGate(name){
+  if (name !== 'home') return name;
+  if (!sessOk()) return 'timer';
+  if (timeUp()) return 'locked';
+  return name;
+}
+function renderTimer(){
+  var relock = timeUp();
+  app.innerHTML = '<section class="screen timerscreen">' +
+    avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av"') +
+    '<h1>' + L('timerTitle') + '</h1>' +
+    '<div class="timer-opts">' +
+      '<button class="big-btn timer-btn" data-act="timer-set" data-v="10"><b>10</b><span>' + L('timerMin') + '</span></button>' +
+      '<button class="big-btn timer-btn" data-act="timer-set" data-v="15"><b>15</b><span>' + L('timerMin') + '</span></button>' +
+    '</div>' +
+    '<button class="link-btn" data-act="timer-none">' + ICON.lock + ' ' + L('noTimer') + '</button>' +
+    '</section>';
+}
+function renderLocked(){
+  app.innerHTML = '<section class="screen lockscreen">' +
+    '<div class="lock-moon" aria-hidden="true"></div>' +
+    avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av sleepy"') +
+    '<h1>' + L('lockTitle') + '</h1><p class="lock-sub">' + L('lockSub') + '</p>' +
+    '<button class="big-btn green" data-act="garden">' + ICON.star + ' ' + L('seeGarden') + '</button>' +
+    '<button class="link-btn" data-act="lock-grown">' + ICON.lock + ' ' + L('grownOnly') + '</button>' +
+    '</section>';
+}
+/* the little sun in the corner slowly turns into a moon as the time runs out (no numbers) */
+function syncDaynight(){
+  var el = document.getElementById('daynight');
+  var playing = sessOk() && S.sess.end && ['timer', 'locked', 'start', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0;
+  if (!playing) { if (el) el.remove(); return; }
+  if (!el) { el = document.createElement('div'); el.id = 'daynight'; el.setAttribute('aria-hidden', 'true'); el.innerHTML = '<i></i>'; document.body.appendChild(el); }
+  var p = Math.max(0, Math.min(1, (Date.now() - S.sess.start) / (S.sess.end - S.sess.start)));
+  el.style.setProperty('--p', p.toFixed(3));
+  el.classList.toggle('night', p >= 1);
+}
+function timerTick(){
+  /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads'].indexOf(screen) >= 0;
+  if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
+  if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
+  syncDaynight();
+}
+setInterval(timerTick, 5000);
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) timerTick(); });
 
 /* ---------- start (unlocks audio on first tap) ---------- */
 var askName = false;
@@ -3244,7 +3335,7 @@ function roundDone(){
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
   overlay('<div class="reward round-rw"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
     '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
-    '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button><button class="big-btn" data-act="again">' + L('again') + '</button></div></div>');
+    '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button>' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>' : '<button class="big-btn" data-act="again">' + L('again') + '</button>') + '</div></div>');
   confetti();
   say(L('sGreat', G.earned).concat(madeRainbow ? [P((madeSpecial ? L('specialSticker') : L('madeRainbow')), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
@@ -4254,7 +4345,7 @@ document.addEventListener('click', function(e){
     case 'bus-pick': busPick(+b.getAttribute('data-v')); break;
     case 'ten-repeat': tenAskAloud(); break;
     case 'tf-pick': tenPick(+b.getAttribute('data-v')); break;
-    case 'home': show('home'); break;
+    case 'home': show('home'); if (screen === 'locked') say(L('sLock')); break;
     case 'garden':
       /* remember where we came from, so Back returns there (a game in progress continues with the next question) */
       var ov = document.querySelector('.overlay');
@@ -4285,11 +4376,19 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
-    case 'gate': gate(); break;
+    case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
+    case 'gate': gateFor = 'parents'; gate(); break;
+    case 'timer-set': startSession(+b.getAttribute('data-v')); break;
+    case 'timer-none': gateFor = 'notimer'; gate(); break;
+    case 'lock-grown': gateFor = 'unlock'; gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
-      if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); }
+      if (b.getAttribute('data-ok') === '1') {
+        if (gateFor === 'notimer') { closeOverlay(); startSession(0); }
+        else if (gateFor === 'unlock') { S.sess = null; save(); show('home'); }   /* a grown-up unlocks: choose a new timer */
+        else { resetArmed = false; ptab = 'progress'; show('parents'); }
+      }
       else { var gbox = b.closest('.gate'); if (gbox) { gbox.classList.remove('nope'); void gbox.offsetWidth; gbox.classList.add('nope'); } if (navigator.vibrate) try { navigator.vibrate(80); } catch(e) {} }   /* wrong: shake, stay open */
       break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
