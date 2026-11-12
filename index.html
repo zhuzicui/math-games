@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.185110">
+<meta name="build" content="2026-11-12.185745">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1279,7 +1279,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .tile.upt{background:#E3F1FA;border-color:#A9D0EA;box-shadow:0 7px 0 #A9D0EA}
 .tile.mini.upt{box-shadow:0 4px 0 #A9D0EA}
 .upgame{position:relative;gap:clamp(4px,1.2dvh,12px)}
-.upgame > *:not(.up-sky):not(.rotate-hint){position:relative;z-index:1}
+.upgame > .bar,.upgame > .croc-ask,.upgame > .up-field,.upgame > .bw-choices{position:relative;z-index:1}
 .up-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#9FD3F2 0%,#C7E6F8 55%,#E6F4FB 100%)}
 .up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;animation:updrift 60s linear infinite}
 .up-sky .cl::before,.up-sky .cl::after{content:'';position:absolute;background:#fff;border-radius:50%}
@@ -1313,7 +1313,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .up-sheep{position:absolute;left:50%;bottom:0;width:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 6px 6px rgba(40,60,90,.2))}
 .up-rig.landed .up-sheep{animation:none}
 .upgame .bw-choices{flex:none}
-@media (orientation:landscape){ .upgame .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
+@media (orientation:landscape){ .upgame > .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
 @media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
 .upgame .bubble{background:rgba(255,252,247,.96)}
 @media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
@@ -3819,20 +3819,17 @@ function layoutUp(){
   var f = document.getElementById('upField'), rig = document.getElementById('upRig'); if (!f || !G) return;
   var W = f.clientWidth, H = f.clientHeight, n = G.n;
   var rows0 = n > 10 ? 2 : 1, rowH0 = Math.min(H * (rows0 > 1 ? 0.24 : 0.18), rows0 > 1 ? 130 : 100);
-  var sheepH = Math.max(52, Math.min(H * (n > 10 ? 0.22 : 0.28), 210)), stringH = Math.max(30, H * 0.07);
-  var fall = H * (H < 330 ? 0.05 : 0.12), avail = H - rowH0 - sheepH - stringH - 12 - fall;  /* keep only a little room below for the landing; the hill rises to meet her */
+  var sheepH = Math.max(52, Math.min(H * (n > 10 ? 0.24 : 0.3), 240)), stringH = Math.max(30, H * 0.07);
+  var fall = H * (H < 330 ? 0.05 : 0.08), avail = H - rowH0 - sheepH - stringH - 12 - fall;  /* keep only a little room below for the landing; the hill rises to meet her */
   /* fit: radii a (across) and b (up-down) of the oval of centres, balloon width bw from how many share it */
-  var maxA = W * 0.42, a, b, bw, bh;
-  var asp = Math.max(1.3, Math.min(H < 330 ? 7 : 4, W / H * 1.8));  /* wide screens get a wide bunch */
-  b = avail * 0.32; a = Math.min(maxA, b * asp);
-  for (var k = 0; k < 4; k++) {
-    bw = Math.max(28, Math.min(120, avail * 0.5, 0.92 * Math.sqrt(Math.PI / n) * Math.sqrt(a * b) / 0.62));
-    bh = bw / 0.75;
-    b = Math.max(bh * 0.3, (avail - bh) / 2); a = Math.min(maxA - bw / 2, b * asp);
-  }
-  /* small bunches don't need the whole sky */
-  var want = Math.sqrt(n) * bw * 0.62 / (0.92 * Math.sqrt(Math.PI));
-  if (want < Math.sqrt(a * b)) { var f2 = want / Math.sqrt(a * b); a *= f2; b *= f2; }
+  var maxA = W * 0.42, asp = Math.max(1.3, Math.min(H < 330 ? 7 : 4, W / H * 1.8));  /* wide screens get a wide bunch */
+  /* solve together: the oval (b tall, a = asp * b wide) plus one balloon height fills the room, and balloons are as big
+     as the crowd allows (centres about 0.6 balloon-widths apart, so they overlap like a real bunch) */
+  var k = 0.92 * Math.sqrt(Math.PI) / 0.62 / Math.sqrt(n), c = k * Math.sqrt(asp) / 0.75;
+  var b = Math.max(10, avail / (2 + c)), a = asp * b, bw = k * Math.sqrt(a * b), bh;
+  if (a > maxA - bw / 2) { a = Math.max(b, maxA - bw / 2); bw = k * Math.sqrt(a * b); }
+  bw = Math.max(28, Math.min(150, bw)); bh = bw / 0.75;
+  b = Math.max(bh * 0.25, (avail - bh) / 2);
   var rigW = Math.max(2 * a + bw * 1.2, sheepH * 1.1), bunchH = 2 * b + bh, rigH = bunchH + stringH + sheepH;
   G.lay = { W:W, H:H, bh:bh, bw:bw, rigW:rigW, rigH:rigH, rowH0:rowH0, rows0:rows0, sheepH:sheepH, drop: Math.max(0, H - rowH0 - rigH - 6) };
   rig.style.width = Math.round(rigW) + 'px'; rig.style.height = Math.round(rigH) + 'px';
