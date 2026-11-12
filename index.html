@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.182804">
+<meta name="build" content="2026-11-12.184018">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1286,7 +1286,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .up-row{position:absolute;left:0;right:0;top:0}
 .up-up{position:absolute;aspect-ratio:auto;display:flex;justify-content:center;pointer-events:none}
 .up-up img{height:100%;width:auto;animation:upbob 2.4s ease-in-out infinite}
-.up-num{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%) scale(.4);opacity:0;min-width:1.5em;height:1.5em;padding:0 .2em;border-radius:1em;background:#FFFCF7;border:3px solid #F2C640;color:var(--ink);font-family:var(--display);font-weight:800;font-size:clamp(15px,3.4dvh,26px);line-height:1.35;text-align:center;transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.6,1)}
+.up-num{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%) scale(.4);opacity:0;min-width:1.5em;height:1.5em;padding:0 .2em;border-radius:1em;background:#FFFCF7;border:3px solid #F2C640;color:var(--ink);font-family:var(--display);font-weight:800;font-size:1em;line-height:1.35;text-align:center;transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.6,1)}
 .up-up.show .up-num{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .up-up.hop img{animation:uphop .5s ease-out}
 @keyframes uphop{40%{transform:translateY(-14%)}}
@@ -1305,7 +1305,8 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .up-sheep{position:absolute;left:50%;bottom:0;width:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 6px 6px rgba(40,60,90,.2))}
 .up-rig.landed .up-sheep{animation:none}
 .upgame .bw-choices{flex:none}
-@media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:10px;flex-direction:column;gap:10px;min-height:0;padding:0} .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
+@media (orientation:landscape){ .upgame .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
+@media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
 .upgame .bubble{background:rgba(255,252,247,.96)}
 @media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
 </style>
@@ -3755,15 +3756,16 @@ var UP_ART = [[0.875,0.494],[0.585,0.46],[0.565,0.506],[0.965,0.511],[0.7,0.459]
 function sheepImg(cls){ return '<img class="' + (cls || 'up-host') + '" src="animals/sheep.png" alt="' + esc(L('upAlt')) + '" draggable="false">'; }
 function startUp(){ G = { game:'up', q:0, earned:0, startStars:S.stars }; upQuestion(); }
 function upQuestion(){
-  var max = Math.max(3, Math.min(10, S.maxSum || 5)), q = G.q;
-  var lo = Math.min(max, [3, 4, 5, 6, 7][q] || 3), hi = Math.min(max, [4, 5, 7, 9, 10][q] || 4), n, tries = 0;
-  if (lo > hi) lo = hi;
+  /* difficulty goes up and down a little: easy, medium, easier, hard, medium-hard (as a share of the kid's max, up to 20) */
+  var max = Math.max(3, Math.min(20, S.maxSum || 5)), q = G.q, R = [[.25, .4], [.5, .65], [.35, .5], [.75, 1], [.55, .8]][q] || [.3, .5];
+  var lo = Math.max(3, Math.round(max * R[0])), hi = Math.max(lo, Math.round(max * R[1])), n, tries = 0;
   do { n = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (n === G.prevN && hi > lo && ++tries < 12);
   G.prevN = n;
   var arts = shuffle(UP_ART.map(function(_, i){ return i; }));
-  G.n = n; G.t = n; G.counted = 0; G.hideNums = q >= 3;
-  G.bal = []; for (var i = 0; i < n; i++) G.bal.push({ id:i, art:arts[i % arts.length], gone:false, num:0 });
-  var o = Math.max(1, Math.min(n - 1, max - 2)); G.opts = [o, o + 1, o + 2];
+  G.n = n; G.t = n; G.counted = 0; G.hideNums = q >= 3 && n <= 12;
+  G.pos = upScatter(n);
+  G.bal = []; for (var i = 0; i < n; i++) G.bal.push({ id:i, art:arts[i % arts.length], gone:false, num:0, rot: Math.round((Math.random() - 0.5) * 16), sz: 0.9 + Math.random() * 0.2 });
+  var o = Math.max(1, Math.min(n - Math.floor(Math.random() * 3), Math.max(n, max) - 2)); G.opts = [o, o + 1, o + 2];  /* the right one can be first, middle or last */
   G.first = true; G.lock = false; G.asked = false; G.done = false; G.tried = {}; G.bubble2 = '';
   screen = 'up'; closeOverlay(); renderUp();
   say(q === 0 ? L('sUpAsk') : L('sUpAsk2'));
@@ -3792,44 +3794,63 @@ function renderUp(){
   });
 }
 /* the bunch: rows of balloons above the sheep, wide enough apart to tap one at a time */
+function upScatter(n){
+  /* balloon centres scattered in a unit disc (dart throwing), close enough to overlap a little like a real bunch */
+  var d = 0.92 * Math.sqrt(Math.PI / n), pts = [], guard = 0;
+  while (pts.length < n && guard++ < 4000) {
+    var a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()), p = { u: Math.cos(a) * r, v: Math.sin(a) * r };
+    if (pts.every(function(o){ var dx = o.u - p.u, dy = o.v - p.v; return dx * dx + dy * dy >= d * d; })) pts.push(p);
+    if (guard % 300 === 0) d *= 0.95;
+  }
+  while (pts.length < n) pts.push({ u: Math.random() * 1.6 - 0.8, v: Math.random() * 1.6 - 0.8 });
+  return shuffle(pts);  /* random paint order, so which one sits in front is random too */
+}
+/* the bunch: an oval cloud of balloons above the sheep, some high, some low, some out to the side */
 function layoutUp(){
   var f = document.getElementById('upField'), rig = document.getElementById('upRig'); if (!f || !G) return;
   var W = f.clientWidth, H = f.clientHeight, n = G.n;
-  var perRow = n <= 4 ? n : n <= 6 ? 3 : n <= 8 ? 4 : 5, rows = Math.ceil(n / perRow);
-  var rowH0 = Math.min(H * 0.2, 110);                                   /* the top row of let-go balloons */
-  var sheepH = Math.max(56, Math.min(H * 0.28, 210)), avail = H - rowH0 - sheepH - 16;
-  var bh = Math.max(34, Math.min(avail / (rows * 0.82 + 0.75), (W * 0.8) / (perRow * 0.82), 150));
-  var bw = bh * 0.78, gapX = bw * 1.05, gapY = bh * 0.82;
-  var rigW = Math.max(perRow * gapX, sheepH * 1.1), bunchH = rows * gapY + bh * 0.18, stringH = Math.max(bh * 0.55, 30);
-  var rigH = bunchH + stringH + sheepH;
-  G.lay = { W:W, H:H, bh:bh, bw:bw, rigW:rigW, rigH:rigH, rowH0:rowH0, sheepH:sheepH, drop: Math.max(0, H - rowH0 - rigH - 6) };
+  var rows0 = n > 10 ? 2 : 1, rowH0 = Math.min(H * (rows0 > 1 ? 0.24 : 0.18), rows0 > 1 ? 130 : 100);
+  var sheepH = Math.max(52, Math.min(H * (n > 10 ? 0.22 : 0.28), 210)), stringH = Math.max(30, H * 0.07);
+  var fall = H * (H < 330 ? 0.05 : 0.12), avail = H - rowH0 - sheepH - stringH - 12 - fall;  /* keep only a little room below for the landing; the hill rises to meet her */
+  /* fit: radii a (across) and b (up-down) of the oval of centres, balloon width bw from how many share it */
+  var maxA = W * 0.42, a, b, bw, bh;
+  var asp = Math.max(1.3, Math.min(H < 330 ? 7 : 4, W / H * 1.8));  /* wide screens get a wide bunch */
+  b = avail * 0.32; a = Math.min(maxA, b * asp);
+  for (var k = 0; k < 4; k++) {
+    bw = Math.max(28, Math.min(120, avail * 0.5, 0.92 * Math.sqrt(Math.PI / n) * Math.sqrt(a * b) / 0.62));
+    bh = bw / 0.75;
+    b = Math.max(bh * 0.3, (avail - bh) / 2); a = Math.min(maxA - bw / 2, b * asp);
+  }
+  /* small bunches don't need the whole sky */
+  var want = Math.sqrt(n) * bw * 0.62 / (0.92 * Math.sqrt(Math.PI));
+  if (want < Math.sqrt(a * b)) { var f2 = want / Math.sqrt(a * b); a *= f2; b *= f2; }
+  var rigW = Math.max(2 * a + bw * 1.2, sheepH * 1.1), bunchH = 2 * b + bh, rigH = bunchH + stringH + sheepH;
+  G.lay = { W:W, H:H, bh:bh, bw:bw, rigW:rigW, rigH:rigH, rowH0:rowH0, rows0:rows0, sheepH:sheepH, drop: Math.max(0, H - rowH0 - rigH - 6) };
   rig.style.width = Math.round(rigW) + 'px'; rig.style.height = Math.round(rigH) + 'px';
   rig.style.left = Math.round(W / 2 - rigW / 2) + 'px'; rig.style.top = Math.round(rowH0 + 4) + 'px';
   var sh = rig.querySelector('.up-sheep'); sh.style.height = Math.round(sheepH) + 'px';
-  var anchor = { x: rigW / 2, y: rigH - sheepH * 0.92 };                /* where all strings meet: the sheep's back */
+  var anchor = { x: rigW / 2, y: rigH - sheepH * 0.92 };
   var svg = document.getElementById('upStrings'); svg.setAttribute('width', Math.round(rigW)); svg.setAttribute('height', Math.round(rigH));
   var lines = '';
-  G.bal.forEach(function(b, i){
-    var row = Math.floor(i / perRow), inRow = Math.min(perRow, n - row * perRow), col = i % perRow;
-    var cx = rigW / 2 + (col - (inRow - 1) / 2) * gapX + (row % 2 ? gapX * 0.18 : 0), top = row * gapY;
-    var A = UP_ART[b.art], h = bh * (0.92 + ((b.id * 37) % 9) / 100), w = h * A[0];
-    b.el = rig.querySelector('.up-bal[data-id="' + b.id + '"]'); b.w = w; b.h = h;
-    b.x = cx - w * A[1]; b.y = top; b.kx = cx; b.ky = top + h;
-    if (!b.gone) { b.el.style.width = Math.round(w) + 'px'; b.el.style.height = Math.round(h) + 'px'; b.el.style.left = Math.round(b.x) + 'px'; b.el.style.top = Math.round(b.y) + 'px'; b.el.style.zIndex = 10 - row; }
-    var mx = (b.kx + anchor.x) / 2 + (b.kx < anchor.x ? -8 : 8);
-    lines += '<path data-s="' + b.id + '"' + (b.gone ? ' class="cut"' : '') + ' d="M' + b.kx.toFixed(1) + ' ' + b.ky.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + ((b.ky + anchor.y) / 2).toFixed(1) + ' ' + anchor.x.toFixed(1) + ' ' + anchor.y.toFixed(1) + '"/>';
+  G.bal.forEach(function(b0, i){
+    var P0 = G.pos[i], cx = rigW / 2 + P0.u * a, cy = b + bh / 2 + P0.v * b;
+    var A = UP_ART[b0.art], h = bh * b0.sz, w = h * A[0];
+    b0.el = rig.querySelector('.up-bal[data-id="' + b0.id + '"]'); b0.w = w; b0.h = h;
+    b0.x = cx - w * A[1]; b0.y = cy - h / 2; b0.kx = cx; b0.ky = cy + h / 2;
+    if (!b0.gone) { var st = b0.el.style; st.width = Math.round(w) + 'px'; st.height = Math.round(h) + 'px'; st.left = Math.round(b0.x) + 'px'; st.top = Math.round(b0.y) + 'px'; st.zIndex = 2 + i; st.transform = 'rotate(' + b0.rot + 'deg)'; }
+    var mx = (b0.kx + anchor.x) / 2 + (b0.kx < anchor.x ? -8 : 8);
+    lines += '<path data-s="' + b0.id + '"' + (b0.gone ? ' class="cut"' : '') + ' d="M' + b0.kx.toFixed(1) + ' ' + b0.ky.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + ((b0.ky + anchor.y) / 2).toFixed(1) + ' ' + anchor.x.toFixed(1) + ' ' + anchor.y.toFixed(1) + '"/>';
   });
   svg.innerHTML = lines;
-  /* the row at the top, where let-go balloons wait with their numbers */
-  var row = document.getElementById('upRow'), slot = Math.min(rowH0 * 0.82, (W - 20) / Math.max(n, 5));
-  row.style.height = Math.round(rowH0) + 'px'; G.lay.slot = slot;
+  /* the row(s) at the top, where let-go balloons wait with their numbers */
+  var row = document.getElementById('upRow'), perRow = Math.ceil(n / rows0);
+  var slot = Math.min(rowH0 / rows0 * 0.86, (W - 20) / Math.max(perRow, 5));
+  row.style.height = Math.round(rowH0) + 'px'; G.lay.slot = slot; G.lay.perRow = perRow;
+  row.style.fontSize = Math.round(Math.max(12, Math.min(26, slot * 0.4))) + 'px';
   upSink(false);
 }
 window.addEventListener('resize', function(){ if (screen === 'up' && G && G.game === 'up') { layoutUp(); upPlaceRow(); } });
-function upSlot(i){ var L0 = G.lay, s = L0.slot * 0.9; return { x: L0.W / 2 + (i - (G.n - 1) / 2) * L0.slot - s * 0.35, y: 2, h: s }; }
-function upPlaceRow(){
-  document.querySelectorAll('#upRow .up-up').forEach(function(el){ var p = upSlot(+el.getAttribute('data-n') - 1); el.style.left = Math.round(p.x) + 'px'; el.style.top = Math.round(p.y) + 'px'; el.style.height = Math.round(p.h) + 'px'; });
-}
+function upSlot(i){ var L0 = G.lay, s = L0.slot * 0.95, r = Math.floor(i / L0.perRow), c = i % L0.perRow, inRow = Math.min(L0.perRow, G.n - r * L0.perRow); return { x: L0.W / 2 + (c - (inRow - 1) / 2) * L0.slot - s * 0.35, y: 2 + r * L0.rowH0 / L0.rows0, h: s }; }
 /* the sheep goes down a little with every balloon that leaves; with none left it lands on the grass */
 function upSink(anim){
   var rig = document.getElementById('upRig'); if (!rig || !G.lay) return;
