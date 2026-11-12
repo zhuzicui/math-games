@@ -11,6 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
+<meta name="build" content="2026-11-12.042409">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1192,6 +1193,9 @@ body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1
 .tile.mini.feed{box-shadow:0 4px 0 #EDC3AC}.tile.mini.ten{box-shadow:0 4px 0 #EBD58F}.tile.mini.bus{box-shadow:0 4px 0 #A9D0EA}.tile.mini.frogt{box-shadow:0 4px 0 #A9CB97}.tile.mini.towert{box-shadow:0 4px 0 #EDBF91}.tile.mini.writet{box-shadow:0 4px 0 #CDBDE2}
 .tile.mini.croct{box-shadow:0 4px 0 #B5D49F}.tile.mini.traint{box-shadow:0 4px 0 #A7CBD2}.tile.mini.beadt{box-shadow:0 4px 0 #F0B7C7}
 .tile.mini img{width:100%;height:100%;object-fit:contain;display:block}
+.update-pill{position:fixed;left:50%;top:max(8px,env(safe-area-inset-top));transform:translateX(-50%);z-index:90;display:inline-flex;align-items:center;gap:8px;max-width:92vw;padding:8px 16px;border-radius:999px;border:3px solid #3B78A0;background:#EAF4FB;color:#1F3B52;font-family:var(--display);font-weight:800;font-size:clamp(13px,2.2dvh,17px);line-height:1.1;box-shadow:0 4px 12px rgba(31,59,82,.22);animation:pillin .4s ease-out}
+.update-pill svg{width:1.1em;height:1.1em;flex:none}
+@keyframes pillin{from{transform:translate(-50%,-140%)}}
 </style>
 </head>
 <body>
@@ -1359,6 +1363,7 @@ en: {
   sWriteAsk: function(s, a){ return [P('What is ' + s + ' plus ' + a + '?', 'ask'), P('Write the answer!', 'cheer')]; }, sWriteRead: function(n){ return [P('I read ' + n + '.', 'calm'), P('Try again!', 'cheer')]; }, sWriteHint: function(t){ return [P('The answer is ' + t + '.', 'calm'), P('Trace the ' + t + '!', 'cheer')]; },
   otherGames: 'Other games',
   myStarsBtn: 'My stars',
+  updatePill: 'New version · tap to update',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1462,6 +1467,7 @@ fr: {
   sWriteAsk: function(s, a){ return [P('Combien font ' + s + ' plus ' + a + ' ?', 'ask'), P('Écris la réponse !', 'cheer')]; }, sWriteRead: function(n){ return [P('J’ai lu ' + n + '.', 'calm'), P('Essaie encore !', 'cheer')]; }, sWriteHint: function(t){ return [P('La réponse est ' + t + '.', 'calm'), P('Repasse sur le ' + t + ' !', 'cheer')]; },
   otherGames: 'Autres jeux',
   myStarsBtn: 'Mes étoiles',
+  updatePill: 'Nouvelle version · touche pour mettre à jour',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1565,6 +1571,7 @@ es: {
   sWriteAsk: function(s, a){ return [P('¿Cuánto es ' + s + ' más ' + a + '?', 'ask'), P('¡Escribe la respuesta!', 'cheer')]; }, sWriteRead: function(n){ return [P('Leí ' + n + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; }, sWriteHint: function(t){ return [P('La respuesta es ' + t + '.', 'calm'), P('¡Repasa el ' + t + '!', 'cheer')]; },
   otherGames: 'Otros juegos',
   myStarsBtn: 'Mis estrellas',
+  updatePill: 'Nueva versión · toca para actualizar',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1668,6 +1675,7 @@ zh: {
   sWriteAsk: function(s, a){ return [P(s + '加' + a + '等于几？', 'ask'), P('写出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我看到的是' + n + '。', 'calm'), P('再试一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案是' + t + '。', 'calm'), P('照着写一写' + t + '！', 'cheer')]; },
   otherGames: '其他游戏',
   myStarsBtn: '我的星星',
+  updatePill: '有新版本 · 点这里更新',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1771,6 +1779,7 @@ ja: {
   sWriteAsk: function(s, a){ return [P(s + ' たす ' + a + ' は いくつ？', 'ask'), P('こたえを かいてね！', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' に みえたよ。', 'calm'), P('もういちど！', 'cheer')]; }, sWriteHint: function(t){ return [P('こたえは ' + t + ' だよ。', 'calm'), P(t + ' を なぞってね！', 'cheer')]; },
   otherGames: 'ほかの ゲーム',
   myStarsBtn: 'わたしの ほし',
+  updatePill: 'あたらしい バージョン · タップで こうしん',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1874,6 +1883,7 @@ yue: {
   sWriteAsk: function(s, a){ return [P(s + '加' + a + '等於幾多？', 'ask'), P('寫出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我睇到係' + n + '。', 'calm'), P('再試一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案係' + t + '。', 'calm'), P('跟住寫個' + t + '！', 'cheer')]; },
   otherGames: '其他遊戲',
   myStarsBtn: '我嘅星星',
+  updatePill: '有新版本 · 撳呢度更新',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1977,6 +1987,7 @@ ko: {
   sWriteAsk: function(s, a){ return [P(s + ' 더하기 ' + a + koEun(a) + ' 얼마일까요?', 'ask'), P('답을 써 보세요!', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' 같아요.', 'calm'), P('다시 해 봐요!', 'cheer')]; }, sWriteHint: function(t){ return [P('답은 ' + t + '.', 'calm'), P(t + ' 따라 써 봐요!', 'cheer')]; },
   otherGames: '다른 게임',
   myStarsBtn: '내 별',
+  updatePill: '새 버전 · 눌러서 업데이트',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2360,6 +2371,41 @@ function timerTick(){
   syncDaynight();
 }
 setInterval(timerTick, 5000);
+
+/* =====================================================================
+   AUTO-UPDATE: every open copy checks the site for a newer build (the <meta name="build"> stamp).
+   On a menu it reloads quietly; in the middle of a game it waits, and shows a small pill that can be tapped.
+   ===================================================================== */
+var MY_BUILD = (document.querySelector('meta[name="build"]') || {}).content || '', newBuild = null;
+function checkBuild(){
+  if (!MY_BUILD || !window.fetch || location.protocol === 'file:') return;
+  fetch(location.pathname + '?b=' + Date.now(), { cache:'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
+    var m = new RegExp('<meta name="bu' + 'ild" content="([^"]+)"').exec(t || '');
+    if (!m || m[1] === MY_BUILD) return;
+    var tried = ''; try { tried = sessionStorage.getItem('momo-reloaded-for') || ''; } catch(e) {}
+    if (tried === m[1]) return;                       /* already reloaded for this build once: don't loop */
+    newBuild = m[1]; updateTick();
+  }).catch(function(){});
+}
+function safeToReload(){
+  var ov = document.querySelector('.overlay');
+  if (ov) return !!ov.querySelector('.round-rw');     /* the end-of-round page is a fine moment; other dialogs are not */
+  return ['start', 'home', 'timer', 'locked'].indexOf(screen) >= 0;
+}
+function doUpdate(){ try { sessionStorage.setItem('momo-reloaded-for', newBuild || ''); } catch(e) {} save(); location.reload(); }
+function updateTick(){
+  if (!newBuild) return;
+  if (safeToReload()) { doUpdate(); return; }
+  if (!document.getElementById('updatePill')) {
+    var b = document.createElement('button'); b.id = 'updatePill'; b.className = 'update-pill'; b.setAttribute('data-act', 'update-now');
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg><span>' + L('updatePill') + '</span>';
+    document.body.appendChild(b);
+  }
+}
+setInterval(updateTick, 4000);
+setInterval(checkBuild, 5 * 60 * 1000);
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) checkBuild(); });
+setTimeout(checkBuild, 3000);
 document.addEventListener('visibilitychange', function(){ if (!document.hidden) timerTick(); });
 
 /* ---------- start (unlocks audio on first tap) ---------- */
@@ -4666,6 +4712,7 @@ document.addEventListener('click', function(e){
     case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
       if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else startRound(); break;
     case 'gate': gateFor = 'parents'; gate(); break;
+    case 'update-now': if (newBuild) doUpdate(); break;
     case 'timer-set': startSession(+b.getAttribute('data-v')); break;
     case 'timer-none': gateFor = 'notimer'; gate(); break;
     case 'lock-grown': gateFor = 'unlock'; gate(); break;
