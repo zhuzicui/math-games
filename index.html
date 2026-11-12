@@ -1149,7 +1149,7 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .lockscreen > *:not(.night-sky){position:relative;z-index:1}
 .night-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .sky-moon{position:absolute;left:50%;top:4%;width:clamp(56px,13vmin,120px);margin-left:clamp(60px,16vmin,150px);animation:moonwiggle 7s ease-in-out infinite}
-.sky-star{position:absolute;height:auto;min-width:22px;transform:translate(-50%,-50%) rotate(var(--rot,0deg));animation:skytwinkle var(--tw,3s) ease-in-out var(--td,0s) infinite,skywiggle var(--wg,5s) ease-in-out var(--wd,0s) infinite}
+.sky-star{position:absolute;height:auto;min-width:16px;transform:translate(-50%,-50%) rotate(var(--rot,0deg));animation:skytwinkle var(--tw,3s) ease-in-out var(--td,0s) infinite,skywiggle var(--wg,5s) ease-in-out var(--wd,0s) infinite}
 @keyframes skytwinkle{0%,100%{opacity:1}50%{opacity:.45}}
 @keyframes skywiggle{0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) - var(--amp,8deg)))}50%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) + var(--amp,8deg)))}}
 @keyframes moonwiggle{0%,100%{transform:rotate(3deg)}50%{transform:rotate(13deg)}}
@@ -2256,8 +2256,9 @@ function renderTimer(){
     '</section>';
 }
 /* hand-drawn moon and stars spread around the lock screen; each star twinkles and wiggles at its own pace */
-var SKY = [ ['star1', 8, 14, 9], ['star3', 22, 40, 5], ['star2', 12, 72, 6], ['star6', 30, 86, 8], ['star3', 46, 8, 4.5],
-            ['star2', 90, 9, 7], ['star1', 86, 34, 8], ['star6', 78, 52, 5.5], ['star3', 92, 74, 5], ['star1', 66, 88, 7.5], ['star2', 52, 94, 4.5] ];
+var SKY = [ ['star1', 6, 12, 6.3], ['star6', 16, 30, 4.2], ['star1', 24, 8, 3.5], ['star2', 10, 52, 3.9], ['star6', 20, 70, 5.6], ['star1', 7, 86, 4.2], ['star3', 30, 90, 3.2],
+            ['star6', 36, 16, 3.2], ['star1', 27, 46, 3.5], ['star6', 44, 6, 4.2], ['star1', 41, 92, 4.6], ['star2', 54, 95, 3.2], ['star6', 62, 84, 5.3], ['star1', 73, 93, 3.9],
+            ['star6', 90, 9, 4.9], ['star1', 84, 28, 5.6], ['star3', 94, 44, 3.2], ['star6', 77, 46, 3.9], ['star1', 91, 64, 4.6], ['star6', 82, 76, 3.5], ['star1', 96, 88, 4.2], ['star2', 72, 22, 3.2] ];
 function nightSky(){
   var h = '<div class="night-sky" aria-hidden="true"><img class="sky-moon" src="night/moon.png" alt="">';
   SKY.forEach(function(st){
