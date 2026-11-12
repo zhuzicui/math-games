@@ -1187,6 +1187,11 @@ body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1
 .round-rw .big-btn.plain{background:#FFFCF7;border-color:var(--edge);box-shadow:0 7px 0 var(--edge);color:var(--ink)}
 .round-rw .row{margin:0}
 @media (orientation:landscape) and (max-height:600px){ .reward.round-rw .big-btn{min-height:clamp(38px,10dvh,56px);font-size:clamp(16px,4.6dvh,24px)} .reward.round-rw .pic{max-height:16dvh !important;height:16dvh !important} }
+.mini-tiles{display:flex;justify-content:center;gap:clamp(8px,2vmin,16px);flex-wrap:nowrap}
+.tile.mini{flex:none;width:clamp(48px,11vmin,84px);height:clamp(48px,11vmin,84px);min-height:0;aspect-ratio:auto;padding:6px;border-width:3px;border-radius:clamp(12px,2.6vmin,20px);box-shadow:0 4px 0 var(--edge);display:flex;align-items:center;justify-content:center;position:relative}
+.tile.mini.feed{box-shadow:0 4px 0 #EDC3AC}.tile.mini.ten{box-shadow:0 4px 0 #EBD58F}.tile.mini.bus{box-shadow:0 4px 0 #A9D0EA}.tile.mini.frogt{box-shadow:0 4px 0 #A9CB97}.tile.mini.towert{box-shadow:0 4px 0 #EDBF91}.tile.mini.writet{box-shadow:0 4px 0 #CDBDE2}
+.tile.mini.croct{box-shadow:0 4px 0 #B5D49F}.tile.mini.traint{box-shadow:0 4px 0 #A7CBD2}.tile.mini.beadt{box-shadow:0 4px 0 #F0B7C7}
+.tile.mini img{width:100%;height:100%;object-fit:contain;display:block}
 </style>
 </head>
 <body>
@@ -3582,6 +3587,17 @@ function next(){
   G.q++;
   if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else newQuestion();
 }
+/* small tiles for the other games of the same group (Addition or Kindergarten): one tap starts that game */
+var GAME_TILES = {
+  add:    [['play', 'feed', 'unicorn', 'gFeed'], ['ten', 'ten', 'chick', 'gTen'], ['bus', 'bus', 'snail', 'gBus'], ['frog', 'frogt', 'frog', 'gFrog'], ['tower', 'towert', 'tiger', 'gTower'], ['write', 'writet', 'hedgehog', 'gWrite']],
+  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads']]
+};
+function otherGames(){
+  var cur = G.game || 'play', grp = ['croc', 'train', 'beads'].indexOf(cur) >= 0 ? 'kinder' : 'add';
+  return '<div class="mini-tiles" role="group" aria-label="' + esc(L('otherGames')) + '">' + GAME_TILES[grp].filter(function(t){ return t[0] !== cur; }).map(function(t){
+    return '<button class="tile mini ' + t[1] + '" data-act="' + t[0] + '" aria-label="' + esc(L(t[3])) + '"><img src="animals/' + t[2] + '.png" alt="" draggable="false"></button>';
+  }).join('') + '</div>';
+}
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
   var prNow = rainbowProgress(S.stars), prBefore = rainbowProgress(G.startStars || 0);
@@ -3589,11 +3605,10 @@ function roundDone(){
   var madeSpecial = Math.floor(prNow.done.length / 100) > Math.floor(prBefore.done.length / 100);
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
   overlay('<div class="reward round-rw"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
-    '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
-    '<div class="row"><button class="big-btn plain ic-btn" data-act="garden">' + ICON.star + '<span>' + L('seeGarden') + '</span></button></div>' +
-    '<div class="row two">' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>'
-      : '<button class="big-btn ic-btn" data-act="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg><span>' + L('again') + '</span></button>' +
-        '<button class="big-btn plain ic-btn" data-act="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg><span>' + L('otherGames') + '</span></button>') + '</div></div>');
+    '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
+    '<div class="row two"><button class="big-btn plain ic-btn" data-act="garden">' + ICON.star + '<span>' + L('seeGarden') + '</span></button>' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>'
+      : '<button class="big-btn ic-btn" data-act="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg><span>' + L('again') + '</span></button>') + '</div>' +
+    (timeUp() ? '' : otherGames()) + '</div></div>');
   confetti();
   say(L('sGreat', G.earned).concat(madeRainbow ? [P((madeSpecial ? L('specialSticker') : L('madeRainbow')), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
