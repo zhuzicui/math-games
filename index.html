@@ -1107,7 +1107,7 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .bead-tray{transition:opacity .4s}
 .bead-tray.gone{opacity:0;pointer-events:none}
 .pondcol{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;gap:clamp(4px,1dvh,10px)}
-.frog .donerow{justify-content:center}
+.frog .donerow{justify-content:center;padding-bottom:max(0px,calc(44px - var(--padb,20px)))}
 .frog .donebtn{width:auto;font-size:clamp(22px,5dvh,32px);min-height:clamp(46px,9dvh,76px)}
 .frog .donebtn.ready{animation:donepulse 1.2s ease-in-out infinite}
 @keyframes donepulse{50%{transform:scale(1.06)}}
