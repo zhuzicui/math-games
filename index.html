@@ -1185,6 +1185,8 @@ body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1
 .big-btn.ic-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em}
 .big-btn.ic-btn svg{width:1.05em;height:1.05em;flex:none}
 .round-rw .big-btn.plain{background:#FFFCF7;border-color:var(--edge);box-shadow:0 7px 0 var(--edge);color:var(--ink)}
+.round-rw .row{margin:0}
+@media (orientation:landscape) and (max-height:600px){ .reward.round-rw .big-btn{min-height:clamp(38px,10dvh,56px);font-size:clamp(16px,4.6dvh,24px)} .reward.round-rw .pic{max-height:16dvh !important;height:16dvh !important} }
 </style>
 </head>
 <body>
@@ -1350,6 +1352,7 @@ en: {
   timerTitle: 'How long can we play today?', timerMin: 'minutes', noTimer: 'No timer', lockTitle: 'All done for today!', lockSub: 'See you next time!', allDone: 'All done', sLock: [P('All done for today!', 'calm'), P('See you next time!', 'cheer')],
   hogAlt: 'Hedgehog', writeAsk: 'Write the answer!', writeFirst: 'Write the number first!', writeClear: 'Erase', writeRead: function(n){ return 'I read ' + n; },
   sWriteAsk: function(s, a){ return [P('What is ' + s + ' plus ' + a + '?', 'ask'), P('Write the answer!', 'cheer')]; }, sWriteRead: function(n){ return [P('I read ' + n + '.', 'calm'), P('Try again!', 'cheer')]; }, sWriteHint: function(t){ return [P('The answer is ' + t + '.', 'calm'), P('Trace the ' + t + '!', 'cheer')]; },
+  otherGames: 'Other games',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1451,6 +1454,7 @@ fr: {
   timerTitle: 'On joue combien de temps aujourd’hui\u00a0?', timerMin: 'minutes', noTimer: 'Sans minuteur', lockTitle: 'C’est fini pour aujourd’hui\u00a0!', lockSub: 'À la prochaine\u00a0!', allDone: 'Terminé', sLock: [P('C’est fini pour aujourd’hui !', 'calm'), P('À la prochaine !', 'cheer')],
   hogAlt: 'Hérisson', writeAsk: 'Écris la réponse\u00a0!', writeFirst: 'Écris d’abord le nombre\u00a0!', writeClear: 'Effacer', writeRead: function(n){ return 'J’ai lu ' + n; },
   sWriteAsk: function(s, a){ return [P('Combien font ' + s + ' plus ' + a + ' ?', 'ask'), P('Écris la réponse !', 'cheer')]; }, sWriteRead: function(n){ return [P('J’ai lu ' + n + '.', 'calm'), P('Essaie encore !', 'cheer')]; }, sWriteHint: function(t){ return [P('La réponse est ' + t + '.', 'calm'), P('Repasse sur le ' + t + ' !', 'cheer')]; },
+  otherGames: 'Autres jeux',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1552,6 +1556,7 @@ es: {
   timerTitle: '¿Cuánto tiempo jugamos hoy?', timerMin: 'minutos', noTimer: 'Sin temporizador', lockTitle: '¡Se acabó por hoy!', lockSub: '¡Hasta la próxima!', allDone: 'Terminar', sLock: [P('¡Se acabó por hoy!', 'calm'), P('¡Hasta la próxima!', 'cheer')],
   hogAlt: 'Erizo', writeAsk: '¡Escribe la respuesta!', writeFirst: '¡Primero escribe el número!', writeClear: 'Borrar', writeRead: function(n){ return 'Leí ' + n; },
   sWriteAsk: function(s, a){ return [P('¿Cuánto es ' + s + ' más ' + a + '?', 'ask'), P('¡Escribe la respuesta!', 'cheer')]; }, sWriteRead: function(n){ return [P('Leí ' + n + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; }, sWriteHint: function(t){ return [P('La respuesta es ' + t + '.', 'calm'), P('¡Repasa el ' + t + '!', 'cheer')]; },
+  otherGames: 'Otros juegos',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1653,6 +1658,7 @@ zh: {
   timerTitle: '今天玩多久？', timerMin: '分钟', noTimer: '不计时', lockTitle: '今天玩好啦！', lockSub: '下次再见！', allDone: '好了', sLock: [P('今天玩好啦！', 'calm'), P('下次再见！', 'cheer')],
   hogAlt: '刺猬', writeAsk: '写出答案！', writeFirst: '先写数字吧！', writeClear: '擦掉', writeRead: function(n){ return '我看到的是' + n; },
   sWriteAsk: function(s, a){ return [P(s + '加' + a + '等于几？', 'ask'), P('写出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我看到的是' + n + '。', 'calm'), P('再试一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案是' + t + '。', 'calm'), P('照着写一写' + t + '！', 'cheer')]; },
+  otherGames: '其他游戏',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1754,6 +1760,7 @@ ja: {
   timerTitle: 'きょうは どのくらい あそぶ？', timerMin: 'ふん', noTimer: 'タイマーなし', lockTitle: 'きょうは おしまい！', lockSub: 'また こんどね！', allDone: 'おしまい', sLock: [P('きょうは おしまい！', 'calm'), P('また こんどね！', 'cheer')],
   hogAlt: 'ハリネズミ', writeAsk: 'こたえを かいてね！', writeFirst: 'さきに かずを かいてね！', writeClear: 'けす', writeRead: function(n){ return n + ' に みえたよ'; },
   sWriteAsk: function(s, a){ return [P(s + ' たす ' + a + ' は いくつ？', 'ask'), P('こたえを かいてね！', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' に みえたよ。', 'calm'), P('もういちど！', 'cheer')]; }, sWriteHint: function(t){ return [P('こたえは ' + t + ' だよ。', 'calm'), P(t + ' を なぞってね！', 'cheer')]; },
+  otherGames: 'ほかの ゲーム',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1855,6 +1862,7 @@ yue: {
   timerTitle: '今日玩幾耐？', timerMin: '分鐘', noTimer: '唔計時', lockTitle: '今日玩完喇！', lockSub: '下次再見！', allDone: '得喇', sLock: [P('今日玩完喇！', 'calm'), P('下次再見！', 'cheer')],
   hogAlt: '刺蝟', writeAsk: '寫出答案！', writeFirst: '寫咗數字先啦！', writeClear: '擦走', writeRead: function(n){ return '我睇到係' + n; },
   sWriteAsk: function(s, a){ return [P(s + '加' + a + '等於幾多？', 'ask'), P('寫出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我睇到係' + n + '。', 'calm'), P('再試一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案係' + t + '。', 'calm'), P('跟住寫個' + t + '！', 'cheer')]; },
+  otherGames: '其他遊戲',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1956,6 +1964,7 @@ ko: {
   timerTitle: '오늘은 얼마나 놀까요?', timerMin: '분', noTimer: '타이머 없이', lockTitle: '오늘은 여기까지!', lockSub: '다음에 또 만나요!', allDone: '끝', sLock: [P('오늘은 여기까지!', 'calm'), P('다음에 또 만나요!', 'cheer')],
   hogAlt: '고슴도치', writeAsk: '답을 써 보세요!', writeFirst: '먼저 숫자를 써요!', writeClear: '지우기', writeRead: function(n){ return n + '(으)로 읽었어요'; },
   sWriteAsk: function(s, a){ return [P(s + ' 더하기 ' + a + koEun(a) + ' 얼마일까요?', 'ask'), P('답을 써 보세요!', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' 같아요.', 'calm'), P('다시 해 봐요!', 'cheer')]; }, sWriteHint: function(t){ return [P('답은 ' + t + '.', 'calm'), P(t + ' 따라 써 봐요!', 'cheer')]; },
+  otherGames: '다른 게임',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -3581,7 +3590,10 @@ function roundDone(){
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
   overlay('<div class="reward round-rw"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
     '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
-    '<div class="row two"><button class="big-btn plain ic-btn" data-act="garden">' + ICON.star + '<span>' + L('seeGarden') + '</span></button>' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>' : '<button class="big-btn ic-btn" data-act="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg><span>' + L('again') + '</span></button>') + '</div></div>');
+    '<div class="row"><button class="big-btn plain ic-btn" data-act="garden">' + ICON.star + '<span>' + L('seeGarden') + '</span></button></div>' +
+    '<div class="row two">' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>'
+      : '<button class="big-btn ic-btn" data-act="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg><span>' + L('again') + '</span></button>' +
+        '<button class="big-btn plain ic-btn" data-act="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg><span>' + L('otherGames') + '</span></button>') + '</div></div>');
   confetti();
   say(L('sGreat', G.earned).concat(madeRainbow ? [P((madeSpecial ? L('specialSticker') : L('madeRainbow')), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
