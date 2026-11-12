@@ -896,7 +896,8 @@ img.stk{object-fit:contain}
 .grp-eg{display:block;font-size:clamp(16px,2.6dvh,22px);color:var(--ink2);opacity:.8;margin-top:4px}
 @media (orientation:landscape) and (max-height:500px){ .grp-pics{height:clamp(50px,26dvh,120px)} .grp-name{margin-top:4px} }
 .tile.croct{background:#E4F0D9;border-color:#B5D49F;box-shadow:0 7px 0 #B5D49F}
-.tile.croct .croc-pic{height:auto;width:86%;max-height:clamp(50px,15dvh,140px);object-fit:contain}
+/* same picture height as the other tiles, so every title sits on the same line; the croc itself is drawn at 60% of its old width */
+.tile.croct .croc-pic{height:clamp(50px,15dvh,140px);width:max(52%,84px);max-width:90%;object-fit:contain;object-position:center}
 .tile.soon-tile{background:transparent;border-style:dashed;border-color:var(--edge);box-shadow:none;color:var(--ink2);cursor:default}
 .soon-plus{font-size:clamp(40px,8dvh,70px);line-height:1;opacity:.6}
 /* ===== Hungry Crocodile ===== */
