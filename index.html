@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.184559">
+<meta name="build" content="2026-11-12.185110">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1281,7 +1281,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .upgame{position:relative;gap:clamp(4px,1.2dvh,12px)}
 .upgame > *:not(.up-sky):not(.rotate-hint){position:relative;z-index:1}
 .up-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#9FD3F2 0%,#C7E6F8 55%,#E6F4FB 100%)}
-.up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;filter:blur(1px);animation:updrift 60s linear infinite}
+.up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;animation:updrift 60s linear infinite}
 .up-sky .cl::before,.up-sky .cl::after{content:'';position:absolute;background:#fff;border-radius:50%}
 .up-sky .cl::before{width:45%;height:150%;left:15%;top:-60%}.up-sky .cl::after{width:35%;height:120%;left:50%;top:-40%}
 .up-sky .deep{position:absolute;inset:0;background:linear-gradient(180deg,#3F8FD6 0%,#6DB3E8 60%,#9CCDF0 100%);opacity:var(--alt,1);transition:opacity 1s ease}
@@ -1292,8 +1292,8 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .up-sky .hill{transform:translateY(calc(var(--alt,1) * 50vh));transition:transform 1s cubic-bezier(.4,0,.3,1);position:absolute;left:-10%;right:-10%;bottom:-18vh;height:34vh;border-radius:50% 50% 0 0/100% 100% 0 0;background:linear-gradient(#A6D98C,#86C46C);box-shadow:inset 0 10px 0 #B9E3A1}
 .up-field{flex:1;min-height:0;position:relative}
 .up-row{position:absolute;left:0;right:0;top:0}
-.up-up{position:absolute;aspect-ratio:auto;display:flex;justify-content:center;pointer-events:none}
-.up-up img{height:100%;width:auto;animation:upbob 2.4s ease-in-out infinite}
+.up-up{position:absolute;display:block;pointer-events:none}
+.up-up img{display:block;width:100%;height:100%;object-fit:contain;animation:upbob 2.4s ease-in-out infinite}
 .up-num{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%) scale(.4);opacity:0;min-width:1.5em;height:1.5em;padding:0 .2em;border-radius:1em;background:#FFFCF7;border:3px solid #F2C640;color:var(--ink);font-family:var(--display);font-weight:800;font-size:1em;line-height:1.35;text-align:center;transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.6,1)}
 .up-up.show .up-num{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .up-up.hop img{animation:uphop .5s ease-out}
@@ -3860,6 +3860,9 @@ function layoutUp(){
 }
 window.addEventListener('resize', function(){ if (screen === 'up' && G && G.game === 'up') { layoutUp(); upPlaceRow(); } });
 function upSlot(i){ var L0 = G.lay, s = L0.slot * 0.95, r = Math.floor(i / L0.perRow), c = i % L0.perRow, inRow = Math.min(L0.perRow, G.n - r * L0.perRow); return { x: L0.W / 2 + (c - (inRow - 1) / 2) * L0.slot - s * 0.35, y: 2 + r * L0.rowH0 / L0.rows0, h: s }; }
+function upPut(el, p){ el.style.left = Math.round(p.x) + 'px'; el.style.top = Math.round(p.y) + 'px'; el.style.height = Math.round(p.h) + 'px'; el.style.width = Math.round(p.h * +el.getAttribute('data-a')) + 'px'; }
+/* after a resize (rotation, the browser bar coming and going) the let-go balloons move to their new places */
+function upPlaceRow(){ document.querySelectorAll('#upRow .up-up').forEach(function(el){ upPut(el, upSlot(+el.getAttribute('data-n') - 1)); }); }
 /* the sheep goes down a little with every balloon that leaves; with none left it lands on the grass */
 function upSink(anim){
   var rig = document.getElementById('upRig'); if (!rig || !G.lay) return;
@@ -3879,7 +3882,7 @@ function upTap(id){
   b.el.style.visibility = 'hidden';
   var up = document.createElement('div'); up.className = 'up-up'; up.setAttribute('data-n', b.num);
   up.innerHTML = '<img src="up/b' + b.art + '.png" alt="" draggable="false"><b class="up-num">' + b.num + '</b>';
-  up.style.left = Math.round(p.x) + 'px'; up.style.top = Math.round(p.y) + 'px'; up.style.height = Math.round(p.h) + 'px';
+  up.setAttribute('data-a', UP_ART[b.art][0]); upPut(up, p);
   row.appendChild(up);
   /* float up from where it was, with a gentle sway */
   var dx = from.left - (rr.left + p.x), dy = from.top - (rr.top + p.y), sc = from.height / p.h;
