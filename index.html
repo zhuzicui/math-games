@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.054659">
+<meta name="build" content="2026-11-12.061543">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1212,8 +1212,8 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .wbird.away{visibility:hidden}
 .wbird.hover{animation:birdhover 1s ease-in-out infinite;z-index:3}
 .wbird.hover.flip{animation-name:birdhoverF}
-@keyframes birdhover{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -.8)) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -1.0)) rotate(4deg)}}
-@keyframes birdhoverF{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -.8)) scaleX(-1) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * .9),calc(var(--u) * -1.0)) scaleX(-1) rotate(4deg)}}
+@keyframes birdhover{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * var(--hx,.9)),calc(var(--u) * -.8)) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * var(--hx,.9)),calc(var(--u) * -1.0)) rotate(4deg)}}
+@keyframes birdhoverF{0%,100%{transform:translate(-50%,0) translate(calc(var(--u) * var(--hx,.9)),calc(var(--u) * -.8)) scaleX(-1) rotate(-6deg)}50%{transform:translate(-50%,0) translate(calc(var(--u) * var(--hx,.9)),calc(var(--u) * -1.0)) scaleX(-1) rotate(4deg)}}
 .wbird.antsy{animation:birdantsy .5s ease-in-out infinite}
 .wbird.antsy.flip{animation-name:birdantsyF}
 @keyframes birdantsy{0%,100%{transform:translate(-50%,0) rotate(-7deg)}50%{transform:translate(-50%,-10%) rotate(7deg)}}
@@ -1262,6 +1262,10 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .mk-bin.hint{animation:mkhint .9s ease-in-out}
 @keyframes mkhint{25%,75%{transform:translateY(-10%)}50%{transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){ .mk-bin.plop,.mk-bin.hint,.mk-host.cheer{animation:none} }
+.wbird.land{animation:birdland .3s ease-out}
+.wbird.land.flip{animation-name:birdlandF}
+@keyframes birdland{40%{transform:translate(-50%,0) scale(1.06,.9)}}
+@keyframes birdlandF{40%{transform:translate(-50%,0) scaleX(-1) scale(1.06,.9)}}
 </style>
 </head>
 <body>
@@ -3377,6 +3381,9 @@ function showWriteReward(){
    Above 10 birds a second wire appears (ten on the first).
    ===================================================================== */
 var BIRD_ART = ['a1', 'a2', 'a4', 'a5', 'a6', 'a7', 'a8', 'b1', 'b2', 'b3', 'b4', 'b6'];
+/* which way each drawing looks: 1 = right, -1 = left. A bird always flies the way it is looking. */
+var BIRD_FACE = { a1:1, a2:1, a4:-1, a5:-1, a6:-1, a7:-1, a8:-1, b1:-1, b2:1, b3:-1, b4:1, b6:1 };
+function birdDir(k){ var a = G.art[k]; return BIRD_FACE[a[0]] * (a[1] ? -1 : 1); }
 function birdPlan(){ return shuffle([['watch', 1], ['watch', -1]]).concat(shuffle([['guess', 1], ['guess', -1]])).concat([['guess', Math.random() < 0.5 ? 1 : -1]]); }
 function startBirds(){ G = { game:'birds', q:0, earned:0, startStars:S.stars, plan:birdPlan() }; birdQuestion(); }
 function birdQuestion(){
@@ -3415,7 +3422,7 @@ function renderBirds(){
   for (var k = 0; k < G.art.length; k++) {
     var here = k < shown, extra = !G.moved && G.d > 0 && k === G.n, leaving = !G.moved && G.d < 0 && k === G.n - 1;
     if (!here && !extra) continue;
-    birds += '<img class="wbird' + (G.art[k][1] ? ' flip' : '') + (extra ? (G.mode === 'guess' ? ' hover' : ' away') : '') + (leaving && G.mode === 'guess' ? ' antsy' : '') + '" data-k="' + k + '" src="birds/' + G.art[k][0] + '.png" alt="" draggable="false">';
+    birds += '<img class="wbird' + (G.art[k][1] ? ' flip' : '') + (extra ? (G.mode === 'guess' ? ' hover' : ' away') : '') + (leaving && G.mode === 'guess' ? ' antsy' : '') + '" data-k="' + k + '"' + (extra ? ' style="--hx:' + (-birdDir(k) * 0.9) + '"' : '') + ' src="birds/' + G.art[k][0] + '.png" alt="" draggable="false">';
   }
   var choices = G.opts.map(function(v){
     var cls = 'choice' + (G.tried[v] ? ' tried' : '') + (G.done && v === G.t ? ' right' : '');
@@ -3461,16 +3468,25 @@ function birdMove(done){
   G.moved = true;
   var sc = document.getElementById('bwScene'), k = G.d > 0 ? G.n : G.n - 1, b = sc && sc.querySelector('.wbird[data-k="' + k + '"]');
   if (!b) { done && done(); return; }
-  var u = G.lay.u, flip = b.classList.contains('flip') ? ' scaleX(-1)' : '', DUR = reduceMotion ? 1 : 1300;
+  var u = G.lay.u, dir = birdDir(k), flip = b.classList.contains('flip') ? ' scaleX(-1)' : '', hovering = b.classList.contains('hover');
   b.classList.remove('hover', 'antsy', 'away');
-  var far = 'translate(-50%,0) translate(' + Math.round(G.lay.w * 0.45 + u * 2) + 'px,' + Math.round(-u * 2.6 - (parseFloat(b.style.top) || 0)) + 'px)' + flip, home = 'translate(-50%,0)' + flip;
   function fin(){ if (G.d < 0 && b.parentNode) b.remove(); else b.style.transform = ''; done && done(); }
   if (!b.animate || reduceMotion) { fin(); return; }
-  var kf = G.d > 0
-    ? [{ transform: far + ' rotate(-10deg)' }, { transform: 'translate(-50%,0) translate(' + Math.round(u * 0.6) + 'px,' + Math.round(-u * 0.9) + 'px)' + flip + ' rotate(8deg)', offset: .7 }, { transform: home + ' scale(1.06,.9)', offset: .9 }, { transform: home }]
-    : [{ transform: home }, { transform: home + ' scale(1.08,.86)', offset: .12 }, { transform: 'translate(-50%,0) translate(' + Math.round(u * 0.5) + 'px,' + Math.round(-u * 1.1) + 'px)' + flip + ' rotate(-12deg)', offset: .4 }, { transform: far + ' rotate(-6deg)' }];
-  var an = b.animate(kf, { duration: DUR, easing: 'ease-in-out', fill: 'forwards' }), ended = false;
-  function end(){ if (ended) return; ended = true; try { an.cancel(); } catch(e) {} fin(); }
+  /* the far end of the flight is measured on the screen, so the bird always goes right off it (or comes from off it) */
+  var r = b.getBoundingClientRect();
+  var offX = G.d > 0 ? (dir < 0 ? innerWidth - r.left + 30 : -(r.right + 30)) : (dir > 0 ? innerWidth - r.left + 30 : -(r.right + 30));
+  var offY = -Math.min(r.top + r.height + 30, Math.max(innerHeight * 0.45, u * 3));
+  if (G.d > 0 && hovering) { offX = -dir * u * 0.9; offY = -u * 0.9; }
+  /* a smooth arc: many small steps along the curve, with a gentle start and stop; t = 0 on the wire, 1 far away */
+  var N = 24, kf = [], DUR = hovering ? 700 : 1500;
+  for (var i = 0; i <= N; i++) {
+    var p = i / N, e = p * p * (3 - 2 * p), t = G.d > 0 ? 1 - e : e;
+    var x = offX * Math.pow(t, 1.5), y = offY * (1 - Math.pow(1 - t, 2.2)) - Math.sin(t * Math.PI * 3) * u * 0.05 * (t > 0.08 ? 1 : 0);
+    var tilt = -dir * 9 * Math.sin(Math.min(1, t * 2.2) * Math.PI / 2) * (flip ? -1 : 1);
+    kf.push({ transform: 'translate(-50%,0) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)' + flip + ' rotate(' + tilt.toFixed(1) + 'deg)', offset: +p.toFixed(4) });
+  }
+  var an = b.animate(kf, { duration: DUR, easing: 'linear', fill: 'forwards' }), ended = false;
+  function end(){ if (ended) return; ended = true; if (G.d > 0) { b.classList.remove('land'); void b.offsetWidth; b.classList.add('land'); } try { an.cancel(); } catch(e) {} fin(); }
   an.onfinish = end; setTimeout(end, DUR + 150);
 }
 /* count the birds on the wire out loud, each one hopping as its number is said */
