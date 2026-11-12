@@ -2,6 +2,6 @@
   "cleanUrls": true,
   "headers": [
     { "source": "/manifest.webmanifest", "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }] },
-    { "source": "/(animals|stars|icons)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+    { "source": "/(animals|stars|icons)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] }
   ]
 }
