@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.054455">
+<meta name="build" content="2026-11-12.054659">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -2971,22 +2971,8 @@ function trainPlace(id, i, from){
       if (done) trainWin(); else { say(L('sTrainGood')); G.bubble2 = ''; }
     }, reduceMotion ? 50 : 400);
   } else {
-    G.lock = true;
+    /* wrong card: it just shakes; the child can try another straight away */
     btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope');
-    say(L('sTrainWrong'));
-    /* count along the cars; the empty ones get a little wiggle and a pause */
-    var q = G.q, cars = [].slice.call(document.querySelectorAll('.tcar')), idx = 0;
-    function step(){
-      if (screen !== 'train' || !G || G.q !== q || G.done) return;
-      document.querySelectorAll('.tcar.lit').forEach(function(c){ c.classList.remove('lit'); });
-      if (idx >= cars.length) { G.lock = false; say(G.mode === 'drag' ? L('sTrainDrag') : L('sTrainAsk2')); return; }
-      var c = cars[idx], ci = +c.getAttribute('data-i'); idx++;
-      c.classList.add('lit');
-      var known = G.gaps.indexOf(ci) < 0 || G.filled[ci];
-      if (known) say(P(String(G.seq[ci]), 'count', G.seq[ci]));
-      setTimeout(step, known ? 560 : 900);
-    }
-    setTimeout(step, 1300);
   }
 }
 function trainWin(){
