@@ -1166,6 +1166,22 @@ body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1
 .lockscreen .link-btn svg{stroke:#C9C2EE}
 .lockscreen .timer-av{box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 40px rgba(255,220,140,.25)}
 .lockscreen .timer-av.sleepy{filter:none}
+
+/* ---------- write it ---------- */
+.writegame .momo-row .hogpic{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
+.writegame .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent;border-radius:16px;padding:0 .15em;min-width:1.4em;text-align:center}
+.writegame .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
+.wr-area{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6dvh,16px)}
+.wr-pads{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;gap:14px;--ph:200px}
+.wpad{position:relative;flex:none;height:var(--ph);width:calc(var(--ph) * .75);background:#fff;border:4px solid var(--edge);border-radius:clamp(16px,3dvh,28px);box-shadow:0 6px 0 var(--edge);touch-action:none;overflow:hidden}
+.wpad::before{content:'';position:absolute;left:12%;right:12%;top:50%;border-top:3px dashed #EFE3D6}
+.wpad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.wpad .wguide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:calc(var(--ph) * .78);line-height:1;color:#EADFD2;pointer-events:none}
+.wpad.bad{border-color:#E3A592;box-shadow:0 6px 0 #E3A592}
+.wpad.good{border-color:#8FBF7A;box-shadow:0 6px 0 #8FBF7A;background:#F3FAEE}
+.wpad.nope{animation:nope .5s}
+.wr-row{flex:none;display:flex;gap:clamp(10px,3vw,20px);justify-content:center;align-items:center;padding-bottom:max(0px,calc(44px - var(--padb,20px)))}
+.wr-row .donebtn,.wr-row .wr-clear{width:auto;min-width:0;min-height:clamp(46px,9dvh,72px);padding:0 clamp(18px,3vw,30px);font-size:clamp(20px,4.6dvh,30px)}
 </style>
 </head>
 <body>
@@ -1329,6 +1345,8 @@ en: {
   sBeadAsk: [P('Let’s make a necklace!', 'cheer'), P('Look at the pattern. What comes next?', 'ask')], sBeadAsk2: [P('What comes next?', 'ask')], sBeadWrong: [P('Hmm, let’s sing the pattern.', 'calm')], sBeadDone: [P('Beautiful!', 'cheer')],
   beadN: { heart:'heart', star:'star', orange:'orange', smile:'smile', wink:'wink', flower:'flower', flower2:'flower', flower3:'flower', pinkheart:'heart' },
   timerTitle: 'How long can we play today?', timerMin: 'minutes', noTimer: 'No timer', lockTitle: 'All done for today!', lockSub: 'See you next time!', allDone: 'All done', sLock: [P('All done for today!', 'calm'), P('See you next time!', 'cheer')],
+  hogAlt: 'Hedgehog', writeAsk: 'Write the answer!', writeFirst: 'Write the number first!', writeClear: 'Erase', writeRead: function(n){ return 'I read ' + n; },
+  sWriteAsk: function(s, a){ return [P('What is ' + s + ' plus ' + a + '?', 'ask'), P('Write the answer!', 'cheer')]; }, sWriteRead: function(n){ return [P('I read ' + n + '.', 'calm'), P('Try again!', 'cheer')]; }, sWriteHint: function(t){ return [P('The answer is ' + t + '.', 'calm'), P('Trace the ' + t + '!', 'cheer')]; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1428,6 +1446,8 @@ fr: {
   sBeadAsk: [P('Faisons un collier !', 'cheer'), P('Regarde le motif. Qu’est-ce qui vient ensuite ?', 'ask')], sBeadAsk2: [P('Qu’est-ce qui vient ensuite ?', 'ask')], sBeadWrong: [P('Hmm, chantons le motif.', 'calm')], sBeadDone: [P('Magnifique !', 'cheer')],
   beadN: { heart:'cœur', star:'étoile', orange:'orange', smile:'sourire', wink:'clin d’œil', flower:'fleur', flower2:'fleur', flower3:'fleur', pinkheart:'cœur' },
   timerTitle: 'On joue combien de temps aujourd’hui\u00a0?', timerMin: 'minutes', noTimer: 'Sans minuteur', lockTitle: 'C’est fini pour aujourd’hui\u00a0!', lockSub: 'À la prochaine\u00a0!', allDone: 'Terminé', sLock: [P('C’est fini pour aujourd’hui !', 'calm'), P('À la prochaine !', 'cheer')],
+  hogAlt: 'Hérisson', writeAsk: 'Écris la réponse\u00a0!', writeFirst: 'Écris d’abord le nombre\u00a0!', writeClear: 'Effacer', writeRead: function(n){ return 'J’ai lu ' + n; },
+  sWriteAsk: function(s, a){ return [P('Combien font ' + s + ' plus ' + a + ' ?', 'ask'), P('Écris la réponse !', 'cheer')]; }, sWriteRead: function(n){ return [P('J’ai lu ' + n + '.', 'calm'), P('Essaie encore !', 'cheer')]; }, sWriteHint: function(t){ return [P('La réponse est ' + t + '.', 'calm'), P('Repasse sur le ' + t + ' !', 'cheer')]; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1527,6 +1547,8 @@ es: {
   sBeadAsk: [P('¡Hagamos un collar!', 'cheer'), P('Mira el patrón. ¿Qué sigue?', 'ask')], sBeadAsk2: [P('¿Qué sigue?', 'ask')], sBeadWrong: [P('Mmm, cantemos el patrón.', 'calm')], sBeadDone: [P('¡Precioso!', 'cheer')],
   beadN: { heart:'corazón', star:'estrella', orange:'naranja', smile:'sonrisa', wink:'guiño', flower:'flor', flower2:'flor', flower3:'flor', pinkheart:'corazón' },
   timerTitle: '¿Cuánto tiempo jugamos hoy?', timerMin: 'minutos', noTimer: 'Sin temporizador', lockTitle: '¡Se acabó por hoy!', lockSub: '¡Hasta la próxima!', allDone: 'Terminar', sLock: [P('¡Se acabó por hoy!', 'calm'), P('¡Hasta la próxima!', 'cheer')],
+  hogAlt: 'Erizo', writeAsk: '¡Escribe la respuesta!', writeFirst: '¡Primero escribe el número!', writeClear: 'Borrar', writeRead: function(n){ return 'Leí ' + n; },
+  sWriteAsk: function(s, a){ return [P('¿Cuánto es ' + s + ' más ' + a + '?', 'ask'), P('¡Escribe la respuesta!', 'cheer')]; }, sWriteRead: function(n){ return [P('Leí ' + n + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; }, sWriteHint: function(t){ return [P('La respuesta es ' + t + '.', 'calm'), P('¡Repasa el ' + t + '!', 'cheer')]; },
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1626,6 +1648,8 @@ zh: {
   sBeadAsk: [P('我们来做项链吧！', 'cheer'), P('看看规律。下一个是什么？', 'ask')], sBeadAsk2: [P('下一个是什么？', 'ask')], sBeadWrong: [P('嗯，我们一起唱一唱规律。', 'calm')], sBeadDone: [P('真漂亮！', 'cheer')],
   beadN: { heart:'爱心', star:'星星', orange:'橙子', smile:'笑脸', wink:'眨眼', flower:'花朵', flower2:'花朵', flower3:'花朵', pinkheart:'爱心' },
   timerTitle: '今天玩多久？', timerMin: '分钟', noTimer: '不计时', lockTitle: '今天玩好啦！', lockSub: '下次再见！', allDone: '好了', sLock: [P('今天玩好啦！', 'calm'), P('下次再见！', 'cheer')],
+  hogAlt: '刺猬', writeAsk: '写出答案！', writeFirst: '先写数字吧！', writeClear: '擦掉', writeRead: function(n){ return '我看到的是' + n; },
+  sWriteAsk: function(s, a){ return [P(s + '加' + a + '等于几？', 'ask'), P('写出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我看到的是' + n + '。', 'calm'), P('再试一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案是' + t + '。', 'calm'), P('照着写一写' + t + '！', 'cheer')]; },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1725,6 +1749,8 @@ ja: {
   sBeadAsk: [P('ネックレスを つくろう！', 'cheer'), P('じゅんばんを よく みてね。つぎは なにかな？', 'ask')], sBeadAsk2: [P('つぎは なにかな？', 'ask')], sBeadWrong: [P('うーん、いっしょに となえてみよう。', 'calm')], sBeadDone: [P('きれい！', 'cheer')],
   beadN: { heart:'ハート', star:'ほし', orange:'オレンジ', smile:'にこにこ', wink:'ウインク', flower:'おはな', flower2:'おはな', flower3:'おはな', pinkheart:'ハート' },
   timerTitle: 'きょうは どのくらい あそぶ？', timerMin: 'ふん', noTimer: 'タイマーなし', lockTitle: 'きょうは おしまい！', lockSub: 'また こんどね！', allDone: 'おしまい', sLock: [P('きょうは おしまい！', 'calm'), P('また こんどね！', 'cheer')],
+  hogAlt: 'ハリネズミ', writeAsk: 'こたえを かいてね！', writeFirst: 'さきに かずを かいてね！', writeClear: 'けす', writeRead: function(n){ return n + ' に みえたよ'; },
+  sWriteAsk: function(s, a){ return [P(s + ' たす ' + a + ' は いくつ？', 'ask'), P('こたえを かいてね！', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' に みえたよ。', 'calm'), P('もういちど！', 'cheer')]; }, sWriteHint: function(t){ return [P('こたえは ' + t + ' だよ。', 'calm'), P(t + ' を なぞってね！', 'cheer')]; },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1824,6 +1850,8 @@ yue: {
   sBeadAsk: [P('我哋一齊整條頸鏈！', 'cheer'), P('睇下規律。跟住係咩？', 'ask')], sBeadAsk2: [P('跟住係咩？', 'ask')], sBeadWrong: [P('嗯，我哋一齊唱下個規律。', 'calm')], sBeadDone: [P('好靚呀！', 'cheer')],
   beadN: { heart:'心心', star:'星星', orange:'橙', smile:'笑臉', wink:'眨眼', flower:'花', flower2:'花', flower3:'花', pinkheart:'心心' },
   timerTitle: '今日玩幾耐？', timerMin: '分鐘', noTimer: '唔計時', lockTitle: '今日玩完喇！', lockSub: '下次再見！', allDone: '得喇', sLock: [P('今日玩完喇！', 'calm'), P('下次再見！', 'cheer')],
+  hogAlt: '刺蝟', writeAsk: '寫出答案！', writeFirst: '寫咗數字先啦！', writeClear: '擦走', writeRead: function(n){ return '我睇到係' + n; },
+  sWriteAsk: function(s, a){ return [P(s + '加' + a + '等於幾多？', 'ask'), P('寫出答案！', 'cheer')]; }, sWriteRead: function(n){ return [P('我睇到係' + n + '。', 'calm'), P('再試一次！', 'cheer')]; }, sWriteHint: function(t){ return [P('答案係' + t + '。', 'calm'), P('跟住寫個' + t + '！', 'cheer')]; },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1923,6 +1951,8 @@ ko: {
   sBeadAsk: [P('목걸이를 만들어요!', 'cheer'), P('규칙을 보세요. 다음엔 뭐가 올까요?', 'ask')], sBeadAsk2: [P('다음엔 뭐가 올까요?', 'ask')], sBeadWrong: [P('음, 같이 규칙을 불러 봐요.', 'calm')], sBeadDone: [P('예뻐요!', 'cheer')],
   beadN: { heart:'하트', star:'별', orange:'오렌지', smile:'웃음', wink:'윙크', flower:'꽃', flower2:'꽃', flower3:'꽃', pinkheart:'하트' },
   timerTitle: '오늘은 얼마나 놀까요?', timerMin: '분', noTimer: '타이머 없이', lockTitle: '오늘은 여기까지!', lockSub: '다음에 또 만나요!', allDone: '끝', sLock: [P('오늘은 여기까지!', 'calm'), P('다음에 또 만나요!', 'cheer')],
+  hogAlt: '고슴도치', writeAsk: '답을 써 보세요!', writeFirst: '먼저 숫자를 써요!', writeClear: '지우기', writeRead: function(n){ return n + '(으)로 읽었어요'; },
+  sWriteAsk: function(s, a){ return [P(s + ' 더하기 ' + a + koEun(a) + ' 얼마일까요?', 'ask'), P('답을 써 보세요!', 'cheer')]; }, sWriteRead: function(n){ return [P(n + ' 같아요.', 'calm'), P('다시 해 봐요!', 'cheer')]; }, sWriteHint: function(t){ return [P('답은 ' + t + '.', 'calm'), P(t + ' 따라 써 봐요!', 'cheer')]; },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2213,6 +2243,7 @@ function render(){
   else if (screen === 'croc') renderCroc();
   else if (screen === 'train') renderTrain();
   else if (screen === 'beads') renderBeads();
+  else if (screen === 'write') renderWrite();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2295,7 +2326,7 @@ function syncDaynight(){
 }
 function timerTick(){
   /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
-  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads'].indexOf(screen) >= 0;
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write'].indexOf(screen) >= 0;
   if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
   if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
   syncDaynight();
@@ -2433,7 +2464,7 @@ function renderHome(){
       '<button class="tile bus" data-act="bus">' + critter('snail') + '<span class="tl">' + L('gBus') + '</span></button>' +
       '<button class="tile frogt" data-act="frog">' + critter('frog') + '<span class="tl">' + L('gFrog') + '</span></button>' +
       '<button class="tile towert" data-act="tower">' + critter('tiger') + '<span class="tl">' + L('gTower') + '</span></button>' +
-      '<button class="tile writet" data-act="write"><span class="dev-badge">' + L('devBadge') + '</span>' + critter('hedgehog') + '<span class="tl">' + L('gWrite') + '</span></button>' +
+      '<button class="tile writet" data-act="write">' + critter('hedgehog') + '<span class="tl">' + L('gWrite') + '</span></button>' +
     '</div></div>';
   else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
       '<button class="tile croct" data-act="croc">' + critter('croc-icon') + '<span class="tl">' + L('gCroc') + '</span></button>' +
@@ -2997,6 +3028,182 @@ function beadWin(){
   setTimeout(function(){ if (screen !== 'beads') return; var nk = document.querySelector('.necklace'); if (nk) nk.classList.add('dance'); beadMakeRoom(); starToDot('beads'); }, reduceMotion ? 500 : 2100);
 }
 
+/* =====================================================================
+   WRITE IT (hedgehog): write the answer to the sum with a finger; a small reader checks it.
+   One box per digit. After two misses the answer shows faintly in the box to trace.
+   ===================================================================== */
+function hogImg(cls){ return '<img class="' + (cls || 'momo hogpic') + '" src="animals/hedgehog.png" alt="' + esc(L('hogAlt')) + '" draggable="false">'; }
+var WR = null;   /* the digit reader, made once digits-model.js has loaded */
+function loadReader(done){
+  if (WR) { done(); return; }
+  if (!window.DIGIT_MODEL) {
+    var sc = document.createElement('script'); sc.src = 'digits-model.js';
+    sc.onload = function(){ loadReader(done); }; sc.onerror = function(){ done(); };
+    document.head.appendChild(sc); return;
+  }
+  var M = window.DIGIT_MODEL;
+  function dec(b64){ var s = atob(b64), a = new Int8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = (s.charCodeAt(i) << 24) >> 24; return a; }
+  var H = M.h, W1 = dec(M.w1), W2 = dec(M.w2);
+  function softmax(o){ var m = Math.max.apply(null, o), e = o.map(function(v){ return Math.exp(v - m); }), s = e.reduce(function(a, b){ return a + b; }, 0); return e.map(function(v){ return v / s; }); }
+  function mlp(x){
+    var h = new Float32Array(H), i, j;
+    for (j = 0; j < H; j++) h[j] = M.b1[j];
+    for (i = 0; i < 784; i++) { var v = x[i]; if (!v) continue; var row = i * H; for (j = 0; j < H; j++) h[j] += v * W1[row + j] * M.s1; }
+    var o = M.b2.slice();
+    for (j = 0; j < H; j++) { var hv = h[j] > 0 ? h[j] : 0; if (!hv) continue; for (var k = 0; k < 10; k++) o[k] += hv * W2[j * 10 + k] * M.s2; }
+    return softmax(o);
+  }
+  /* drawing -> 28x28, the same steps the reader was trained with */
+  var off = document.createElement('canvas'); off.width = off.height = 112; var octx = off.getContext('2d');
+  function toVec(strokes){
+    var pts = [].concat.apply([], strokes); if (pts.length < 2) return null;
+    var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    pts.forEach(function(p){ x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); });
+    var w = Math.max(x1 - x0, 1e-6), h = Math.max(y1 - y0, 1e-6);
+    if (Math.max(w, h) < 12) return null;
+    var sc = 20 / Math.max(w, h), ox = (28 - w * sc) / 2 - x0 * sc, oy = (28 - h * sc) / 2 - y0 * sc, Q = 4;
+    octx.fillStyle = '#000'; octx.fillRect(0, 0, 112, 112);
+    octx.strokeStyle = '#fff'; octx.lineWidth = Math.round(2.3 * Q); octx.lineCap = 'round'; octx.lineJoin = 'round';
+    strokes.forEach(function(s){
+      octx.beginPath();
+      s.forEach(function(p, i){ var X = (p[0] * sc + ox) * Q, Y = (p[1] * sc + oy) * Q; if (i) octx.lineTo(X, Y); else octx.moveTo(X, Y); });
+      if (s.length === 1) octx.lineTo((s[0][0] * sc + ox) * Q + .1, (s[0][1] * sc + oy) * Q);
+      octx.stroke();
+    });
+    var d = octx.getImageData(0, 0, 112, 112).data, v = new Float32Array(784);
+    for (var y = 0; y < 28; y++) for (var x = 0; x < 28; x++) {
+      var sum = 0;
+      for (var dy = 0; dy < 4; dy++) for (var dx = 0; dx < 4; dx++) sum += d[((y * 4 + dy) * 112 + x * 4 + dx) * 4];
+      v[y * 28 + x] = sum / 16 / 255;
+    }
+    return v;
+  }
+  /* digits she wrote before (kept on this device) help read the next ones */
+  var SKEY = 'momo-write-test-v1', D;
+  try { D = JSON.parse(localStorage.getItem(SKEY)) || {}; } catch(e) { D = {}; }
+  if (!D.samples) D.samples = []; if (!D.tries) D.tries = [];
+  function pack(v){ var s = ''; for (var i = 0; i < 784; i++) s += String.fromCharCode(Math.round(v[i] * 255)); return btoa(s); }
+  function unpack(b){ var s = atob(b), v = new Float32Array(784); for (var i = 0; i < 784; i++) v[i] = s.charCodeAt(i) / 255; return v; }
+  var cache = D.samples.map(function(s){ return { y:s.y, v:unpack(s.v) }; });
+  function knn(v){
+    if (cache.length < 10) return null;
+    var best = []; for (var k = 0; k < 10; k++) best.push(Infinity);
+    cache.forEach(function(s){ var d = 0; for (var i = 0; i < 784; i++) { var t = v[i] - s.v[i]; d += t * t; } if (d < best[s.y]) best[s.y] = d; });
+    return softmax(best.map(function(d){ return isFinite(d) ? -d / 12 : -1e9; }));
+  }
+  WR = {
+    toVec: toVec,
+    read: function(v){ var p = mlp(v), k = knn(v); if (k) p = p.map(function(x, i){ return 0.55 * x + 0.45 * k[i]; }); return p; },
+    learn: function(v, y){
+      D.samples.push({ y:y, v:pack(v) }); if (D.samples.length > 400) D.samples = D.samples.slice(-400);
+      cache.push({ y:y, v:v }); if (cache.length > 400) cache.shift();
+      try { localStorage.setItem(SKEY, JSON.stringify(D)); } catch(e) {}
+    }
+  };
+  done();
+}
+function startWrite(){
+  clearSay();
+  loadReader(function(){ G = { game:'write', q:0, earned:0, startStars:S.stars }; writeQuestion(); });
+}
+function writeQuestion(){
+  var p = pickFrog();
+  G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
+  G.first = true; G.lock = false; G.miss = 0; G.hint = false; G.done = false; G.bubble2 = ''; G.pads = [];
+  screen = 'write'; closeOverlay(); renderWrite();
+  say(L('sWriteAsk', G.s, G.a));
+}
+function renderWrite(){
+  var dots = '';
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
+  var digits = String(G.t).split(''), old = G.pads || [];
+  var pads = digits.map(function(d, i){ return '<div class="wpad" data-i="' + i + '">' + (G.hint ? '<span class="wguide" aria-hidden="true">' + d + '</span>' : '') + '<canvas></canvas></div>'; }).join('');
+  app.innerHTML = '<section class="screen writegame">' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('write-repeat', L('hearAgain')) + '</div>' +
+    '<div class="stage">' +
+      '<div class="left"><div class="momo-row"><div id="momo">' + hogImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(L('writeAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+        '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox' + (G.done ? ' solved' : '') + '" id="writeT">' + (G.done ? G.t : '?') + '</span></div></div>' +
+      '<div class="wr-area"><div class="wr-pads" id="wrPads">' + pads + '</div>' +
+        '<div class="wr-row"><button class="big-btn plain wr-clear" data-act="write-clear">' + L('writeClear') + '</button><button class="donebtn" id="writeDone" data-act="write-done">' + L('done') + '</button></div></div>' +
+    '</div></section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  sizeWrite();
+  G.pads = [].map.call(document.querySelectorAll('.wpad'), function(el, i){ return writePad(el, old[i] ? old[i].strokes : []); });
+}
+/* the boxes are as big as the space allows (3:4 each), never bigger than the area: nothing scrolls */
+function sizeWrite(){
+  var box = document.getElementById('wrPads'); if (!box) return;
+  var n = box.children.length, W = box.clientWidth, H = box.clientHeight, gap = 14;
+  var h = Math.floor(Math.max(60, Math.min(H, ((W - gap * (n - 1)) / n) * 4 / 3, 420)));
+  box.style.setProperty('--ph', h + 'px');
+}
+function writePad(el, strokes){
+  var c = el.querySelector('canvas'), P = { strokes: strokes || [], cur:null, el:el, ctx:c.getContext('2d') };
+  function size(){ var r = el.getBoundingClientRect(), dpr = window.devicePixelRatio || 1; c.width = Math.round(r.width * dpr); c.height = Math.round(r.height * dpr); P.ctx.setTransform(dpr, 0, 0, dpr, 0, 0); redraw(); }
+  function pt(e){ var r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+  function redraw(){
+    var x = P.ctx, r = el.getBoundingClientRect(); x.clearRect(0, 0, r.width, r.height);
+    x.strokeStyle = '#5A3E33'; x.lineWidth = Math.max(7, r.width * 0.05); x.lineCap = 'round'; x.lineJoin = 'round';
+    P.strokes.forEach(function(s){ x.beginPath(); s.forEach(function(p, i){ if (i) x.lineTo(p[0], p[1]); else x.moveTo(p[0], p[1]); }); if (s.length === 1) x.lineTo(s[0][0] + .1, s[0][1]); x.stroke(); });
+  }
+  c.addEventListener('pointerdown', function(e){ if (!G || G.lock || G.done) return; e.preventDefault(); try { c.setPointerCapture(e.pointerId); } catch(_) {} P.cur = [pt(e)]; P.strokes.push(P.cur); redraw(); el.classList.remove('bad'); if (G.bubble2) { G.bubble2 = ''; setBubble2(''); } });
+  c.addEventListener('pointermove', function(e){ if (!P.cur) return; var q = pt(e), l = P.cur[P.cur.length - 1]; if (Math.abs(q[0] - l[0]) + Math.abs(q[1] - l[1]) < 2) return; P.cur.push(q); redraw(); });
+  function up(){ P.cur = null; }
+  c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+  P.clear = function(){ P.strokes = []; redraw(); };
+  P.size = size; size();
+  return P;
+}
+window.addEventListener('resize', function(){ if (screen === 'write' && G && G.pads) { sizeWrite(); G.pads.forEach(function(p){ p.size(); }); } });
+function writeClear(){ if (!G || G.lock || G.done) return; G.pads.forEach(function(p){ p.clear(); p.el.classList.remove('bad'); }); G.bubble2 = ''; setBubble2(''); }
+function writeDone(){
+  if (!G || G.lock || G.done || !WR) return;
+  var want = String(G.t).split('').map(Number), vecs = [], read = [], ok = true;
+  for (var i = 0; i < G.pads.length; i++) {
+    var v = WR.toVec(G.pads[i].strokes);
+    if (!v) { G.bubble2 = L('writeFirst'); G.bubble2Kind = ''; setBubble2(G.bubble2); say(P(L('writeFirst'), 'calm')); G.pads[i].el.classList.remove('nope'); void G.pads[i].el.offsetWidth; G.pads[i].el.classList.add('nope'); return; }
+    var p = WR.read(v), order = p.map(function(x, k){ return [x, k]; }).sort(function(a, b){ return b[0] - a[0]; });
+    /* kind to wobbly handwriting: the wanted digit also counts when it is a close second guess */
+    var hit = order[0][1] === want[i] || (order[1][1] === want[i] && order[1][0] >= 0.25);
+    vecs.push(v); read.push(hit ? want[i] : order[0][1]); if (!hit) ok = false;
+  }
+  clearSay();
+  if (G.first) { record(ok); G.first = false; }
+  if (ok) {
+    G.lock = true; G.done = true;
+    vecs.forEach(function(v, i){ WR.learn(v, want[i]); });
+    var qt = document.getElementById('writeT'); if (qt) { qt.textContent = G.t; qt.classList.add('solved'); }
+    G.pads.forEach(function(p){ p.el.classList.add('good'); });
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    S.stars++; G.earned++; save();
+    say(L('sFrogRight', G.s, G.a, G.t));
+    setTimeout(showWriteReward, 1500);
+  } else {
+    G.miss++; G.lock = true;
+    var shown = read.join('');
+    G.bubble2 = L('writeRead', shown); G.bubble2Kind = ''; setBubble2(G.bubble2);
+    G.pads.forEach(function(p){ p.el.classList.remove('nope'); void p.el.offsetWidth; p.el.classList.add('nope', 'bad'); });
+    var hintNow = G.miss >= 2 && !G.hint;
+    say(hintNow ? L('sWriteHint', G.t) : L('sWriteRead', shown));
+    setTimeout(function(){
+      if (screen !== 'write' || !G || G.done) return;
+      G.lock = false; G.pads.forEach(function(p){ p.clear(); });
+      if (hintNow) { G.hint = true; G.bubble2 = ''; renderWrite(); }
+    }, 1400);
+  }
+}
+function showWriteReward(){
+  if (screen !== 'write') return;
+  var last = G.q + 1 >= ROUND;
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1>' + hogImg('pic animal') +
+    '<div class="sumcard"><div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.t)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.t + '</span></div></div>' +
+    '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+
 /* ---------- game ---------- */
 var G = null;
 var ROUND = 5;
@@ -3361,7 +3568,7 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else newQuestion();
 }
 function roundDone(){
   var stars = ''; for (var i = 0; i < G.earned; i++) stars += '<span>' + ICON.star + '</span>';
@@ -4364,7 +4571,10 @@ document.addEventListener('click', function(e){
       var av2 = document.querySelector('.start-av'); if (av2) av2.classList.add('pop');
       break;
     }
-    case 'write': clearSay(); location.href = 'write-test.html'; break;
+    case 'write': startWrite(); break;
+    case 'write-repeat': say(L('sWriteAsk', G.s, G.a)); break;
+    case 'write-clear': writeClear(); break;
+    case 'write-done': writeDone(); break;
     case 'tower-repeat': towerAskAloud(); break;
     case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
     case 'frog-repeat': frogAskAloud(); break;
@@ -4413,7 +4623,7 @@ document.addEventListener('click', function(e){
     case 'check': check(); break;
     case 'next': next(); break;
     case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
-      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else startRound(); break;
     case 'gate': gateFor = 'parents'; gate(); break;
     case 'timer-set': startSession(+b.getAttribute('data-v')); break;
     case 'timer-none': gateFor = 'notimer'; gate(); break;
