@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.201832">
+<meta name="build" content="2026-11-12.234613">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -3068,11 +3068,9 @@ function trainWin(){
   G.lock = true; G.done = true;
   S.stars++; G.earned++; save();
   G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, G.bubble2Kind);
-  say(G.seq.map(function(v){ return P(String(v), 'count', v); }));
-  /* light the cars one by one as the numbers are read, then the train pulls out to the left */
-  var cars = [].slice.call(document.querySelectorAll('.tcar'));
-  cars.forEach(function(c, i){ setTimeout(function(){ c.classList.add('lit'); setTimeout(function(){ c.classList.remove('lit'); }, 420); }, 700 + i * 480); });
-  var leaveAt = 900 + cars.length * 480;
+  say(L('sTrainGood'));   /* just a cheer: the numbers are not read out again */
+  /* then the train pulls out to the left */
+  var leaveAt = 900;
   setTimeout(function(){ var tr = document.querySelector('.train'); if (tr && !reduceMotion) tr.classList.add('moving', 'leave'); }, leaveAt);
   setTimeout(trainStar, leaveAt + (reduceMotion ? 300 : 1500));
 }
