@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.185745">
+<meta name="build" content="2026-11-12.192514">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -3609,18 +3609,22 @@ function record2(){ /* one more / one less is not an addition fact: nothing to a
    Levels in a round: by colour (2 baskets), by colour (3), same ones together, a mix, then fruit or vegetable.
    ===================================================================== */
 var MK_COL = {
-  red:    ['apple', 'strawberry', 'cherries', 'tomato', 'chilli'],
+  red:    ['apple', 'strawberry', 'cherries', 'tomato', 'chilli', 'pomegranate'],
   yellow: ['banana', 'lemon', 'pepper', 'corn', 'starfruit', 'pineapple'],
-  green:  ['broccoli', 'cabbage', 'cucumber', 'peas', 'guava', 'greenchilli'],
+  green:  ['broccoli', 'cabbage', 'cucumber', 'peas', 'guava', 'greenchilli', 'lime'],
   purple: ['plum', 'eggplant', 'fig']
 };
 var MK_SWATCH = { red:'#E4574E', yellow:'#F2C640', green:'#6FAE55', purple:'#7B5196' };
-var MK_KINDS = ['apple', 'banana', 'lemon', 'strawberry', 'broccoli', 'pear', 'orange', 'plum', 'onion', 'potato'];
+var MK_KINDS = ['apple', 'banana', 'lemon', 'strawberry', 'broccoli', 'pear', 'orange', 'plum', 'onion', 'potato', 'mango', 'peach', 'pineapple', 'watermelon'];
+/* other drawings of the same fruit: each question picks one per fruit, so "the same ones" always look the same */
+var MK_ART = { apple:['apple', 'apple2', 'apple3'], banana:['banana', 'banana2', 'banana3'], lemon:['lemon', 'lemon2'], strawberry:['strawberry', 'strawberry2', 'strawberry3'],
+  pear:['pear', 'pear2', 'pear3'], orange:['orange', 'orange2', 'orange3'], pineapple:['pineapple', 'pineapple2', 'pineapple3'], watermelon:['watermelon', 'watermelon2', 'watermelon3'],
+  cherries:['cherries', 'cherries2'], peach:['peach', 'peach2'], papaya:['papaya', 'papaya2'], lime:['lime', 'lime2'] };
 /* fruit or vegetable: only the clear-cut ones (no tomato, cucumber, pepper, pumpkin, olives or corn) */
-var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon'];
+var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon', 'mango', 'peach', 'papaya', 'pomegranate', 'lime'];
 var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'radish', 'garlic'];
 function racImg(cls){ return '<img class="' + (cls || 'mk-host') + '" src="animals/raccoon.png" alt="' + esc(L('mkAlt')) + '" draggable="false">'; }
-function foodImg(k){ return '<img src="market/' + k + '.png" alt="" draggable="false">'; }
+function foodImg(k){ var a = G && G.art && G.art[k] || k; return '<img src="market/' + a + '.png" alt="" draggable="false">'; }
 function marketPlan(){ return ['col2', 'col3', 'kind', Math.random() < 0.5 ? 'col3' : 'kind3', 'food']; }
 function startMarket(){ G = { game:'market', q:0, earned:0, startStars:S.stars, plan:marketPlan() }; marketQuestion(); }
 function marketQuestion(){
@@ -3638,6 +3642,7 @@ function marketQuestion(){
     fr.slice(0, 3).forEach(function(k){ items.push({ k:k, bin:0 }); }); vg.slice(0, 3).forEach(function(k){ items.push({ k:k, bin:1 }); });
     if (Math.random() < 0.5) bins.reverse(), items.forEach(function(it){ it.bin = 1 - it.bin; });
   }
+  G.art = {}; Object.keys(MK_ART).forEach(function(k){ var v = MK_ART[k]; G.art[k] = v[Math.floor(Math.random() * v.length)]; });
   G.mode = mode; G.bins = bins; G.items = shuffle(items).map(function(it, i){ it.id = i; it.placed = false; return it; });
   G.sel = null; G.lock = false; G.done = false; G.miss = 0; G.bubble2 = '';
   screen = 'market'; closeOverlay(); renderMarket();
