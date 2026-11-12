@@ -1106,6 +1106,12 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .group-add .grp-pics img.grp-solo{height:116%}
 .bead-tray{transition:opacity .4s}
 .bead-tray.gone{opacity:0;pointer-events:none}
+.pondcol{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;gap:clamp(4px,1dvh,10px)}
+.frog .donerow{justify-content:center}
+.frog .donebtn{width:auto;font-size:clamp(22px,5dvh,32px);min-height:clamp(46px,9dvh,76px)}
+.frog .donebtn.ready{animation:donepulse 1.2s ease-in-out infinite}
+@keyframes donepulse{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){ .frog .donebtn.ready{animation:none} }
 </style>
 </head>
 <body>
@@ -3633,7 +3639,7 @@ function frogQuestion(){
   if (max <= 5) { G.lo = 0; G.hi = 5; }
   else if (max <= 10) { G.lo = 0; G.hi = 10; }
   else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
-  G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = '';
+  G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.sel = null; G.bubble2 = '';
   screen = 'frog'; closeOverlay(); renderFrog();
   frogAskAloud();
 }
@@ -3643,7 +3649,7 @@ function renderFrog(){
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
   var pads = '';
   for (var n = G.lo; n <= G.hi; n++)
-    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
   app.innerHTML = '<section class="screen frog">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
@@ -3651,11 +3657,11 @@ function renderFrog(){
     '<div class="stage">' +
       '<div class="left"><div class="momo-row"><div id="momo">' + frogImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(L('frogWhere')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox" id="frogT">?</span></div></div>' +
-      '<div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
+      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
         '<svg class="arcs" id="arcs" aria-hidden="true"></svg>' +
         '<div class="pads">' + pads + '</div>' +
         '<img class="hopper" id="hopper" src="animals/frog.png" alt="" draggable="false">' +
-      '</div>' +
+      '</div><div class="donerow"><button class="donebtn' + (G.sel != null && !G.lock ? ' ready' : '') + '" id="frogDone" data-act="frog-done"' + (G.sel == null || G.lock ? ' disabled' : '') + '>' + L('done') + '</button></div></div>' +
     '</div></section>';
   setBubble2(G.bubble2, G.bubble2Kind);
   layoutPond();
@@ -3740,12 +3746,23 @@ function frogHop(done){
   }
   setTimeout(step, 650);
 }
+/* tapping a pad only marks it (so a child can tap along while counting); the last pad tapped is the answer once Done is pressed */
 function frogPick(n){
   if (!G || G.lock || n === G.s || G.tried[n]) return;
+  G.sel = n;
+  document.querySelectorAll('.pad.chosen').forEach(function(p){ p.classList.remove('chosen'); });
+  var pad = document.querySelector('.pad[data-v="' + n + '"]');
+  if (pad) { pad.classList.add('chosen'); pad.classList.remove('hit'); void pad.offsetWidth; pad.classList.add('hit'); }
+  var d = document.getElementById('frogDone'); if (d) { d.disabled = false; d.classList.add('ready'); }
+}
+function frogDone(){
+  if (!G || G.lock || G.sel == null) return;
+  var n = G.sel;
   G.lock = true;
+  var d = document.getElementById('frogDone'); if (d) { d.disabled = true; d.classList.remove('ready'); }
   var right = n === G.t;
   if (G.first) { record(right); G.first = false; }
-  var pad = document.querySelector('.pad[data-v="' + n + '"]'); if (pad) pad.classList.add('chosen');
+  var pad = document.querySelector('.pad[data-v="' + n + '"]');
   clearSay();
   frogHop(function(){
     if (screen !== 'frog' || !G) return;
@@ -3757,7 +3774,7 @@ function frogPick(n){
       say(L('sFrogRight', G.s, G.a, G.t));
       setTimeout(showFrogReward, 1800);
     } else {
-      G.tried[n] = true;
+      G.tried[n] = true; G.sel = null;
       if (pad) { pad.classList.remove('chosen'); pad.classList.add('tried'); pad.disabled = true; }
       G.bubble2 = L('frogLanded', G.t); G.bubble2Kind = ''; setBubble2(G.bubble2);
       say(L('sFrogWrong', G.t));
@@ -4179,6 +4196,7 @@ document.addEventListener('click', function(e){
     case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
     case 'frog-repeat': frogAskAloud(); break;
     case 'frog-pick': frogPick(+b.getAttribute('data-v')); break;
+    case 'frog-done': frogDone(); break;
     case 'avatar': avatarReturn = screen === 'start' ? 'start' : 'home'; show('avatar'); break;
     case 'pick-avatar':
       S.avatar = b.getAttribute('data-v'); S.avatarPicked = true; save();
