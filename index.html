@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.192514">
+<meta name="build" content="2026-11-12.193508">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1241,6 +1241,9 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .marketgame{gap:clamp(4px,1.2dvh,12px)}
 .mk-ask{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,16px);flex:none}
 .mk-host{height:clamp(54px,14dvh,130px);width:auto;flex:none}
+/* the raccoon hangs to the left of the speech bubble, so the bubble (and the cheer under it) stay centred on the screen */
+.mk-bwrap{position:relative}
+.mk-bwrap .mk-host{position:absolute;right:calc(100% + clamp(8px,2vw,16px));top:50%;translate:0 -50%}
 .mk-host.cheer{animation:octodance .5s ease-in-out 3;transform-origin:50% 90%}
 .mk-pile{flex:1;min-height:0;display:flex;flex-wrap:wrap;align-items:center;align-content:center;justify-content:center;gap:clamp(8px,2.4vw,26px)}
 .mk-item{width:clamp(56px,min(13vw,19dvh),170px);height:clamp(56px,min(13vw,19dvh),170px);padding:0;border:0;background:none;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:20px;transition:transform .15s}
@@ -1281,13 +1284,13 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .upgame{position:relative;gap:clamp(4px,1.2dvh,12px)}
 .upgame > .bar,.upgame > .croc-ask,.upgame > .up-field,.upgame > .bw-choices{position:relative;z-index:1}
 .up-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#9FD3F2 0%,#C7E6F8 55%,#E6F4FB 100%)}
-.up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;animation:updrift 60s linear infinite}
+.up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.42;animation:updrift 60s linear infinite}
 .up-sky .cl::before,.up-sky .cl::after{content:'';position:absolute;background:#fff;border-radius:50%}
 .up-sky .cl::before{width:45%;height:150%;left:15%;top:-60%}.up-sky .cl::after{width:35%;height:120%;left:50%;top:-40%}
 .up-sky .deep{position:absolute;inset:0;background:linear-gradient(180deg,#3F8FD6 0%,#6DB3E8 60%,#9CCDF0 100%);opacity:var(--alt,1);transition:opacity 1s ease}
 .up-sky .clouds{position:absolute;left:0;right:0;top:0;height:200vh;transform:translateY(calc((var(--alt,1) - 1) * 100vh));transition:transform 1s cubic-bezier(.4,0,.3,1)}
-.up-sky .c1{left:6%;top:8%}.up-sky .c2{left:62%;top:4.5%;transform:scale(.75);animation-duration:80s}.up-sky .c3{left:34%;top:21%;transform:scale(.6);opacity:.7;animation-duration:100s}
-.up-sky .c4{left:70%;top:32%;transform:scale(.9);animation-duration:70s}.up-sky .c5{left:-4%;top:44%;transform:scale(.7);opacity:.75}.up-sky .c6{left:50%;top:60%;transform:scale(1.1);animation-duration:90s}.up-sky .c7{left:12%;top:74%;transform:scale(.8);animation-duration:75s}.up-sky .c8{left:66%;top:84%;transform:scale(.6);opacity:.7}
+.up-sky .c1{left:6%;top:8%}.up-sky .c2{left:62%;top:4.5%;transform:scale(.75);animation-duration:80s}.up-sky .c3{left:34%;top:21%;transform:scale(.6);opacity:.35;animation-duration:100s}
+.up-sky .c4{left:70%;top:32%;transform:scale(.9);animation-duration:70s}.up-sky .c5{left:-4%;top:44%;transform:scale(.7);opacity:.37}.up-sky .c6{left:50%;top:60%;transform:scale(1.1);animation-duration:90s}.up-sky .c7{left:12%;top:74%;transform:scale(.8);animation-duration:75s}.up-sky .c8{left:66%;top:84%;transform:scale(.6);opacity:.35}
 @keyframes updrift{50%{margin-left:4vw}}
 .up-sky .hill{transform:translateY(calc(var(--alt,1) * 50vh));transition:transform 1s cubic-bezier(.4,0,.3,1);position:absolute;left:-10%;right:-10%;bottom:-18vh;height:34vh;border-radius:50% 50% 0 0/100% 100% 0 0;background:linear-gradient(#A6D98C,#86C46C);box-shadow:inset 0 10px 0 #B9E3A1}
 .up-field{flex:1;min-height:0;position:relative}
@@ -3671,7 +3674,7 @@ function renderMarket(){
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
     speakBtn('mk-repeat', L('hearAgain')) + '</div>' +
-    '<div class="mk-ask">' + racImg() + '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(marketAsk()) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
+    '<div class="mk-ask"><div class="croc-ask"><div class="mk-bwrap">' + racImg() + '<div class="bubble"><b id="bubble">' + esc(marketAsk()) + '</b></div></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
     '<div class="mk-pile" id="mkPile">' + pile + '</div>' +
     '<div class="mk-bins n' + G.bins.length + '">' + bins + '</div>' +
     '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M22 30a32 32 0 0 1 30-18"/><path class="rh-arrow" d="M45 6l7 6-7 7"/></svg><b>' + L('rotateHint') + '</b></div>' +
