@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.194306">
+<meta name="build" content="2026-11-12.195044">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -805,7 +805,8 @@ img.stk{object-fit:contain}
 @media (orientation:landscape) and (max-height:600px){ .tiles.six{grid-template-columns:repeat(6,minmax(0,1fr))} }
 @media (orientation:portrait) and (max-width:600px){ .tiles.six{grid-template-columns:repeat(2,minmax(0,1fr))} }
 /* phones: game names a little smaller on the tiles */
-@media (orientation:portrait) and (max-width:600px), (orientation:landscape) and (max-height:500px){ .tile .tl{font-size:.85em} }
+@media (orientation:portrait) and (max-width:600px){ .tile .tl{font-size:.72em} .tiles .tile .pic{height:clamp(43px,12.75dvh,119px)} }
+@media (orientation:landscape) and (max-height:500px){ .tile .tl{font-size:.85em} }
 .tower .momo-row .tigerpic{height:clamp(60px,15dvh,170px);width:auto;max-width:100%;object-fit:contain;object-position:right center}
 .tower .qbox{color:var(--ink);border:4px dashed var(--edge);background:transparent;border-radius:16px;padding:0 .15em;min-width:1.4em;text-align:center}
 .tower .qbox.solved{border-style:solid;background:var(--card);animation:pop .35s}
