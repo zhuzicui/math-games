@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.061543">
+<meta name="build" content="2026-11-12.185110">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -958,6 +958,14 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
   .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tilt 2.4s ease-in-out infinite}
   .rotate-hint b{font-family:var(--display);font-size:28px}
 }
+/* Up and Away needs the height: phones held sideways are asked to stand the phone up */
+@media (orientation:landscape) and (max-height:500px){
+  .upgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px;color:var(--ink)}
+  .upgame .rotate-hint svg{width:96px;height:96px;overflow:visible}
+  .upgame .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tiltUp 2.4s ease-in-out infinite}
+  .upgame .rotate-hint b{font-family:var(--display);font-size:26px}
+}
+@keyframes tiltUp{0%,25%{transform:rotate(90deg)}55%,85%{transform:rotate(0)}100%{transform:rotate(90deg)}}
 @keyframes tilt{0%,25%{transform:rotate(0)}55%,85%{transform:rotate(90deg)}100%{transform:rotate(0)}}
 .croc-reward{width:auto !important;max-width:min(40vw,320px) !important;height:auto !important;max-height:26dvh !important;object-fit:contain}
 .cmp-eq .s{color:var(--ink)} .cmp-eq .a{color:var(--ink)}
@@ -1266,7 +1274,53 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .wbird.land.flip{animation-name:birdlandF}
 @keyframes birdland{40%{transform:translate(-50%,0) scale(1.06,.9)}}
 @keyframes birdlandF{40%{transform:translate(-50%,0) scaleX(-1) scale(1.06,.9)}}
+
+/* ---------- up and away ---------- */
+.tile.upt{background:#E3F1FA;border-color:#A9D0EA;box-shadow:0 7px 0 #A9D0EA}
+.tile.mini.upt{box-shadow:0 4px 0 #A9D0EA}
+.upgame{position:relative;gap:clamp(4px,1.2dvh,12px)}
+.upgame > *:not(.up-sky):not(.rotate-hint){position:relative;z-index:1}
+.up-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#9FD3F2 0%,#C7E6F8 55%,#E6F4FB 100%)}
+.up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;animation:updrift 60s linear infinite}
+.up-sky .cl::before,.up-sky .cl::after{content:'';position:absolute;background:#fff;border-radius:50%}
+.up-sky .cl::before{width:45%;height:150%;left:15%;top:-60%}.up-sky .cl::after{width:35%;height:120%;left:50%;top:-40%}
+.up-sky .deep{position:absolute;inset:0;background:linear-gradient(180deg,#3F8FD6 0%,#6DB3E8 60%,#9CCDF0 100%);opacity:var(--alt,1);transition:opacity 1s ease}
+.up-sky .clouds{position:absolute;left:0;right:0;top:0;height:200vh;transform:translateY(calc((var(--alt,1) - 1) * 100vh));transition:transform 1s cubic-bezier(.4,0,.3,1)}
+.up-sky .c1{left:6%;top:8%}.up-sky .c2{left:62%;top:4.5%;transform:scale(.75);animation-duration:80s}.up-sky .c3{left:34%;top:21%;transform:scale(.6);opacity:.7;animation-duration:100s}
+.up-sky .c4{left:70%;top:32%;transform:scale(.9);animation-duration:70s}.up-sky .c5{left:-4%;top:44%;transform:scale(.7);opacity:.75}.up-sky .c6{left:50%;top:60%;transform:scale(1.1);animation-duration:90s}.up-sky .c7{left:12%;top:74%;transform:scale(.8);animation-duration:75s}.up-sky .c8{left:66%;top:84%;transform:scale(.6);opacity:.7}
+@keyframes updrift{50%{margin-left:4vw}}
+.up-sky .hill{transform:translateY(calc(var(--alt,1) * 50vh));transition:transform 1s cubic-bezier(.4,0,.3,1);position:absolute;left:-10%;right:-10%;bottom:-18vh;height:34vh;border-radius:50% 50% 0 0/100% 100% 0 0;background:linear-gradient(#A6D98C,#86C46C);box-shadow:inset 0 10px 0 #B9E3A1}
+.up-field{flex:1;min-height:0;position:relative}
+.up-row{position:absolute;left:0;right:0;top:0}
+.up-up{position:absolute;display:block;pointer-events:none}
+.up-up img{display:block;width:100%;height:100%;object-fit:contain;animation:upbob 2.4s ease-in-out infinite}
+.up-num{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%) scale(.4);opacity:0;min-width:1.5em;height:1.5em;padding:0 .2em;border-radius:1em;background:#FFFCF7;border:3px solid #F2C640;color:var(--ink);font-family:var(--display);font-weight:800;font-size:1em;line-height:1.35;text-align:center;transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.6,1)}
+.up-up.show .up-num{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.up-up.hop img{animation:uphop .5s ease-out}
+@keyframes uphop{40%{transform:translateY(-14%)}}
+@keyframes upbob{50%{transform:translateY(-5%) rotate(2deg)}}
+.up-rig{position:absolute;will-change:transform}
+.up-rig > *{animation:upfloat 3.2s ease-in-out infinite}
+.up-rig.landed > *{animation:uplanded .6s ease-out}
+@keyframes upfloat{50%{translate:0 -6px}}
+@keyframes uplanded{30%{transform:scale(1.06,.9);transform-origin:50% 100%}60%{transform:translateY(-8%)}}
+.up-strings{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.up-strings path{fill:none;stroke:#5E4A44;stroke-width:2;stroke-linecap:round;transition:opacity .3s}
+.up-strings path.cut{opacity:0}
+.up-bal{position:absolute;padding:0;border:0;background:none;cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent}
+.up-bal img{width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 4px 4px rgba(40,60,90,.18))}
+.up-bal::after{content:'';position:absolute;inset:-6px}
+.up-sheep{position:absolute;left:50%;bottom:0;width:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 6px 6px rgba(40,60,90,.2))}
+.up-rig.landed .up-sheep{animation:none}
+.upgame .bw-choices{flex:none}
+@media (orientation:landscape){ .upgame .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
+@media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
+.upgame .bubble{background:rgba(255,252,247,.96)}
+@media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
 </style>
+<!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -1418,7 +1472,7 @@ en: {
   gWrite: 'Write It',
   devBadge: 'Still under development',
   switchTo: function(n){ return 'Switch to ' + n; }, addShort: 'Add', holdText: 'Press and hold the button for 3 seconds to add a new kid.', holdLabel: 'Hold', keepHolding: 'Keep holding…', stepOf: function(a, b){ return 'Step ' + a + ' of ' + b; }, theirName: 'What’s their name?', nameLabel: 'Name', namePh: 'Kid’s first name', buddyFor: function(n){ return 'Pick a buddy for ' + n; }, addName: function(n){ return 'Add ' + n; }, backLabel: 'Back',
-  gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways',
+  gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways', rotateUp: 'Turn your phone upright',
   sCrocAsk: [P('The crocodile is very hungry!', 'cheer'), P('He always eats the side with more fish. Which side will he eat?', 'ask')], sCrocAsk2: [P('Which side has more fish?', 'ask')],
   sCrocRight: function(b, s){ return [P('Yes!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
   sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
@@ -1439,6 +1493,8 @@ en: {
   sBirdRight: function(n, t, more){ return [P('Yes!', 'cheer'), P((more ? 'One more than ' : 'One less than ') + n + ' is ' + t + '!', 'proud')]; }, sBirdWrong: [P('Hmm, let’s count the birds.', 'calm')],
   gMarket: 'Market Day', mkAlt: 'Raccoon', mkColour: 'Sort by colour!', mkKind: 'Put the same ones together!', mkFood: 'Fruit or vegetable?', mkFruits: 'Fruits', mkVeggies: 'Vegetables', mkItem: 'Food', mkBasket: 'Basket', mkColN: { red:'Red', yellow:'Yellow', green:'Green', purple:'Purple' },
   sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
+  gUp: 'Up and Away', upAlt: 'Sheep', upOne: 'Balloon', upAsk: 'Tap each balloon to let it go!', upHow: 'How many balloons?',
+  sUpAsk: [P('Look! The sheep is flying!', 'cheer'), P('Tap each balloon to let it go, and count.', 'ask')], sUpAsk2: [P('Tap each balloon to count.', 'ask')], sUpRight: function(n){ return [P('Yes!', 'cheer'), P(n + ' balloons!', 'proud')]; },
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1527,7 +1583,7 @@ fr: {
   gWrite: 'J’écris',
   devBadge: 'En cours de développement',
   switchTo: function(n){ return 'Passer à ' + n; }, addShort: 'Ajouter', holdText: 'Garde le bouton enfoncé 3 secondes pour ajouter un enfant.', holdLabel: 'Tenir', keepHolding: 'Continue d’appuyer…', stepOf: function(a, b){ return 'Étape ' + a + ' sur ' + b; }, theirName: 'Comment s’appelle-t-il\u00a0?', nameLabel: 'Prénom', namePh: 'Prénom de l’enfant', buddyFor: function(n){ return 'Choisis un copain pour ' + n; }, addName: function(n){ return 'Ajouter ' + n; }, backLabel: 'Retour',
-  gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone',
+  gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone', rotateUp: 'Tiens ton téléphone debout',
   sCrocAsk: [P('Le crocodile a très faim !', 'cheer'), P('Il mange toujours le côté qui a le plus de poissons. Lequel va-t-il manger ?', 'ask')], sCrocAsk2: [P('Quel côté a le plus de poissons ?', 'ask')],
   sCrocRight: function(b, s){ return [P('Oui !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
   sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
@@ -1548,6 +1604,8 @@ fr: {
   sBirdRight: function(n, t, more){ return [P('Oui !', 'cheer'), P((more ? 'Un de plus que ' : 'Un de moins que ') + n + ', ça fait ' + t + ' !', 'proud')]; }, sBirdWrong: [P('Hmm, comptons les oiseaux.', 'calm')],
   gMarket: 'Jour de marché', mkAlt: 'Raton laveur', mkColour: 'Trie par couleur\u00a0!', mkKind: 'Mets les mêmes ensemble\u00a0!', mkFood: 'Fruit ou légume\u00a0?', mkFruits: 'Fruits', mkVeggies: 'Légumes', mkItem: 'Aliment', mkBasket: 'Panier', mkColN: { red:'Rouge', yellow:'Jaune', green:'Vert', purple:'Violet' },
   sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
+  gUp: 'Haut dans le ciel', upAlt: 'Mouton', upOne: 'Ballon', upAsk: 'Touche chaque ballon pour le lâcher !', upHow: 'Combien de ballons ?',
+  sUpAsk: [P('Regarde ! Le mouton vole !', 'cheer'), P('Touche chaque ballon pour le lâcher, et compte.', 'ask')], sUpAsk2: [P('Touche chaque ballon pour compter.', 'ask')], sUpRight: function(n){ return [P('Oui !', 'cheer'), P(n + ' ballons !', 'proud')]; },
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1636,7 +1694,7 @@ es: {
   gWrite: 'A escribir',
   devBadge: 'Todavía en desarrollo',
   switchTo: function(n){ return 'Cambiar a ' + n; }, addShort: 'Añadir', holdText: 'Mantén pulsado el botón 3 segundos para añadir un niño.', holdLabel: 'Mantén', keepHolding: 'Sigue pulsando…', stepOf: function(a, b){ return 'Paso ' + a + ' de ' + b; }, theirName: '¿Cómo se llama?', nameLabel: 'Nombre', namePh: 'Nombre del niño', buddyFor: function(n){ return 'Elige un amigo para ' + n; }, addName: function(n){ return 'Añadir a ' + n; }, backLabel: 'Atrás',
-  gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono',
+  gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono', rotateUp: 'Pon tu teléfono de pie',
   sCrocAsk: [P('¡El cocodrilo tiene mucha hambre!', 'cheer'), P('Siempre se come el lado con más peces. ¿Cuál se comerá?', 'ask')], sCrocAsk2: [P('¿Qué lado tiene más peces?', 'ask')],
   sCrocRight: function(b, s){ return [P('¡Sí!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
   sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
@@ -1657,6 +1715,8 @@ es: {
   sBirdRight: function(n, t, more){ return [P('¡Sí!', 'cheer'), P((more ? 'Uno más que ' : 'Uno menos que ') + n + ' es ' + t + '.', 'proud')]; }, sBirdWrong: [P('Mmm, contemos los pájaros.', 'calm')],
   gMarket: 'Día de mercado', mkAlt: 'Mapache', mkColour: '¡Ordena por color!', mkKind: '¡Junta los que son iguales!', mkFood: '¿Fruta o verdura?', mkFruits: 'Frutas', mkVeggies: 'Verduras', mkItem: 'Alimento', mkBasket: 'Cesta', mkColN: { red:'Rojo', yellow:'Amarillo', green:'Verde', purple:'Morado' },
   sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
+  gUp: '¡Arriba y lejos!', upAlt: 'Oveja', upOne: 'Globo', upAsk: '¡Toca cada globo para soltarlo!', upHow: '¿Cuántos globos hay?',
+  sUpAsk: [P('¡Mira! ¡La oveja está volando!', 'cheer'), P('Toca cada globo para soltarlo, y cuenta.', 'ask')], sUpAsk2: [P('Toca cada globo para contar.', 'ask')], sUpRight: function(n){ return [P('¡Sí!', 'cheer'), P('¡' + n + ' globos!', 'proud')]; },
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1745,7 +1805,7 @@ zh: {
   gWrite: '写数字',
   devBadge: '还在开发中',
   switchTo: function(n){ return '换成' + n; }, addShort: '添加', holdText: '按住按钮3秒，添加一个孩子。', holdLabel: '按住', keepHolding: '继续按住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '孩子叫什么名字？', nameLabel: '名字', namePh: '孩子的名字', buddyFor: function(n){ return '给' + n + '选一个小伙伴'; }, addName: function(n){ return '添加' + n; }, backLabel: '返回',
-  gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来',
+  gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来', rotateUp: '请把手机竖过来',
   sCrocAsk: [P('鳄鱼好饿呀！', 'cheer'), P('它总是吃鱼多的那一边。它会吃哪一边呢？', 'ask')], sCrocAsk2: [P('哪边的鱼多？', 'ask')],
   sCrocRight: function(b, s){ return [P('对啦！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
   sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
@@ -1766,6 +1826,8 @@ zh: {
   sBirdRight: function(n, t, more){ return [P('对啦！', 'cheer'), P('比' + n + (more ? '多一个是' : '少一个是') + t + '！', 'proud')]; }, sBirdWrong: [P('嗯，我们一起数一数小鸟。', 'calm')],
   gMarket: '赶集日', mkAlt: '小浣熊', mkColour: '按颜色分一分！', mkKind: '把一样的放在一起！', mkFood: '水果还是蔬菜？', mkFruits: '水果', mkVeggies: '蔬菜', mkItem: '食物', mkBasket: '篮子', mkColN: { red:'红色', yellow:'黄色', green:'绿色', purple:'紫色' },
   sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
+  gUp: '气球飞呀飞', upAlt: '小羊', upOne: '气球', upAsk: '点一点气球，让它飞走！', upHow: '一共有几个气球？',
+  sUpAsk: [P('看！小羊飞起来啦！', 'cheer'), P('点一点每个气球，让它飞走，数一数。', 'ask')], sUpAsk2: [P('点一点每个气球，数一数。', 'ask')], sUpRight: function(n){ return [P('对啦！', 'cheer'), P(n + '个气球！', 'proud')]; },
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1854,7 +1916,7 @@ ja: {
   gWrite: 'すうじを かこう',
   devBadge: 'まだ じゅんびちゅう',
   switchTo: function(n){ return n + 'に かえる'; }, addShort: 'ついか', holdText: 'ボタンを 3びょう おしつづけると こどもを ついかできます。', holdLabel: 'おしつづける', keepHolding: 'そのまま…', stepOf: function(a, b){ return 'ステップ ' + a + '/' + b; }, theirName: 'おなまえは？', nameLabel: 'なまえ', namePh: 'こどもの なまえ', buddyFor: function(n){ return n + 'の なかまを えらぼう'; }, addName: function(n){ return n + 'を ついか'; }, backLabel: 'もどる',
-  gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね',
+  gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね', rotateUp: 'たてむきに してね',
   sCrocAsk: [P('ワニは おなかが ぺこぺこ！', 'cheer'), P('いつも さかなが おおい ほうを たべるよ。どっちを たべるかな？', 'ask')], sCrocAsk2: [P('どっちの さかなが おおい？', 'ask')],
   sCrocRight: function(b, s){ return [P('せいかい！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
   sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
@@ -1875,6 +1937,8 @@ ja: {
   sBirdRight: function(n, t, more){ return [P('せいかい！', 'cheer'), P(n + (more ? ' より ひとつ おおいと ' : ' より ひとつ すくないと ') + t + '！', 'proud')]; }, sBirdWrong: [P('うーん、いっしょに かぞえてみよう。', 'calm')],
   gMarket: 'いちばの ひ', mkAlt: 'アライグマ', mkColour: 'いろで わけてね！', mkKind: 'おなじ ものを あつめてね！', mkFood: 'くだもの？ やさい？', mkFruits: 'くだもの', mkVeggies: 'やさい', mkItem: 'たべもの', mkBasket: 'かご', mkColN: { red:'あか', yellow:'きいろ', green:'みどり', purple:'むらさき' },
   sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
+  gUp: 'ふうせん ふわふわ', upAlt: 'ひつじ', upOne: 'ふうせん', upAsk: 'ふうせんを タッチして とばしてね！', upHow: 'ふうせんは いくつ？',
+  sUpAsk: [P('みて！ ひつじが とんでるよ！', 'cheer'), P('ふうせんを ひとつずつ タッチして かぞえてね。', 'ask')], sUpAsk2: [P('ふうせんを タッチして かぞえてね。', 'ask')], sUpRight: function(n){ return [P('せいかい！', 'cheer'), P('ふうせんは ' + n + 'こ！', 'proud')]; },
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1963,7 +2027,7 @@ yue: {
   gWrite: '寫數字',
   devBadge: '仲喺開發緊',
   switchTo: function(n){ return '轉做' + n; }, addShort: '加', holdText: '撳住個掣3秒，就可以加小朋友。', holdLabel: '撳住', keepHolding: '繼續撳住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '小朋友叫咩名？', nameLabel: '名', namePh: '小朋友嘅名', buddyFor: function(n){ return '幫' + n + '揀個好朋友'; }, addName: function(n){ return '加' + n; }, backLabel: '返回',
-  gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫',
+  gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫', rotateUp: '請將手機打直',
   sCrocAsk: [P('鱷魚好肚餓呀！', 'cheer'), P('佢成日食魚多啲嗰邊。佢會食邊邊呢？', 'ask')], sCrocAsk2: [P('邊邊啲魚多啲？', 'ask')],
   sCrocRight: function(b, s){ return [P('啱喇！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
   sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
@@ -1984,6 +2048,8 @@ yue: {
   sBirdRight: function(n, t, more){ return [P('啱喇！', 'cheer'), P('比' + n + (more ? '多一個係' : '少一個係') + t + '！', 'proud')]; }, sBirdWrong: [P('嗯，我哋一齊數下啲雀仔。', 'calm')],
   gMarket: '趁墟日', mkAlt: '浣熊', mkColour: '跟顏色分一分！', mkKind: '將一樣嘅放埋一齊！', mkFood: '生果定蔬菜？', mkFruits: '生果', mkVeggies: '蔬菜', mkItem: '食物', mkBasket: '籃', mkColN: { red:'紅色', yellow:'黃色', green:'綠色', purple:'紫色' },
   sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
+  gUp: '氣球飛呀飛', upAlt: '小羊', upOne: '氣球', upAsk: '撳下氣球，等佢飛走！', upHow: '一共有幾多個氣球？',
+  sUpAsk: [P('睇下！小羊飛起咗！', 'cheer'), P('撳下每個氣球，等佢飛走，數一數。', 'ask')], sUpAsk2: [P('撳下每個氣球，數一數。', 'ask')], sUpRight: function(n){ return [P('啱喇！', 'cheer'), P(n + '個氣球！', 'proud')]; },
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -2072,7 +2138,7 @@ ko: {
   gWrite: '숫자 쓰기',
   devBadge: '아직 개발 중',
   switchTo: function(n){ return n + '(으)로 바꾸기'; }, addShort: '추가', holdText: '버튼을 3초 동안 누르고 있으면 아이를 추가할 수 있어요.', holdLabel: '누르기', keepHolding: '계속 누르세요…', stepOf: function(a, b){ return a + '/' + b + '단계'; }, theirName: '아이 이름이 뭐예요?', nameLabel: '이름', namePh: '아이 이름', buddyFor: function(n){ return n + '의 친구를 골라요'; }, addName: function(n){ return n + ' 추가'; }, backLabel: '뒤로',
-  gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요',
+  gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요', rotateUp: '휴대폰을 세로로 돌려 주세요',
   sCrocAsk: [P('악어가 너무 배고파요!', 'cheer'), P('악어는 항상 물고기가 더 많은 쪽을 먹어요. 어느 쪽을 먹을까요?', 'ask')], sCrocAsk2: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
   sCrocRight: function(b, s){ return [P('맞아요!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
   sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
@@ -2093,6 +2159,8 @@ ko: {
   sBirdRight: function(n, t, more){ return [P('맞아요!', 'cheer'), P(n + '보다 하나 ' + (more ? '많으면 ' : '적으면 ') + t + '!', 'proud')]; }, sBirdWrong: [P('음, 같이 새를 세어 봐요.', 'calm')],
   gMarket: '장날', mkAlt: '너구리', mkColour: '색깔별로 나눠요!', mkKind: '같은 것끼리 모아요!', mkFood: '과일일까요, 채소일까요?', mkFruits: '과일', mkVeggies: '채소', mkItem: '먹을거리', mkBasket: '바구니', mkColN: { red:'빨강', yellow:'노랑', green:'초록', purple:'보라' },
   sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
+  gUp: '풍선 타고 둥실', upAlt: '양', upOne: '풍선', upAsk: '풍선을 눌러서 날려 보내요!', upHow: '풍선이 몇 개일까요?',
+  sUpAsk: [P('봐요! 양이 날고 있어요!', 'cheer'), P('풍선을 하나씩 눌러 날려 보내며 세어 보세요.', 'ask')], sUpAsk2: [P('풍선을 눌러서 세어 보세요.', 'ask')], sUpRight: function(n){ return [P('맞아요!', 'cheer'), P('풍선 ' + n + '개!', 'proud')]; },
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2375,7 +2443,7 @@ function render(){
   document.body.classList.toggle('birdbg', screen === 'birds');
   document.body.classList.toggle('nightbg', screen === 'locked');
   /* the strip behind the phone's clock and battery takes the colour of the top of the page */
-  var topCol = { locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC' }[screen] || '#F7F1EA';
+  var topCol = { up:'#9FD3F2', locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC' }[screen] || '#F7F1EA';
   var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', topCol);
   document.documentElement.style.backgroundColor = topCol;
   if (screen === 'start') renderStart();
@@ -2391,6 +2459,7 @@ function render(){
   else if (screen === 'write') renderWrite();
   else if (screen === 'birds') renderBirds();
   else if (screen === 'market') renderMarket();
+  else if (screen === 'up') renderUp();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2473,7 +2542,7 @@ function syncDaynight(){
 }
 function timerTick(){
   /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
-  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write', 'birds', 'market'].indexOf(screen) >= 0;
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write', 'birds', 'market', 'up'].indexOf(screen) >= 0;
   if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
   if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
   syncDaynight();
@@ -2654,7 +2723,7 @@ function renderHome(){
       '<button class="tile beadt" data-act="beads">' + critter('octopus') + '<span class="tl">' + L('gBeads') + '</span></button>' +
       '<button class="tile birdt" data-act="birds">' + critter('bird') + '<span class="tl">' + L('gBird') + '</span></button>' +
       '<button class="tile markett" data-act="market">' + critter('raccoon') + '<span class="tl">' + L('gMarket') + '</span></button>' +
-      '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
+      '<button class="tile upt" data-act="up">' + critter('sheep') + '<span class="tl">' + L('gUp') + '</span></button>' +
     '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
       '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics"><img class="grp-solo" src="animals/penguin.png" alt=""></span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
@@ -3543,13 +3612,13 @@ var MK_COL = {
   red:    ['apple', 'strawberry', 'cherries', 'tomato', 'chilli'],
   yellow: ['banana', 'lemon', 'pepper', 'corn', 'starfruit', 'pineapple'],
   green:  ['broccoli', 'cabbage', 'cucumber', 'peas', 'guava', 'greenchilli'],
-  purple: ['plum', 'eggplant', 'fig', 'beet']
+  purple: ['plum', 'eggplant', 'fig']
 };
 var MK_SWATCH = { red:'#E4574E', yellow:'#F2C640', green:'#6FAE55', purple:'#7B5196' };
 var MK_KINDS = ['apple', 'banana', 'lemon', 'strawberry', 'broccoli', 'pear', 'orange', 'plum', 'onion', 'potato'];
 /* fruit or vegetable: only the clear-cut ones (no tomato, cucumber, pepper, pumpkin, olives or corn) */
 var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon'];
-var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'beet', 'radish', 'garlic'];
+var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'radish', 'garlic'];
 function racImg(cls){ return '<img class="' + (cls || 'mk-host') + '" src="animals/raccoon.png" alt="' + esc(L('mkAlt')) + '" draggable="false">'; }
 function foodImg(k){ return '<img src="market/' + k + '.png" alt="" draggable="false">'; }
 function marketPlan(){ return ['col2', 'col3', 'kind', Math.random() < 0.5 ? 'col3' : 'kind3', 'food']; }
@@ -3684,6 +3753,182 @@ function marketWin(){
   document.querySelectorAll('.mk-bin').forEach(function(b, i){ setTimeout(function(){ b.classList.remove('plop'); void b.offsetWidth; b.classList.add('plop'); }, 150 * i); });
   say(L('sMkDone'));
   var q = G.q; setTimeout(function(){ if (screen === 'market' && G && G.q === q) starToDot('market'); }, S.voice ? 1900 : 1200);
+}
+
+/* =====================================================================
+   UP AND AWAY: counting. A sheep floats on a bunch of balloons; tap each balloon to let it go.
+   It floats up to the row at the top and gets its number; the sheep sinks a little each time
+   and lands on the grass when the last one goes. Then: how many balloons?
+   ===================================================================== */
+var UP_ART = [[0.875,0.494],[0.585,0.46],[0.565,0.506],[0.965,0.511],[0.7,0.459],[0.59,0.504],[0.71,0.483],[0.935,0.481],[0.725,0.481],[0.59,0.488],[0.895,0.512],[0.685,0.509],[0.725,0.508],[0.655,0.537],[0.76,0.517],[0.675,0.489],[0.865,0.478],[0.75,0.52]];
+function sheepImg(cls){ return '<img class="' + (cls || 'up-host') + '" src="animals/sheep.png" alt="' + esc(L('upAlt')) + '" draggable="false">'; }
+function startUp(){ G = { game:'up', q:0, earned:0, startStars:S.stars }; upQuestion(); }
+function upQuestion(){
+  /* difficulty goes up and down a little: easy, medium, easier, hard, medium-hard (as a share of the kid's max, up to 20) */
+  var max = Math.max(3, Math.min(20, S.maxSum || 5)), q = G.q, R = [[.25, .4], [.5, .65], [.35, .5], [.75, 1], [.55, .8]][q] || [.3, .5];
+  var lo = Math.max(3, Math.round(max * R[0])), hi = Math.max(lo, Math.round(max * R[1])), n, tries = 0;
+  do { n = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (n === G.prevN && hi > lo && ++tries < 12);
+  G.prevN = n;
+  var arts = shuffle(UP_ART.map(function(_, i){ return i; }));
+  G.n = n; G.t = n; G.counted = 0; G.hideNums = q >= 3 && n <= 12;
+  G.pos = upScatter(n);
+  G.bal = []; for (var i = 0; i < n; i++) G.bal.push({ id:i, art:arts[i % arts.length], gone:false, num:0, rot: Math.round((Math.random() - 0.5) * 16), sz: 0.9 + Math.random() * 0.2 });
+  var o = Math.max(1, Math.min(n - Math.floor(Math.random() * 3), Math.max(n, max) - 2)); G.opts = [o, o + 1, o + 2];  /* the right one can be first, middle or last */
+  G.first = true; G.lock = false; G.asked = false; G.done = false; G.tried = {}; G.bubble2 = '';
+  screen = 'up'; closeOverlay(); renderUp();
+  say(q === 0 ? L('sUpAsk') : L('sUpAsk2'));
+}
+function upLive(q){ return screen === 'up' && G && G.game === 'up' && G.q === q; }
+function renderUp(){
+  var dots = '', q = G.q;
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < q ? 'done' : i === q ? 'now' : '') + '"></span>';
+  var bals = G.bal.map(function(b){ return '<button class="up-bal" data-id="' + b.id + '" aria-label="' + esc(L('upOne')) + '"><img src="up/b' + b.art + '.png" alt="" draggable="false"></button>'; }).join('');
+  var choices = G.opts.map(function(v){ return '<button class="choice" data-act="up-pick" data-v="' + v + '" disabled>' + v + '</button>'; }).join('');
+  app.innerHTML = '<section class="screen upgame">' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M74 30a32 32 0 0 0-30-18"/><path class="rh-arrow" d="M51 6l-7 6 7 7"/></svg><b>' + L('rotateUp') + '</b></div>' +
+    '<div class="up-sky" id="upSky" aria-hidden="true" style="--alt:1"><i class="deep"></i><div class="clouds"><i class="cl c1"></i><i class="cl c2"></i><i class="cl c3"></i><i class="cl c4"></i><i class="cl c5"></i><i class="cl c6"></i><i class="cl c7"></i><i class="cl c8"></i></div><i class="hill"></i></div>' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('up-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(L('upAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="up-field" id="upField"><div class="up-row" id="upRow"></div>' +
+      '<div class="up-rig" id="upRig"><svg class="up-strings" id="upStrings" aria-hidden="true"></svg>' + bals + sheepImg('up-sheep') + '</div></div>' +
+    '<div class="bw-choices wait" id="upChoices" role="group" aria-label="' + esc(L('upHow')) + '">' + choices + '</div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  layoutUp();
+  document.querySelectorAll('.up-bal').forEach(function(el){
+    el.addEventListener('pointerdown', function(e){ e.preventDefault(); upTap(+el.getAttribute('data-id')); });
+    el.addEventListener('click', function(e){ if (e.detail === 0) upTap(+el.getAttribute('data-id')); });
+  });
+}
+/* the bunch: rows of balloons above the sheep, wide enough apart to tap one at a time */
+function upScatter(n){
+  /* balloon centres scattered in a unit disc (dart throwing), close enough to overlap a little like a real bunch */
+  var d = 0.92 * Math.sqrt(Math.PI / n), pts = [], guard = 0;
+  while (pts.length < n && guard++ < 4000) {
+    var a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()), p = { u: Math.cos(a) * r, v: Math.sin(a) * r };
+    if (pts.every(function(o){ var dx = o.u - p.u, dy = o.v - p.v; return dx * dx + dy * dy >= d * d; })) pts.push(p);
+    if (guard % 300 === 0) d *= 0.95;
+  }
+  while (pts.length < n) pts.push({ u: Math.random() * 1.6 - 0.8, v: Math.random() * 1.6 - 0.8 });
+  return shuffle(pts);  /* random paint order, so which one sits in front is random too */
+}
+/* the bunch: an oval cloud of balloons above the sheep, some high, some low, some out to the side */
+function layoutUp(){
+  var f = document.getElementById('upField'), rig = document.getElementById('upRig'); if (!f || !G) return;
+  var W = f.clientWidth, H = f.clientHeight, n = G.n;
+  var rows0 = n > 10 ? 2 : 1, rowH0 = Math.min(H * (rows0 > 1 ? 0.24 : 0.18), rows0 > 1 ? 130 : 100);
+  var sheepH = Math.max(52, Math.min(H * (n > 10 ? 0.22 : 0.28), 210)), stringH = Math.max(30, H * 0.07);
+  var fall = H * (H < 330 ? 0.05 : 0.12), avail = H - rowH0 - sheepH - stringH - 12 - fall;  /* keep only a little room below for the landing; the hill rises to meet her */
+  /* fit: radii a (across) and b (up-down) of the oval of centres, balloon width bw from how many share it */
+  var maxA = W * 0.42, a, b, bw, bh;
+  var asp = Math.max(1.3, Math.min(H < 330 ? 7 : 4, W / H * 1.8));  /* wide screens get a wide bunch */
+  b = avail * 0.32; a = Math.min(maxA, b * asp);
+  for (var k = 0; k < 4; k++) {
+    bw = Math.max(28, Math.min(120, avail * 0.5, 0.92 * Math.sqrt(Math.PI / n) * Math.sqrt(a * b) / 0.62));
+    bh = bw / 0.75;
+    b = Math.max(bh * 0.3, (avail - bh) / 2); a = Math.min(maxA - bw / 2, b * asp);
+  }
+  /* small bunches don't need the whole sky */
+  var want = Math.sqrt(n) * bw * 0.62 / (0.92 * Math.sqrt(Math.PI));
+  if (want < Math.sqrt(a * b)) { var f2 = want / Math.sqrt(a * b); a *= f2; b *= f2; }
+  var rigW = Math.max(2 * a + bw * 1.2, sheepH * 1.1), bunchH = 2 * b + bh, rigH = bunchH + stringH + sheepH;
+  G.lay = { W:W, H:H, bh:bh, bw:bw, rigW:rigW, rigH:rigH, rowH0:rowH0, rows0:rows0, sheepH:sheepH, drop: Math.max(0, H - rowH0 - rigH - 6) };
+  rig.style.width = Math.round(rigW) + 'px'; rig.style.height = Math.round(rigH) + 'px';
+  rig.style.left = Math.round(W / 2 - rigW / 2) + 'px'; rig.style.top = Math.round(rowH0 + 4) + 'px';
+  var sh = rig.querySelector('.up-sheep'); sh.style.height = Math.round(sheepH) + 'px';
+  var anchor = { x: rigW / 2, y: rigH - sheepH * 0.92 };
+  var svg = document.getElementById('upStrings'); svg.setAttribute('width', Math.round(rigW)); svg.setAttribute('height', Math.round(rigH));
+  var lines = '';
+  G.bal.forEach(function(b0, i){
+    var P0 = G.pos[i], cx = rigW / 2 + P0.u * a, cy = b + bh / 2 + P0.v * b;
+    var A = UP_ART[b0.art], h = bh * b0.sz, w = h * A[0];
+    b0.el = rig.querySelector('.up-bal[data-id="' + b0.id + '"]'); b0.w = w; b0.h = h;
+    b0.x = cx - w * A[1]; b0.y = cy - h / 2; b0.kx = cx; b0.ky = cy + h / 2;
+    if (!b0.gone) { var st = b0.el.style; st.width = Math.round(w) + 'px'; st.height = Math.round(h) + 'px'; st.left = Math.round(b0.x) + 'px'; st.top = Math.round(b0.y) + 'px'; st.zIndex = 2 + i; st.transform = 'rotate(' + b0.rot + 'deg)'; }
+    var mx = (b0.kx + anchor.x) / 2 + (b0.kx < anchor.x ? -8 : 8);
+    lines += '<path data-s="' + b0.id + '"' + (b0.gone ? ' class="cut"' : '') + ' d="M' + b0.kx.toFixed(1) + ' ' + b0.ky.toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + ((b0.ky + anchor.y) / 2).toFixed(1) + ' ' + anchor.x.toFixed(1) + ' ' + anchor.y.toFixed(1) + '"/>';
+  });
+  svg.innerHTML = lines;
+  /* the row(s) at the top, where let-go balloons wait with their numbers */
+  var row = document.getElementById('upRow'), perRow = Math.ceil(n / rows0);
+  var slot = Math.min(rowH0 / rows0 * 0.86, (W - 20) / Math.max(perRow, 5));
+  row.style.height = Math.round(rowH0) + 'px'; G.lay.slot = slot; G.lay.perRow = perRow;
+  row.style.fontSize = Math.round(Math.max(12, Math.min(26, slot * 0.4))) + 'px';
+  upSink(false);
+}
+window.addEventListener('resize', function(){ if (screen === 'up' && G && G.game === 'up') { layoutUp(); upPlaceRow(); } });
+function upSlot(i){ var L0 = G.lay, s = L0.slot * 0.95, r = Math.floor(i / L0.perRow), c = i % L0.perRow, inRow = Math.min(L0.perRow, G.n - r * L0.perRow); return { x: L0.W / 2 + (c - (inRow - 1) / 2) * L0.slot - s * 0.35, y: 2 + r * L0.rowH0 / L0.rows0, h: s }; }
+function upPut(el, p){ el.style.left = Math.round(p.x) + 'px'; el.style.top = Math.round(p.y) + 'px'; el.style.height = Math.round(p.h) + 'px'; el.style.width = Math.round(p.h * +el.getAttribute('data-a')) + 'px'; }
+/* after a resize (rotation, the browser bar coming and going) the let-go balloons move to their new places */
+function upPlaceRow(){ document.querySelectorAll('#upRow .up-up').forEach(function(el){ upPut(el, upSlot(+el.getAttribute('data-n') - 1)); }); }
+/* the sheep goes down a little with every balloon that leaves; with none left it lands on the grass */
+function upSink(anim){
+  var rig = document.getElementById('upRig'); if (!rig || !G.lay) return;
+  /* high in the sky at first: the sheep only drifts down a little while the world (clouds, sky colour, hill) rises past her;
+     with the last balloon gone she drops the rest of the way and lands on the grass */
+  var frac = G.counted / G.n, y = G.lay.drop * (G.counted >= G.n ? 1 : frac * 0.3);
+  var sky = document.getElementById('upSky'); if (sky) sky.style.setProperty('--alt', (1 - frac).toFixed(3));
+  rig.style.transition = anim && !reduceMotion ? 'transform .9s cubic-bezier(.4,0,.3,1)' : 'none';
+  rig.style.transform = 'translateY(' + Math.round(y) + 'px)';
+}
+function upTap(id){
+  if (!G || G.game !== 'up' || G.lock || G.done) return;
+  var b = G.bal[id]; if (!b || b.gone) return;
+  b.gone = true; G.counted++; b.num = G.counted;
+  var from = b.el.getBoundingClientRect(), row = document.getElementById('upRow'), rr = row.getBoundingClientRect(), p = upSlot(b.num - 1);
+  var s = document.querySelector('#upStrings path[data-s="' + id + '"]'); if (s) s.classList.add('cut');
+  b.el.style.visibility = 'hidden';
+  var up = document.createElement('div'); up.className = 'up-up'; up.setAttribute('data-n', b.num);
+  up.innerHTML = '<img src="up/b' + b.art + '.png" alt="" draggable="false"><b class="up-num">' + b.num + '</b>';
+  up.setAttribute('data-a', UP_ART[b.art][0]); upPut(up, p);
+  row.appendChild(up);
+  /* float up from where it was, with a gentle sway */
+  var dx = from.left - (rr.left + p.x), dy = from.top - (rr.top + p.y), sc = from.height / p.h;
+  if (up.animate && !reduceMotion) {
+    up.animate([
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')', offset: 0 },
+      { transform: 'translate(' + (dx * 0.55 + 14) + 'px,' + (dy * 0.5) + 'px) scale(' + (1 + (sc - 1) * 0.5) + ') rotate(6deg)', offset: .5 },
+      { transform: 'translate(' + (dx * 0.15 - 8) + 'px,' + (dy * 0.12) + 'px) scale(' + (1 + (sc - 1) * 0.12) + ') rotate(-4deg)', offset: .85 },
+      { transform: 'none', offset: 1 }
+    ], { duration: 1100, easing: 'ease-in-out' });
+  }
+  setTimeout(function(){ up.classList.add('show'); if (G.hideNums) setTimeout(function(){ up.classList.remove('show'); }, 1300); }, reduceMotion ? 0 : 900);
+  clearSay(); say(P(String(b.num), 'count', b.num));
+  upSink(true);
+  if (G.counted >= G.n) {
+    var q = G.q, rig = document.getElementById('upRig');
+    setTimeout(function(){ if (!upLive(q)) return; if (rig) { rig.classList.remove('landed'); void rig.offsetWidth; rig.classList.add('landed'); } }, 900);
+    setTimeout(function(){ if (upLive(q)) upAskHow(); }, 1500);
+  }
+}
+function upAskHow(){
+  G.asked = true;
+  var bb = document.getElementById('bubble'); if (bb) bb.textContent = L('upHow');
+  var ch = document.getElementById('upChoices'); if (ch) ch.classList.remove('wait');
+  document.querySelectorAll('#upChoices .choice').forEach(function(c){ if (!G.tried[+c.getAttribute('data-v')]) c.disabled = false; });
+  say(P(L('upHow'), 'ask'));
+}
+function upPick(v){
+  if (!G || G.lock || G.done || !G.asked || G.tried[v]) return;
+  var right = v === G.t, q = G.q, btn = document.querySelector('#upChoices .choice[data-v="' + v + '"]');
+  G.first = false; clearSay();
+  if (right) {
+    G.done = true; G.lock = true;
+    if (btn) btn.classList.add('right');
+    document.querySelectorAll('#upChoices .choice').forEach(function(c){ if (c !== btn) c.disabled = true; });
+    document.querySelectorAll('.up-up').forEach(function(el){ el.classList.add('show'); });
+    S.stars++; G.earned++; save();
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    say(L('sUpRight', G.t));
+    setTimeout(function(){ if (upLive(q)) starToDot('up'); }, S.voice ? 2000 : 1200);
+  } else {
+    G.tried[v] = true;
+    if (btn) { btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope', 'tried'); btn.disabled = true; }
+    /* show the numbers on the balloons again so she can check */
+    document.querySelectorAll('.up-up').forEach(function(el, i){ setTimeout(function(){ el.classList.add('show'); el.classList.remove('hop'); void el.offsetWidth; el.classList.add('hop'); }, i * 120); });
+  }
 }
 
 /* ---------- game ---------- */
@@ -4050,15 +4295,15 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else if (G.game === 'birds') birdQuestion(); else if (G.game === 'market') marketQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else if (G.game === 'birds') birdQuestion(); else if (G.game === 'market') marketQuestion(); else if (G.game === 'up') upQuestion(); else newQuestion();
 }
 /* small tiles for the other games of the same group (Addition or Kindergarten): one tap starts that game */
 var GAME_TILES = {
   add:    [['play', 'feed', 'unicorn', 'gFeed'], ['ten', 'ten', 'chick', 'gTen'], ['bus', 'bus', 'snail', 'gBus'], ['frog', 'frogt', 'frog', 'gFrog'], ['tower', 'towert', 'tiger', 'gTower'], ['write', 'writet', 'hedgehog', 'gWrite']],
-  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads'], ['birds', 'birdt', 'bird', 'gBird'], ['market', 'markett', 'raccoon', 'gMarket']]
+  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads'], ['birds', 'birdt', 'bird', 'gBird'], ['market', 'markett', 'raccoon', 'gMarket'], ['up', 'upt', 'sheep', 'gUp']]
 };
 function otherGames(){
-  var cur = G.game || 'play', grp = ['croc', 'train', 'beads', 'birds', 'market'].indexOf(cur) >= 0 ? 'kinder' : 'add';
+  var cur = G.game || 'play', grp = ['croc', 'train', 'beads', 'birds', 'market', 'up'].indexOf(cur) >= 0 ? 'kinder' : 'add';
   return '<div class="mini-tiles" role="group" aria-label="' + esc(L('otherGames')) + '">' + GAME_TILES[grp].filter(function(t){ return t[0] !== cur; }).map(function(t){
     return '<button class="tile mini ' + t[1] + '" data-act="' + t[0] + '" aria-label="' + esc(L(t[3])) + '"><img src="animals/' + t[2] + '.png" alt="" draggable="false"></button>';
   }).join('') + '</div>';
@@ -5043,6 +5288,9 @@ document.addEventListener('click', function(e){
     case 'beads': startBeads(); break;
     case 'birds': startBirds(); break;
     case 'market': startMarket(); break;
+    case 'up': startUp(); break;
+    case 'up-pick': upPick(+b.getAttribute('data-v')); break;
+    case 'up-repeat': say(G.asked ? P(L('upHow'), 'ask') : L('sUpAsk2')); break;
     case 'mk-bin': marketBin(b.getAttribute('data-v')); break;
     case 'mk-repeat': say(marketSay()); break;
     case 'bird-pick': birdPick(+b.getAttribute('data-v')); break;
@@ -5124,7 +5372,7 @@ document.addEventListener('click', function(e){
     case 'check': check(); break;
     case 'next': next(); break;
     case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
-      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else if (G && G.game === 'birds') startBirds(); else if (G && G.game === 'market') startMarket(); else startRound(); break;
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else if (G && G.game === 'birds') startBirds(); else if (G && G.game === 'market') startMarket(); else if (G && G.game === 'up') startUp(); else startRound(); break;
     case 'gate': gateFor = 'parents'; gate(); break;
     case 'update-now': if (newBuild) doUpdate(); break;
     case 'timer-set': startSession(+b.getAttribute('data-v')); break;
