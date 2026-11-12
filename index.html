@@ -2257,6 +2257,10 @@ function render(){
   document.body.classList.toggle('waterbg', screen === 'croc');
   document.body.classList.toggle('railbg', screen === 'train');
   document.body.classList.toggle('nightbg', screen === 'locked');
+  /* the strip behind the phone's clock and battery takes the colour of the top of the page */
+  var topCol = { locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC' }[screen] || '#F7F1EA';
+  var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', topCol);
+  document.documentElement.style.backgroundColor = topCol;
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
