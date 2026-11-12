@@ -810,8 +810,8 @@ img.stk{object-fit:contain}
 .yard-col{flex:1;min-height:0;display:flex;flex-direction:column}
 .yard-main{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--b) * .5);padding:0 8px}
 .tw-shelf{flex:none;height:clamp(14px,2.4dvh,22px);background:#D9B48F;border-radius:12px;box-shadow:0 6px 0 #BF9773}
-.ruler{flex:none;display:flex;flex-direction:column-reverse;width:var(--b);background:var(--card);border-radius:calc(var(--b) * .28);box-shadow:0 0 0 3px var(--edge);overflow:hidden}
-.ruler span{height:var(--b);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:calc(var(--b) * .42);color:var(--ink2);border-top:1px solid #EFE3D6;transition:background .2s,color .2s}
+.ruler{flex:none;display:flex;flex-direction:column-reverse;width:calc(var(--b) * 1.4);background:var(--card);border-radius:calc(var(--b) * .28);box-shadow:0 0 0 3px var(--edge);overflow:hidden}
+.ruler span{height:var(--b);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:max(11px,calc(var(--b) * .62));line-height:1;color:var(--ink);border-top:1px solid #EFE3D6;transition:background .2s,color .2s}
 .ruler span:last-child{border-top:0}
 .ruler span.hi{background:var(--ink);color:#fff}
 .ruler span.ok{background:#4F7A3B;color:#fff}
@@ -1115,6 +1115,20 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .big-btn.auto{position:relative;overflow:hidden;isolation:isolate}
 .big-btn.auto .fill{position:absolute;inset:0;z-index:-1;background:var(--cta-d);opacity:.75;transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
 [dir=rtl] .big-btn.auto .fill{transform-origin:100% 50%}
+.twr .blk,.twr .tw-ghost{width:var(--tw, calc(var(--b) * 2.3))}
+.twr.blue{display:block}
+/* tall towers (ruler to 15 or 20) on a landscape tablet: the tiger and the sum move to the side so the tower gets the full height */
+@media (orientation:landscape) and (min-height:601px){
+  .tower.tall .stage{display:flex;flex-direction:row;gap:clamp(10px,2vw,20px);align-items:stretch}
+  .tower.tall .left{width:30%;flex:none;justify-content:center;align-items:center;gap:clamp(6px,2dvh,20px)}
+  .tower.tall .momo-row{display:flex;flex-direction:column;align-items:center}
+  .tower.tall .momo-row #momo{justify-content:center}
+  .tower.tall .left{min-width:0}
+  .tower.tall .momo-row,.tower.tall .bubbles{max-width:100%;min-width:0}
+  .tower.tall .bubble{max-width:100%;box-sizing:border-box}
+  .tower.tall .bubble b{white-space:normal;font-size:clamp(17px,2.1vw,30px)}
+  .tower.tall .eq{font-size:clamp(34px,4.6vw,60px)}
+}
 </style>
 </head>
 <body>
@@ -3838,7 +3852,8 @@ function startTower(){ G = { game:'tower', q:0, earned:0, startStars:S.stars }; 
 function towerQuestion(){
   var p = pickFrog();
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
-  G.R = S.maxSum <= 5 ? 6 : S.maxSum <= 10 ? 10 : 20;          /* ruler length */
+  /* ruler length: only as tall as this sum needs (in steps of 5), so the blocks and numbers stay as big as possible */
+  G.R = S.maxSum <= 5 ? 6 : Math.min(S.maxSum, Math.max(10, Math.ceil((G.t + 1) / 5) * 5));
   G.stacked = false; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.done = false; G.opts = null;
   screen = 'tower'; closeOverlay(); renderTower();
   towerAskAloud();
@@ -3862,7 +3877,7 @@ function renderTower(){
         '<i class="tw-guide" aria-hidden="true"></i>' + (G.done ? flag : '') + '</div>'
     : '<div class="twr" id="twRed">' + towerBlocks(G.s, 'r', 0) + '<span class="tw-ghost" id="twGhost" style="--a:' + G.a + '"></span></div>' +
       '<button class="twr blue" id="twBlue" aria-label="' + esc(L('towerPut')) + '">' + towerBlocks(G.a, 'b', G.s) + '</button>';
-  app.innerHTML = '<section class="screen tower">' +
+  app.innerHTML = '<section class="screen tower' + (G.R > 10 ? ' tall' : '') + '">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
     speakBtn('tower-repeat', L('hearAgain')) + '</div>' +
@@ -3892,11 +3907,11 @@ function layoutYard(){
   var half = W / 2 - side;
   var b = Math.floor(Math.min(H / (G.R + 1.6), 66)), tw;
   for (; b > 14; b--) {
-    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
-    if ((1.5 * b + tw) / 2 + 0.9 * b + tw <= half) break;
+    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 96 : 0)));
+    if ((1.9 * b + tw) / 2 + 0.9 * b + tw <= half) break;
   }
-  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
-  if ((1.5 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.75 * b - 0.9 * b) / 1.5));
+  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 96 : 0)));
+  if ((1.9 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.95 * b - 0.9 * b) / 1.5));
   y.style.setProperty('--b', b + 'px');
   y.style.setProperty('--tw', tw + 'px');
 }
