@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-12.184018">
+<meta name="build" content="2026-11-12.184559">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -958,6 +958,14 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
   .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tilt 2.4s ease-in-out infinite}
   .rotate-hint b{font-family:var(--display);font-size:28px}
 }
+/* Up and Away needs the height: phones held sideways are asked to stand the phone up */
+@media (orientation:landscape) and (max-height:500px){
+  .upgame .rotate-hint{display:flex;position:fixed;inset:0;z-index:50;background:var(--paper,#F7F1EA);flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px;color:var(--ink)}
+  .upgame .rotate-hint svg{width:96px;height:96px;overflow:visible}
+  .upgame .rotate-hint .rh-phone{transform-box:fill-box;transform-origin:center;animation:tiltUp 2.4s ease-in-out infinite}
+  .upgame .rotate-hint b{font-family:var(--display);font-size:26px}
+}
+@keyframes tiltUp{0%,25%{transform:rotate(90deg)}55%,85%{transform:rotate(0)}100%{transform:rotate(90deg)}}
 @keyframes tilt{0%,25%{transform:rotate(0)}55%,85%{transform:rotate(90deg)}100%{transform:rotate(0)}}
 .croc-reward{width:auto !important;max-width:min(40vw,320px) !important;height:auto !important;max-height:26dvh !important;object-fit:contain}
 .cmp-eq .s{color:var(--ink)} .cmp-eq .a{color:var(--ink)}
@@ -1271,7 +1279,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .tile.upt{background:#E3F1FA;border-color:#A9D0EA;box-shadow:0 7px 0 #A9D0EA}
 .tile.mini.upt{box-shadow:0 4px 0 #A9D0EA}
 .upgame{position:relative;gap:clamp(4px,1.2dvh,12px)}
-.upgame > *:not(.up-sky){position:relative;z-index:1}
+.upgame > *:not(.up-sky):not(.rotate-hint){position:relative;z-index:1}
 .up-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#9FD3F2 0%,#C7E6F8 55%,#E6F4FB 100%)}
 .up-sky .cl{position:absolute;width:22vmax;height:7vmax;border-radius:999px;background:#fff;opacity:.85;filter:blur(1px);animation:updrift 60s linear infinite}
 .up-sky .cl::before,.up-sky .cl::after{content:'';position:absolute;background:#fff;border-radius:50%}
@@ -1464,7 +1472,7 @@ en: {
   gWrite: 'Write It',
   devBadge: 'Still under development',
   switchTo: function(n){ return 'Switch to ' + n; }, addShort: 'Add', holdText: 'Press and hold the button for 3 seconds to add a new kid.', holdLabel: 'Hold', keepHolding: 'Keep holding…', stepOf: function(a, b){ return 'Step ' + a + ' of ' + b; }, theirName: 'What’s their name?', nameLabel: 'Name', namePh: 'Kid’s first name', buddyFor: function(n){ return 'Pick a buddy for ' + n; }, addName: function(n){ return 'Add ' + n; }, backLabel: 'Back',
-  gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways',
+  gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways', rotateUp: 'Turn your phone upright',
   sCrocAsk: [P('The crocodile is very hungry!', 'cheer'), P('He always eats the side with more fish. Which side will he eat?', 'ask')], sCrocAsk2: [P('Which side has more fish?', 'ask')],
   sCrocRight: function(b, s){ return [P('Yes!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
   sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
@@ -1575,7 +1583,7 @@ fr: {
   gWrite: 'J’écris',
   devBadge: 'En cours de développement',
   switchTo: function(n){ return 'Passer à ' + n; }, addShort: 'Ajouter', holdText: 'Garde le bouton enfoncé 3 secondes pour ajouter un enfant.', holdLabel: 'Tenir', keepHolding: 'Continue d’appuyer…', stepOf: function(a, b){ return 'Étape ' + a + ' sur ' + b; }, theirName: 'Comment s’appelle-t-il\u00a0?', nameLabel: 'Prénom', namePh: 'Prénom de l’enfant', buddyFor: function(n){ return 'Choisis un copain pour ' + n; }, addName: function(n){ return 'Ajouter ' + n; }, backLabel: 'Retour',
-  gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone',
+  gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone', rotateUp: 'Tiens ton téléphone debout',
   sCrocAsk: [P('Le crocodile a très faim !', 'cheer'), P('Il mange toujours le côté qui a le plus de poissons. Lequel va-t-il manger ?', 'ask')], sCrocAsk2: [P('Quel côté a le plus de poissons ?', 'ask')],
   sCrocRight: function(b, s){ return [P('Oui !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
   sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
@@ -1686,7 +1694,7 @@ es: {
   gWrite: 'A escribir',
   devBadge: 'Todavía en desarrollo',
   switchTo: function(n){ return 'Cambiar a ' + n; }, addShort: 'Añadir', holdText: 'Mantén pulsado el botón 3 segundos para añadir un niño.', holdLabel: 'Mantén', keepHolding: 'Sigue pulsando…', stepOf: function(a, b){ return 'Paso ' + a + ' de ' + b; }, theirName: '¿Cómo se llama?', nameLabel: 'Nombre', namePh: 'Nombre del niño', buddyFor: function(n){ return 'Elige un amigo para ' + n; }, addName: function(n){ return 'Añadir a ' + n; }, backLabel: 'Atrás',
-  gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono',
+  gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono', rotateUp: 'Pon tu teléfono de pie',
   sCrocAsk: [P('¡El cocodrilo tiene mucha hambre!', 'cheer'), P('Siempre se come el lado con más peces. ¿Cuál se comerá?', 'ask')], sCrocAsk2: [P('¿Qué lado tiene más peces?', 'ask')],
   sCrocRight: function(b, s){ return [P('¡Sí!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
   sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
@@ -1797,7 +1805,7 @@ zh: {
   gWrite: '写数字',
   devBadge: '还在开发中',
   switchTo: function(n){ return '换成' + n; }, addShort: '添加', holdText: '按住按钮3秒，添加一个孩子。', holdLabel: '按住', keepHolding: '继续按住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '孩子叫什么名字？', nameLabel: '名字', namePh: '孩子的名字', buddyFor: function(n){ return '给' + n + '选一个小伙伴'; }, addName: function(n){ return '添加' + n; }, backLabel: '返回',
-  gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来',
+  gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来', rotateUp: '请把手机竖过来',
   sCrocAsk: [P('鳄鱼好饿呀！', 'cheer'), P('它总是吃鱼多的那一边。它会吃哪一边呢？', 'ask')], sCrocAsk2: [P('哪边的鱼多？', 'ask')],
   sCrocRight: function(b, s){ return [P('对啦！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
   sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
@@ -1908,7 +1916,7 @@ ja: {
   gWrite: 'すうじを かこう',
   devBadge: 'まだ じゅんびちゅう',
   switchTo: function(n){ return n + 'に かえる'; }, addShort: 'ついか', holdText: 'ボタンを 3びょう おしつづけると こどもを ついかできます。', holdLabel: 'おしつづける', keepHolding: 'そのまま…', stepOf: function(a, b){ return 'ステップ ' + a + '/' + b; }, theirName: 'おなまえは？', nameLabel: 'なまえ', namePh: 'こどもの なまえ', buddyFor: function(n){ return n + 'の なかまを えらぼう'; }, addName: function(n){ return n + 'を ついか'; }, backLabel: 'もどる',
-  gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね',
+  gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね', rotateUp: 'たてむきに してね',
   sCrocAsk: [P('ワニは おなかが ぺこぺこ！', 'cheer'), P('いつも さかなが おおい ほうを たべるよ。どっちを たべるかな？', 'ask')], sCrocAsk2: [P('どっちの さかなが おおい？', 'ask')],
   sCrocRight: function(b, s){ return [P('せいかい！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
   sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
@@ -2019,7 +2027,7 @@ yue: {
   gWrite: '寫數字',
   devBadge: '仲喺開發緊',
   switchTo: function(n){ return '轉做' + n; }, addShort: '加', holdText: '撳住個掣3秒，就可以加小朋友。', holdLabel: '撳住', keepHolding: '繼續撳住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '小朋友叫咩名？', nameLabel: '名', namePh: '小朋友嘅名', buddyFor: function(n){ return '幫' + n + '揀個好朋友'; }, addName: function(n){ return '加' + n; }, backLabel: '返回',
-  gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫',
+  gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫', rotateUp: '請將手機打直',
   sCrocAsk: [P('鱷魚好肚餓呀！', 'cheer'), P('佢成日食魚多啲嗰邊。佢會食邊邊呢？', 'ask')], sCrocAsk2: [P('邊邊啲魚多啲？', 'ask')],
   sCrocRight: function(b, s){ return [P('啱喇！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
   sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
@@ -2130,7 +2138,7 @@ ko: {
   gWrite: '숫자 쓰기',
   devBadge: '아직 개발 중',
   switchTo: function(n){ return n + '(으)로 바꾸기'; }, addShort: '추가', holdText: '버튼을 3초 동안 누르고 있으면 아이를 추가할 수 있어요.', holdLabel: '누르기', keepHolding: '계속 누르세요…', stepOf: function(a, b){ return a + '/' + b + '단계'; }, theirName: '아이 이름이 뭐예요?', nameLabel: '이름', namePh: '아이 이름', buddyFor: function(n){ return n + '의 친구를 골라요'; }, addName: function(n){ return n + ' 추가'; }, backLabel: '뒤로',
-  gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요',
+  gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요', rotateUp: '휴대폰을 세로로 돌려 주세요',
   sCrocAsk: [P('악어가 너무 배고파요!', 'cheer'), P('악어는 항상 물고기가 더 많은 쪽을 먹어요. 어느 쪽을 먹을까요?', 'ask')], sCrocAsk2: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
   sCrocRight: function(b, s){ return [P('맞아요!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
   sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
@@ -3777,6 +3785,7 @@ function renderUp(){
   var bals = G.bal.map(function(b){ return '<button class="up-bal" data-id="' + b.id + '" aria-label="' + esc(L('upOne')) + '"><img src="up/b' + b.art + '.png" alt="" draggable="false"></button>'; }).join('');
   var choices = G.opts.map(function(v){ return '<button class="choice" data-act="up-pick" data-v="' + v + '" disabled>' + v + '</button>'; }).join('');
   app.innerHTML = '<section class="screen upgame">' +
+    '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M74 30a32 32 0 0 0-30-18"/><path class="rh-arrow" d="M51 6l-7 6 7 7"/></svg><b>' + L('rotateUp') + '</b></div>' +
     '<div class="up-sky" id="upSky" aria-hidden="true" style="--alt:1"><i class="deep"></i><div class="clouds"><i class="cl c1"></i><i class="cl c2"></i><i class="cl c3"></i><i class="cl c4"></i><i class="cl c5"></i><i class="cl c6"></i><i class="cl c7"></i><i class="cl c8"></i></div><i class="hill"></i></div>' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', q + 1, ROUND)) + '">' + dots + '</div>' +
