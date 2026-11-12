@@ -1158,6 +1158,14 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
   background:color-mix(in srgb,#F7C948 calc((1 - var(--p,0)) * 100%),#E9E4D4);box-shadow:0 0 0 3px rgba(255,255,255,.7),0 2px 6px rgba(90,62,51,.2);--p:0}
 #daynight i{position:absolute;inset:0;border-radius:50%;background:#5B6B8C;transform:translateX(calc(105% - var(--p,0) * 75%));transition:transform 1s linear}
 #daynight.night{background:#E9E4D4}
+/* lock screen at night: dark blue fading to dark violet */
+body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1B5C 45%,#3A1D66 100%) fixed}
+.lockscreen h1{color:#FFF6DE}
+.lockscreen .lock-sub{color:#D5CDF2}
+.lockscreen .link-btn{color:#C9C2EE}
+.lockscreen .link-btn svg{stroke:#C9C2EE}
+.lockscreen .timer-av{box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 40px rgba(255,220,140,.25)}
+.lockscreen .timer-av.sleepy{filter:none}
 </style>
 </head>
 <body>
@@ -2194,6 +2202,7 @@ function render(){
   document.body.classList.toggle('bookbg', screen === 'book');
   document.body.classList.toggle('waterbg', screen === 'croc');
   document.body.classList.toggle('railbg', screen === 'train');
+  document.body.classList.toggle('nightbg', screen === 'locked');
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
@@ -2263,7 +2272,7 @@ function renderLocked(){
     nightSky() +
     avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av sleepy"') +
     '<h1>' + L('lockTitle') + '</h1><p class="lock-sub">' + L('lockSub') + '</p>' +
-    '<button class="big-btn green" data-act="garden">' + ICON.star + ' ' + L('seeGarden') + '</button>' +
+    '<button class="big-btn" data-act="garden">' + ICON.star + ' ' + L('seeGarden') + '</button>' +
     '<button class="link-btn" data-act="lock-grown">' + ICON.lock + ' ' + L('grownOnly') + '</button>' +
     '</section>';
   /* on narrow screens, drop any star that would sit on the text or the buttons */
