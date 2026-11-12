@@ -1106,6 +1106,15 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .group-add .grp-pics img.grp-solo{height:116%}
 .bead-tray{transition:opacity .4s}
 .bead-tray.gone{opacity:0;pointer-events:none}
+.pondcol{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;gap:clamp(4px,1dvh,10px)}
+.frog .donerow{justify-content:center;padding-bottom:max(0px,calc(44px - var(--padb,20px)))}
+.frog .donebtn{width:auto;font-size:clamp(22px,5dvh,32px);min-height:clamp(46px,9dvh,76px)}
+.frog .donebtn.ready{animation:donepulse 1.2s ease-in-out infinite}
+@keyframes donepulse{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){ .frog .donebtn.ready{animation:none} }
+.big-btn.auto{position:relative;overflow:hidden;isolation:isolate}
+.big-btn.auto .fill{position:absolute;inset:0;z-index:-1;background:var(--cta-d);opacity:.75;transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+[dir=rtl] .big-btn.auto .fill{transform-origin:100% 50%}
 </style>
 </head>
 <body>
@@ -1986,10 +1995,11 @@ var STYLE = {
   oops:  { p: 1.32, r: 0.86 },
   count: { p: 1.05, r: 0.82 }
 };
-var sayTimers = [];
+var sayTimers = [], sayBusy = false, sayEndAt = 0, sayDone = null;   /* is a line being spoken, and roughly when it ends */
+function sayFinished(){ sayBusy = false; if (sayDone) { var f = sayDone; sayDone = null; f(); } }
 function syncMute(){ document.body.classList.toggle('muted', !S.voice); document.querySelectorAll('.speakbtn').forEach(function(x){ x.setAttribute('aria-pressed', String(!S.voice)); }); }
 function setTalking(on){ document.body.classList.toggle('talking', !!on); }
-function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); }
+function clearSay(){ if (typeof G !== 'undefined' && G && G.unlock) { var u = G.unlock; G.unlock = null; u(); } sayTimers.forEach(clearTimeout); sayTimers = []; if (hasSpeech) { try { speechSynthesis.cancel(); } catch(e) {} } setTalking(false); sayBusy = false; }
 /* parts: a line or list of lines; each line is a string or P(text, style, n). onEach(i) fires as each starts. */
 var RATE_MUL = { slow: 0.8, medium: 1, fast: 1.22 };
 function say(parts, onEach, gap){
@@ -2016,11 +2026,13 @@ function say(parts, onEach, gap){
       rate *= RATE_MUL[S.voiceRate] || 1;   /* grown-ups' speed setting */
       u.rate = Math.max(0.45, Math.min(1.6, rate));
       u.onstart = function(){ spoke = true; setTalking(true); onEach && onEach(i); };
-      if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); };
+      if (i === arr.length - 1) u.onend = u.onerror = function(){ setTalking(false); sayFinished(); };
       try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch(e) {}
       speechSynthesis.speak(u);
     });
     setTalking(true);
+    var cjk = /zh|yue|ja|ko/.test(lang), mul = RATE_MUL[S.voiceRate] || 1;
+    sayBusy = true; sayEndAt = Date.now() + arr.reduce(function(t, p){ return t + 350 + p.t.length * (cjk ? 260 : 80); }, 0) / mul;
     /* safety net: some browsers never fire onend */
     var est = arr.reduce(function(t, p){ return t + 400 + p.t.length * 95; }, 0) + 1500;
     sayTimers.push(setTimeout(function(){ try { if (!speechSynthesis.speaking) setTalking(false); else sayTimers.push(setTimeout(function(){ setTalking(false); }, est)); } catch(e) { setTalking(false); } }, est));
@@ -3162,7 +3174,31 @@ function closeOverlay(){ document.querySelectorAll('.flying').forEach(function(f
 function overlay(html){ closeOverlay(); var o = document.createElement('div'); o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.innerHTML = html; document.body.appendChild(o);
   /* reward groups: at most 5 per row, filled from the left, so they're easy to count */
   o.querySelectorAll('.groups .g').forEach(function(g){ g.style.setProperty('--cols', Math.min(5, g.children.length)); });
-  var b = o.querySelector('button'); if (b) b.focus(); return o; }
+  var b = o.querySelector('button'); if (b) b.focus(); autoNext(o); return o; }
+/* "You did it" pages move on by themselves: the Next button fills up while the sum is read out, then the next question comes.
+   Tapping Next skips ahead; opening the star sky (or leaving) cancels it because the page is gone. */
+function autoNext(o){
+  var btn = o.querySelector('.reward:not(.round-rw) [data-act="next"]'); if (!btn) return;
+  var fill = document.createElement('i'); fill.className = 'fill'; btn.classList.add('auto'); btn.insertBefore(fill, btn.firstChild);
+  var t0 = Date.now(), MIN = 1500, gone = false;
+  var dur = Math.max(MIN, Math.min(9000, sayBusy ? sayEndAt - t0 + 300 : 0));
+  function alive(){ return !gone && document.body.contains(o) && document.body.contains(btn); }
+  function go(){ if (!alive()) return; gone = true; sayDone = null; next(); }
+  function finish(){            /* top the bar up quickly, then go */
+    if (!alive()) return;
+    fill.style.transition = 'transform .25s linear'; fill.style.transform = 'scaleX(1)'; setTimeout(go, 280);
+  }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ fill.style.transition = 'transform ' + dur + 'ms linear'; fill.style.transform = 'scaleX(.96)'; }); });
+  /* the voice finished early: go as soon as the minimum time has passed */
+  if (sayBusy) sayDone = function(){ if (alive()) setTimeout(finish, Math.max(0, MIN - (Date.now() - t0))); };
+  /* the bar is full: go, unless the voice is still talking (then wait for it, a few seconds at most) */
+  setTimeout(function wait(){
+    if (!alive()) return;
+    var talking = false; try { talking = sayBusy && hasSpeech && speechSynthesis.speaking; } catch(e) {}
+    if (talking && Date.now() - t0 < dur + 4000) { setTimeout(wait, 150); return; }
+    finish();
+  }, dur);
+}
 function confetti(){
   var c = document.createElement('div'); c.className = 'confetti'; c.setAttribute('aria-hidden', 'true');
   var cols = ['#F6C9B4','#F7D98C','#B9D3E3','#E9917A','#A9C99F','#E6DDEF'], h = '';
@@ -3633,7 +3669,7 @@ function frogQuestion(){
   if (max <= 5) { G.lo = 0; G.hi = 5; }
   else if (max <= 10) { G.lo = 0; G.hi = 10; }
   else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
-  G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = '';
+  G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.sel = null; G.bubble2 = '';
   screen = 'frog'; closeOverlay(); renderFrog();
   frogAskAloud();
 }
@@ -3643,7 +3679,7 @@ function renderFrog(){
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
   var pads = '';
   for (var n = G.lo; n <= G.hi; n++)
-    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
   app.innerHTML = '<section class="screen frog">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
@@ -3651,11 +3687,11 @@ function renderFrog(){
     '<div class="stage">' +
       '<div class="left"><div class="momo-row"><div id="momo">' + frogImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(L('frogWhere')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox" id="frogT">?</span></div></div>' +
-      '<div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
+      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
         '<svg class="arcs" id="arcs" aria-hidden="true"></svg>' +
         '<div class="pads">' + pads + '</div>' +
         '<img class="hopper" id="hopper" src="animals/frog.png" alt="" draggable="false">' +
-      '</div>' +
+      '</div><div class="donerow"><button class="donebtn' + (G.sel != null && !G.lock ? ' ready' : '') + '" id="frogDone" data-act="frog-done"' + (G.sel == null || G.lock ? ' disabled' : '') + '>' + L('done') + '</button></div></div>' +
     '</div></section>';
   setBubble2(G.bubble2, G.bubble2Kind);
   layoutPond();
@@ -3740,12 +3776,23 @@ function frogHop(done){
   }
   setTimeout(step, 650);
 }
+/* tapping a pad only marks it (so a child can tap along while counting); the last pad tapped is the answer once Done is pressed */
 function frogPick(n){
   if (!G || G.lock || n === G.s || G.tried[n]) return;
+  G.sel = n;
+  document.querySelectorAll('.pad.chosen').forEach(function(p){ p.classList.remove('chosen'); });
+  var pad = document.querySelector('.pad[data-v="' + n + '"]');
+  if (pad) { pad.classList.add('chosen'); pad.classList.remove('hit'); void pad.offsetWidth; pad.classList.add('hit'); }
+  var d = document.getElementById('frogDone'); if (d) { d.disabled = false; d.classList.add('ready'); }
+}
+function frogDone(){
+  if (!G || G.lock || G.sel == null) return;
+  var n = G.sel;
   G.lock = true;
+  var d = document.getElementById('frogDone'); if (d) { d.disabled = true; d.classList.remove('ready'); }
   var right = n === G.t;
   if (G.first) { record(right); G.first = false; }
-  var pad = document.querySelector('.pad[data-v="' + n + '"]'); if (pad) pad.classList.add('chosen');
+  var pad = document.querySelector('.pad[data-v="' + n + '"]');
   clearSay();
   frogHop(function(){
     if (screen !== 'frog' || !G) return;
@@ -3757,7 +3804,7 @@ function frogPick(n){
       say(L('sFrogRight', G.s, G.a, G.t));
       setTimeout(showFrogReward, 1800);
     } else {
-      G.tried[n] = true;
+      G.tried[n] = true; G.sel = null;
       if (pad) { pad.classList.remove('chosen'); pad.classList.add('tried'); pad.disabled = true; }
       G.bubble2 = L('frogLanded', G.t); G.bubble2Kind = ''; setBubble2(G.bubble2);
       say(L('sFrogWrong', G.t));
@@ -4179,6 +4226,7 @@ document.addEventListener('click', function(e){
     case 'tw-pick': towerPick(+b.getAttribute('data-v')); break;
     case 'frog-repeat': frogAskAloud(); break;
     case 'frog-pick': frogPick(+b.getAttribute('data-v')); break;
+    case 'frog-done': frogDone(); break;
     case 'avatar': avatarReturn = screen === 'start' ? 'start' : 'home'; show('avatar'); break;
     case 'pick-avatar':
       S.avatar = b.getAttribute('data-v'); S.avatarPicked = true; save();
