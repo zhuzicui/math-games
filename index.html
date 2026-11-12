@@ -810,8 +810,8 @@ img.stk{object-fit:contain}
 .yard-col{flex:1;min-height:0;display:flex;flex-direction:column}
 .yard-main{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--b) * .5);padding:0 8px}
 .tw-shelf{flex:none;height:clamp(14px,2.4dvh,22px);background:#D9B48F;border-radius:12px;box-shadow:0 6px 0 #BF9773}
-.ruler{flex:none;display:flex;flex-direction:column-reverse;width:var(--b);background:var(--card);border-radius:calc(var(--b) * .28);box-shadow:0 0 0 3px var(--edge);overflow:hidden}
-.ruler span{height:var(--b);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:calc(var(--b) * .42);color:var(--ink2);border-top:1px solid #EFE3D6;transition:background .2s,color .2s}
+.ruler{flex:none;display:flex;flex-direction:column-reverse;width:calc(var(--b) * 1.4);background:var(--card);border-radius:calc(var(--b) * .28);box-shadow:0 0 0 3px var(--edge);overflow:hidden}
+.ruler span{height:var(--b);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:max(11px,calc(var(--b) * .62));line-height:1;color:var(--ink);border-top:1px solid #EFE3D6;transition:background .2s,color .2s}
 .ruler span:last-child{border-top:0}
 .ruler span.hi{background:var(--ink);color:#fff}
 .ruler span.ok{background:#4F7A3B;color:#fff}
@@ -896,7 +896,8 @@ img.stk{object-fit:contain}
 .grp-eg{display:block;font-size:clamp(16px,2.6dvh,22px);color:var(--ink2);opacity:.8;margin-top:4px}
 @media (orientation:landscape) and (max-height:500px){ .grp-pics{height:clamp(50px,26dvh,120px)} .grp-name{margin-top:4px} }
 .tile.croct{background:#E4F0D9;border-color:#B5D49F;box-shadow:0 7px 0 #B5D49F}
-.tile.croct .croc-pic{height:auto;width:86%;max-height:clamp(50px,15dvh,140px);object-fit:contain}
+/* same picture height as the other tiles, so every title sits on the same line; the croc itself is drawn at 60% of its old width */
+.tile.croct .croc-pic{height:clamp(50px,15dvh,140px);width:max(52%,84px);max-width:90%;object-fit:contain;object-position:center}
 .tile.soon-tile{background:transparent;border-style:dashed;border-color:var(--edge);box-shadow:none;color:var(--ink2);cursor:default}
 .soon-plus{font-size:clamp(40px,8dvh,70px);line-height:1;opacity:.6}
 /* ===== Hungry Crocodile ===== */
@@ -1115,6 +1116,56 @@ body.railbg,body.railbg #app{background:#F7FCFD url(train/bg.jpg) center bottom/
 .big-btn.auto{position:relative;overflow:hidden;isolation:isolate}
 .big-btn.auto .fill{position:absolute;inset:0;z-index:-1;background:var(--cta-d);opacity:.75;transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
 [dir=rtl] .big-btn.auto .fill{transform-origin:100% 50%}
+.twr .blk,.twr .tw-ghost{width:var(--tw, calc(var(--b) * 2.3))}
+.twr.blue{display:block}
+/* tall towers (ruler to 15 or 20) on a landscape tablet: the tiger and the sum move to the side so the tower gets the full height */
+@media (orientation:landscape) and (min-height:601px){
+  .tower.tall .stage{display:flex;flex-direction:row;gap:clamp(10px,2vw,20px);align-items:stretch}
+  .tower.tall .left{width:30%;flex:none;justify-content:center;align-items:center;gap:clamp(6px,2dvh,20px)}
+  .tower.tall .momo-row{display:flex;flex-direction:column;align-items:center}
+  .tower.tall .momo-row #momo{justify-content:center}
+  .tower.tall .left{min-width:0}
+  .tower.tall .momo-row,.tower.tall .bubbles{max-width:100%;min-width:0}
+  .tower.tall .bubble{max-width:100%;box-sizing:border-box}
+  .tower.tall .bubble b{white-space:normal;font-size:clamp(17px,2.1vw,30px)}
+  .tower.tall .eq{font-size:clamp(34px,4.6vw,60px)}
+}
+
+/* ---------- play timer ---------- */
+.timerscreen,.lockscreen{align-items:center;justify-content:center;text-align:center;gap:clamp(10px,2.4dvh,22px)}
+.timer-av{width:clamp(84px,18dvh,150px) !important;height:clamp(84px,18dvh,150px) !important;flex:none}
+.timerscreen h1,.lockscreen h1{font-family:var(--display);font-size:clamp(26px,5.4dvh,46px);margin:0;line-height:1.15}
+.timer-opts{display:flex;gap:clamp(14px,4vw,32px);justify-content:center}
+.timer-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:clamp(120px,26vw,200px);min-height:clamp(96px,22dvh,170px);padding:8px 18px;gap:2px}
+.timer-btn b{font-size:clamp(44px,11dvh,84px);line-height:1}
+.timer-btn span{font-size:clamp(16px,3.2dvh,24px)}
+.timerscreen .link-btn,.lockscreen .link-btn{display:inline-flex;align-items:center;gap:6px}
+.timerscreen .link-btn svg,.lockscreen .link-btn svg{width:18px;height:18px}
+.lockscreen .big-btn{display:inline-flex;align-items:center;gap:10px}
+.lockscreen .big-btn svg{width:30px;height:30px}
+.lock-sub{font-family:var(--display);font-weight:700;font-size:clamp(18px,3.6dvh,28px);color:var(--ink2);margin:0}
+.timer-av.sleepy{filter:saturate(.75)}
+.lockscreen{position:relative}
+.lockscreen > *:not(.night-sky){position:relative;z-index:1}
+.night-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky-moon{position:absolute;left:50%;top:4%;width:clamp(56px,13vmin,120px);margin-left:clamp(60px,16vmin,150px);animation:moonwiggle 7s ease-in-out infinite}
+.sky-star{position:absolute;height:auto;min-width:16px;transform:translate(-50%,-50%) rotate(var(--rot,0deg));animation:skytwinkle var(--tw,3s) ease-in-out var(--td,0s) infinite,skywiggle var(--wg,5s) ease-in-out var(--wd,0s) infinite}
+@keyframes skytwinkle{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes skywiggle{0%,100%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) - var(--amp,8deg)))}50%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) + var(--amp,8deg)))}}
+@keyframes moonwiggle{0%,100%{transform:rotate(3deg)}50%{transform:rotate(13deg)}}
+@media (prefers-reduced-motion:reduce){ .sky-star,.sky-moon{animation:none} }
+#daynight{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));width:30px;height:30px;border-radius:50%;z-index:40;pointer-events:none;overflow:hidden;
+  background:color-mix(in srgb,#F7C948 calc((1 - var(--p,0)) * 100%),#E9E4D4);box-shadow:0 0 0 3px rgba(255,255,255,.7),0 2px 6px rgba(90,62,51,.2);--p:0}
+#daynight i{position:absolute;inset:0;border-radius:50%;background:#5B6B8C;transform:translateX(calc(105% - var(--p,0) * 75%));transition:transform 1s linear}
+#daynight.night{background:#E9E4D4}
+/* lock screen at night: dark blue fading to dark violet */
+body.nightbg,body.nightbg #app{background:linear-gradient(180deg,#10194A 0%,#1F1B5C 45%,#3A1D66 100%) fixed}
+.lockscreen h1{color:#FFF6DE}
+.lockscreen .lock-sub{color:#D5CDF2}
+.lockscreen .link-btn{color:#C9C2EE}
+.lockscreen .link-btn svg{stroke:#C9C2EE}
+.lockscreen .timer-av{box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 40px rgba(255,220,140,.25)}
+.lockscreen .timer-av.sleepy{filter:none}
 </style>
 </head>
 <body>
@@ -1226,7 +1277,7 @@ en: {
   sHello: function(n){ return [P(n ? 'Hi, ' + n + '!' : 'Hi!', 'cheer'), P('Tap the unicorn to play.', 'calm'), P('Or tap the stars to see your sky.', 'calm')]; },
   sSoon: function(g){ return [P(g + ' is coming soon!', 'cheer')]; },
   sAsk: function(t, s){ return [P('Momo wants ' + t + ' ' + pl(t, 'cookie', 'cookies') + '!', 'ask'), P(s === 1 ? 'There is 1 cookie on the plate.' : 'There are ' + s + ' cookies on the plate.', 'calm'), P('Add more!', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('Yum!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
+  sYum: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
   sCount: P('Let’s count together.', 'calm'),
   sTooFew: function(n, t){ return [P('That’s ' + n + '.', 'calm'), P('Momo wants ' + t + '.', 'calm'), P('Add more!', 'cheer')]; },
   sTooMany: function(n, t){ return [P('That’s ' + n + '.', 'calm'), P('Too many!', 'oops'), P('Momo wants ' + t + '. Take some back.', 'calm')]; },
@@ -1244,7 +1295,7 @@ en: {
   busIn: function(s){ return s + ' ' + pl(s, 'snail', 'snails') + ' already on the bus'; }, busTap: 'Help this snail get on the bus',
   sBusAsk: function(s, a){ return [P(s === 1 ? 'There is 1 snail on the bus.' : 'There are ' + s + ' snails on the bus.', 'calm'), P(a === 1 ? '1 more is waiting.' : a + ' more are waiting.', 'calm'), P('Tap them to get on!', 'cheer')]; },
   sBusHowMany: [P('Everyone’s on!', 'cheer'), P('How many snails are on the bus now?', 'ask')],
-  sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud'), P('Beep beep!', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
   sBusCountOn: function(s){ return P('Let’s count on. Start at ' + s + '.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' snails!', 'calm'); },
   bravo: 'Great job!',
@@ -1269,7 +1320,7 @@ en: {
   switchTo: function(n){ return 'Switch to ' + n; }, addShort: 'Add', holdText: 'Press and hold the button for 3 seconds to add a new kid.', holdLabel: 'Hold', keepHolding: 'Keep holding…', stepOf: function(a, b){ return 'Step ' + a + ' of ' + b; }, theirName: 'What’s their name?', nameLabel: 'Name', namePh: 'Kid’s first name', buddyFor: function(n){ return 'Pick a buddy for ' + n; }, addName: function(n){ return 'Add ' + n; }, backLabel: 'Back',
   gAddition: 'Addition', gKinder: 'Kindergarten', moreSoon: 'More games coming soon', gCroc: 'Hungry Crocodile', crocAlt: 'Crocodile', crocAsk: 'Which side has more fish?', leftSide: 'Left side', rightSide: 'Right side', sameBtn: 'Same', rotateHint: 'Turn your phone sideways',
   sCrocAsk: [P('The crocodile is very hungry!', 'cheer'), P('He always eats the side with more fish. Which side will he eat?', 'ask')], sCrocAsk2: [P('Which side has more fish?', 'ask')],
-  sCrocRight: function(b, s){ return [P('Chomp!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('Yes!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
   sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
   crocAskNum: 'Which number is bigger?', sCrocAskNum: [P('Which number is bigger?', 'ask')],
   gTrain: 'Number Train', trainAlt: 'Penguin train', trainAsk: 'Which number is missing?', trainAskDrag: 'Drag the numbers onto the train', trainSlot: 'Empty car', toot: 'Toot toot!',
@@ -1277,6 +1328,7 @@ en: {
   gBeads: 'Bead Necklace', octoAlt: 'Octopus', beadAsk: 'What comes next?',
   sBeadAsk: [P('Let’s make a necklace!', 'cheer'), P('Look at the pattern. What comes next?', 'ask')], sBeadAsk2: [P('What comes next?', 'ask')], sBeadWrong: [P('Hmm, let’s sing the pattern.', 'calm')], sBeadDone: [P('Beautiful!', 'cheer')],
   beadN: { heart:'heart', star:'star', orange:'orange', smile:'smile', wink:'wink', flower:'flower', flower2:'flower', flower3:'flower', pinkheart:'heart' },
+  timerTitle: 'How long can we play today?', timerMin: 'minutes', noTimer: 'No timer', lockTitle: 'All done for today!', lockSub: 'See you next time!', allDone: 'All done', sLock: [P('All done for today!', 'calm'), P('See you next time!', 'cheer')],
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1324,7 +1376,7 @@ fr: {
   sHello: function(n){ return [P(n ? 'Coucou ' + n + ' !' : 'Coucou !', 'cheer'), P('Touche la licorne pour jouer.', 'calm'), P('Ou touche les étoiles pour voir ton ciel.', 'calm')]; },
   sSoon: function(g){ return [P(g + ', c’est bientôt !', 'cheer')]; },
   sAsk: function(t, s){ return [P('Momo veut ' + t + ' ' + pl(t, 'biscuit', 'biscuits') + ' !', 'ask'), P(s === 1 ? 'Il y a 1 biscuit dans l’assiette.' : 'Il y a ' + s + ' biscuits dans l’assiette.', 'calm'), P('Ajoutes-en !', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('Miam !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
+  sYum: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
   sCount: P('Comptons ensemble.', 'calm'),
   sTooFew: function(n, t){ return [P('Ça fait ' + n + '.', 'calm'), P('Momo en veut ' + t + '.', 'calm'), P('Ajoutes-en !', 'cheer')]; },
   sTooMany: function(n, t){ return [P('Ça fait ' + n + '.', 'calm'), P('C’est trop !', 'oops'), P('Momo en veut ' + t + '. Reprends-en.', 'calm')]; },
@@ -1342,7 +1394,7 @@ fr: {
   busIn: function(s){ return s + ' ' + pl(s, 'escargot', 'escargots') + ' déjà dans le bus'; }, busTap: 'Aider cet escargot à monter dans le bus',
   sBusAsk: function(s, a){ return [P('Il y a ' + s + ' ' + pl(s, 'escargot', 'escargots') + ' dans le bus.', 'calm'), P(a === 1 ? 'Encore 1 attend.' : 'Encore ' + a + ' attendent.', 'calm'), P('Touche-les pour les faire monter !', 'cheer')]; },
   sBusHowMany: [P('Tout le monde est là !', 'cheer'), P('Combien d’escargots dans le bus maintenant ?', 'ask')],
-  sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud'), P('Tut tut !', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
   sBusCountOn: function(s){ return P('On part de ' + s + ' et on continue.', 'calm'); },
   sBusCounted: function(t){ return P(t + ' escargots !', 'calm'); },
   bravo: 'Bravo\u00a0!',
@@ -1367,7 +1419,7 @@ fr: {
   switchTo: function(n){ return 'Passer à ' + n; }, addShort: 'Ajouter', holdText: 'Garde le bouton enfoncé 3 secondes pour ajouter un enfant.', holdLabel: 'Tenir', keepHolding: 'Continue d’appuyer…', stepOf: function(a, b){ return 'Étape ' + a + ' sur ' + b; }, theirName: 'Comment s’appelle-t-il\u00a0?', nameLabel: 'Prénom', namePh: 'Prénom de l’enfant', buddyFor: function(n){ return 'Choisis un copain pour ' + n; }, addName: function(n){ return 'Ajouter ' + n; }, backLabel: 'Retour',
   gAddition: 'Addition', gKinder: 'Maternelle', moreSoon: 'D’autres jeux arrivent bientôt', gCroc: 'Le crocodile affamé', crocAlt: 'Crocodile', crocAsk: 'Quel côté a le plus de poissons\u00a0?', leftSide: 'Côté gauche', rightSide: 'Côté droit', sameBtn: 'Pareil', rotateHint: 'Tourne ton téléphone',
   sCrocAsk: [P('Le crocodile a très faim !', 'cheer'), P('Il mange toujours le côté qui a le plus de poissons. Lequel va-t-il manger ?', 'ask')], sCrocAsk2: [P('Quel côté a le plus de poissons ?', 'ask')],
-  sCrocRight: function(b, s){ return [P('Crac !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('Oui !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
   sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
   crocAskNum: 'Quel nombre est le plus grand\u00a0?', sCrocAskNum: [P('Quel nombre est le plus grand ?', 'ask')],
   gTrain: 'Le train des nombres', trainAlt: 'Train des pingouins', trainAsk: 'Quel nombre manque\u00a0?', trainAskDrag: 'Glisse les nombres dans le train', trainSlot: 'Wagon vide', toot: 'Tchou tchou\u00a0!',
@@ -1375,6 +1427,7 @@ fr: {
   gBeads: 'Le collier de perles', octoAlt: 'Pieuvre', beadAsk: 'Qu’est-ce qui vient ensuite\u00a0?',
   sBeadAsk: [P('Faisons un collier !', 'cheer'), P('Regarde le motif. Qu’est-ce qui vient ensuite ?', 'ask')], sBeadAsk2: [P('Qu’est-ce qui vient ensuite ?', 'ask')], sBeadWrong: [P('Hmm, chantons le motif.', 'calm')], sBeadDone: [P('Magnifique !', 'cheer')],
   beadN: { heart:'cœur', star:'étoile', orange:'orange', smile:'sourire', wink:'clin d’œil', flower:'fleur', flower2:'fleur', flower3:'fleur', pinkheart:'cœur' },
+  timerTitle: 'On joue combien de temps aujourd’hui\u00a0?', timerMin: 'minutes', noTimer: 'Sans minuteur', lockTitle: 'C’est fini pour aujourd’hui\u00a0!', lockSub: 'À la prochaine\u00a0!', allDone: 'Terminé', sLock: [P('C’est fini pour aujourd’hui !', 'calm'), P('À la prochaine !', 'cheer')],
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1422,7 +1475,7 @@ es: {
   sHello: function(n){ return [P(n ? '¡Hola, ' + n + '!' : '¡Hola!', 'cheer'), P('Toca el unicornio para jugar.', 'calm'), P('O toca las estrellas para ver tu cielo.', 'calm')]; },
   sSoon: function(g){ return [P('¡' + g + ' llega muy pronto!', 'cheer')]; },
   sAsk: function(t, s){ return [P('¡Momo quiere ' + t + ' ' + pl(t, 'galleta', 'galletas') + '!', 'ask'), P(s === 1 ? 'Hay 1 galleta en el plato.' : 'Hay ' + s + ' galletas en el plato.', 'calm'), P('¡Añade más!', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('¡Ñam!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
+  sYum: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
   sCount: P('Contemos juntos.', 'calm'),
   sTooFew: function(n, t){ return [P('Hay ' + n + '.', 'calm'), P('Momo quiere ' + t + '.', 'calm'), P('¡Añade más!', 'cheer')]; },
   sTooMany: function(n, t){ return [P('Hay ' + n + '.', 'calm'), P('¡Demasiadas!', 'oops'), P('Momo quiere ' + t + '. Quita algunas.', 'calm')]; },
@@ -1440,7 +1493,7 @@ es: {
   busIn: function(s){ return s + ' ' + pl(s, 'caracol', 'caracoles') + ' ya en el autobús'; }, busTap: 'Ayuda a este caracol a subir',
   sBusAsk: function(s, a){ return [P(s === 1 ? 'Hay 1 caracol en el autobús.' : 'Hay ' + s + ' caracoles en el autobús.', 'calm'), P(a === 1 ? '1 más está esperando.' : a + ' más están esperando.', 'calm'), P('¡Tócalos para que suban!', 'cheer')]; },
   sBusHowMany: [P('¡Ya subieron todos!', 'cheer'), P('¿Cuántos caracoles hay ahora en el autobús?', 'ask')],
-  sBusRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud'), P('¡Pi, pi!', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
   sBusCountOn: function(s){ return P('Sigamos contando desde ' + s + '.', 'calm'); },
   sBusCounted: function(t){ return P('¡' + t + ' caracoles!', 'calm'); },
   bravo: '¡Bravo!',
@@ -1465,7 +1518,7 @@ es: {
   switchTo: function(n){ return 'Cambiar a ' + n; }, addShort: 'Añadir', holdText: 'Mantén pulsado el botón 3 segundos para añadir un niño.', holdLabel: 'Mantén', keepHolding: 'Sigue pulsando…', stepOf: function(a, b){ return 'Paso ' + a + ' de ' + b; }, theirName: '¿Cómo se llama?', nameLabel: 'Nombre', namePh: 'Nombre del niño', buddyFor: function(n){ return 'Elige un amigo para ' + n; }, addName: function(n){ return 'Añadir a ' + n; }, backLabel: 'Atrás',
   gAddition: 'Suma', gKinder: 'Kínder', moreSoon: 'Pronto habrá más juegos', gCroc: 'El cocodrilo hambriento', crocAlt: 'Cocodrilo', crocAsk: '¿Qué lado tiene más peces?', leftSide: 'Lado izquierdo', rightSide: 'Lado derecho', sameBtn: 'Igual', rotateHint: 'Gira tu teléfono',
   sCrocAsk: [P('¡El cocodrilo tiene mucha hambre!', 'cheer'), P('Siempre se come el lado con más peces. ¿Cuál se comerá?', 'ask')], sCrocAsk2: [P('¿Qué lado tiene más peces?', 'ask')],
-  sCrocRight: function(b, s){ return [P('¡Ñam!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('¡Sí!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
   sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
   crocAskNum: '¿Qué número es más grande?', sCrocAskNum: [P('¿Qué número es más grande?', 'ask')],
   gTrain: 'El tren de los números', trainAlt: 'Tren de pingüinos', trainAsk: '¿Qué número falta?', trainAskDrag: 'Arrastra los números al tren', trainSlot: 'Vagón vacío', toot: '¡Chu chu!',
@@ -1473,6 +1526,7 @@ es: {
   gBeads: 'El collar de cuentas', octoAlt: 'Pulpo', beadAsk: '¿Qué sigue?',
   sBeadAsk: [P('¡Hagamos un collar!', 'cheer'), P('Mira el patrón. ¿Qué sigue?', 'ask')], sBeadAsk2: [P('¿Qué sigue?', 'ask')], sBeadWrong: [P('Mmm, cantemos el patrón.', 'calm')], sBeadDone: [P('¡Precioso!', 'cheer')],
   beadN: { heart:'corazón', star:'estrella', orange:'naranja', smile:'sonrisa', wink:'guiño', flower:'flor', flower2:'flor', flower3:'flor', pinkheart:'corazón' },
+  timerTitle: '¿Cuánto tiempo jugamos hoy?', timerMin: 'minutos', noTimer: 'Sin temporizador', lockTitle: '¡Se acabó por hoy!', lockSub: '¡Hasta la próxima!', allDone: 'Terminar', sLock: [P('¡Se acabó por hoy!', 'calm'), P('¡Hasta la próxima!', 'cheer')],
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1520,7 +1574,7 @@ zh: {
   sHello: function(n){ return [P(n ? '你好，' + n + '！' : '你好！', 'cheer'), P('点独角兽开始玩。', 'calm'), P('或者点星星，看看你的星空。', 'calm')]; },
   sSoon: function(g){ return [P(g + '马上就来啦！', 'cheer')]; },
   sAsk: function(t, s){ return [P('莫莫想吃' + t + '块饼干！', 'ask'), P('盘子里已经有' + s + '块了。', 'calm'), P('再加一些吧！', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('好吃！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
+  sYum: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sCount: P('我们一起数一数。', 'calm'),
   sTooFew: function(n, t){ return [P('一共' + n + '块。', 'calm'), P('莫莫想要' + t + '块。', 'calm'), P('再加一些！', 'cheer')]; },
   sTooMany: function(n, t){ return [P('一共' + n + '块。', 'calm'), P('太多啦！', 'oops'), P('莫莫只要' + t + '块，拿回去一些吧。', 'calm')]; },
@@ -1538,7 +1592,7 @@ zh: {
   busIn: function(s){ return '车上已经有' + s + '只小蜗牛'; }, busTap: '帮这只小蜗牛上车',
   sBusAsk: function(s, a){ return [P('车上已经有' + s + '只小蜗牛。', 'calm'), P('还有' + a + '只在等车。', 'calm'), P('点它们上车吧！', 'cheer')]; },
   sBusHowMany: [P('都上车啦！', 'cheer'), P('现在车上一共有几只小蜗牛？', 'ask')],
-  sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud'), P('嘀嘀！', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sBusCountOn: function(s){ return P('从' + s + '开始，接着数。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '只！', 'calm'); },
   bravo: '真棒！',
@@ -1563,7 +1617,7 @@ zh: {
   switchTo: function(n){ return '换成' + n; }, addShort: '添加', holdText: '按住按钮3秒，添加一个孩子。', holdLabel: '按住', keepHolding: '继续按住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '孩子叫什么名字？', nameLabel: '名字', namePh: '孩子的名字', buddyFor: function(n){ return '给' + n + '选一个小伙伴'; }, addName: function(n){ return '添加' + n; }, backLabel: '返回',
   gAddition: '加法', gKinder: '幼儿园', moreSoon: '更多游戏即将推出', gCroc: '饥饿的鳄鱼', crocAlt: '鳄鱼', crocAsk: '哪边的鱼多？', leftSide: '左边', rightSide: '右边', sameBtn: '一样多', rotateHint: '请把手机横过来',
   sCrocAsk: [P('鳄鱼好饿呀！', 'cheer'), P('它总是吃鱼多的那一边。它会吃哪一边呢？', 'ask')], sCrocAsk2: [P('哪边的鱼多？', 'ask')],
-  sCrocRight: function(b, s){ return [P('啊呜！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('对啦！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
   sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
   crocAskNum: '哪个数字更大？', sCrocAskNum: [P('哪个数字更大？', 'ask')],
   gTrain: '数字火车', trainAlt: '企鹅火车', trainAsk: '缺了哪个数字？', trainAskDrag: '把数字拖到火车上', trainSlot: '空车厢', toot: '呜呜！',
@@ -1571,6 +1625,7 @@ zh: {
   gBeads: '串珠项链', octoAlt: '章鱼', beadAsk: '下一个是什么？',
   sBeadAsk: [P('我们来做项链吧！', 'cheer'), P('看看规律。下一个是什么？', 'ask')], sBeadAsk2: [P('下一个是什么？', 'ask')], sBeadWrong: [P('嗯，我们一起唱一唱规律。', 'calm')], sBeadDone: [P('真漂亮！', 'cheer')],
   beadN: { heart:'爱心', star:'星星', orange:'橙子', smile:'笑脸', wink:'眨眼', flower:'花朵', flower2:'花朵', flower3:'花朵', pinkheart:'爱心' },
+  timerTitle: '今天玩多久？', timerMin: '分钟', noTimer: '不计时', lockTitle: '今天玩好啦！', lockSub: '下次再见！', allDone: '好了', sLock: [P('今天玩好啦！', 'calm'), P('下次再见！', 'cheer')],
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1618,7 +1673,7 @@ ja: {
   sHello: function(n){ return [P(n ? 'こんにちは、' + n + '！' : 'こんにちは！', 'cheer'), P('ユニコーンを タップして あそぼう。', 'calm'), P('ほしを タップすると、そらが みられるよ。', 'calm')]; },
   sSoon: function(g){ return [P(g + 'は もうすぐ だよ！', 'cheer')]; },
   sAsk: function(t, s){ return [P('モモは クッキーが ' + t + 'こ ほしいな！', 'ask'), P('おさらには ' + s + 'こ あるよ。', 'calm'), P('たしてね！', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('おいしい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
+  sYum: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sCount: P('いっしょに かぞえよう。', 'calm'),
   sTooFew: function(n, t){ return [P(n + 'こ だね。', 'calm'), P('モモは ' + t + 'こ ほしいな。', 'calm'), P('もっと たしてね！', 'cheer')]; },
   sTooMany: function(n, t){ return [P(n + 'こ だね。', 'calm'), P('おおすぎ！', 'oops'), P('モモは ' + t + 'こで いいよ。すこし もどしてね。', 'calm')]; },
@@ -1636,7 +1691,7 @@ ja: {
   busIn: function(s){ return 'バスには もう ' + s + 'ひき のってるよ'; }, busTap: 'この かたつむりを バスに のせる',
   sBusAsk: function(s, a){ return [P('バスには かたつむりが ' + s + 'ひき のってるよ。', 'calm'), P('あと ' + a + 'ひき まってるよ。', 'calm'), P('タップして のせてあげてね！', 'cheer')]; },
   sBusHowMany: [P('みんな のったよ！', 'cheer'), P('バスには いま なんびき いるかな？', 'ask')],
-  sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud'), P('ブッブー！', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sBusCountOn: function(s){ return P(s + 'から つづけて かぞえよう。', 'calm'); },
   sBusCounted: function(t){ return P(t + 'ひき！', 'calm'); },
   bravo: 'すごいね！',
@@ -1661,7 +1716,7 @@ ja: {
   switchTo: function(n){ return n + 'に かえる'; }, addShort: 'ついか', holdText: 'ボタンを 3びょう おしつづけると こどもを ついかできます。', holdLabel: 'おしつづける', keepHolding: 'そのまま…', stepOf: function(a, b){ return 'ステップ ' + a + '/' + b; }, theirName: 'おなまえは？', nameLabel: 'なまえ', namePh: 'こどもの なまえ', buddyFor: function(n){ return n + 'の なかまを えらぼう'; }, addName: function(n){ return n + 'を ついか'; }, backLabel: 'もどる',
   gAddition: 'たしざん', gKinder: 'ようちえん', moreSoon: 'もうすぐ ゲームが ふえるよ', gCroc: 'はらぺこ ワニ', crocAlt: 'ワニ', crocAsk: 'どっちの さかなが おおい？', leftSide: 'ひだり', rightSide: 'みぎ', sameBtn: 'おなじ', rotateHint: 'よこむきに してね',
   sCrocAsk: [P('ワニは おなかが ぺこぺこ！', 'cheer'), P('いつも さかなが おおい ほうを たべるよ。どっちを たべるかな？', 'ask')], sCrocAsk2: [P('どっちの さかなが おおい？', 'ask')],
-  sCrocRight: function(b, s){ return [P('パクッ！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('せいかい！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
   sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
   crocAskNum: 'どっちの かずが おおきい？', sCrocAskNum: [P('どっちの かずが おおきい？', 'ask')],
   gTrain: 'かずの きしゃ', trainAlt: 'ペンギンの きしゃ', trainAsk: 'どの かずが ないかな？', trainAskDrag: 'かずを きしゃに いれてね', trainSlot: 'からっぽの しゃりょう', toot: 'ポッポー！',
@@ -1669,6 +1724,7 @@ ja: {
   gBeads: 'ビーズの ネックレス', octoAlt: 'タコ', beadAsk: 'つぎは なにかな？',
   sBeadAsk: [P('ネックレスを つくろう！', 'cheer'), P('じゅんばんを よく みてね。つぎは なにかな？', 'ask')], sBeadAsk2: [P('つぎは なにかな？', 'ask')], sBeadWrong: [P('うーん、いっしょに となえてみよう。', 'calm')], sBeadDone: [P('きれい！', 'cheer')],
   beadN: { heart:'ハート', star:'ほし', orange:'オレンジ', smile:'にこにこ', wink:'ウインク', flower:'おはな', flower2:'おはな', flower3:'おはな', pinkheart:'ハート' },
+  timerTitle: 'きょうは どのくらい あそぶ？', timerMin: 'ふん', noTimer: 'タイマーなし', lockTitle: 'きょうは おしまい！', lockSub: 'また こんどね！', allDone: 'おしまい', sLock: [P('きょうは おしまい！', 'calm'), P('また こんどね！', 'cheer')],
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -1716,7 +1772,7 @@ yue: {
   sHello: function(n){ return [P(n ? '你好，' + n + '！' : '你好！', 'cheer'), P('撳獨角獸開始玩。', 'calm'), P('或者撳星星，睇吓你個星空。', 'calm')]; },
   sSoon: function(g){ return [P(g + '就快嚟喇！', 'cheer')]; },
   sAsk: function(t, s){ return [P('摩摩想食' + t + '塊曲奇！', 'ask'), P('碟度已經有' + s + '塊。', 'calm'), P('再加多啲啦！', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('好好食！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
+  sYum: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sCount: P('我哋一齊數吓。', 'calm'),
   sTooFew: function(n, t){ return [P('一共' + n + '塊。', 'calm'), P('摩摩想要' + t + '塊。', 'calm'), P('再加多啲！', 'cheer')]; },
   sTooMany: function(n, t){ return [P('一共' + n + '塊。', 'calm'), P('太多喇！', 'oops'), P('摩摩只要' + t + '塊，攞返啲走啦。', 'calm')]; },
@@ -1734,7 +1790,7 @@ yue: {
   busIn: function(s){ return '車上已經有' + s + '隻蝸牛'; }, busTap: '幫呢隻蝸牛上車',
   sBusAsk: function(s, a){ return [P('車上已經有' + s + '隻蝸牛。', 'calm'), P('仲有' + a + '隻等緊車。', 'calm'), P('撳佢哋上車啦！', 'cheer')]; },
   sBusHowMany: [P('全部上咗車喇！', 'cheer'), P('而家車上一共有幾多隻蝸牛？', 'ask')],
-  sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud'), P('嘟嘟！', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sBusCountOn: function(s){ return P('由' + s + '開始，接住數。', 'calm'); },
   sBusCounted: function(t){ return P('一共' + t + '隻！', 'calm'); },
   bravo: '好叻呀！',
@@ -1759,7 +1815,7 @@ yue: {
   switchTo: function(n){ return '轉做' + n; }, addShort: '加', holdText: '撳住個掣3秒，就可以加小朋友。', holdLabel: '撳住', keepHolding: '繼續撳住…', stepOf: function(a, b){ return '第' + a + '步，共' + b + '步'; }, theirName: '小朋友叫咩名？', nameLabel: '名', namePh: '小朋友嘅名', buddyFor: function(n){ return '幫' + n + '揀個好朋友'; }, addName: function(n){ return '加' + n; }, backLabel: '返回',
   gAddition: '加數', gKinder: '幼稚園', moreSoon: '仲有更多遊戲就嚟', gCroc: '肚餓嘅鱷魚', crocAlt: '鱷魚', crocAsk: '邊邊啲魚多啲？', leftSide: '左邊', rightSide: '右邊', sameBtn: '一樣多', rotateHint: '請將手機打橫',
   sCrocAsk: [P('鱷魚好肚餓呀！', 'cheer'), P('佢成日食魚多啲嗰邊。佢會食邊邊呢？', 'ask')], sCrocAsk2: [P('邊邊啲魚多啲？', 'ask')],
-  sCrocRight: function(b, s){ return [P('啊嗚！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('啱喇！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
   sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
   crocAskNum: '邊個數字大啲？', sCrocAskNum: [P('邊個數字大啲？', 'ask')],
   gTrain: '數字火車', trainAlt: '企鵝火車', trainAsk: '唔見咗邊個數字？', trainAskDrag: '將數字拖上火車', trainSlot: '空車卡', toot: '嘟嘟！',
@@ -1767,6 +1823,7 @@ yue: {
   gBeads: '串珠頸鏈', octoAlt: '八爪魚', beadAsk: '跟住係咩？',
   sBeadAsk: [P('我哋一齊整條頸鏈！', 'cheer'), P('睇下規律。跟住係咩？', 'ask')], sBeadAsk2: [P('跟住係咩？', 'ask')], sBeadWrong: [P('嗯，我哋一齊唱下個規律。', 'calm')], sBeadDone: [P('好靚呀！', 'cheer')],
   beadN: { heart:'心心', star:'星星', orange:'橙', smile:'笑臉', wink:'眨眼', flower:'花', flower2:'花', flower3:'花', pinkheart:'心心' },
+  timerTitle: '今日玩幾耐？', timerMin: '分鐘', noTimer: '唔計時', lockTitle: '今日玩完喇！', lockSub: '下次再見！', allDone: '得喇', sLock: [P('今日玩完喇！', 'calm'), P('下次再見！', 'cheer')],
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -1814,7 +1871,7 @@ ko: {
   sHello: function(n){ return [P(n ? '안녕, ' + n + '!' : '안녕!', 'cheer'), P('유니콘을 눌러서 놀아요.', 'calm'), P('별을 누르면 하늘을 볼 수 있어요.', 'calm')]; },
   sSoon: function(g){ return [P(g + ', 곧 나와요!', 'cheer')]; },
   sAsk: function(t, s){ return [P('모모는 쿠키 ' + t + '개를 먹고 싶어요!', 'ask'), P('접시에 벌써 ' + s + '개 있어요.', 'calm'), P('더 올려 주세요!', 'cheer')]; },
-  sYum: function(s, a, t){ return [P('냠냠!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
+  sYum: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sCount: P('같이 세어 봐요.', 'calm'),
   sTooFew: function(n, t){ return [P('모두 ' + n + '개예요.', 'calm'), P('모모는 ' + t + '개를 먹고 싶어요.', 'calm'), P('더 올려 주세요!', 'cheer')]; },
   sTooMany: function(n, t){ return [P('모두 ' + n + '개예요.', 'calm'), P('너무 많아요!', 'oops'), P('모모는 ' + t + '개면 돼요. 조금 가져가 주세요.', 'calm')]; },
@@ -1832,7 +1889,7 @@ ko: {
   busIn: function(s){ return '버스에 벌써 달팽이 ' + s + '마리'; }, busTap: '이 달팽이를 버스에 태우기',
   sBusAsk: function(s, a){ return [P('버스에 달팽이가 ' + s + '마리 타고 있어요.', 'calm'), P(a + '마리가 더 기다리고 있어요.', 'calm'), P('눌러서 태워 주세요!', 'cheer')]; },
   sBusHowMany: [P('모두 탔어요!', 'cheer'), P('이제 버스에 달팽이가 모두 몇 마리 있나요?', 'ask')],
-  sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud'), P('빵빵!', 'cheer')]; },
+  sBusRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sBusCountOn: function(s){ return P(s + '부터 이어서 세어 봐요.', 'calm'); },
   sBusCounted: function(t){ return P('모두 ' + t + '마리!', 'calm'); },
   bravo: '잘했어요!',
@@ -1857,7 +1914,7 @@ ko: {
   switchTo: function(n){ return n + '(으)로 바꾸기'; }, addShort: '추가', holdText: '버튼을 3초 동안 누르고 있으면 아이를 추가할 수 있어요.', holdLabel: '누르기', keepHolding: '계속 누르세요…', stepOf: function(a, b){ return a + '/' + b + '단계'; }, theirName: '아이 이름이 뭐예요?', nameLabel: '이름', namePh: '아이 이름', buddyFor: function(n){ return n + '의 친구를 골라요'; }, addName: function(n){ return n + ' 추가'; }, backLabel: '뒤로',
   gAddition: '덧셈', gKinder: '유치원', moreSoon: '곧 더 많은 게임이 나와요', gCroc: '배고픈 악어', crocAlt: '악어', crocAsk: '어느 쪽에 물고기가 더 많아요?', leftSide: '왼쪽', rightSide: '오른쪽', sameBtn: '같아요', rotateHint: '휴대폰을 가로로 돌려 주세요',
   sCrocAsk: [P('악어가 너무 배고파요!', 'cheer'), P('악어는 항상 물고기가 더 많은 쪽을 먹어요. 어느 쪽을 먹을까요?', 'ask')], sCrocAsk2: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
-  sCrocRight: function(b, s){ return [P('냠!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
+  sCrocRight: function(b, s){ return [P('맞아요!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
   sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
   crocAskNum: '어느 숫자가 더 커요?', sCrocAskNum: [P('어느 숫자가 더 커요?', 'ask')],
   gTrain: '숫자 기차', trainAlt: '펭귄 기차', trainAsk: '어떤 숫자가 빠졌을까요?', trainAskDrag: '숫자를 기차에 끌어다 놓아요', trainSlot: '빈 칸', toot: '칙칙폭폭!',
@@ -1865,6 +1922,7 @@ ko: {
   gBeads: '구슬 목걸이', octoAlt: '문어', beadAsk: '다음엔 뭐가 올까요?',
   sBeadAsk: [P('목걸이를 만들어요!', 'cheer'), P('규칙을 보세요. 다음엔 뭐가 올까요?', 'ask')], sBeadAsk2: [P('다음엔 뭐가 올까요?', 'ask')], sBeadWrong: [P('음, 같이 규칙을 불러 봐요.', 'calm')], sBeadDone: [P('예뻐요!', 'cheer')],
   beadN: { heart:'하트', star:'별', orange:'오렌지', smile:'웃음', wink:'윙크', flower:'꽃', flower2:'꽃', flower3:'꽃', pinkheart:'하트' },
+  timerTitle: '오늘은 얼마나 놀까요?', timerMin: '분', noTimer: '타이머 없이', lockTitle: '오늘은 여기까지!', lockSub: '다음에 또 만나요!', allDone: '끝', sLock: [P('오늘은 여기까지!', 'calm'), P('다음에 또 만나요!', 'cheer')],
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2137,13 +2195,14 @@ function speakBtn(act, label){
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 var app = document.getElementById('app');
 var screen = 'start';
-function show(name){ screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
+function show(name){ name = playGate(name); screen = name; clearSay(); closeOverlay(); render(); window.scrollTo(0,0); }
 function render(){
   applyLang(); syncMute();
   document.body.classList.toggle('skybg', screen === 'garden');
   document.body.classList.toggle('bookbg', screen === 'book');
   document.body.classList.toggle('waterbg', screen === 'croc');
   document.body.classList.toggle('railbg', screen === 'train');
+  document.body.classList.toggle('nightbg', screen === 'locked');
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
@@ -2159,7 +2218,90 @@ function render(){
   else if (screen === 'garden') renderGarden();
   else if (screen === 'book') renderBook();
   else if (screen === 'parents') renderParents();
+  else if (screen === 'timer') renderTimer();
+  else if (screen === 'locked') renderLocked();
+  syncDaynight();
 }
+
+/* =====================================================================
+   PLAY TIMER: a grown-up picks 10 or 15 minutes (or "no timer", behind the sum gate) when a play session starts.
+   A session lasts 4 hours from when it was set; after that the app asks again.
+   When time is up the child finishes the round in progress, then the games lock. Stars and stickers stay open.
+   ===================================================================== */
+var SESSION_MS = 4 * 60 * 60 * 1000, gateFor = 'parents';
+function sessOk(){ return !!(S.sess && S.sess.start && Date.now() - S.sess.start < SESSION_MS && Date.now() >= S.sess.start); }
+function timeUp(){ return sessOk() && S.sess.end && Date.now() >= S.sess.end; }
+function startSession(mins){
+  var now = Date.now();
+  S.sess = { start: now, mins: mins, end: mins ? now + mins * 60000 : 0 };
+  save(); homeGroup = null; show('home');
+}
+/* where a request for the games really goes: the timer question first, the lock once time is up */
+function playGate(name){
+  if (name !== 'home') return name;
+  if (!sessOk()) return 'timer';
+  if (timeUp()) return 'locked';
+  return name;
+}
+function renderTimer(){
+  var relock = timeUp();
+  app.innerHTML = '<section class="screen timerscreen">' +
+    avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av"') +
+    '<h1>' + L('timerTitle') + '</h1>' +
+    '<div class="timer-opts">' +
+      '<button class="big-btn timer-btn" data-act="timer-set" data-v="10"><b>10</b><span>' + L('timerMin') + '</span></button>' +
+      '<button class="big-btn timer-btn" data-act="timer-set" data-v="15"><b>15</b><span>' + L('timerMin') + '</span></button>' +
+    '</div>' +
+    '<button class="link-btn" data-act="timer-none">' + ICON.lock + ' ' + L('noTimer') + '</button>' +
+    '</section>';
+}
+/* hand-drawn moon and stars spread around the lock screen; each star twinkles and wiggles at its own pace */
+var SKY = [ ['star1', 6, 12, 6.3], ['star6', 16, 30, 4.2], ['star1', 24, 8, 3.5], ['star2', 10, 52, 3.9], ['star6', 20, 70, 5.6], ['star1', 7, 86, 4.2], ['star3', 30, 90, 3.2],
+            ['star6', 36, 16, 3.2], ['star1', 27, 46, 3.5], ['star6', 44, 6, 4.2], ['star1', 41, 92, 4.6], ['star2', 54, 95, 3.2], ['star6', 62, 84, 5.3], ['star1', 73, 93, 3.9],
+            ['star6', 90, 9, 4.9], ['star1', 84, 28, 5.6], ['star3', 94, 44, 3.2], ['star6', 77, 46, 3.9], ['star1', 91, 64, 4.6], ['star6', 82, 76, 3.5], ['star1', 96, 88, 4.2], ['star2', 72, 22, 3.2] ];
+function nightSky(){
+  var h = '<div class="night-sky" aria-hidden="true"><img class="sky-moon" src="night/moon.png" alt="">';
+  SKY.forEach(function(st){
+    var r = Math.random;
+    h += '<img class="sky-star" src="night/' + st[0] + '.png" alt="" style="left:' + st[1] + '%;top:' + st[2] + '%;width:' + st[3] + 'vmin;' +
+      '--tw:' + (2.2 + r() * 2.6).toFixed(2) + 's;--td:' + (-r() * 4).toFixed(2) + 's;--wg:' + (3 + r() * 4).toFixed(2) + 's;--wd:' + (-r() * 5).toFixed(2) + 's;--rot:' + Math.round(r() * 40 - 20) + 'deg;--amp:' + Math.round(6 + r() * 8) + 'deg">';
+  });
+  return h + '</div>';
+}
+function renderLocked(){
+  app.innerHTML = '<section class="screen lockscreen">' +
+    nightSky() +
+    avatarFace(S.avatar).replace('class="avatar"', 'class="avatar timer-av sleepy"') +
+    '<h1>' + L('lockTitle') + '</h1><p class="lock-sub">' + L('lockSub') + '</p>' +
+    '<button class="big-btn" data-act="garden">' + ICON.star + ' ' + L('seeGarden') + '</button>' +
+    '<button class="link-btn" data-act="lock-grown">' + ICON.lock + ' ' + L('grownOnly') + '</button>' +
+    '</section>';
+  /* on narrow screens, drop any star that would sit on the text or the buttons */
+  var boxes = [].map.call(document.querySelectorAll('.lockscreen > *:not(.night-sky)'), function(e){ return e.getBoundingClientRect(); });
+  document.querySelectorAll('.sky-star').forEach(function(st){
+    var r = st.getBoundingClientRect(), pad = 6;
+    if (boxes.some(function(q){ return !(r.right < q.left - pad || r.left > q.right + pad || r.bottom < q.top - pad || r.top > q.bottom + pad); })) st.remove();
+  });
+}
+/* the little sun in the corner slowly turns into a moon as the time runs out (no numbers) */
+function syncDaynight(){
+  var el = document.getElementById('daynight');
+  var playing = sessOk() && S.sess.end && ['timer', 'locked', 'start', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0;
+  if (!playing) { if (el) el.remove(); return; }
+  if (!el) { el = document.createElement('div'); el.id = 'daynight'; el.setAttribute('aria-hidden', 'true'); el.innerHTML = '<i></i>'; document.body.appendChild(el); }
+  var p = Math.max(0, Math.min(1, (Date.now() - S.sess.start) / (S.sess.end - S.sess.start)));
+  el.style.setProperty('--p', p.toFixed(3));
+  el.classList.toggle('night', p >= 1);
+}
+function timerTick(){
+  /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads'].indexOf(screen) >= 0;
+  if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
+  if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
+  syncDaynight();
+}
+setInterval(timerTick, 5000);
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) timerTick(); });
 
 /* ---------- start (unlocks audio on first tap) ---------- */
 var askName = false;
@@ -2294,7 +2436,7 @@ function renderHome(){
       '<button class="tile writet" data-act="write"><span class="dev-badge">' + L('devBadge') + '</span>' + critter('hedgehog') + '<span class="tl">' + L('gWrite') + '</span></button>' +
     '</div></div>';
   else if (homeGroup === 'kinder') body = '<div class="games"><div class="tiles six">' +
-      '<button class="tile croct" data-act="croc">' + crocImg(false, 'pic animal croc-pic') + '<span class="tl">' + L('gCroc') + '</span></button>' +
+      '<button class="tile croct" data-act="croc">' + critter('croc-icon') + '<span class="tl">' + L('gCroc') + '</span></button>' +
       '<button class="tile traint" data-act="train">' + critter('penguin') + '<span class="tl">' + L('gTrain') + '</span></button>' +
       '<button class="tile beadt" data-act="beads">' + critter('octopus') + '<span class="tl">' + L('gBeads') + '</span></button>' +
       '<div class="tile soon-tile" aria-hidden="true"><span class="soon-plus">+</span><span class="tl">' + L('moreSoon') + '</span></div>' +
@@ -2640,7 +2782,7 @@ function trainWin(){
   G.lock = true; G.done = true;
   S.stars++; G.earned++; save();
   G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, G.bubble2Kind);
-  say([P(L('toot'), 'cheer')].concat(G.seq.map(function(v){ return P(String(v), 'count', v); })));
+  say(G.seq.map(function(v){ return P(String(v), 'count', v); }));
   /* light the cars one by one as the numbers are read, then the train pulls out to the left */
   var cars = [].slice.call(document.querySelectorAll('.tcar'));
   cars.forEach(function(c, i){ setTimeout(function(){ c.classList.add('lit'); setTimeout(function(){ c.classList.remove('lit'); }, 420); }, 700 + i * 480); });
@@ -3229,7 +3371,7 @@ function roundDone(){
   var newStripe = !madeRainbow && Math.floor(S.stars / PER_STRIPE) > Math.floor((G.startStars || 0) / PER_STRIPE);
   overlay('<div class="reward round-rw"><h1>' + L('great') + '</h1>' + (madeSpecial ? specialSticker(Math.floor(prNow.done.length / 100) - 1, 0).replace('<button', '<span').replace('</button>', '</span>') : madeRainbow ? rainbowSvg(prNow.done[prNow.done.length - 1], 99, 'pic stk') : starImg(7, 'pic')) +
     '<div class="sumcard"><div class="stars-row" aria-label="' + esc(L('stars', G.earned)) + '">' + stars + '</div><b style="font-family:var(--display);font-size:clamp(18px,3.6dvh,26px)">' + L('newFlowers', G.earned) + '</b>' + (madeRainbow ? '<b class="rainbow-news">' + (madeSpecial ? L('specialSticker') : L('madeRainbow')) + '</b>' : newStripe ? '<b class="rainbow-news">' + L('newStripe') + '</b>' : '') + '</div>' +
-    '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button><button class="big-btn" data-act="again">' + L('again') + '</button></div></div>');
+    '<div class="row two"><button class="big-btn green" data-act="garden">' + L('seeGarden') + '</button>' + (timeUp() ? '<button class="big-btn" data-act="home">' + L('allDone') + '</button>' : '<button class="big-btn" data-act="again">' + L('again') + '</button>') + '</div></div>');
   confetti();
   say(L('sGreat', G.earned).concat(madeRainbow ? [P((madeSpecial ? L('specialSticker') : L('madeRainbow')), 'cheer')] : newStripe ? [P(L('newStripe'), 'cheer')] : []));
 }
@@ -3838,7 +3980,8 @@ function startTower(){ G = { game:'tower', q:0, earned:0, startStars:S.stars }; 
 function towerQuestion(){
   var p = pickFrog();
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
-  G.R = S.maxSum <= 5 ? 6 : S.maxSum <= 10 ? 10 : 20;          /* ruler length */
+  /* ruler length: only as tall as this sum needs (in steps of 5), so the blocks and numbers stay as big as possible */
+  G.R = S.maxSum <= 5 ? 6 : Math.min(S.maxSum, Math.max(10, Math.ceil((G.t + 1) / 5) * 5));
   G.stacked = false; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.done = false; G.opts = null;
   screen = 'tower'; closeOverlay(); renderTower();
   towerAskAloud();
@@ -3862,7 +4005,7 @@ function renderTower(){
         '<i class="tw-guide" aria-hidden="true"></i>' + (G.done ? flag : '') + '</div>'
     : '<div class="twr" id="twRed">' + towerBlocks(G.s, 'r', 0) + '<span class="tw-ghost" id="twGhost" style="--a:' + G.a + '"></span></div>' +
       '<button class="twr blue" id="twBlue" aria-label="' + esc(L('towerPut')) + '">' + towerBlocks(G.a, 'b', G.s) + '</button>';
-  app.innerHTML = '<section class="screen tower">' +
+  app.innerHTML = '<section class="screen tower' + (G.R > 10 ? ' tall' : '') + '">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
     speakBtn('tower-repeat', L('hearAgain')) + '</div>' +
@@ -3892,11 +4035,11 @@ function layoutYard(){
   var half = W / 2 - side;
   var b = Math.floor(Math.min(H / (G.R + 1.6), 66)), tw;
   for (; b > 14; b--) {
-    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
-    if ((1.5 * b + tw) / 2 + 0.9 * b + tw <= half) break;
+    tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 96 : 0)));
+    if ((1.9 * b + tw) / 2 + 0.9 * b + tw <= half) break;
   }
-  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 110 : 0)));
-  if ((1.5 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.75 * b - 0.9 * b) / 1.5));
+  tw = Math.round(Math.min(W * 0.3, Math.max(b * 2.3, G.R > 10 ? 96 : 0)));
+  if ((1.9 * b + tw) / 2 + 0.9 * b + tw > half) tw = Math.max(b * 1.6, Math.floor((half - 0.95 * b - 0.9 * b) / 1.5));
   y.style.setProperty('--b', b + 'px');
   y.style.setProperty('--tw', tw + 'px');
 }
@@ -4238,7 +4381,7 @@ document.addEventListener('click', function(e){
     case 'bus-pick': busPick(+b.getAttribute('data-v')); break;
     case 'ten-repeat': tenAskAloud(); break;
     case 'tf-pick': tenPick(+b.getAttribute('data-v')); break;
-    case 'home': show('home'); break;
+    case 'home': show('home'); if (screen === 'locked') say(L('sLock')); break;
     case 'garden':
       /* remember where we came from, so Back returns there (a game in progress continues with the next question) */
       var ov = document.querySelector('.overlay');
@@ -4269,11 +4412,19 @@ document.addEventListener('click', function(e){
     case 'remove': if (e.detail === 0) removeCookie(); break; /* keyboard; pointer taps handled above */
     case 'check': check(); break;
     case 'next': next(); break;
-    case 'again': if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
-    case 'gate': gate(); break;
+    case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else startRound(); break;
+    case 'gate': gateFor = 'parents'; gate(); break;
+    case 'timer-set': startSession(+b.getAttribute('data-v')); break;
+    case 'timer-none': gateFor = 'notimer'; gate(); break;
+    case 'lock-grown': gateFor = 'unlock'; gate(); break;
     case 'close': closeOverlay(); break;
     case 'gate-ans':
-      if (b.getAttribute('data-ok') === '1') { resetArmed = false; ptab = 'progress'; show('parents'); }
+      if (b.getAttribute('data-ok') === '1') {
+        if (gateFor === 'notimer') { closeOverlay(); startSession(0); }
+        else if (gateFor === 'unlock') { S.sess = null; save(); show('home'); }   /* a grown-up unlocks: choose a new timer */
+        else { resetArmed = false; ptab = 'progress'; show('parents'); }
+      }
       else { var gbox = b.closest('.gate'); if (gbox) { gbox.classList.remove('nope'); void gbox.offsetWidth; gbox.classList.add('nope'); } if (navigator.vibrate) try { navigator.vibrate(80); } catch(e) {} }   /* wrong: shake, stay open */
       break;
     case 'ptab': ptab = b.getAttribute('data-v'); resetArmed = false; renderParents(); break;
