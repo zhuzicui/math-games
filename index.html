@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.034442">
+<meta name="build" content="2026-11-13.035621">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1011,7 +1011,8 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 .same-btn.picked{border-color:#F2C640;background:#FFF4CC;box-shadow:0 5px 0 #C99E1E}
 .water.nope,.same-btn.nope{animation:nope .5s}
 /* the croc turns to look at the chosen side (individual properties, so its paddling animation keeps going) */
-.croc-img{transition:transform .3s,scale .35s cubic-bezier(.3,1.4,.5,1),rotate .35s}
+/* the turn itself is instant (animating the flip squashes the croc to a sliver); only the little tilt eases in */
+.croc-img{transition:transform .3s,rotate .35s cubic-bezier(.3,1.4,.5,1)}
 .croc-img.look-l{scale:-1 1;rotate:4deg}
 .croc-img.look-r{rotate:-4deg}
 .crocgame .donebtn{width:auto;min-width:clamp(120px,16vw,200px);font-size:clamp(22px,4.5dvh,32px);min-height:clamp(46px,8dvh,72px);padding:0 26px}
