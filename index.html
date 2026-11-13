@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.035621">
+<meta name="build" content="2026-11-13.194355">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -652,9 +652,8 @@ html:lang(zh-HK) body,html:lang(zh-HK) .parents{font-family:Nunito,'Chiron GoRou
 .facts.many .h{font-size:clamp(8px,min(1.8vw,1.3dvh),12px)}
 .settings .field{min-width:0}
 .settings .field{container-type:inline-size}
-.settings .seg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
-.settings .seg4 button{white-space:nowrap;padding:0 4px}
-@container (max-width:440px){ .settings .seg4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.settings .seg6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.settings .seg6 button{white-space:nowrap;padding:0 4px}
 @media (max-width:520px){ .momo-row .bubbles{max-width:58vw} .momo-row .bubbles .bubble b{white-space:normal} }
 .reward .sumcard{background:none;border:0;box-shadow:none;padding:0}
 .reward .row:not(.two) .chip-btn{cursor:pointer;font-family:var(--display);font-weight:800;color:var(--ink);font-size:clamp(22px,4.6dvh,30px)}
@@ -790,8 +789,8 @@ img.stk{object-fit:contain}
 .seg button{border:0 !important;background:transparent;min-height:38px;border-radius:999px;color:var(--ink)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .seg button:disabled{opacity:.35}
-.settings .seg4{gap:4px}
-@container (max-width:440px){ .settings .seg4{border-radius:26px} .settings .seg4 button{border-radius:20px} }
+.settings .seg6{gap:4px}
+.settings .seg6{border-radius:26px} .settings .seg6 button{border-radius:20px}
 .settings .field.off .lab{opacity:.45}
 @keyframes nope{0%,100%{transform:translateX(0)}15%{transform:translateX(-14px)}30%{transform:translateX(12px)}45%{transform:translateX(-9px)}60%{transform:translateX(7px)}75%{transform:translateX(-4px)}90%{transform:translateX(2px)}}
 .gate.nope{animation:nope .45s ease-out}
@@ -1338,6 +1337,29 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 @media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
 .upgame .bubble{background:rgba(255,252,247,.96)}
 @media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
+
+/* ===== boxes of 10 (Feed the Unicorn at 50 / 100) ===== */
+.cookie.tenbox{--box:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 52'><rect x='1.5' y='1.5' width='109' height='49' rx='11' fill='%23D8EAF6' stroke='%233B78A0' stroke-width='3'/><circle cx='12' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='34' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='56' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='78' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='100' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='12' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='34' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='56' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='78' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='100' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/></svg>");border-radius:12px;border:0;background:var(--box) center / 100% 100% no-repeat;aspect-ratio:112 / 52;filter:drop-shadow(0 2px 1px rgba(90,62,51,.18))}
+.cookie.tenbox.start{--box:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 52'><rect x='1.5' y='1.5' width='109' height='49' rx='11' fill='%23FBE0D9' stroke='%23B5604A' stroke-width='3'/><circle cx='12' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='34' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='56' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='78' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='100' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='12' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='34' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='56' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='78' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='100' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/></svg>")}
+.table .loose .cookie.tenbox,.ghost.tenbox{width:calc(var(--ck) * 2.2);height:calc(var(--ck) * 1.02);max-width:none}
+.table .plate.big{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:center;justify-content:center;gap:6px;grid-template-columns:none}
+.plate.big .pboxes{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:6px;width:100%}
+.plate.big .pones{display:grid;grid-template-columns:repeat(5,var(--psc,28px));gap:6px;justify-content:center;position:relative}
+.plate.big .pones.ring{outline:4px dashed var(--butter,#F7D98C);outline-offset:4px;border-radius:14px}
+.table .plate.big .tenbox{width:var(--pbw,60px);height:auto;max-width:none}
+.table .plate.big .pones .cookie{width:var(--psc,28px);max-width:none}
+.cookie.tenbox.counted{background:#FFF1C9;border:4px solid var(--edge-c);box-shadow:0 0 0 5px var(--butter);filter:none}
+.cookie.tenbox .num{font-size:calc(var(--ck) * .6)}
+.flying.tenbox{aspect-ratio:auto}
+.groups .g .cookie.tenbox{width:calc(var(--ck) * 2.2);height:calc(var(--ck) * 1.02);max-width:none}
+
+.skills{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.skills li{display:flex;align-items:center;gap:12px}
+.skills .sk-t{flex:none;min-width:64px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.skills .sk-n{display:flex;flex-direction:column;line-height:1.2;text-align:left}
+.skills .sk-n b{font-size:18px}
+.skills .sk-n small{font-size:15px;opacity:.7;font-weight:700}
+.pad.tenpad::after{content:'';position:absolute;inset:-5px;border:4px solid #E8B923;border-radius:50%;pointer-events:none}
 </style>
 <!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -1478,6 +1500,7 @@ en: {
   sBusNow: function(s, a){ return [P(s === 1 ? 'There was 1 snail on the bus.' : 'There were ' + s + ' snails on the bus.', 'calm'), P(a === 1 ? '1 more got on.' : a + ' more got on.', 'calm'), P('How many snails are on the bus now?', 'ask')]; },
   frogAlt: 'Hop the frog', frogWhere: 'Where will I land?', frogLanded: function(t){ return 'I landed on ' + t + '!'; },
   sFrogAsk: function(s, a){ return [P('I’m on ' + s + '.', 'calm'), P('I’ll hop ' + a + (a === 1 ? ' time.' : ' times.'), 'calm'), P('Tap where I’ll land!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('I’m on ' + s + '.', 'calm'), P('I’ll hop ' + k + (k === 1 ? ' time,' : ' times,') + ' 10 each time.', 'calm'), P('Tap where I’ll land!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('I landed on ' + t + '.', 'calm'), P('Try again!', 'cheer')]; },
   specialSticker: 'Special sticker!',
@@ -1516,6 +1539,8 @@ en: {
   sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
   gUp: 'Up and Away', upAlt: 'Sheep', upOne: 'Balloon', upAsk: 'Tap each balloon to let it go!', upHow: 'How many balloons?',
   sUpAsk: [P('Look! The sheep is flying!', 'cheer'), P('Tap each balloon to let it go, and count.', 'ask')], sUpAsk2: [P('Tap each balloon to count.', 'ask')], sUpRight: function(n){ return [P('Yes!', 'cheer'), P(n + ' balloons!', 'proud')]; },
+  skTitle: 'Bigger numbers', skTens: 'Whole tens', skTensOnes: 'Tens and ones', skAddTen: 'Add a ten', skAddOnes: 'Add ones', skCross: 'Cross a ten',
+  tenBox: '10 cookies make a box!', boxOf10: 'Box of 10 cookies',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1589,6 +1614,7 @@ fr: {
   sBusNow: function(s, a){ return [P('Il y avait ' + s + ' ' + pl(s, 'escargot', 'escargots') + ' dans le bus.', 'calm'), P(a === 1 ? 'Un autre est monté.' : 'Encore ' + a + ' sont montés.', 'calm'), P('Combien d’escargots dans le bus maintenant ?', 'ask')]; },
   frogAlt: 'Hop la grenouille', frogWhere: 'Où vais-je atterrir\u00a0?', frogLanded: function(t){ return 'Je suis sur ' + t + '\u00a0!'; },
   sFrogAsk: function(s, a){ return [P('Je suis sur le ' + s + '.', 'calm'), P(a === 1 ? 'Je fais 1 saut.' : 'Je fais ' + a + ' sauts.', 'calm'), P('Touche le nénuphar où je vais atterrir !', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('Je suis sur le ' + s + '.', 'calm'), P(k === 1 ? 'Je fais 1 saut de 10.' : 'Je fais ' + k + ' sauts de 10.', 'calm'), P('Touche le nénuphar où je vais atterrir !', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
   sFrogWrong: function(t){ return [P('Je suis arrivée sur le ' + t + '.', 'calm'), P('Essaie encore !', 'cheer')]; },
   specialSticker: 'Autocollant spécial\u00a0!',
@@ -1627,6 +1653,8 @@ fr: {
   sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
   gUp: 'Haut dans le ciel', upAlt: 'Mouton', upOne: 'Ballon', upAsk: 'Touche chaque ballon pour le lâcher !', upHow: 'Combien de ballons ?',
   sUpAsk: [P('Regarde ! Le mouton vole !', 'cheer'), P('Touche chaque ballon pour le lâcher, et compte.', 'ask')], sUpAsk2: [P('Touche chaque ballon pour compter.', 'ask')], sUpRight: function(n){ return [P('Oui !', 'cheer'), P(n + ' ballons !', 'proud')]; },
+  skTitle: 'Grands nombres', skTens: 'Dizaines entières', skTensOnes: 'Dizaines et unités', skAddTen: 'Ajouter une dizaine', skAddOnes: 'Ajouter des unités', skCross: 'Passer la dizaine',
+  tenBox: '10 biscuits font une boîte !', boxOf10: 'Boîte de 10 biscuits',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1700,6 +1728,7 @@ es: {
   sBusNow: function(s, a){ return [P(s === 1 ? 'Había 1 caracol en el autobús.' : 'Había ' + s + ' caracoles en el autobús.', 'calm'), P(a === 1 ? 'Subió 1 más.' : 'Subieron ' + a + ' más.', 'calm'), P('¿Cuántos caracoles hay ahora en el autobús?', 'ask')]; },
   frogAlt: 'Hop, la rana', frogWhere: '¿Dónde voy a caer?', frogLanded: function(t){ return '¡Caí en el ' + t + '!'; },
   sFrogAsk: function(s, a){ return [P('Estoy en el ' + s + '.', 'calm'), P(a === 1 ? 'Voy a dar 1 salto.' : 'Voy a dar ' + a + ' saltos.', 'calm'), P('¡Toca el nenúfar donde voy a caer!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('Estoy en el ' + s + '.', 'calm'), P(k === 1 ? 'Voy a dar 1 salto de 10.' : 'Voy a dar ' + k + ' saltos de 10.', 'calm'), P('¡Toca el nenúfar donde voy a caer!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('Caí en el ' + t + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; },
   specialSticker: '¡Pegatina especial!',
@@ -1738,6 +1767,8 @@ es: {
   sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
   gUp: '¡Arriba y lejos!', upAlt: 'Oveja', upOne: 'Globo', upAsk: '¡Toca cada globo para soltarlo!', upHow: '¿Cuántos globos hay?',
   sUpAsk: [P('¡Mira! ¡La oveja está volando!', 'cheer'), P('Toca cada globo para soltarlo, y cuenta.', 'ask')], sUpAsk2: [P('Toca cada globo para contar.', 'ask')], sUpRight: function(n){ return [P('¡Sí!', 'cheer'), P('¡' + n + ' globos!', 'proud')]; },
+  skTitle: 'Números más grandes', skTens: 'Decenas completas', skTensOnes: 'Decenas y unidades', skAddTen: 'Sumar una decena', skAddOnes: 'Sumar unidades', skCross: 'Pasar a la siguiente decena',
+  tenBox: '¡10 galletas hacen una caja!', boxOf10: 'Caja de 10 galletas',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1811,6 +1842,7 @@ zh: {
   sBusNow: function(s, a){ return [P('车上原来有' + s + '只小蜗牛。', 'calm'), P('又上来了' + a + '只。', 'calm'), P('现在车上一共有几只？', 'ask')]; },
   frogAlt: '青蛙跳跳', frogWhere: '我会跳到哪里？', frogLanded: function(t){ return '我跳到了' + t + '！'; },
   sFrogAsk: function(s, a){ return [P('我在' + s + '上。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('点一点我会落在哪片荷叶上！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('我在' + s + '上。', 'calm'), P('我要跳' + k + '下，每下跳10。', 'calm'), P('点一点我会落在哪片荷叶上！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳到了' + t + '。', 'calm'), P('再试一次！', 'cheer')]; },
   specialSticker: '特别贴纸！',
@@ -1849,6 +1881,8 @@ zh: {
   sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
   gUp: '气球飞呀飞', upAlt: '小羊', upOne: '气球', upAsk: '点一点气球，让它飞走！', upHow: '一共有几个气球？',
   sUpAsk: [P('看！小羊飞起来啦！', 'cheer'), P('点一点每个气球，让它飞走，数一数。', 'ask')], sUpAsk2: [P('点一点每个气球，数一数。', 'ask')], sUpRight: function(n){ return [P('对啦！', 'cheer'), P(n + '个气球！', 'proud')]; },
+  skTitle: '更大的数', skTens: '整十数', skTensOnes: '几十几', skAddTen: '加一个十', skAddOnes: '加个位数', skCross: '进位',
+  tenBox: '10块饼干装成一盒！', boxOf10: '一盒10块饼干',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1922,6 +1956,7 @@ ja: {
   sBusNow: function(s, a){ return [P('バスに かたつむりが ' + s + 'ひき のっていたよ。', 'calm'), P('あと ' + a + 'ひき のったよ。', 'calm'), P('いま バスには なんびき いるかな？', 'ask')]; },
   frogAlt: 'カエルの ホップ', frogWhere: 'どこに つくかな？', frogLanded: function(t){ return t + 'に ついたよ！'; },
   sFrogAsk: function(s, a){ return [P('いま ' + s + 'に いるよ。', 'calm'), P(a + 'かい ジャンプするよ。', 'calm'), P('どの はっぱに つくか タップしてね！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('いま ' + s + 'に いるよ。', 'calm'), P(k + 'かい ジャンプするよ。1かいで 10 すすむよ。', 'calm'), P('どの はっぱに つくか タップしてね！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + 'に ついたよ。', 'calm'), P('もういちど やってみよう！', 'cheer')]; },
   specialSticker: 'とくべつな シール！',
@@ -1960,6 +1995,8 @@ ja: {
   sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
   gUp: 'ふうせん ふわふわ', upAlt: 'ひつじ', upOne: 'ふうせん', upAsk: 'ふうせんを タッチして とばしてね！', upHow: 'ふうせんは いくつ？',
   sUpAsk: [P('みて！ ひつじが とんでるよ！', 'cheer'), P('ふうせんを ひとつずつ タッチして かぞえてね。', 'ask')], sUpAsk2: [P('ふうせんを タッチして かぞえてね。', 'ask')], sUpRight: function(n){ return [P('せいかい！', 'cheer'), P('ふうせんは ' + n + 'こ！', 'proud')]; },
+  skTitle: 'おおきい かず', skTens: 'ちょうどの 10', skTensOnes: '10と 1', skAddTen: '10を たす', skAddOnes: '1を たす', skCross: 'くりあがり',
+  tenBox: 'クッキー10こで 1はこ！', boxOf10: 'クッキー10この はこ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -2033,6 +2070,7 @@ yue: {
   sBusNow: function(s, a){ return [P('車上本來有' + s + '隻蝸牛。', 'calm'), P('再上咗' + a + '隻。', 'calm'), P('而家車上一共有幾多隻？', 'ask')]; },
   frogAlt: '青蛙跳跳', frogWhere: '我會跳到邊度？', frogLanded: function(t){ return '我跳咗去' + t + '！'; },
   sFrogAsk: function(s, a){ return [P('我喺' + s + '度。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('撳吓我會跳到邊塊荷葉！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('我喺' + s + '度。', 'calm'), P('我要跳' + k + '下，每下跳10。', 'calm'), P('撳吓我會跳到邊塊荷葉！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳咗去' + t + '。', 'calm'), P('再試多次！', 'cheer')]; },
   specialSticker: '特別貼紙！',
@@ -2071,6 +2109,8 @@ yue: {
   sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
   gUp: '氣球飛呀飛', upAlt: '小羊', upOne: '氣球', upAsk: '撳下氣球，等佢飛走！', upHow: '一共有幾多個氣球？',
   sUpAsk: [P('睇下！小羊飛起咗！', 'cheer'), P('撳下每個氣球，等佢飛走，數一數。', 'ask')], sUpAsk2: [P('撳下每個氣球，數一數。', 'ask')], sUpRight: function(n){ return [P('啱喇！', 'cheer'), P(n + '個氣球！', 'proud')]; },
+  skTitle: '更大嘅數', skTens: '整十數', skTensOnes: '幾十幾', skAddTen: '加一個十', skAddOnes: '加個位數', skCross: '進位',
+  tenBox: '10塊餅乾裝成一盒！', boxOf10: '一盒10塊餅乾',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -2144,6 +2184,7 @@ ko: {
   sBusNow: function(s, a){ return [P('버스에 달팽이가 ' + s + '마리 있었어요.', 'calm'), P(a + '마리가 더 탔어요.', 'calm'), P('이제 버스에 모두 몇 마리 있나요?', 'ask')]; },
   frogAlt: '개구리 폴짝이', frogWhere: '어디에 도착할까요?', frogLanded: function(t){ return t + '에 도착했어요!'; },
   sFrogAsk: function(s, a){ return [P('나는 ' + s + '에 있어요.', 'calm'), P(a + '번 뛸 거예요.', 'calm'), P('어느 연잎에 도착할지 눌러 보세요!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('나는 ' + s + '에 있어요.', 'calm'), P(k + '번 뛸 거예요. 한 번에 10씩 가요.', 'calm'), P('어느 연잎에 도착할지 눌러 보세요!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + '에 도착했어요.', 'calm'), P('다시 해 봐요!', 'cheer')]; },
   specialSticker: '특별 스티커!',
@@ -2182,6 +2223,8 @@ ko: {
   sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
   gUp: '풍선 타고 둥실', upAlt: '양', upOne: '풍선', upAsk: '풍선을 눌러서 날려 보내요!', upHow: '풍선이 몇 개일까요?',
   sUpAsk: [P('봐요! 양이 날고 있어요!', 'cheer'), P('풍선을 하나씩 눌러 날려 보내며 세어 보세요.', 'ask')], sUpAsk2: [P('풍선을 눌러서 세어 보세요.', 'ask')], sUpRight: function(n){ return [P('맞아요!', 'cheer'), P('풍선 ' + n + '개!', 'proud')]; },
+  skTitle: '더 큰 수', skTens: '딱 떨어지는 십', skTensOnes: '십과 일', skAddTen: '십 더하기', skAddOnes: '일 더하기', skCross: '받아올림',
+  tenBox: '쿠키 10개가 한 상자!', boxOf10: '쿠키 10개 상자',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -2774,14 +2817,14 @@ function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" sr
 /* each round of 5 mixes kinds of question: 'easy' (clear difference), 'close' (1-2 apart, fish sizes that mislead),
    'num' (just two numbers; the fish appear only if the child needs to count), 'eq' (same on both sides) */
 function crocPlan(){
-  var small = S.maxSum <= 5, rest = small ? ['easy', 'num', 'easy'] : ['close', 'num', 'close'];
+  var small = MX() <= 5, rest = small ? ['easy', 'num', 'easy'] : ['close', 'num', 'close'];
   rest.push(Math.random() < 0.6 ? 'eq' : (small ? 'easy' : 'easy'));
   rest.sort(function(){ return Math.random() - 0.5; });
   return ['easy'].concat(rest);
 }
 function startCroc(){ G = { game:'croc', q:0, earned:0, startStars:S.stars, plan:crocPlan() }; crocQuestion(); }
 function crocNumbers(kind){
-  var small = S.maxSum <= 5, max = Math.min(20, S.maxSum || 5), a, b, n = 0;
+  var small = MX() <= 5, max = Math.min(20, MX() || 5), a, b, n = 0;
   function r(lo){ return lo + Math.floor(Math.random() * (max - lo + 1)); }
   if (kind === 'eq') { a = r(2); return [a, a]; }
   do {
@@ -2821,7 +2864,7 @@ function crocQuestion(){
   G.kind = kind; G.mode = kind === 'num' ? 'num' : 'fish'; G.reveal = false;
   G.l = p[0]; G.r = p[1]; G.first = true; G.lock = false; G.done = null; G.bubble2 = '';
   /* close calls give the smaller side the bigger fish, so children count instead of judging by size */
-  var trick = kind === 'close' || (S.maxSum > 5 && kind !== 'num' && Math.random() < 0.3);
+  var trick = kind === 'close' || (MX() > 5 && kind !== 'num' && Math.random() < 0.3);
   G.fishL = pondFish(G.l, trick ? G.l < G.r : Math.random() < 0.5, 'L');
   G.fishR = pondFish(G.r, trick ? G.r < G.l : Math.random() < 0.5, 'R');
   screen = 'croc'; closeOverlay(); renderCroc();
@@ -2940,15 +2983,34 @@ function showCrocReward(){
 var PG_POS = { 1:{ l:7.7, w:80.0, b:39.9 }, 2:{ l:14.3, w:78.1, b:53.3 }, 3:{ l:-6.2, w:110.4, b:44.3 } };
 function trainImg(cls){ return '<img class="' + (cls || 'loco') + '" src="train/loco.png" alt="' + esc(L('trainAlt')) + '" draggable="false">'; }
 function trainPlan(){
-  var small = S.maxSum <= 5;
+  var small = MX() <= 5;
   return [{ m:'tap', g:1 }, { m:'tap', g:1 }, { m:'drag', g:small ? 1 : 2 }, { m:'drag', g:2 }, { m:'drag', g:small ? 2 : 3 }];
 }
 function startTrain(){ G = { game:'train', q:0, earned:0, startStars:S.stars, plan:trainPlan() }; trainQuestion(); }
 function shuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+/* 50 / 100: count by tens (20, 30, 40...), count by tens from 24 (24, 34, 44...), then count by ones up to and across a ten */
+function trainBig(q){
+  var cap = BIG(), by = q < 2 ? 10 : q === 2 ? 1 : 1, start, n = 6, i, seq = [];
+  if (q < 2) {
+    var u = q === 0 ? 0 : rint(1, 9), k0 = q === 0 ? 1 : rint(1, 2);       /* q0: 10, 20, ...   q1: 24, 34, ... */
+    var room = Math.floor((cap - u) / 10) - k0 + 1;                        /* cars that fit under the cap */
+    n = Math.max(4, Math.min(6, room)); k0 = Math.max(q === 0 ? 1 : 0, Math.min(k0 + rint(0, Math.max(0, room - n)), Math.floor((cap - u) / 10) - n + 1));
+    start = u + 10 * k0;
+    for (i = 0; i < n; i++) seq.push(start + 10 * i);
+  } else if (q === 2) {                                            /* inside one ten: 31 ... 36 (never crosses) */
+    var t0 = 10 * rint(1, Math.floor(cap / 10) - 1); start = t0 + rint(1, 4);
+    for (i = 0; i < n; i++) seq.push(start + i);
+  } else {                                                         /* across a ten: 37 38 39 40 41 42 */
+    var t1 = 10 * rint(2, Math.floor(cap / 10) - 1); start = t1 - rint(2, 4);
+    for (i = 0; i < n; i++) seq.push(start + i);
+  }
+  return { seq: seq, by: by };
+}
 function trainQuestion(){
-  var step = G.plan[G.q] || { m:'tap', g:1 }, small = S.maxSum <= 5;
-  var max = Math.min(20, S.maxSum || 5), n = small ? 5 : 6, start = small ? 1 : 1 + Math.floor(Math.random() * (max - 5));
-  var seq = []; for (var i = 0; i < n; i++) seq.push(start + i);
+  var step = G.plan[G.q] || { m:'tap', g:1 }, small = MX() <= 5, big = isBig();
+  var max = Math.min(20, MX() || 5), n = small ? 5 : 6, start = small ? 1 : 1 + Math.floor(Math.random() * (max - 5));
+  var seq = [], bg = big ? trainBig(G.q) : null; G.big = big;
+  if (big) { seq = bg.seq; n = seq.length; } else for (var i = 0; i < n; i++) seq.push(start + i);
   /* gaps: never two side by side; the very first question keeps the first car, so counting starts easy */
   var gaps, tries = 0;
   do {
@@ -2962,8 +3024,13 @@ function trainQuestion(){
   /* more cards to choose from as the round goes on: 4, 5, 5, 6, 6 */
   var total = [4, 5, 5, 6, 6][G.q] || 5;
   var pool = [], lo = Math.max(0, seq[0] - 3), hi = Math.min(Math.max(max, seq[n - 1] + 2), seq[n - 1] + 3);
-  for (var v = lo; v <= hi; v++) if (missing.indexOf(v) < 0) pool.push(v);
-  pool.sort(function(a, b){ return Math.abs(a - missing[0]) - Math.abs(b - missing[0]) + (Math.random() - 0.5) * 2.5; });
+  if (big && bg.by === 10) {                                      /* look-alikes: the next ten along, and off by one */
+    missing.forEach(function(m){ [m - 10, m + 10, m - 20, m + 20, m - 1, m + 1, m + 11, m - 9].forEach(function(v){ if (v > 0 && v <= BIG() && seq.indexOf(v) < 0 && missing.indexOf(v) < 0 && pool.indexOf(v) < 0) pool.push(v); }); });
+  } else {
+    if (big) { lo = Math.max(1, seq[0] - 3); hi = Math.min(BIG(), seq[n - 1] + 3); }
+    for (var v = lo; v <= hi; v++) if (missing.indexOf(v) < 0) pool.push(v);
+  }
+  if (big && bg.by === 10) shuffle(pool); else pool.sort(function(a, b){ return Math.abs(a - missing[0]) - Math.abs(b - missing[0]) + (Math.random() - 0.5) * 2.5; });
   var extra = pool.slice(0, Math.max(1, total - missing.length));
   var pg = [], last = 0;
   for (var c = 0; c < n; c++) { var p; do { p = 1 + Math.floor(Math.random() * 3); } while (p === last); pg.push(p); last = p; }
@@ -3486,7 +3553,7 @@ function birdDir(k){ var a = G.art[k]; return BIRD_FACE[a[0]] * (a[1] ? -1 : 1);
 function birdPlan(){ return shuffle([['watch', 1], ['watch', -1]]).concat(shuffle([['guess', 1], ['guess', -1]])).concat([['guess', Math.random() < 0.5 ? 1 : -1]]); }
 function startBirds(){ G = { game:'birds', q:0, earned:0, startStars:S.stars, plan:birdPlan() }; birdQuestion(); }
 function birdQuestion(){
-  var step = G.plan[G.q] || ['watch', 1], max = Math.min(20, S.maxSum || 5), d = step[1], n, tries = 0;
+  var step = G.plan[G.q] || ['watch', 1], max = Math.min(20, MX() || 5), d = step[1], n, tries = 0;
   do { n = d > 0 ? 1 + Math.floor(Math.random() * (max - 1)) : 2 + Math.floor(Math.random() * (max - 1)); } while (n === G.prevN && ++tries < 20);
   G.prevN = n;
   G.mode = step[0]; G.d = d; G.n = n; G.t = n + d; G.moved = false; G.asked = false;
@@ -3800,7 +3867,7 @@ function sheepImg(cls){ return '<img class="' + (cls || 'up-host') + '" src="ani
 function startUp(){ G = { game:'up', q:0, earned:0, startStars:S.stars }; upQuestion(); }
 function upQuestion(){
   /* difficulty goes up and down a little: easy, medium, easier, hard, medium-hard (as a share of the kid's max, up to 20) */
-  var max = Math.max(3, Math.min(20, S.maxSum || 5)), q = G.q, R = [[.25, .4], [.5, .65], [.35, .5], [.75, 1], [.55, .8]][q] || [.3, .5];
+  var max = Math.max(3, Math.min(20, MX() || 5)), q = G.q, R = [[.25, .4], [.5, .65], [.35, .5], [.75, 1], [.55, .8]][q] || [.3, .5];
   var lo = Math.max(3, Math.round(max * R[0])), hi = Math.max(lo, Math.round(max * R[1])), n, tries = 0;
   do { n = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (n === G.prevN && hi > lo && ++tries < 12);
   G.prevN = n;
@@ -3966,6 +4033,33 @@ function upPick(v){
 /* ---------- game ---------- */
 var G = null;
 var ROUND = 5;
+/* Big numbers (up to 50 / 100). MX() is what games not yet upgraded see: always at most 20.
+   BIG() is the real setting. Upgraded games call bigPlan() for their level ramp. */
+function MX(){ return Math.min(20, S.maxSum || 5); }
+function BIG(){ return S.maxSum || 5; }
+function isBig(){ return BIG() > 20; }
+function bigStep(q){ return ['tens', 'tensones', 'addten', 'addones', 'cross'][Math.max(0, Math.min(4, q))]; }
+function rint(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+/* Feed the Unicorn at 50 / 100: start a, add b, with b made of boxes of 10 and loose cookies. */
+function bigSum(q, cap){
+  cap = cap || BIG();
+  var kind = bigStep(q), t = Math.floor(cap / 10), a, b, x, y, u;
+  if (kind === 'tens') { x = rint(1, t - 2); y = rint(1, t - 1 - x); return { kind: kind, a: 10 * x, b: 10 * y }; }
+  if (kind === 'tensones') { x = rint(1, t - 2); u = rint(1, 9); y = rint(1, t - 1 - x); return { kind: kind, a: 10 * x + u, b: 10 * y }; }
+  var p = bigPlan(q, cap); return { kind: p.kind, a: p.a, b: p.b };
+}
+/* One question for round position q (0..4) with answers up to cap (50 or 100).
+   kind: tens (30), tensones (34), addten (34+10), addones (34+5, same ten), cross (38+5, next ten).
+   Returns {kind, n} for counting games and {kind, a, b, n:a+b} for sum games. */
+function bigPlan(q, cap){
+  cap = cap || BIG();
+  var kind = bigStep(q), t = Math.floor(cap / 10), a, b, u;
+  if (kind === 'tens') { a = 10 * rint(2, t); return { kind: kind, a: a, b: 0, n: a }; }
+  if (kind === 'tensones') { u = rint(1, 9); a = 10 * rint(1, t - 1) + u; return { kind: kind, a: a, b: 0, n: a }; }
+  if (kind === 'addten') { u = rint(0, 9); a = 10 * rint(1, t - 2) + u; return { kind: kind, a: a, b: 10, n: a + 10 }; }
+  if (kind === 'addones') { u = rint(1, 4); a = 10 * rint(1, t - 1) + u; b = rint(1, 9 - u); return { kind: kind, a: a, b: b, n: a + b }; }
+  u = rint(5, 9); a = 10 * rint(1, t - 2) + u; b = rint(10 - u + 1, 9); return { kind: 'cross', a: a, b: b, n: a + b };
+}
 function factKey(s, a){ return s + '+' + a; }
 function factState(s, a){
   var f = S.facts[factKey(s, a)];
@@ -3979,7 +4073,7 @@ function allFacts(max){
   return out;
 }
 function pickFact(){
-  var list = allFacts(S.maxSum).filter(function(p){ return S.maxSum <= 10 || p[1] <= 9; }), bag = [];
+  var list = allFacts(MX()).filter(function(p){ return MX() <= 10 || p[1] <= 9; }), bag = [];
   list.forEach(function(p){
     var st = factState(p[0], p[1]);
     var w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
@@ -3990,19 +4084,50 @@ function pickFact(){
 }
 function startRound(){ G = { q:0, earned:0, startStars:S.stars }; newQuestion(); }
 function newQuestion(){
-  var p = pickFact();
+  var big = isBig(), p;
+  if (big) { var bp = bigSum(G.q, BIG()); p = [bp.a, bp.b]; G.kind = bp.kind; } else p = pickFact();
+  G.big = big; G.vals = null; G.carry = false;
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1];
   G.last = factKey(G.s, G.a);
-  G.added = 0; G.jarCount = S.maxSum <= 10 ? Math.min(G.a + 2, 12 - G.s) : Math.min(G.a + 2, 11); G.first = true; G.lock = false; G.mood = 'hungry';
+  G.added = 0;
+  if (big) bigJar(); else G.jarCount = MX() <= 10 ? Math.min(G.a + 2, 12 - G.s) : Math.min(G.a + 2, 11);
+  G.first = true; G.lock = false; G.mood = 'hungry';
   G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
   G.bubble2 = '';
   screen = 'play'; closeOverlay(); renderPlay();
   askAloud();
 }
+function bigJar(){
+  var nb = Math.floor(G.a / 10), no = G.a % 10, boxes = G.kind === 'tens' || G.kind === 'tensones' || G.kind === 'addten' ? nb + 1 : 1, ones = no + 2, v = [], i;
+  if (G.kind === 'tens' || G.kind === 'tensones') ones = 2;
+  for (i = 0; i < boxes; i++) v.push(10);
+  for (i = 0; i < ones; i++) v.push(1);
+  G.vals = v; G.jarCount = v.length;
+}
+function onesRaw(){ var n = G.s % 10; G.stack.forEach(function(sp){ if (G.vals[sp] === 1) n++; }); return n; }
+function addedVal(){ var n = 0; G.stack.forEach(function(sp){ n += G.vals ? G.vals[sp] : 1; }); return n; }
+function bigPlateHtml(popLast){
+  var T = total(), B = Math.floor(T / 10), sOnes = G.s % 10, raw = onesRaw(), ones, carried = raw >= 10 && !G.carry;
+  if (G.carry) { B -= Math.floor(raw / 10); ones = raw; } else ones = T % 10;
+  var redBoxes = Math.floor(G.s / 10), redOnes = carried ? 0 : Math.min(sOnes, ones), h = '', i;
+  var lastBox = G.stack.length && G.vals[G.stack[G.stack.length - 1]] === 10;
+  h += '<div class="pboxes">';
+  for (i = 0; i < B; i++) {
+    var pop = (popLast === 'carry' && i === B - 1) || (popLast === true && lastBox && i === B - 1) ? ' pop' : '';
+    if (i < redBoxes) h += '<span class="cookie tenbox start" role="img" aria-label="' + esc(L('boxOf10')) + '"></span>';
+    else h += '<button class="cookie tenbox' + pop + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"></button>';
+  }
+  h += '</div><div class="pones' + (G.carry ? ' ring' : '') + '">';
+  for (i = 0; i < ones; i++) {
+    if (i < redOnes) h += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
+    else h += '<button class="cookie' + (popLast === true && !lastBox && i === ones - 1 ? ' pop' : '') + '" style="' + blueFace(i) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
+  }
+  return h + '</div>';
+}
 function askAloud(){
   say(L('sAsk', G.t, G.s));
 }
-function total(){ return G.s + G.added; }
+function total(){ return G.s + addedVal(); }
 function setBubble2(t, kind){
   var box = document.getElementById('bubble2Box'), b = document.getElementById('bubble2'); if (!box || !b) return;
   b.textContent = t || '\u00a0';
@@ -4033,19 +4158,23 @@ function updatePlay(popLast){
   document.getElementById('bubble').textContent = L('feedMe', G.t);
   setBubble2(G.bubble2);
   var plate = '';
+  var pl0 = document.getElementById('plate'); if (pl0) pl0.classList.toggle('big', !!G.big);
+  if (G.big) plate = bigPlateHtml(popLast); else {
   for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
   for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" style="' + blueFace(G.stack[j]) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
+  }
   document.getElementById('plate').innerHTML = plate;
   var jar = '';
   for (var k = 0; k < G.jarCount; k++) if (!G.taken[k]) {
     var ps = G.pos && G.pos[k];
-    jar += '<button class="cookie' + (popLast === 'back' && G.lastBack === k ? ' pop' : '') + '" data-jar="1" data-spot="' + k + '" aria-label="' + esc(L('putOn')) + '"' +
+    jar += '<button class="cookie' + (G.vals && G.vals[k] === 10 ? ' tenbox' : '') + (popLast === 'back' && G.lastBack === k ? ' pop' : '') + '" data-jar="1" data-spot="' + k + '" aria-label="' + esc(L('putOn')) + '"' +
       ' style="' + blueFace(k) + (ps ? ';left:' + ps[0] + 'px;top:' + ps[1] + 'px' : '') + '"></button>';
   }
   document.getElementById('jar').innerHTML = jar;
-  document.getElementById('eqA').textContent = G.added;
+  document.getElementById('eqA').textContent = addedVal();
   document.getElementById('eqT').textContent = total();
   document.getElementById('doneBtn').disabled = G.lock;
+  fitBig();
 }
 var FACES = 12;
 function face(color, n){ return '--face:url(cookies/' + color + '_' + ('0' + ((((n % FACES) + FACES) % FACES) + 1)).slice(-2) + '.png)'; }
@@ -4061,21 +4190,22 @@ function layoutTable(){
   /* plate: as big as possible while leaving a band around it for the loose cookies */
   var cap = (5 * c + 32) / 0.70;                       /* plate cookies never bigger than loose ones */
   var rand, pos, cx = W / 2, cy = H / 2, R;
-  function ok(x, y, g){
-    var mx = x + c / 2, my = y + c / 2;
-    if (Math.hypot(mx - cx, my - cy) < R + c / 2) return false;
-    for (var i = 0; i < pos.length; i++) if (Math.hypot(pos[i][0] - x, pos[i][1] - y) < c + g) return false;
+  function dims(k){ return G.vals && G.vals[k] === 10 ? [c * 2.2, c * 1.02] : [c, c]; }   /* a box of 10 is wider than a cookie */
+  function ok(x, y, g, w, h){
+    var mx = x + w / 2, my = y + h / 2, rr = Math.max(w, h) / 2;
+    if (Math.hypot(mx - cx, my - cy) < R + rr) return false;
+    for (var i = 0; i < pos.length; i++) { var d = dims(i), px = pos[i][0] + d[0] / 2, py = pos[i][1] + d[1] / 2; if (Math.hypot(px - mx, py - my) < rr + Math.max(d[0], d[1]) / 2 + g) return false; }
     return true;
   }
   function place(D, g, force){
     R = D / 2 + 8; rand = rng(G.seed); pos = [];
     for (var k = 0; k < G.jarCount; k++) {
-      var got = null;
+      var got = null, d = dims(k);
       for (var t = 0; t < 500 && !got; t++) {
-        var x = 4 + rand() * Math.max(1, W - c - 8), y = 4 + rand() * Math.max(1, H - c - 8);
-        if (ok(x, y, g)) got = [Math.round(x), Math.round(y)];
+        var x = 4 + rand() * Math.max(1, W - d[0] - 8), y = 4 + rand() * Math.max(1, H - d[1] - 8);
+        if (ok(x, y, g, d[0], d[1])) got = [Math.round(x), Math.round(y)];
       }
-      if (!got) { if (!force) return false; got = [Math.round(4 + rand() * (W - c - 8)), Math.round(k % 2 ? 4 : H - c - 4)]; }
+      if (!got) { if (!force) return false; got = [Math.round(4 + rand() * (W - d[0] - 8)), Math.round(k % 2 ? 4 : H - d[1] - 4)]; }
       pos.push(got);
     }
     return true;
@@ -4085,13 +4215,27 @@ function layoutTable(){
   for (; D >= 120 && !done; D -= 6) done = place(D, 6, false);
   if (done) D += 6; else { D = 120; place(D, 0, true); }
   tb.style.setProperty('--pd', D + 'px');
+  tb.dataset.c = c;
   /* more than 10 on the plate (up to 15 / 20): shrink plate cookies so 3-4 rows of 5 fit inside the rim */
   var rows = Math.ceil((G.s + G.jarCount) / 5);
   if (rows > 2) { var inner = D * 0.7, gp = 8, cell = Math.max(14, Math.min(c, (inner - 4 * gp) / 5, (inner - (rows - 1) * gp) / rows)); tb.style.setProperty('--pcol', Math.floor(cell) + 'px'); }
   else tb.style.removeProperty('--pcol');
   G.pos = pos;
+  fitBig();
   var els = document.querySelectorAll('#jar .cookie');
   els.forEach(function(el){ var p = pos[+el.getAttribute('data-spot')]; if (p) { el.style.left = p[0] + 'px'; el.style.top = p[1] + 'px'; } });
+}
+/* boxes of 10 on top, loose cookies below: shrink both until everything sits inside the rim */
+function fitBig(){
+  var tb = document.getElementById('table'), pl = document.getElementById('plate');
+  if (!tb || !pl || !G || !G.big) return;
+  var D = pl.clientWidth, inner = D * 0.7, gp = 6, c = +tb.dataset.c || 44;
+  var bw0 = (inner - 2 * gp) / 3, sc0 = Math.min(c, (inner - 4 * gp) / 5), f = 1, bx = pl.querySelector('.pboxes'), on = pl.querySelector('.pones');
+  for (var i = 0; i < 12; i++) {
+    tb.style.setProperty('--pbw', Math.floor(bw0 * f) + 'px'); tb.style.setProperty('--psc', Math.floor(sc0 * f) + 'px');
+    if (!bx || !on || bx.offsetHeight + on.offsetHeight + gp <= inner) break;
+    f *= 0.88;
+  }
 }
 window.addEventListener('resize', function(){ if (screen === 'play') layoutTable(); });
 function setMomo(mood, anim){
@@ -4103,19 +4247,30 @@ function setMomo(mood, anim){
 function addCookie(spot){
   if (!G || G.lock || G.added >= G.jarCount) return;
   if (spot === undefined || spot === null || isNaN(spot) || G.taken[spot]) { spot = 0; while (G.taken[spot]) spot++; }
+  var before = G.big ? onesRaw() : 0;
   G.taken[spot] = true; G.stack.push(spot); G.added = G.stack.length;
   G.bubble2 = ''; G.mood = 'hungry';
+  if (G.big && G.vals[spot] === 1 && before < 10 && onesRaw() >= 10) {        /* ten loose cookies: they pack into a box */
+    G.carry = true; var q0 = G.q, g0 = G;
+    updatePlay(true);
+    say([P(String(total()), 'count', total()), L('tenBox')]);
+    setTimeout(function(){
+      if (G !== g0 || G.q !== q0 || screen !== 'play' || !G.carry) return;
+      G.carry = false; G.bubble2 = L('tenBox'); updatePlay('carry');
+    }, 1100);
+    return;
+  }
   updatePlay(true);
   say(P(String(total()), 'count', total()));
 }
 function removeCookie(){
   if (!G || G.lock || G.added <= 0) return;
-  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = '';
+  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = ''; G.carry = false;
   updatePlay('back');
   say(P(String(total()), 'count', total()));
 }
 function record(right){
-  var k = factKey(G.s, G.a);
+  var k = G.big ? 'T:' + G.kind : factKey(G.s, G.a);
   var f = S.facts[k] || { t:0, r:0 };
   f.t++; if (right) f.r++;
   S.facts[k] = f; save();
@@ -4125,7 +4280,7 @@ function record(right){
 var reduceMotion = false;
 try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
 function feedUnicorn(){
-  var cs = Array.prototype.slice.call(document.querySelectorAll('#plate .cookie'));
+  var cs = Array.prototype.slice.call(document.querySelectorAll('#plate .cookie'));   /* boxes of 10 are .cookie too */
   var m = document.querySelector('#momo .momo');
   if (!cs.length || !m) return 0;
   var gentle = reduceMotion;                       /* Reduce Motion: still fly, but straight and without spinning */
@@ -4135,7 +4290,7 @@ function feedUnicorn(){
   cs.forEach(function(c, i){
     var r = c.getBoundingClientRect();
     var fly = document.createElement('span');
-    fly.className = c.className.replace(/\b(pop|counted)\b/g, '') + ' flying';
+    fly.className = c.className.replace(/\b(pop|counted)\b/g, '') + ' flying' + (c.classList.contains('tenbox') ? ' ghostbox' : '');
     var fc = c.style.getPropertyValue('--face');
     fly.style.cssText = (fc ? '--face:' + fc + ';' : '') + 'position:fixed;left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;margin:0;z-index:30;pointer-events:none';
     var dx = tx - (r.left + r.width / 2), dy = ty - (r.top + r.height / 2);
@@ -4193,9 +4348,12 @@ function check(){
     G.bubble2 = tooFew ? L('more') : L('full'); setBubble2(G.bubble2);
     setMomo('hungry', 'wobble');
     var parts = [L('sCount')];
-    for (var i = 1; i <= n; i++) parts.push(P(String(i), 'count', i));
+    var cookies = document.querySelectorAll('#plate .cookie'), nums = [], cnt = cookies.length, bx = 0;
+    for (var i = 1; i <= cnt; i++) {
+      if (G.big && cookies[i-1].classList.contains('tenbox')) { bx++; nums.push(bx * 10); } else nums.push(G.big ? bx * 10 + (i - bx) : i);
+    }
+    nums.forEach(function(v){ parts.push(P(String(v), 'count', v)); });
     parts = parts.concat(tooFew ? L('sTooFew', n, G.t) : L('sTooMany', n, G.t));
-    var cookies = document.querySelectorAll('#plate .cookie');
     var tbl = document.getElementById('table'); if (tbl) tbl.classList.add('counting');
     var q = G.q, unlocked = false;
     function unlock(){
@@ -4205,14 +4363,14 @@ function check(){
       var d = document.getElementById('doneBtn'); if (d) d.disabled = false;
     }
     say(parts, function(i){
-      if (i >= 1 && i <= n && cookies[i-1]) {
+      if (i >= 1 && i <= cnt && cookies[i-1]) {
         cookies[i-1].classList.add('counted');
-        cookies[i-1].innerHTML = '<span class="num">' + i + '</span>';
+        cookies[i-1].innerHTML = '<span class="num">' + nums[i-1] + '</span>';
       }
-      if (i > n) unlock();             /* counting is over: play again right away, no wait */
+      if (i > cnt) unlock();             /* counting is over: play again right away, no wait */
     }, 750);
     G.unlock = unlock;                                     /* stopping the voice (mute, repeat, leaving) also unlocks */
-    setTimeout(unlock, (n + 2) * 2500);                   /* safety net if speech events never arrive */
+    setTimeout(unlock, (cnt + 2) * 2500);                   /* safety net if speech events never arrive */
   }
 }
 
@@ -4232,7 +4390,7 @@ document.addEventListener('pointermove', function(e){
   var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (!drag.moved && Math.hypot(dx, dy) > 10) {
     drag.moved = true;
-    var g = document.createElement('span'); g.className = 'cookie ghost'; g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
+    var g = document.createElement('span'); g.className = 'cookie ghost' + (drag.el.classList.contains('tenbox') ? ' tenbox' : ''); g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
     document.body.appendChild(g); drag.ghost = g; drag.el.style.visibility = 'hidden';
   }
   /* keep the ghost on screen, so it can never get parked out at the edge */
@@ -4314,7 +4472,9 @@ function confetti(){
   c.innerHTML = h; document.body.appendChild(c);
   setTimeout(function(){ c.remove(); }, 4200);
 }
-function cookies(n, cls){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(i) : blueFace(i)) + '"></span>'; return h; }
+function cookies(n, cls){
+  if (G && G.big) { var h2 = ''; for (var b = 0; b < Math.floor(n / 10); b++) h2 += '<span class="cookie tenbox ' + (cls || '') + '"></span>'; n = n % 10; for (var j = 0; j < n; j++) h2 += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(j) : blueFace(j)) + '"></span>'; return h2; }
+  var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(i) : blueFace(i)) + '"></span>'; return h; }
 function showReward(){
   if (screen !== 'play') return;
   var last = G.q + 1 >= ROUND;
@@ -4366,7 +4526,7 @@ function eggSvg(kind, v){
 }
 function chick(cls){ return '<img class="' + (cls || 'momo chick') + '" src="animals/chick.png" alt="' + esc(L('chickAlt')) + '" draggable="false">'; }
 
-function tenSize(){ return S.maxSum <= 5 ? 5 : 10; }
+function tenSize(){ return MX() <= 5 ? 5 : 10; }
 function pickTen(){
   var N = tenSize(), bag = [];
   for (var s = 1; s < N; s++) {
@@ -4584,7 +4744,7 @@ document.addEventListener('touchcancel', function(){ if (tdrag) tFinish(); });
 var BUS_SEATS = 4;
 function bunnyImg(cls){ return '<img class="' + (cls || 'momo bunny') + '" src="animals/snail.png" alt="' + esc(L('busAlt')) + '" draggable="false">'; }
 function pickBus(){
-  var max = S.maxSum, bag = [];
+  var max = MX(), bag = [];
   for (var s = 2; s < max; s++) for (var a = 1; a <= Math.min(BUS_SEATS, max - s); a++) {
     var st = factState(s, a), w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
     if (G && G.last === factKey(s, a)) w = 0;
@@ -4604,7 +4764,7 @@ function busQuestion(){
 }
 function busOpts(){
   var t = G.t, opts = [t];
-  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= S.maxSum && n !== G.s; });
+  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= MX() && n !== G.s; });
   while (opts.length < 3 && cand.length) opts.push(cand.splice(Math.floor(Math.random() * Math.min(2, cand.length)), 1)[0]);
   return opts.sort(function(x, y){ return x - y; });
 }
@@ -4701,7 +4861,7 @@ function busBoard(i){
 function busAllOn(){
   G.lock = true;
   var t = G.t, opts = [t];
-  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= S.maxSum && n !== G.s; });
+  var cand = [t - 1, t + 1, t - 2, t + 2, t - 3, t + 3].filter(function(n){ return n >= 1 && n <= MX() && n !== G.s; });
   while (opts.length < 3 && cand.length) opts.push(cand.splice(Math.floor(Math.random() * Math.min(2, cand.length)), 1)[0]);
   opts.sort(function(x, y){ return x - y; });
   setTimeout(function(){
@@ -4774,7 +4934,7 @@ window.addEventListener('blur', function(){ if (bpress) bEnd(); });
    ===================================================================== */
 function frogImg(cls){ return '<img class="' + (cls || 'momo frogpic') + '" src="animals/frog.png" alt="' + esc(L('frogAlt')) + '" draggable="false">'; }
 function pickFrog(){
-  var max = S.maxSum, capA = max <= 10 ? max - 1 : 8, bag = [];
+  var max = MX(), capA = max <= 10 ? max - 1 : 8, bag = [];
   for (var s = 1; s < max; s++) for (var a = 1; a <= Math.min(capA, max - s); a++) {
     var st = factState(s, a), w = st === 'got' ? 1 : st === 'learn' ? 4 : 3;
     if (G && G.last === factKey(s, a)) w = 0;
@@ -4784,23 +4944,39 @@ function pickFrog(){
 }
 function startFrog(){ G = { game:'frog', q:0, earned:0, startStars:S.stars }; frogQuestion(); }
 function frogQuestion(){
-  var p = pickFrog(), max = S.maxSum;
+  var big = isBig(), p, max = MX(), v;
+  if (big) { var bp = bigSum(G.q, BIG()); p = [bp.a, bp.b]; G.kind = bp.kind; } else p = pickFrog();
+  G.big = big; G.hopv = 1;
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
-  /* the line shows 0-5, 0-10, or a window of 11 pads around the hop when going up to 15 / 20 */
-  if (max <= 5) { G.lo = 0; G.hi = 5; }
-  else if (max <= 10) { G.lo = 0; G.hi = 10; }
-  else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
+  G.padVals = [];
+  if (big) {
+    if (G.a % 10 === 0) {                       /* hops of 10: pads are 10 apart, e.g. 34, 44, 54 */
+      G.hopv = 10;
+      for (v = G.s % 10; v <= BIG(); v += 10) G.padVals.push(v);
+    } else {                                    /* small hops: 11 pads in a row, the tens (30, 40) stand out */
+      var lo = Math.max(0, G.s - 1);
+      for (v = lo; v <= lo + 10; v++) G.padVals.push(v);
+    }
+  } else {
+    /* the line shows 0-5, 0-10, or a window of 11 pads around the hop when going up to 15 / 20 */
+    if (max <= 5) { G.lo = 0; G.hi = 5; }
+    else if (max <= 10) { G.lo = 0; G.hi = 10; }
+    else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
+    for (v = G.lo; v <= G.hi; v++) G.padVals.push(v);
+  }
+  G.hops = G.a / G.hopv;
   G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.sel = null; G.bubble2 = '';
   screen = 'frog'; closeOverlay(); renderFrog();
   frogAskAloud();
 }
-function frogAskAloud(){ say(L('sFrogAsk', G.s, G.a)); }
+function frogAskAloud(){ say(G.hopv === 10 ? L('sFrogAskTens', G.s, G.hops) : L('sFrogAsk', G.s, G.a)); }
 function renderFrog(){
   var dots = '';
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
   var pads = '';
-  for (var n = G.lo; n <= G.hi; n++)
-    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+  G.padVals.forEach(function(n){
+    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.big && G.hopv === 1 && n % 10 === 0 ? ' tenpad' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+  });
   app.innerHTML = '<section class="screen frog">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
@@ -4808,7 +4984,7 @@ function renderFrog(){
     '<div class="stage">' +
       '<div class="left"><div class="momo-row"><div id="momo">' + frogImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(L('frogWhere')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox" id="frogT">?</span></div></div>' +
-      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
+      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + G.padVals.length + '">' +
         '<svg class="arcs" id="arcs" aria-hidden="true"></svg>' +
         '<div class="pads">' + pads + '</div>' +
         '<img class="hopper" id="hopper" src="animals/frog.png" alt="" draggable="false">' +
@@ -4821,7 +4997,7 @@ function renderFrog(){
 /* pick how many pads per row so they're as big as possible (one long line on wide screens, 2-3 rows on tall ones) */
 function layoutPond(){
   var pond = document.getElementById('pond'), pads = pond && pond.querySelector('.pads'); if (!pads) return;
-  var n = G.hi - G.lo + 1, W = pond.clientWidth - 24, H = pond.clientHeight - 16, best = null;
+  var n = G.padVals.length, W = pond.clientWidth - 24, H = pond.clientHeight - 16, best = null;
   for (var r = 1; r <= 4; r++) {
     var c = Math.ceil(n / r), gap = 8, size = Math.min((W - (c - 1) * gap) / c, (H / r) / 2.05, 110);   /* room above each row for the frog */
     if (!best || size > best.size * 1.15) best = { c:c, size:size };   /* fewer rows unless more rows make pads clearly bigger */
@@ -4886,8 +5062,8 @@ function frogHop(done){
   say(P(String(G.s), 'calm'));
   function step(){
     if (screen !== 'frog' || !G || G.q !== q) return;
-    if (k >= G.a) { setTimeout(done, 350); return; }
-    var from = G.s + k, to = from + 1; k++;
+    if (k >= G.hops) { setTimeout(done, 350); return; }
+    var from = G.s + k * G.hopv, to = from + G.hopv; k++;
     hopOnce(from, to, function(){
       var pad = document.querySelector('.pad[data-v="' + to + '"]');
       if (pad) { pad.classList.remove('hit'); void pad.offsetWidth; pad.classList.add('hit'); }
@@ -4944,7 +5120,7 @@ function showFrogReward(){
   function pads(n, kind){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="mini-pad ' + kind + '"></span>'; return h; }
   overlay('<div class="reward">' +
     '<h1>' + L('didIt') + '</h1>' + frogImg('pic animal') +
-    '<div class="sumcard"><div class="groups"><div class="g">' + pads(G.s, 'start') + '</div>+<div class="g">' + pads(G.a, 'add') + '</div></div>' +
+    '<div class="sumcard">' + (G.big ? '' : '<div class="groups"><div class="g">' + pads(G.s, 'start') + '</div>+<div class="g">' + pads(G.a, 'add') + '</div></div>') +
     '<div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.t)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.t + '</span></div></div>' +
     '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
@@ -4960,7 +5136,7 @@ function towerQuestion(){
   var p = pickFrog();
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
   /* ruler length: only as tall as this sum needs (in steps of 5), so the blocks and numbers stay as big as possible */
-  G.R = S.maxSum <= 5 ? 6 : Math.min(S.maxSum, Math.max(10, Math.ceil((G.t + 1) / 5) * 5));
+  G.R = MX() <= 5 ? 6 : Math.min(MX(), Math.max(10, Math.ceil((G.t + 1) / 5) * 5));
   G.stacked = false; G.first = true; G.lock = false; G.tried = {}; G.bubble2 = ''; G.done = false; G.opts = null;
   screen = 'tower'; closeOverlay(); renderTower();
   towerAskAloud();
@@ -4972,7 +5148,7 @@ function renderTower(){
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
   var ruler = '';
   for (var n = 1; n <= G.R; n++) ruler += '<span data-n="' + n + '" class="' + (G.done && n === G.t ? 'ok' : G.stacked && n === G.t ? 'hi' : '') + '">' + n + '</span>';
-  var opts = G.opts || (G.opts = choiceOpts(G.t, S.maxSum));
+  var opts = G.opts || (G.opts = choiceOpts(G.t, MX()));
   var choices = '<div class="tw-choices' + (G.stacked ? '' : ' wait') + '" role="group" aria-label="' + esc(L('towerHow')) + '">' + opts.map(function(n){
     var cls = 'choice' + (G.tried[n] ? ' tried' : '') + (G.done && n === G.t ? ' right' : '');
     var dis = G.tried[n] || (G.done && n !== G.t) || !G.stacked;
@@ -5234,9 +5410,9 @@ function kidDialog(id){
 }
 function renderParents(){
   var oldSc = document.querySelector('.screen.parents'), keepY = oldSc ? oldSc.scrollTop : 0;   /* re-rendering after a tap keeps the scroll position */
-  var max = S.maxSum, list = allFacts(max), got = 0;
+  var max = BIG(), list = allFacts(MX()), got = 0;
   list.forEach(function(p){ if (factState(p[0], p[1]) === 'got') got++; });
-  var cols = max - 1;
+  var cols = MX() - 1;
   var grid = '<div class="h"></div>';
   for (var c = 1; c <= cols; c++) grid += '<div class="h">+' + c + '</div>';
   for (var s = 1; s <= cols; s++) {
@@ -5263,7 +5439,17 @@ function renderParents(){
   }).join('') + '<button class="kp-add" data-act="kid-add" aria-label="' + esc(L('addKid')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>';
   if (ptab !== 'settings') ptab = 'progress';
   if (ptab === 'progress') {
-    body = '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
+    var skills = '';
+    if (isBig()) {
+      var SK = [['tens', 'skTens', '20 + 30'], ['tensones', 'skTensOnes', '34 + 20'], ['addten', 'skAddTen', '34 + 10'], ['addones', 'skAddOnes', '34 + 5'], ['cross', 'skCross', '38 + 5']];
+      skills = '<div class="card skillcard"><div class="head"><h2>' + L('skTitle') + '</h2></div>' +
+        '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
+        '<ul class="skills">' + SK.map(function(k){
+          var f = S.facts['T:' + k[0]] || { t: 0, r: 0 }, st = !f.t ? 'new' : (f.r >= 2 && f.r / f.t >= 0.75 ? 'got' : 'learn');
+          return '<li><span class="sk-t f-' + st + '">' + (f.t ? f.r + '/' + f.t : '') + '</span><span class="sk-n"><b>' + L(k[1]) + '</b><small>' + k[2] + '</small></span></li>';
+        }).join('') + '</ul></div>';
+    }
+    body = skills + '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
       '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
       '<div class="facts-wrap"><div class="facts' + (cols > 9 ? ' many' : '') + '" style="grid-template-columns:repeat(' + (cols + 1) + ',minmax(0,1fr));grid-template-rows:repeat(' + (cols + 1) + ',minmax(0,1fr));--fmax:' + Math.min(560, (cols + 1) * 62) + 'px">' + grid + '</div></div></div>' +
       '<div class="card tipcard"><h2>' + L('tryHome') + '</h2><p class="tip">' + tip + '</p>' + suggest +
@@ -5272,7 +5458,7 @@ function renderParents(){
     body = '<div class="setgrid"><div class="card settings">' +
       '<div class="field"><span class="lab">' + L('language') + '</span>' + langPicker() +
         (hasSpeech && !hasVoice(S.lang) ? '<span class="tip small">' + L('noVoice', L('langName')[S.lang]) + '</span>' : '') + '</div></div>' +
-      '<div class="card settings"><div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg seg4"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button></div></div>' +
+      '<div class="card settings"><div class="field"><span class="lab">' + L('biggest') + '</span><div class="seg seg6"><button data-act="max" data-v="5" aria-pressed="' + (max === 5) + '">' + L('upTo', 5) + '</button><button data-act="max" data-v="10" aria-pressed="' + (max === 10) + '">' + L('upTo', 10) + '</button><button data-act="max" data-v="15" aria-pressed="' + (max === 15) + '">' + L('upTo', 15) + '</button><button data-act="max" data-v="20" aria-pressed="' + (max === 20) + '">' + L('upTo', 20) + '</button><button data-act="max" data-v="50" aria-pressed="' + (max === 50) + '">' + L('upTo', 50) + '</button><button data-act="max" data-v="100" aria-pressed="' + (max === 100) + '">' + L('upTo', 100) + '</button></div></div>' +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('spoken') + '</span><div class="seg"><button data-act="voice" data-v="1" aria-pressed="' + S.voice + '">' + L('on') + '</button><button data-act="voice" data-v="0" aria-pressed="' + !S.voice + '">' + L('off') + '</button></div>' +
         (hasSpeech ? '' : '<span class="tip small">' + L('noSpeech') + '</span>') + '</div>' +
       (hasSpeech ? (function(){
