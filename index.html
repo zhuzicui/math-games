@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.190244">
+<meta name="build" content="2026-11-13.192225">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1352,6 +1352,13 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .cookie.tenbox .num{font-size:calc(var(--ck) * .6)}
 .flying.tenbox{aspect-ratio:auto}
 .groups .g .cookie.tenbox{width:calc(var(--ck) * 2.2);height:calc(var(--ck) * 1.02);max-width:none}
+
+.skills{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.skills li{display:flex;align-items:center;gap:12px}
+.skills .sk-t{flex:none;min-width:64px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.skills .sk-n{display:flex;flex-direction:column;line-height:1.2;text-align:left}
+.skills .sk-n b{font-size:18px}
+.skills .sk-n small{font-size:15px;opacity:.7;font-weight:700}
 </style>
 <!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -1530,6 +1537,7 @@ en: {
   sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
   gUp: 'Up and Away', upAlt: 'Sheep', upOne: 'Balloon', upAsk: 'Tap each balloon to let it go!', upHow: 'How many balloons?',
   sUpAsk: [P('Look! The sheep is flying!', 'cheer'), P('Tap each balloon to let it go, and count.', 'ask')], sUpAsk2: [P('Tap each balloon to count.', 'ask')], sUpRight: function(n){ return [P('Yes!', 'cheer'), P(n + ' balloons!', 'proud')]; },
+  skTitle: 'Bigger numbers', skTens: 'Whole tens', skTensOnes: 'Tens and ones', skAddTen: 'Add a ten', skAddOnes: 'Add ones', skCross: 'Cross a ten',
   tenBox: '10 cookies make a box!', boxOf10: 'Box of 10 cookies',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
@@ -1642,6 +1650,7 @@ fr: {
   sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
   gUp: 'Haut dans le ciel', upAlt: 'Mouton', upOne: 'Ballon', upAsk: 'Touche chaque ballon pour le lâcher !', upHow: 'Combien de ballons ?',
   sUpAsk: [P('Regarde ! Le mouton vole !', 'cheer'), P('Touche chaque ballon pour le lâcher, et compte.', 'ask')], sUpAsk2: [P('Touche chaque ballon pour compter.', 'ask')], sUpRight: function(n){ return [P('Oui !', 'cheer'), P(n + ' ballons !', 'proud')]; },
+  skTitle: 'Grands nombres', skTens: 'Dizaines entières', skTensOnes: 'Dizaines et unités', skAddTen: 'Ajouter une dizaine', skAddOnes: 'Ajouter des unités', skCross: 'Passer la dizaine',
   tenBox: '10 biscuits font une boîte !', boxOf10: 'Boîte de 10 biscuits',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
@@ -1754,6 +1763,7 @@ es: {
   sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
   gUp: '¡Arriba y lejos!', upAlt: 'Oveja', upOne: 'Globo', upAsk: '¡Toca cada globo para soltarlo!', upHow: '¿Cuántos globos hay?',
   sUpAsk: [P('¡Mira! ¡La oveja está volando!', 'cheer'), P('Toca cada globo para soltarlo, y cuenta.', 'ask')], sUpAsk2: [P('Toca cada globo para contar.', 'ask')], sUpRight: function(n){ return [P('¡Sí!', 'cheer'), P('¡' + n + ' globos!', 'proud')]; },
+  skTitle: 'Números más grandes', skTens: 'Decenas completas', skTensOnes: 'Decenas y unidades', skAddTen: 'Sumar una decena', skAddOnes: 'Sumar unidades', skCross: 'Pasar a la siguiente decena',
   tenBox: '¡10 galletas hacen una caja!', boxOf10: 'Caja de 10 galletas',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
@@ -1866,6 +1876,7 @@ zh: {
   sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
   gUp: '气球飞呀飞', upAlt: '小羊', upOne: '气球', upAsk: '点一点气球，让它飞走！', upHow: '一共有几个气球？',
   sUpAsk: [P('看！小羊飞起来啦！', 'cheer'), P('点一点每个气球，让它飞走，数一数。', 'ask')], sUpAsk2: [P('点一点每个气球，数一数。', 'ask')], sUpRight: function(n){ return [P('对啦！', 'cheer'), P(n + '个气球！', 'proud')]; },
+  skTitle: '更大的数', skTens: '整十数', skTensOnes: '几十几', skAddTen: '加一个十', skAddOnes: '加个位数', skCross: '进位',
   tenBox: '10块饼干装成一盒！', boxOf10: '一盒10块饼干',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
@@ -1978,6 +1989,7 @@ ja: {
   sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
   gUp: 'ふうせん ふわふわ', upAlt: 'ひつじ', upOne: 'ふうせん', upAsk: 'ふうせんを タッチして とばしてね！', upHow: 'ふうせんは いくつ？',
   sUpAsk: [P('みて！ ひつじが とんでるよ！', 'cheer'), P('ふうせんを ひとつずつ タッチして かぞえてね。', 'ask')], sUpAsk2: [P('ふうせんを タッチして かぞえてね。', 'ask')], sUpRight: function(n){ return [P('せいかい！', 'cheer'), P('ふうせんは ' + n + 'こ！', 'proud')]; },
+  skTitle: 'おおきい かず', skTens: 'ちょうどの 10', skTensOnes: '10と 1', skAddTen: '10を たす', skAddOnes: '1を たす', skCross: 'くりあがり',
   tenBox: 'クッキー10こで 1はこ！', boxOf10: 'クッキー10この はこ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
@@ -2090,6 +2102,7 @@ yue: {
   sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
   gUp: '氣球飛呀飛', upAlt: '小羊', upOne: '氣球', upAsk: '撳下氣球，等佢飛走！', upHow: '一共有幾多個氣球？',
   sUpAsk: [P('睇下！小羊飛起咗！', 'cheer'), P('撳下每個氣球，等佢飛走，數一數。', 'ask')], sUpAsk2: [P('撳下每個氣球，數一數。', 'ask')], sUpRight: function(n){ return [P('啱喇！', 'cheer'), P(n + '個氣球！', 'proud')]; },
+  skTitle: '更大嘅數', skTens: '整十數', skTensOnes: '幾十幾', skAddTen: '加一個十', skAddOnes: '加個位數', skCross: '進位',
   tenBox: '10塊餅乾裝成一盒！', boxOf10: '一盒10塊餅乾',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
@@ -2202,6 +2215,7 @@ ko: {
   sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
   gUp: '풍선 타고 둥실', upAlt: '양', upOne: '풍선', upAsk: '풍선을 눌러서 날려 보내요!', upHow: '풍선이 몇 개일까요?',
   sUpAsk: [P('봐요! 양이 날고 있어요!', 'cheer'), P('풍선을 하나씩 눌러 날려 보내며 세어 보세요.', 'ask')], sUpAsk2: [P('풍선을 눌러서 세어 보세요.', 'ask')], sUpRight: function(n){ return [P('맞아요!', 'cheer'), P('풍선 ' + n + '개!', 'proud')]; },
+  skTitle: '더 큰 수', skTens: '딱 떨어지는 십', skTensOnes: '십과 일', skAddTen: '십 더하기', skAddOnes: '일 더하기', skCross: '받아올림',
   tenBox: '쿠키 10개가 한 상자!', boxOf10: '쿠키 10개 상자',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
@@ -5377,7 +5391,17 @@ function renderParents(){
   }).join('') + '<button class="kp-add" data-act="kid-add" aria-label="' + esc(L('addKid')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>';
   if (ptab !== 'settings') ptab = 'progress';
   if (ptab === 'progress') {
-    body = '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
+    var skills = '';
+    if (isBig()) {
+      var SK = [['tens', 'skTens', '20 + 30'], ['tensones', 'skTensOnes', '34 + 20'], ['addten', 'skAddTen', '34 + 10'], ['addones', 'skAddOnes', '34 + 5'], ['cross', 'skCross', '38 + 5']];
+      skills = '<div class="card skillcard"><div class="head"><h2>' + L('skTitle') + '</h2></div>' +
+        '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
+        '<ul class="skills">' + SK.map(function(k){
+          var f = S.facts['T:' + k[0]] || { t: 0, r: 0 }, st = !f.t ? 'new' : (f.r >= 2 && f.r / f.t >= 0.75 ? 'got' : 'learn');
+          return '<li><span class="sk-t f-' + st + '">' + (f.t ? f.r + '/' + f.t : '') + '</span><span class="sk-n"><b>' + L(k[1]) + '</b><small>' + k[2] + '</small></span></li>';
+        }).join('') + '</ul></div>';
+    }
+    body = skills + '<div class="card gridcard"><div class="head"><h2>' + L('facts') + '</h2><span class="stat">' + L('stat', S.stars, got, list.length) + '</span></div>' +
       '<div class="legend"><span><i class="f-got"></i>' + L('gotIt') + '</span><span><i class="f-learn"></i>' + L('learning') + '</span><span><i class="f-new"></i>' + L('notTried') + '</span></div>' +
       '<div class="facts-wrap"><div class="facts' + (cols > 9 ? ' many' : '') + '" style="grid-template-columns:repeat(' + (cols + 1) + ',minmax(0,1fr));grid-template-rows:repeat(' + (cols + 1) + ',minmax(0,1fr));--fmax:' + Math.min(560, (cols + 1) * 62) + 'px">' + grid + '</div></div></div>' +
       '<div class="card tipcard"><h2>' + L('tryHome') + '</h2><p class="tip">' + tip + '</p>' + suggest +
