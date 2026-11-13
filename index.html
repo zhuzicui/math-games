@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.194355">
+<meta name="build" content="2026-11-13.235032">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1277,7 +1277,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 /* the food sits behind the basket picture, so it peeks out over the rim (the rim is 29% down the picture) */
 .mk-in{position:absolute;left:14%;right:14%;top:-22%;height:66%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;z-index:0}
 .mk-in img{height:100%;max-width:34%;object-fit:contain;object-position:bottom;margin:0 -2%}
-.mk-front{position:absolute;inset:0;z-index:1;background:url(market/basket.png) center / 100% 100% no-repeat;display:flex;align-items:center;justify-content:center;pointer-events:none;filter:drop-shadow(0 5px 4px rgba(71,28,14,.18))}
+.mk-front{position:absolute;inset:0;z-index:1;background:url(market/basket.svg) center / 100% 100% no-repeat;display:flex;align-items:center;justify-content:center;pointer-events:none;filter:drop-shadow(0 5px 4px rgba(71,28,14,.18))}
 .mk-label{position:relative;margin-top:26%;display:flex;align-items:center;justify-content:center;gap:6px;min-width:36%;max-width:74%;height:40%;padding:0 10px;border-radius:14px;background:#FFFCF7;border:3px solid #E6D5C4;font-family:var(--display);font-weight:800;font-size:clamp(12px,calc(var(--bw) * .085),24px);line-height:1}
 .mk-label img{height:86%;width:auto;max-width:100%;object-fit:contain}
 .mk-swatch{width:calc(var(--bw) * .17);height:calc(var(--bw) * .17);border-radius:50%;border:3px solid rgba(0,0,0,.14)}
@@ -2581,10 +2581,10 @@ var SKY = [ ['star1', 6, 12, 6.3], ['star6', 16, 30, 4.2], ['star1', 24, 8, 3.5]
             ['star6', 36, 16, 3.2], ['star1', 27, 46, 3.5], ['star6', 44, 6, 4.2], ['star1', 41, 92, 4.6], ['star2', 54, 95, 3.2], ['star6', 62, 84, 5.3], ['star1', 73, 93, 3.9],
             ['star6', 90, 9, 4.9], ['star1', 84, 28, 5.6], ['star3', 94, 44, 3.2], ['star6', 77, 46, 3.9], ['star1', 91, 64, 4.6], ['star6', 82, 76, 3.5], ['star1', 96, 88, 4.2], ['star2', 72, 22, 3.2] ];
 function nightSky(){
-  var h = '<div class="night-sky" aria-hidden="true"><img class="sky-moon" src="night/moon.png" alt="">';
+  var h = '<div class="night-sky" aria-hidden="true"><img class="sky-moon" src="night/moon.svg" alt="">';
   SKY.forEach(function(st){
     var r = Math.random;
-    h += '<img class="sky-star" src="night/' + st[0] + '.png" alt="" style="left:' + st[1] + '%;top:' + st[2] + '%;width:' + st[3] + 'vmin;' +
+    h += '<img class="sky-star" src="night/' + st[0] + '.svg" alt="" style="left:' + st[1] + '%;top:' + st[2] + '%;width:' + st[3] + 'vmin;' +
       '--tw:' + (2.2 + r() * 2.6).toFixed(2) + 's;--td:' + (-r() * 4).toFixed(2) + 's;--wg:' + (3 + r() * 4).toFixed(2) + 's;--wd:' + (-r() * 5).toFixed(2) + 's;--rot:' + Math.round(r() * 40 - 20) + 'deg;--amp:' + Math.round(6 + r() * 8) + 'deg">';
   });
   return h + '</div>';
@@ -2813,7 +2813,7 @@ function renderHome(){
    HUNGRY CROCODILE (croc): which side has more fish? The croc always eats the bigger side.
    ===================================================================== */
 var FISH_N = 12, FISH_LEFT = [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1];   /* which fish drawings face left */
-function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" src="animals/croc-' + (open ? 'open' : 'closed') + '.png" alt="' + esc(L('crocAlt')) + '" draggable="false">'; }
+function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" src="animals/croc-' + (open ? 'open' : 'closed') + '.svg" alt="' + esc(L('crocAlt')) + '" draggable="false">'; }
 /* each round of 5 mixes kinds of question: 'easy' (clear difference), 'close' (1-2 apart, fish sizes that mislead),
    'num' (just two numbers; the fish appear only if the child needs to count), 'eq' (same on both sides) */
 function crocPlan(){
@@ -2872,7 +2872,7 @@ function crocQuestion(){
 }
 function fishHtml(list, side){
   return list.map(function(o, i){
-    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + ((FISH_LEFT[o.f - 1] ? -1 : 1) * (o.flip ? -1 : 1) * o.dx) + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
+    return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.svg" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + ((FISH_LEFT[o.f - 1] ? -1 : 1) * (o.flip ? -1 : 1) * o.dx) + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
   }).join('');
 }
 function renderCroc(){
@@ -2922,7 +2922,7 @@ function crocPick(v){
     else {
       /* in place: the croc turns to the bigger side and opens wide, then the fish swim into its mouth one by one */
       var stage = document.querySelector('.crocgame'); stage.classList.add(v === 'L' ? 'eat-left' : 'eat-right');
-      var img = document.querySelector('.croc-mid .croc-img'); img.src = 'animals/croc-open.png'; img.className = 'croc-img open' + (v === 'L' ? ' flip' : '');
+      var img = document.querySelector('.croc-mid .croc-img'); img.src = 'animals/croc-open.svg'; img.className = 'croc-img open' + (v === 'L' ? ' flip' : '');
       document.querySelectorAll('.crocgame .water, .crocgame .same-btn').forEach(function(x){ x.disabled = true; x.classList.remove('picked'); });
       var dn = document.getElementById('crocDone'); if (dn) { dn.disabled = true; dn.classList.remove('ready'); }
       img.classList.remove('look-l', 'look-r');
@@ -2950,7 +2950,7 @@ function crocPick(v){
       });
       var eatEnd = 300 + fish.length * step + dur;
       /* gulp: a quick chomp once the last fish is in */
-      setTimeout(function(){ if (screen !== 'croc') return; img.src = 'animals/croc-closed.png'; img.classList.add('chomp'); setTimeout(function(){ if (screen === 'croc') { img.src = 'animals/croc-open.png'; img.classList.remove('chomp'); } }, 260); }, eatEnd);
+      setTimeout(function(){ if (screen !== 'croc') return; img.src = 'animals/croc-closed.svg'; img.classList.add('chomp'); setTimeout(function(){ if (screen === 'croc') { img.src = 'animals/croc-open.svg'; img.classList.remove('chomp'); } }, 260); }, eatEnd);
       setTimeout(showCrocReward, eatEnd + 1300);
     }
 
@@ -2981,7 +2981,7 @@ function showCrocReward(){
    ===================================================================== */
 /* where each penguin sits in a car, in % of the car (the car image is 358x222) */
 var PG_POS = { 1:{ l:7.7, w:80.0, b:39.9 }, 2:{ l:14.3, w:78.1, b:53.3 }, 3:{ l:-6.2, w:110.4, b:44.3 } };
-function trainImg(cls){ return '<img class="' + (cls || 'loco') + '" src="train/loco.png" alt="' + esc(L('trainAlt')) + '" draggable="false">'; }
+function trainImg(cls){ return '<img class="' + (cls || 'loco') + '" src="train/loco.svg" alt="' + esc(L('trainAlt')) + '" draggable="false">'; }
 function trainPlan(){
   var small = MX() <= 5;
   return [{ m:'tap', g:1 }, { m:'tap', g:1 }, { m:'drag', g:small ? 1 : 2 }, { m:'drag', g:2 }, { m:'drag', g:small ? 2 : 3 }];
@@ -3043,8 +3043,8 @@ function trainQuestion(){
 function trainCarHtml(i){
   var gap = G.gaps.indexOf(i) >= 0, filled = G.filled[i], p = PG_POS[G.pg[i]], showPg = !gap || filled;
   return '<div class="tcar' + (gap ? ' gap' : '') + (filled ? ' filled' : '') + '" data-i="' + i + '"' + (gap && !filled ? ' data-act="train-slot" data-v="' + i + '" role="button" aria-label="' + esc(L('trainSlot')) + '"' : '') + '>' +
-    (showPg ? '<img class="pg" src="train/p' + G.pg[i] + '.png" alt="" draggable="false" style="left:' + p.l + '%;width:' + p.w + '%;bottom:' + p.b + '%">' : '') +
-    '<img class="car" src="train/car.png" alt="" draggable="false">' +
+    (showPg ? '<img class="pg" src="train/p' + G.pg[i] + '.svg" alt="" draggable="false" style="left:' + p.l + '%;width:' + p.w + '%;bottom:' + p.b + '%">' : '') +
+    '<img class="car" src="train/car.svg" alt="" draggable="false">' +
     (gap && !filled ? '<span class="tslot">?</span>' : '<span class="tnum' + (gap ? ' new' : '') + '">' + G.seq[i] + '</span>') +
   '</div>';
 }
@@ -3192,7 +3192,7 @@ function showTrainReward(){
    octopus sings the pattern so far, then asks again.
    ===================================================================== */
 var BEAD_NAMED = ['heart', 'star', 'orange', 'smile', 'wink', 'flower'], BEAD_EXTRA = ['flower2', 'flower3', 'pinkheart'];
-function beadImg(k, cls){ return '<img class="' + (cls || 'bd') + '" src="beads/' + k + '.png" alt="" draggable="false">'; }
+function beadImg(k, cls){ return '<img class="' + (cls || 'bd') + '" src="beads/' + k + '.svg" alt="" draggable="false">'; }
 function octoImg(cls){ return '<img class="' + (cls || 'octo') + '" src="animals/octopus.png" alt="' + esc(L('octoAlt')) + '" draggable="false">'; }
 function beadName(k){ var n = L('beadN'); return (n && n[k]) || k; }
 function beadPlan(){
@@ -3588,7 +3588,7 @@ function renderBirds(){
   for (var k = 0; k < G.art.length; k++) {
     var here = k < shown, extra = !G.moved && G.d > 0 && k === G.n, leaving = !G.moved && G.d < 0 && k === G.n - 1;
     if (!here && !extra) continue;
-    birds += '<img class="wbird' + (G.art[k][1] ? ' flip' : '') + (extra ? (G.mode === 'guess' ? ' hover' : ' away') : '') + (leaving && G.mode === 'guess' ? ' antsy' : '') + '" data-k="' + k + '"' + (extra ? ' style="--hx:' + (-birdDir(k) * 0.9) + '"' : '') + ' src="birds/' + G.art[k][0] + '.png" alt="" draggable="false">';
+    birds += '<img class="wbird' + (G.art[k][1] ? ' flip' : '') + (extra ? (G.mode === 'guess' ? ' hover' : ' away') : '') + (leaving && G.mode === 'guess' ? ' antsy' : '') + '" data-k="' + k + '"' + (extra ? ' style="--hx:' + (-birdDir(k) * 0.9) + '"' : '') + ' src="birds/' + G.art[k][0] + '.svg" alt="" draggable="false">';
   }
   var choices = G.opts.map(function(v){
     var cls = 'choice' + (G.tried[v] ? ' tried' : '') + (G.done && v === G.t ? ' right' : '');
@@ -3721,7 +3721,7 @@ var MK_ART = { apple:['apple', 'apple2', 'apple3'], banana:['banana', 'banana2',
 var MK_FRUIT = ['apple', 'banana', 'strawberry', 'pear', 'orange', 'lemon', 'cherries', 'plum', 'pineapple', 'watermelon', 'mango', 'peach', 'papaya', 'pomegranate', 'lime'];
 var MK_VEG = ['broccoli', 'cabbage', 'potato', 'onion', 'eggplant', 'radish', 'garlic'];
 function racImg(cls){ return '<img class="' + (cls || 'mk-host') + '" src="animals/raccoon.png" alt="' + esc(L('mkAlt')) + '" draggable="false">'; }
-function foodImg(k){ var a = G && G.art && G.art[k] || k; return '<img src="market/' + a + '.png" alt="" draggable="false">'; }
+function foodImg(k){ var a = G && G.art && G.art[k] || k; return '<img src="market/' + a + '.svg" alt="" draggable="false">'; }
 function marketPlan(){ return ['col2', 'col3', 'kind', Math.random() < 0.5 ? 'col3' : 'kind3', 'food']; }
 function startMarket(){ G = { game:'market', q:0, earned:0, startStars:S.stars, plan:marketPlan() }; marketQuestion(); }
 function marketQuestion(){
@@ -3884,7 +3884,7 @@ function upLive(q){ return screen === 'up' && G && G.game === 'up' && G.q === q;
 function renderUp(){
   var dots = '', q = G.q;
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < q ? 'done' : i === q ? 'now' : '') + '"></span>';
-  var bals = G.bal.map(function(b){ return '<button class="up-bal" data-id="' + b.id + '" aria-label="' + esc(L('upOne')) + '"><img src="up/b' + b.art + '.png" alt="" draggable="false"></button>'; }).join('');
+  var bals = G.bal.map(function(b){ return '<button class="up-bal" data-id="' + b.id + '" aria-label="' + esc(L('upOne')) + '"><img src="up/b' + b.art + '.svg" alt="" draggable="false"></button>'; }).join('');
   var choices = G.opts.map(function(v){ return '<button class="choice" data-act="up-pick" data-v="' + v + '" disabled>' + v + '</button>'; }).join('');
   app.innerHTML = '<section class="screen upgame">' +
     '<div class="rotate-hint" role="alert"><svg viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rh-phone"><rect x="34" y="22" width="28" height="52" rx="6"/><path d="M44 66h8"/></g><path class="rh-arrow" d="M74 30a32 32 0 0 0-30-18"/><path class="rh-arrow" d="M51 6l-7 6 7 7"/></svg><b>' + L('rotateUp') + '</b></div>' +
@@ -3980,7 +3980,7 @@ function upTap(id){
   var s = document.querySelector('#upStrings path[data-s="' + id + '"]'); if (s) s.classList.add('cut');
   b.el.style.visibility = 'hidden';
   var up = document.createElement('div'); up.className = 'up-up'; up.setAttribute('data-n', b.num);
-  up.innerHTML = '<img src="up/b' + b.art + '.png" alt="" draggable="false"><b class="up-num">' + b.num + '</b>';
+  up.innerHTML = '<img src="up/b' + b.art + '.svg" alt="" draggable="false"><b class="up-num">' + b.num + '</b>';
   up.setAttribute('data-a', UP_ART[b.art][0]); upPut(up, p);
   row.appendChild(up);
   /* float up from where it was, with a gentle sway */
@@ -4177,7 +4177,7 @@ function updatePlay(popLast){
   fitBig();
 }
 var FACES = 12;
-function face(color, n){ return '--face:url(cookies/' + color + '_' + ('0' + ((((n % FACES) + FACES) % FACES) + 1)).slice(-2) + '.png)'; }
+function face(color, n){ return '--face:url(cookies/' + color + '_' + ('0' + ((((n % FACES) + FACES) % FACES) + 1)).slice(-2) + '.svg)'; }
 function redFace(i){ return face('red', (G ? G.faceSeed : 0) + i * 5); }
 function blueFace(spot){ return face('blue', (G ? G.faceSeed : 0) + 3 + spot * 7); }
 function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
