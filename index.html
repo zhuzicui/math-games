@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.192225">
+<meta name="build" content="2026-11-13.192856">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1359,6 +1359,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .skills .sk-n{display:flex;flex-direction:column;line-height:1.2;text-align:left}
 .skills .sk-n b{font-size:18px}
 .skills .sk-n small{font-size:15px;opacity:.7;font-weight:700}
+.pad.tenpad::after{content:'';position:absolute;inset:-5px;border:4px solid #E8B923;border-radius:50%;pointer-events:none}
 </style>
 <!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -1499,6 +1500,7 @@ en: {
   sBusNow: function(s, a){ return [P(s === 1 ? 'There was 1 snail on the bus.' : 'There were ' + s + ' snails on the bus.', 'calm'), P(a === 1 ? '1 more got on.' : a + ' more got on.', 'calm'), P('How many snails are on the bus now?', 'ask')]; },
   frogAlt: 'Hop the frog', frogWhere: 'Where will I land?', frogLanded: function(t){ return 'I landed on ' + t + '!'; },
   sFrogAsk: function(s, a){ return [P('I’m on ' + s + '.', 'calm'), P('I’ll hop ' + a + (a === 1 ? ' time.' : ' times.'), 'calm'), P('Tap where I’ll land!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('I’m on ' + s + '.', 'calm'), P('I’ll hop ' + k + (k === 1 ? ' time,' : ' times,') + ' 10 each time.', 'calm'), P('Tap where I’ll land!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Yes!', 'cheer'), P(s + ' plus ' + a + ' equals ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('I landed on ' + t + '.', 'calm'), P('Try again!', 'cheer')]; },
   specialSticker: 'Special sticker!',
@@ -1612,6 +1614,7 @@ fr: {
   sBusNow: function(s, a){ return [P('Il y avait ' + s + ' ' + pl(s, 'escargot', 'escargots') + ' dans le bus.', 'calm'), P(a === 1 ? 'Un autre est monté.' : 'Encore ' + a + ' sont montés.', 'calm'), P('Combien d’escargots dans le bus maintenant ?', 'ask')]; },
   frogAlt: 'Hop la grenouille', frogWhere: 'Où vais-je atterrir\u00a0?', frogLanded: function(t){ return 'Je suis sur ' + t + '\u00a0!'; },
   sFrogAsk: function(s, a){ return [P('Je suis sur le ' + s + '.', 'calm'), P(a === 1 ? 'Je fais 1 saut.' : 'Je fais ' + a + ' sauts.', 'calm'), P('Touche le nénuphar où je vais atterrir !', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('Je suis sur le ' + s + '.', 'calm'), P(k === 1 ? 'Je fais 1 saut de 10.' : 'Je fais ' + k + ' sauts de 10.', 'calm'), P('Touche le nénuphar où je vais atterrir !', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('Oui !', 'cheer'), P(s + ' plus ' + a + ' égal ' + t + ' !', 'proud')]; },
   sFrogWrong: function(t){ return [P('Je suis arrivée sur le ' + t + '.', 'calm'), P('Essaie encore !', 'cheer')]; },
   specialSticker: 'Autocollant spécial\u00a0!',
@@ -1725,6 +1728,7 @@ es: {
   sBusNow: function(s, a){ return [P(s === 1 ? 'Había 1 caracol en el autobús.' : 'Había ' + s + ' caracoles en el autobús.', 'calm'), P(a === 1 ? 'Subió 1 más.' : 'Subieron ' + a + ' más.', 'calm'), P('¿Cuántos caracoles hay ahora en el autobús?', 'ask')]; },
   frogAlt: 'Hop, la rana', frogWhere: '¿Dónde voy a caer?', frogLanded: function(t){ return '¡Caí en el ' + t + '!'; },
   sFrogAsk: function(s, a){ return [P('Estoy en el ' + s + '.', 'calm'), P(a === 1 ? 'Voy a dar 1 salto.' : 'Voy a dar ' + a + ' saltos.', 'calm'), P('¡Toca el nenúfar donde voy a caer!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('Estoy en el ' + s + '.', 'calm'), P(k === 1 ? 'Voy a dar 1 salto de 10.' : 'Voy a dar ' + k + ' saltos de 10.', 'calm'), P('¡Toca el nenúfar donde voy a caer!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('¡Sí!', 'cheer'), P('¡' + s + ' más ' + a + ' es igual a ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P('Caí en el ' + t + '.', 'calm'), P('¡Inténtalo otra vez!', 'cheer')]; },
   specialSticker: '¡Pegatina especial!',
@@ -1838,6 +1842,7 @@ zh: {
   sBusNow: function(s, a){ return [P('车上原来有' + s + '只小蜗牛。', 'calm'), P('又上来了' + a + '只。', 'calm'), P('现在车上一共有几只？', 'ask')]; },
   frogAlt: '青蛙跳跳', frogWhere: '我会跳到哪里？', frogLanded: function(t){ return '我跳到了' + t + '！'; },
   sFrogAsk: function(s, a){ return [P('我在' + s + '上。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('点一点我会落在哪片荷叶上！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('我在' + s + '上。', 'calm'), P('我要跳' + k + '下，每下跳10。', 'calm'), P('点一点我会落在哪片荷叶上！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('对啦！', 'cheer'), P(s + '加' + a + '等于' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳到了' + t + '。', 'calm'), P('再试一次！', 'cheer')]; },
   specialSticker: '特别贴纸！',
@@ -1951,6 +1956,7 @@ ja: {
   sBusNow: function(s, a){ return [P('バスに かたつむりが ' + s + 'ひき のっていたよ。', 'calm'), P('あと ' + a + 'ひき のったよ。', 'calm'), P('いま バスには なんびき いるかな？', 'ask')]; },
   frogAlt: 'カエルの ホップ', frogWhere: 'どこに つくかな？', frogLanded: function(t){ return t + 'に ついたよ！'; },
   sFrogAsk: function(s, a){ return [P('いま ' + s + 'に いるよ。', 'calm'), P(a + 'かい ジャンプするよ。', 'calm'), P('どの はっぱに つくか タップしてね！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('いま ' + s + 'に いるよ。', 'calm'), P(k + 'かい ジャンプするよ。1かいで 10 すすむよ。', 'calm'), P('どの はっぱに つくか タップしてね！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('せいかい！', 'cheer'), P(s + ' たす ' + a + ' は ' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + 'に ついたよ。', 'calm'), P('もういちど やってみよう！', 'cheer')]; },
   specialSticker: 'とくべつな シール！',
@@ -2064,6 +2070,7 @@ yue: {
   sBusNow: function(s, a){ return [P('車上本來有' + s + '隻蝸牛。', 'calm'), P('再上咗' + a + '隻。', 'calm'), P('而家車上一共有幾多隻？', 'ask')]; },
   frogAlt: '青蛙跳跳', frogWhere: '我會跳到邊度？', frogLanded: function(t){ return '我跳咗去' + t + '！'; },
   sFrogAsk: function(s, a){ return [P('我喺' + s + '度。', 'calm'), P('我要跳' + a + '下。', 'calm'), P('撳吓我會跳到邊塊荷葉！', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('我喺' + s + '度。', 'calm'), P('我要跳' + k + '下，每下跳10。', 'calm'), P('撳吓我會跳到邊塊荷葉！', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('啱喇！', 'cheer'), P(s + '加' + a + '等於' + t + '！', 'proud')]; },
   sFrogWrong: function(t){ return [P('我跳咗去' + t + '。', 'calm'), P('再試多次！', 'cheer')]; },
   specialSticker: '特別貼紙！',
@@ -2177,6 +2184,7 @@ ko: {
   sBusNow: function(s, a){ return [P('버스에 달팽이가 ' + s + '마리 있었어요.', 'calm'), P(a + '마리가 더 탔어요.', 'calm'), P('이제 버스에 모두 몇 마리 있나요?', 'ask')]; },
   frogAlt: '개구리 폴짝이', frogWhere: '어디에 도착할까요?', frogLanded: function(t){ return t + '에 도착했어요!'; },
   sFrogAsk: function(s, a){ return [P('나는 ' + s + '에 있어요.', 'calm'), P(a + '번 뛸 거예요.', 'calm'), P('어느 연잎에 도착할지 눌러 보세요!', 'ask')]; },
+  sFrogAskTens: function(s, k){ return [P('나는 ' + s + '에 있어요.', 'calm'), P(k + '번 뛸 거예요. 한 번에 10씩 가요.', 'calm'), P('어느 연잎에 도착할지 눌러 보세요!', 'ask')]; },
   sFrogRight: function(s, a, t){ return [P('맞아요!', 'cheer'), P(s + ' 더하기 ' + a + koEun(a) + ' ' + t + '!', 'proud')]; },
   sFrogWrong: function(t){ return [P(t + '에 도착했어요.', 'calm'), P('다시 해 봐요!', 'cheer')]; },
   specialSticker: '특별 스티커!',
@@ -4912,23 +4920,39 @@ function pickFrog(){
 }
 function startFrog(){ G = { game:'frog', q:0, earned:0, startStars:S.stars }; frogQuestion(); }
 function frogQuestion(){
-  var p = pickFrog(), max = MX();
+  var big = isBig(), p, max = MX(), v;
+  if (big) { var bp = bigSum(G.q, BIG()); p = [bp.a, bp.b]; G.kind = bp.kind; } else p = pickFrog();
+  G.big = big; G.hopv = 1;
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1]; G.last = factKey(G.s, G.a);
-  /* the line shows 0-5, 0-10, or a window of 11 pads around the hop when going up to 15 / 20 */
-  if (max <= 5) { G.lo = 0; G.hi = 5; }
-  else if (max <= 10) { G.lo = 0; G.hi = 10; }
-  else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
+  G.padVals = [];
+  if (big) {
+    if (G.a % 10 === 0) {                       /* hops of 10: pads are 10 apart, e.g. 34, 44, 54 */
+      G.hopv = 10;
+      for (v = G.s % 10; v <= BIG(); v += 10) G.padVals.push(v);
+    } else {                                    /* small hops: 11 pads in a row, the tens (30, 40) stand out */
+      var lo = Math.max(0, G.s - 1);
+      for (v = lo; v <= lo + 10; v++) G.padVals.push(v);
+    }
+  } else {
+    /* the line shows 0-5, 0-10, or a window of 11 pads around the hop when going up to 15 / 20 */
+    if (max <= 5) { G.lo = 0; G.hi = 5; }
+    else if (max <= 10) { G.lo = 0; G.hi = 10; }
+    else { G.lo = Math.max(0, Math.min(G.s - 1, max - 10)); G.hi = G.lo + 10; }
+    for (v = G.lo; v <= G.hi; v++) G.padVals.push(v);
+  }
+  G.hops = G.a / G.hopv;
   G.pos = G.s; G.first = true; G.lock = false; G.tried = {}; G.sel = null; G.bubble2 = '';
   screen = 'frog'; closeOverlay(); renderFrog();
   frogAskAloud();
 }
-function frogAskAloud(){ say(L('sFrogAsk', G.s, G.a)); }
+function frogAskAloud(){ say(G.hopv === 10 ? L('sFrogAskTens', G.s, G.hops) : L('sFrogAsk', G.s, G.a)); }
 function renderFrog(){
   var dots = '';
   for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < G.q ? 'done' : i === G.q ? 'now' : '') + '"></span>';
   var pads = '';
-  for (var n = G.lo; n <= G.hi; n++)
-    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+  G.padVals.forEach(function(n){
+    pads += '<button class="pad' + (n === G.s ? ' start' : '') + (G.big && G.hopv === 1 && n % 10 === 0 ? ' tenpad' : '') + (G.tried[n] ? ' tried' : '') + (G.sel === n ? ' chosen' : '') + '" data-act="frog-pick" data-v="' + n + '" aria-label="' + n + '"' + (G.tried[n] ? ' disabled' : '') + '><span>' + n + '</span></button>';
+  });
   app.innerHTML = '<section class="screen frog">' +
     '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
     '<div class="dots" aria-label="' + esc(L('qOf', G.q + 1, ROUND)) + '">' + dots + '</div>' +
@@ -4936,7 +4960,7 @@ function renderFrog(){
     '<div class="stage">' +
       '<div class="left"><div class="momo-row"><div id="momo">' + frogImg() + '</div><div class="bubbles"><div class="bubble"><b id="bubble">' + esc(L('frogWhere')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div></div>' +
         '<div class="eq" aria-live="off"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t qbox" id="frogT">?</span></div></div>' +
-      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + (G.hi - G.lo + 1) + '">' +
+      '<div class="pondcol"><div class="pond" id="pond" style="--n:' + G.padVals.length + '">' +
         '<svg class="arcs" id="arcs" aria-hidden="true"></svg>' +
         '<div class="pads">' + pads + '</div>' +
         '<img class="hopper" id="hopper" src="animals/frog.png" alt="" draggable="false">' +
@@ -4949,7 +4973,7 @@ function renderFrog(){
 /* pick how many pads per row so they're as big as possible (one long line on wide screens, 2-3 rows on tall ones) */
 function layoutPond(){
   var pond = document.getElementById('pond'), pads = pond && pond.querySelector('.pads'); if (!pads) return;
-  var n = G.hi - G.lo + 1, W = pond.clientWidth - 24, H = pond.clientHeight - 16, best = null;
+  var n = G.padVals.length, W = pond.clientWidth - 24, H = pond.clientHeight - 16, best = null;
   for (var r = 1; r <= 4; r++) {
     var c = Math.ceil(n / r), gap = 8, size = Math.min((W - (c - 1) * gap) / c, (H / r) / 2.05, 110);   /* room above each row for the frog */
     if (!best || size > best.size * 1.15) best = { c:c, size:size };   /* fewer rows unless more rows make pads clearly bigger */
@@ -5014,8 +5038,8 @@ function frogHop(done){
   say(P(String(G.s), 'calm'));
   function step(){
     if (screen !== 'frog' || !G || G.q !== q) return;
-    if (k >= G.a) { setTimeout(done, 350); return; }
-    var from = G.s + k, to = from + 1; k++;
+    if (k >= G.hops) { setTimeout(done, 350); return; }
+    var from = G.s + k * G.hopv, to = from + G.hopv; k++;
     hopOnce(from, to, function(){
       var pad = document.querySelector('.pad[data-v="' + to + '"]');
       if (pad) { pad.classList.remove('hit'); void pad.offsetWidth; pad.classList.add('hit'); }
@@ -5072,7 +5096,7 @@ function showFrogReward(){
   function pads(n, kind){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="mini-pad ' + kind + '"></span>'; return h; }
   overlay('<div class="reward">' +
     '<h1>' + L('didIt') + '</h1>' + frogImg('pic animal') +
-    '<div class="sumcard"><div class="groups"><div class="g">' + pads(G.s, 'start') + '</div>+<div class="g">' + pads(G.a, 'add') + '</div></div>' +
+    '<div class="sumcard">' + (G.big ? '' : '<div class="groups"><div class="g">' + pads(G.s, 'start') + '</div>+<div class="g">' + pads(G.a, 'add') + '</div></div>') +
     '<div class="bigeq" aria-label="' + esc(L('eqLabel', G.s, G.a, G.t)) + '"><span class="s">' + G.s + '</span><span>+</span><span class="a">' + G.a + '</span><span>=</span><span class="t">' + G.t + '</span></div></div>' +
     '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
   confetti();
