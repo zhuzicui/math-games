@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.194355">
+<meta name="build" content="2026-11-13.201349">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -999,6 +999,18 @@ body.waterbg::before{content:'';position:fixed;inset:0;pointer-events:none;opaci
 @keyframes numbob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 8px)) rotate(-2deg)}}
 .nummode .fish{opacity:0;transition:opacity .4s}
 .nummode.reveal .fish{opacity:1}
+.nummode .school{opacity:0;transition:opacity .4s}
+.nummode.reveal .school{opacity:1}
+/* 50 / 100: a school of 10 fish, five by two like a box of 10 cookies, swimming together */
+.school{position:absolute;box-sizing:border-box;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:3%;align-items:center;
+  border-radius:999px;background:rgba(255,255,255,.3);border:2px dashed rgba(255,255,255,.95);transform:translate(0,-50%);animation:schoolswim 6s ease-in-out infinite;pointer-events:none;will-change:transform}
+.sfish{display:block;width:100%;height:auto;margin:4% 0;transform:scaleX(var(--flip,1))}
+@keyframes schoolswim{0%,100%{transform:translate(0,-50%)}50%{transform:translate(0,calc(-50% - 5px)) rotate(-1deg)}}
+.school.counted{background:rgba(255,241,201,.75);border:2px solid #F2C640;box-shadow:0 0 0 3px rgba(242,198,64,.35)}
+.school .stag{left:0;top:0;transform:translate(-25%,-45%)}
+.crocgame .stag,.crocgame .ltag{font-size:clamp(11px,2.2dvh,20px)}
+.water.eaten .school{opacity:0}
+@media (prefers-reduced-motion:reduce){ .school{animation:none} }
 .nummode.reveal .numcard{top:12%;font-size:clamp(40px,9dvh,80px);transition:top .4s,font-size .4s}
 /* croc: Same sits under the croc (the third choice); the comparison below is flat text, not buttons */
 .croc-mid{flex-direction:column;gap:clamp(10px,2.4dvh,22px)}
@@ -1520,6 +1532,7 @@ en: {
   sCrocAsk: [P('The crocodile is very hungry!', 'cheer'), P('He always eats the side with more fish. Which side will he eat?', 'ask')], sCrocAsk2: [P('Which side has more fish?', 'ask')],
   sCrocRight: function(b, s){ return [P('Yes!', 'cheer'), P(b + ' is more than ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('Same!', 'cheer'), P(n + ' and ' + n + ' are the same!', 'proud')]; },
   sCrocWrong: [P('Hmm, let’s count the fish.', 'calm')], sCrocTry: [P('Which side has more fish?', 'ask')],
+  crocSchool: 'A school of 10 fish', crocTensFirst: 'Look at the schools of 10 first!', crocSameTens: 'Same number of schools! Now look at the other fish.',
   crocAskNum: 'Which number is bigger?', sCrocAskNum: [P('Which number is bigger?', 'ask')],
   gTrain: 'Number Train', trainAlt: 'Penguin train', trainAsk: 'Which number is missing?', trainAskDrag: 'Drag the numbers onto the train', trainSlot: 'Empty car', toot: 'Toot toot!',
   sTrainAsk: [P('All aboard the number train!', 'cheer'), P('Some numbers are missing. Which number is missing?', 'ask')], sTrainAsk2: [P('Which number is missing?', 'ask')], sTrainDrag: [P('Drag each number to its car!', 'ask')], sTrainGood: [P('Yes!', 'cheer')], sTrainWrong: [P('Hmm, let’s count the cars together.', 'calm')],
@@ -1634,6 +1647,7 @@ fr: {
   sCrocAsk: [P('Le crocodile a très faim !', 'cheer'), P('Il mange toujours le côté qui a le plus de poissons. Lequel va-t-il manger ?', 'ask')], sCrocAsk2: [P('Quel côté a le plus de poissons ?', 'ask')],
   sCrocRight: function(b, s){ return [P('Oui !', 'cheer'), P(b + ' est plus grand que ' + s + ' !', 'proud')]; }, sCrocSame: function(n){ return [P('Pareil !', 'cheer'), P(n + ' et ' + n + ', c’est pareil !', 'proud')]; },
   sCrocWrong: [P('Hmm, comptons les poissons.', 'calm')], sCrocTry: [P('Quel côté a le plus de poissons ?', 'ask')],
+  crocSchool: 'Un banc de 10 poissons', crocTensFirst: 'Regarde d’abord les bancs de 10\u00a0!', crocSameTens: 'Autant de bancs\u00a0! Regarde maintenant les autres poissons.',
   crocAskNum: 'Quel nombre est le plus grand\u00a0?', sCrocAskNum: [P('Quel nombre est le plus grand ?', 'ask')],
   gTrain: 'Le train des nombres', trainAlt: 'Train des pingouins', trainAsk: 'Quel nombre manque\u00a0?', trainAskDrag: 'Glisse les nombres dans le train', trainSlot: 'Wagon vide', toot: 'Tchou tchou\u00a0!',
   sTrainAsk: [P('Tout le monde à bord du train des nombres !', 'cheer'), P('Il manque des nombres. Lequel manque ?', 'ask')], sTrainAsk2: [P('Quel nombre manque ?', 'ask')], sTrainDrag: [P('Glisse chaque nombre dans son wagon !', 'ask')], sTrainGood: [P('Oui !', 'cheer')], sTrainWrong: [P('Hmm, comptons les wagons ensemble.', 'calm')],
@@ -1748,6 +1762,7 @@ es: {
   sCrocAsk: [P('¡El cocodrilo tiene mucha hambre!', 'cheer'), P('Siempre se come el lado con más peces. ¿Cuál se comerá?', 'ask')], sCrocAsk2: [P('¿Qué lado tiene más peces?', 'ask')],
   sCrocRight: function(b, s){ return [P('¡Sí!', 'cheer'), P('¡' + b + ' es más que ' + s + '!', 'proud')]; }, sCrocSame: function(n){ return [P('¡Igual!', 'cheer'), P('¡' + n + ' y ' + n + ' son iguales!', 'proud')]; },
   sCrocWrong: [P('Mmm, contemos los peces.', 'calm')], sCrocTry: [P('¿Qué lado tiene más peces?', 'ask')],
+  crocSchool: 'Un banco de 10 peces', crocTensFirst: '¡Mira primero los bancos de 10!', crocSameTens: '¡Hay los mismos bancos! Ahora mira los otros peces.',
   crocAskNum: '¿Qué número es más grande?', sCrocAskNum: [P('¿Qué número es más grande?', 'ask')],
   gTrain: 'El tren de los números', trainAlt: 'Tren de pingüinos', trainAsk: '¿Qué número falta?', trainAskDrag: 'Arrastra los números al tren', trainSlot: 'Vagón vacío', toot: '¡Chu chu!',
   sTrainAsk: [P('¡Todos a bordo del tren de los números!', 'cheer'), P('Faltan algunos números. ¿Cuál falta?', 'ask')], sTrainAsk2: [P('¿Qué número falta?', 'ask')], sTrainDrag: [P('¡Arrastra cada número a su vagón!', 'ask')], sTrainGood: [P('¡Sí!', 'cheer')], sTrainWrong: [P('Mmm, contemos los vagones juntos.', 'calm')],
@@ -1862,6 +1877,7 @@ zh: {
   sCrocAsk: [P('鳄鱼好饿呀！', 'cheer'), P('它总是吃鱼多的那一边。它会吃哪一边呢？', 'ask')], sCrocAsk2: [P('哪边的鱼多？', 'ask')],
   sCrocRight: function(b, s){ return [P('对啦！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一样多！', 'cheer'), P(n + '和' + n + '一样多！', 'proud')]; },
   sCrocWrong: [P('嗯，我们来数一数鱼。', 'calm')], sCrocTry: [P('哪边的鱼多？', 'ask')],
+  crocSchool: '一群10条鱼', crocTensFirst: '先看10条一群的鱼！', crocSameTens: '鱼群一样多！再看看别的鱼。',
   crocAskNum: '哪个数字更大？', sCrocAskNum: [P('哪个数字更大？', 'ask')],
   gTrain: '数字火车', trainAlt: '企鹅火车', trainAsk: '缺了哪个数字？', trainAskDrag: '把数字拖到火车上', trainSlot: '空车厢', toot: '呜呜！',
   sTrainAsk: [P('数字火车要出发啦！', 'cheer'), P('有些数字不见了。缺了哪个数字？', 'ask')], sTrainAsk2: [P('缺了哪个数字？', 'ask')], sTrainDrag: [P('把每个数字拖到它的车厢里！', 'ask')], sTrainGood: [P('对啦！', 'cheer')], sTrainWrong: [P('嗯，我们一起数一数车厢。', 'calm')],
@@ -1976,6 +1992,7 @@ ja: {
   sCrocAsk: [P('ワニは おなかが ぺこぺこ！', 'cheer'), P('いつも さかなが おおい ほうを たべるよ。どっちを たべるかな？', 'ask')], sCrocAsk2: [P('どっちの さかなが おおい？', 'ask')],
   sCrocRight: function(b, s){ return [P('せいかい！', 'cheer'), P(b + 'は ' + s + 'より おおい！', 'proud')]; }, sCrocSame: function(n){ return [P('おなじ！', 'cheer'), P(n + 'と ' + n + 'は おなじ！', 'proud')]; },
   sCrocWrong: [P('さかなを かぞえてみよう。', 'calm')], sCrocTry: [P('どっちの さかなが おおい？', 'ask')],
+  crocSchool: '10ぴきの むれ', crocTensFirst: 'さきに 10ぴきの むれを みてね！', crocSameTens: 'むれの かずは おなじ！ ほかの さかなを みてね。',
   crocAskNum: 'どっちの かずが おおきい？', sCrocAskNum: [P('どっちの かずが おおきい？', 'ask')],
   gTrain: 'かずの きしゃ', trainAlt: 'ペンギンの きしゃ', trainAsk: 'どの かずが ないかな？', trainAskDrag: 'かずを きしゃに いれてね', trainSlot: 'からっぽの しゃりょう', toot: 'ポッポー！',
   sTrainAsk: [P('かずの きしゃが しゅっぱつするよ！', 'cheer'), P('かずが たりないね。どの かずが ないかな？', 'ask')], sTrainAsk2: [P('どの かずが ないかな？', 'ask')], sTrainDrag: [P('かずを ただしい しゃりょうに いれてね！', 'ask')], sTrainGood: [P('そう！', 'cheer')], sTrainWrong: [P('うーん、いっしょに かぞえてみよう。', 'calm')],
@@ -2090,6 +2107,7 @@ yue: {
   sCrocAsk: [P('鱷魚好肚餓呀！', 'cheer'), P('佢成日食魚多啲嗰邊。佢會食邊邊呢？', 'ask')], sCrocAsk2: [P('邊邊啲魚多啲？', 'ask')],
   sCrocRight: function(b, s){ return [P('啱喇！', 'cheer'), P(b + '比' + s + '多！', 'proud')]; }, sCrocSame: function(n){ return [P('一樣多！', 'cheer'), P(n + '同' + n + '一樣多！', 'proud')]; },
   sCrocWrong: [P('我哋數吓啲魚。', 'calm')], sCrocTry: [P('邊邊啲魚多啲？', 'ask')],
+  crocSchool: '一群10條魚', crocTensFirst: '先睇10條一群嘅魚！', crocSameTens: '魚群一樣多！再睇吓其他啲魚。',
   crocAskNum: '邊個數字大啲？', sCrocAskNum: [P('邊個數字大啲？', 'ask')],
   gTrain: '數字火車', trainAlt: '企鵝火車', trainAsk: '唔見咗邊個數字？', trainAskDrag: '將數字拖上火車', trainSlot: '空車卡', toot: '嘟嘟！',
   sTrainAsk: [P('數字火車開車喇！', 'cheer'), P('有啲數字唔見咗。唔見咗邊個數字？', 'ask')], sTrainAsk2: [P('唔見咗邊個數字？', 'ask')], sTrainDrag: [P('將每個數字拖去佢嘅車卡！', 'ask')], sTrainGood: [P('啱喇！', 'cheer')], sTrainWrong: [P('嗯，我哋一齊數下啲車卡。', 'calm')],
@@ -2204,6 +2222,7 @@ ko: {
   sCrocAsk: [P('악어가 너무 배고파요!', 'cheer'), P('악어는 항상 물고기가 더 많은 쪽을 먹어요. 어느 쪽을 먹을까요?', 'ask')], sCrocAsk2: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
   sCrocRight: function(b, s){ return [P('맞아요!', 'cheer'), P(b + ', ' + s + '보다 많아요!', 'proud')]; }, sCrocSame: function(n){ return [P('똑같아요!', 'cheer'), P(n + '하고 ' + n + ', 똑같아요!', 'proud')]; },
   sCrocWrong: [P('물고기를 세어 봐요.', 'calm')], sCrocTry: [P('어느 쪽에 물고기가 더 많아요?', 'ask')],
+  crocSchool: '물고기 10마리 무리', crocTensFirst: '먼저 10마리 무리를 봐요!', crocSameTens: '무리 수가 같아요! 이제 다른 물고기를 봐요.',
   crocAskNum: '어느 숫자가 더 커요?', sCrocAskNum: [P('어느 숫자가 더 커요?', 'ask')],
   gTrain: '숫자 기차', trainAlt: '펭귄 기차', trainAsk: '어떤 숫자가 빠졌을까요?', trainAskDrag: '숫자를 기차에 끌어다 놓아요', trainSlot: '빈 칸', toot: '칙칙폭폭!',
   sTrainAsk: [P('숫자 기차 출발해요!', 'cheer'), P('숫자가 빠졌어요. 어떤 숫자가 빠졌을까요?', 'ask')], sTrainAsk2: [P('어떤 숫자가 빠졌을까요?', 'ask')], sTrainDrag: [P('숫자를 알맞은 칸에 끌어다 놓아요!', 'ask')], sTrainGood: [P('맞아요!', 'cheer')], sTrainWrong: [P('음, 같이 기차 칸을 세어 봐요.', 'calm')],
@@ -2817,13 +2836,36 @@ function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" sr
 /* each round of 5 mixes kinds of question: 'easy' (clear difference), 'close' (1-2 apart, fish sizes that mislead),
    'num' (just two numbers; the fish appear only if the child needs to count), 'eq' (same on both sides) */
 function crocPlan(){
+  /* 50 / 100: whole tens, tens and ones, ones that mislead (28 vs 41), same tens (43 vs 47), then numbers only or a tie */
+  if (isBig()) return ['tens', 'tensones', 'trick', 'sameten', Math.random() < 0.3 ? 'eq' : 'num'];
   var small = MX() <= 5, rest = small ? ['easy', 'num', 'easy'] : ['close', 'num', 'close'];
   rest.push(Math.random() < 0.6 ? 'eq' : (small ? 'easy' : 'easy'));
   rest.sort(function(){ return Math.random() - 0.5; });
   return ['easy'].concat(rest);
 }
 function startCroc(){ G = { game:'croc', q:0, earned:0, startStars:S.stars, plan:crocPlan() }; crocQuestion(); }
+/* big numbers: a = left, b = right, never above the setting (50 or 100) */
+function crocBigNumbers(kind){
+  var cap = BIG(), t = Math.floor(cap / 10), x, y, u, v, a, b, n = 0;
+  do {
+    n++;
+    if (kind === 'tens') { x = rint(1, t); do { y = rint(1, t); } while (y === x); a = 10 * x; b = 10 * y; }
+    else if (kind === 'eq') { a = b = 10 * rint(1, t - 1) + rint(1, 9); }
+    else if (kind === 'sameten') { x = rint(1, t - 1); u = rint(1, 9); do { v = rint(1, 9); } while (v === u); a = 10 * x + u; b = 10 * x + v; }
+    else if (kind === 'trick') {      /* the smaller number has more loose fish: only the schools tell */
+      x = rint(1, t - 2); y = Math.random() < 0.6 ? x + 1 : rint(x + 1, t - 1); u = rint(5, 9); v = rint(0, Math.min(3, u - 2));
+      a = 10 * x + u; b = 10 * y + v; if (Math.random() < 0.5) { var s0 = a; a = b; b = s0; }
+    } else {                           /* tensones and num: different tens, any ones; num sometimes swaps the digits (47 vs 74) */
+      x = rint(1, t - 1); do { y = rint(1, t - 1); } while (y === x); u = rint(0, 9); v = rint(0, 9);
+      if (kind === 'num' && Math.random() < 0.4 && x !== y && x <= 9 && y <= 9) { u = y; v = x; }
+      if (kind === 'tensones' && !u && !v) u = rint(1, 9);
+      a = 10 * x + u; b = 10 * y + v;
+    }
+  } while ((a > cap || b > cap || a < 1 || b < 1 || (G.prev && G.prev[0] === a && G.prev[1] === b)) && n < 200);
+  return [a, b];
+}
 function crocNumbers(kind){
+  if (isBig()) return crocBigNumbers(kind);
   var small = MX() <= 5, max = Math.min(20, MX() || 5), a, b, n = 0;
   function r(lo){ return lo + Math.floor(Math.random() * (max - lo + 1)); }
   if (kind === 'eq') { a = r(2); return [a, a]; }
@@ -2857,12 +2899,76 @@ function pondFish(n, big, side){
   }
   return out;
 }
+/* 50 / 100: fish come in schools of 10 (five by two, like a box of 10 cookies) plus a few loose fish.
+   The schools sit on the outer side of the pond, the loose fish near the croc (or below, on a tall narrow pond).
+   Everything is measured in px for the pond's real size, then stored in % so it follows the pond. */
+function pondSize(){
+  var el = document.getElementById('pondL');
+  if (el && screen === 'croc') { var r = el.getBoundingClientRect(); if (r.width > 60 && r.height > 60) return [r.width, r.height]; }
+  return [Math.max(120, (innerWidth - Math.min(330, innerWidth * 0.27)) / 2 - 20), Math.max(120, innerHeight * 0.58)];
+}
+/* both ponds use the same fish size, so a side never looks bigger just because its fish are */
+/* number questions keep the top of each pond free for the number card once the fish show */
+function crocTop(){ return G && G.kind === 'num' ? 0.24 : 0; }
+function crocSchoolPair(l, r){
+  var a = schoolFit(l), b = schoolFit(r), fw = Math.min(a.fw, b.fw);
+  return [pondSchools(l, 'L', fw), pondSchools(r, 'R', fw)];
+}
+function pondSchools(n, side, fwMax){
+  var b = schoolFit(n, fwMax), sz = pondSize(), k = Math.floor(n / 10), m = n % 10, out = [], W0 = sz[0], H0 = sz[1];
+  var lwT = b.cols * b.lw, lhT = b.rows * b.lh;
+  var totW = b.below ? Math.max(b.bw, lwT) : b.bw + (k && m ? b.gap * 1.6 : 0) + (m ? lwT : 0);
+  var totH = b.below ? b.bh + (k && m ? b.gap * 1.6 : 0) + (m ? lhT : 0) : Math.max(b.bh, m ? lhT : 0);
+  var x0 = (W0 - totW) / 2, y0 = H0 * crocTop() + (H0 * (1 - crocTop()) - totH) / 2, last = 0;
+  /* schools: outer side first, so the loose fish swim nearest the croc */
+  for (var i = 0; i < k; i++) {
+    var col = i % b.c, row = Math.floor(i / b.c), f; do { f = 1 + Math.floor(Math.random() * FISH_N); } while (f === last); last = f;
+    var sx = b.below ? x0 + (totW - b.bw) / 2 : (side === 'L' ? x0 : x0 + totW - b.bw);
+    var sy = b.below ? y0 : y0 + (totH - b.bh) / 2;
+    out.push({ school: true, f: f, x: (sx + col * (b.sw + b.gap)) / W0 * 100, y: (sy + row * (b.sh + b.gap) + b.sh / 2) / H0 * 100, w: b.sw / W0 * 100,
+      pad: 0.25 * b.fw / W0 * 100, face: side === 'L' ? 1 : -1, d: (Math.random() * 4).toFixed(2), dur: (5 + Math.random() * 3).toFixed(1) });
+  }
+  if (m) {
+    var lx = b.below ? x0 + (totW - lwT) / 2 : (side === 'L' ? x0 + totW - lwT : x0), ly = b.below ? y0 + b.bh + (k ? b.gap * 1.6 : 0) : y0 + (totH - lhT) / 2;
+    var cells = []; for (var cc = 0; cc < b.cols; cc++) for (var rr = 0; rr < b.rows; rr++) cells.push([cc, rr]);
+    shuffle(cells);
+    for (var j = 0; j < m; j++) {
+      var cl = cells[j], w = b.fw * (0.95 + Math.random() * 0.1);
+      var fx = lx + cl[0] * b.lw + (b.lw - w) / 2 + (Math.random() - 0.5) * b.lw * 0.25, fy = ly + cl[1] * b.lh + b.lh / 2 + (Math.random() - 0.5) * b.lh * 0.3;
+      out.push({ f: 1 + Math.floor(Math.random() * FISH_N), x: fx / W0 * 100, y: fy / H0 * 100, w: w / W0 * 100, flip: Math.random() < 0.5, d: (Math.random() * 4).toFixed(2),
+        dur: (4 + Math.random() * 4).toFixed(1), dx: Math.round(4 + Math.random() * 6), dy: Math.round((Math.random() - 0.5) * 6), rot: (2 + Math.random() * 3).toFixed(1) });
+    }
+  }
+  return out;
+}
+function schoolFit(n, fwMax){
+  var sz = pondSize(), W = sz[0] * 0.94, H = sz[1] * (0.94 - crocTop()), k = Math.floor(n / 10), m = n % 10, best = null;
+  for (var fw = Math.min(fwMax || 58, 58, W / 5); fw >= 6 && !best; fw -= 0.5) {
+    var sw = 5.9 * fw, sh = 1.95 * fw, gap = 0.32 * fw, lw = 1.5 * fw, lh = 1.05 * fw;
+    for (var c = Math.max(1, k); c >= 1 && !best; c--) {
+      var r = Math.ceil(k / c), bw = k ? c * sw + (c - 1) * gap : 0, bh = k ? r * sh + (r - 1) * gap : 0;
+      if (bw > W || bh > H) continue;
+      /* loose fish beside the schools */
+      var aw = W - bw - (k ? gap * 1.6 : 0), cols = Math.floor(aw / lw), rows = Math.floor(H / lh);
+      if (!m || cols * rows >= m) { var ru = Math.min(rows, m + 1, 5), cu = Math.min(cols, Math.ceil(m * 1.4 / ru)); while (cu * ru < m) { if (ru < rows) ru++; else cu++; }
+        best = { fw: fw, c: c, r: r, bw: bw, bh: bh, below: false, cols: m ? cu : 0, rows: m ? ru : 0, gap: gap, sw: sw, sh: sh, lw: lw, lh: lh }; break; }
+      /* or under them */
+      var ah = H - bh - (k ? gap * 1.6 : 0); cols = Math.floor(W / lw); rows = Math.floor(ah / lh);
+      if (!m || cols * rows >= m) { var cu2 = Math.min(cols, m + 1, 5), ru2 = Math.min(rows, Math.ceil(m * 1.4 / cu2)); while (cu2 * ru2 < m) { if (cu2 < cols) cu2++; else ru2++; }
+        best = { fw: fw, c: c, r: r, bw: bw, bh: bh, below: true, cols: m ? cu2 : 0, rows: m ? ru2 : 0, gap: gap, sw: sw, sh: sh, lw: lw, lh: lh }; break; }
+    }
+  }
+  return best;
+}
 function crocQuestion(){
   var kind = (G.plan && G.plan[G.q]) || 'easy';
   var p = crocNumbers(kind); G.prev = p;
   G.sel = null;   /* every question starts with nothing chosen */
   G.kind = kind; G.mode = kind === 'num' ? 'num' : 'fish'; G.reveal = false;
-  G.l = p[0]; G.r = p[1]; G.first = true; G.lock = false; G.done = null; G.bubble2 = '';
+  G.l = p[0]; G.r = p[1]; G.first = true; G.lock = false; G.done = null; G.bubble2 = ''; G.big = isBig(); G.tagged = false;
+  if (G.big) {   /* draw the empty ponds first, so the schools are laid out for their real size */
+    screen = 'croc'; G.fishL = []; G.fishR = []; closeOverlay(); renderCroc();
+    var pr = crocSchoolPair(G.l, G.r); G.fishL = pr[0]; G.fishR = pr[1]; renderCroc(); say((G.mode === 'num' ? L('sCrocAskNum') : G.q === 0 ? L('sCrocAsk') : L('sCrocAsk2')).concat(G.q === 0 ? L('sCrocHow') : [])); return; }
   /* close calls give the smaller side the bigger fish, so children count instead of judging by size */
   var trick = kind === 'close' || (MX() > 5 && kind !== 'num' && Math.random() < 0.3);
   G.fishL = pondFish(G.l, trick ? G.l < G.r : Math.random() < 0.5, 'L');
@@ -2872,6 +2978,10 @@ function crocQuestion(){
 }
 function fishHtml(list, side){
   return list.map(function(o, i){
+    if (o.school) {
+      var imgs = ''; for (var k = 0; k < 10; k++) imgs += '<img class="sfish" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false">';
+      return '<div class="school" data-i="' + (i + 1) + '" role="img" aria-label="' + esc(L('crocSchool')) + '" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;padding:' + o.pad.toFixed(2) + '%;--flip:' + (o.face * (FISH_LEFT[o.f - 1] ? -1 : 1)) + ';animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">' + imgs + '</div>';
+    }
     return '<img class="fish" data-i="' + (i + 1) + '" src="fish/f' + (o.f < 10 ? '0' : '') + o.f + '.png" alt="" draggable="false" style="left:' + o.x.toFixed(1) + '%;top:' + o.y.toFixed(1) + '%;width:' + o.w.toFixed(1) + '%;--flip:' + (o.flip ? -1 : 1) + ';--fx:' + ((FISH_LEFT[o.f - 1] ? -1 : 1) * (o.flip ? -1 : 1) * o.dx) + 'px;--fy:' + o.dy + 'px;--fr:' + o.rot + 'deg;animation-duration:' + o.dur + 's;animation-delay:-' + o.d + 's">';
   }).join('');
 }
@@ -2888,10 +2998,10 @@ function renderCroc(){
     speakBtn('croc-repeat', L('hearAgain')) + '</div>' +
     '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.mode === 'num' ? L('crocAskNum') : L('crocAsk')) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
     '<div class="croc-stage">' +
-      '<button class="water' + pk('L') + '" id="pondL" data-act="croc-pick" data-v="L" aria-pressed="' + (G.sel === 'L') + '" aria-label=""' + esc(G.mode === 'num' ? String(G.l) : L('leftSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.l + '</span>' : '') + fishHtml(G.fishL, 'L') + '</button>' +
+      '<button class="water' + pk('L') + '" id="pondL" data-act="croc-pick" data-v="L" aria-pressed="' + (G.sel === 'L') + '" aria-label="' + esc(G.mode === 'num' ? String(G.l) : L('leftSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.l + '</span>' : '') + fishHtml(G.fishL, 'L') + '</button>' +
       '<div class="croc-mid">' + (d === 'L' || d === 'R' ? crocImg(true, 'croc-img open' + (d === 'L' ? ' flip' : '')) : crocImg(false, 'croc-img' + (G.sel === 'L' ? ' look-l' : G.sel === 'R' ? ' look-r' : ''))) +
         '<button class="same-btn' + pk('E') + '" data-act="croc-pick" data-v="E" aria-pressed="' + (G.sel === 'E') + '"' + (d ? ' disabled' : '') + '><b>=</b><span>' + L('sameBtn') + '</span></button></div>' +
-      '<button class="water' + pk('R') + '" id="pondR" data-act="croc-pick" data-v="R" aria-pressed="' + (G.sel === 'R') + '" aria-label=""' + esc(G.mode === 'num' ? String(G.r) : L('rightSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.r + '</span>' : '') + fishHtml(G.fishR, 'R') + '</button>' +
+      '<button class="water' + pk('R') + '" id="pondR" data-act="croc-pick" data-v="R" aria-pressed="' + (G.sel === 'R') + '" aria-label="' + esc(G.mode === 'num' ? String(G.r) : L('rightSide')) + '"' + (d ? ' disabled' : '') + '>' + (G.mode === 'num' ? '<span class="numcard">' + G.r + '</span>' : '') + fishHtml(G.fishR, 'R') + '</button>' +
     '</div>' +
     '<div class="croc-under">' +
       '<div class="cmp" aria-live="off"><span class="n">' + (d ? G.l : '?') + '</span><span class="sign' + (d ? ' shown' : '') + '">' + sign + '</span><span class="n">' + (d ? G.r : '?') + '</span></div>' +
@@ -2914,6 +3024,7 @@ function crocPick(v){
   if (!G || G.lock || G.done) return;
   var right = G.l > G.r ? 'L' : G.l < G.r ? 'R' : 'E';
   clearSay();
+  if (G.big && G.first) { var rk = G.kind === 'tens' ? 'T:tens' : 'T:tensones', rf = S.facts[rk] || { t:0, r:0 }; rf.t++; if (v === right) rf.r++; S.facts[rk] = rf; save(); }
   if (v === right) {
     G.lock = true; G.done = v;
     G.bubble2 = L('bravo'); G.bubble2Kind = 'yum';
@@ -2930,7 +3041,7 @@ function crocPick(v){
       setBubble2(G.bubble2, G.bubble2Kind);
       var big = Math.max(G.l, G.r), small = Math.min(G.l, G.r);
       say(L('sCrocRight', big, small));
-      var fish = [].slice.call(document.querySelectorAll('#' + (v === 'L' ? 'pondL' : 'pondR') + (G.mode === 'num' && !G.reveal ? ' .numcard' : ' .fish, #' + (v === 'L' ? 'pondL' : 'pondR') + ' .numcard')));
+      var fish = [].slice.call(document.querySelectorAll('#' + (v === 'L' ? 'pondL' : 'pondR') + (G.mode === 'num' && !G.reveal ? ' .numcard' : ' .fish, #' + (v === 'L' ? 'pondL' : 'pondR') + ' .school, #' + (v === 'L' ? 'pondL' : 'pondR') + ' .numcard')));
       /* nearest fish first */
       var mid = img.getBoundingClientRect(), mx = v === 'L' ? mid.left + mid.width * 0.1 : mid.right - mid.width * 0.1, my = mid.top + mid.height * 0.55;
       fish.sort(function(a, b){ var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return Math.abs(ra.left + ra.width / 2 - mx) - Math.abs(rb.left + rb.width / 2 - mx); });
@@ -2938,7 +3049,7 @@ function crocPick(v){
       fish.forEach(function(f, i){
         var r = f.getBoundingClientRect(), dx = mx - (r.left + r.width / 2), dy = my - (r.top + r.height / 2);
         var o = f.getAttribute('data-i') ? G[v === 'L' ? 'fishL' : 'fishR'][+f.getAttribute('data-i') - 1] : null;
-        var toward = o ? (v === 'L' ? 1 : -1) * (FISH_LEFT[o.f - 1] ? -1 : 1) : 1;   /* fish swim facing the croc; a number card just flies in */
+        var toward = o && !o.school ? (v === 'L' ? 1 : -1) * (FISH_LEFT[o.f - 1] ? -1 : 1) : 1;   /* fish swim facing the croc; a number card just flies in */
         f.style.animation = 'none';
         if (f.animate && !reduceMotion) {
           f.animate([
@@ -2963,7 +3074,31 @@ function crocPick(v){
     if (el) { el.classList.remove('picked', 'nope'); void el.offsetWidth; el.classList.add('nope'); setTimeout(function(){ el.classList.remove('nope'); }, 500); el.setAttribute('aria-pressed', 'false'); }
     var img2 = document.querySelector('.croc-mid .croc-img'); if (img2) img2.classList.remove('look-l', 'look-r');
     var dn2 = document.getElementById('crocDone'); if (dn2) { dn2.disabled = true; dn2.classList.remove('ready'); }
+    if (G.big) crocTensHint();
   }
+}
+/* 50 / 100, after a wrong try: count the schools by tens on each side (10, 20, 30), then the loose fish on from there (31, 32).
+   The bubble says to look at the schools first, or, when both sides have as many schools, to look at the loose fish. */
+function crocTensHint(){
+  var same = Math.floor(G.l / 10) === Math.floor(G.r / 10);
+  G.bubble2 = same ? L('crocSameTens') : L('crocTensFirst'); G.bubble2Kind = '';
+  setBubble2(G.bubble2); say(P(G.bubble2, 'calm'));
+  if (G.tagged) return; G.tagged = true;
+  ['L', 'R'].forEach(function(sd, si){
+    var pond = document.getElementById('pond' + sd); if (!pond) return;
+    var list = G[sd === 'L' ? 'fishL' : 'fishR'], els = [].slice.call(pond.querySelectorAll('.school, .fish'));
+    var sch = els.filter(function(e){ return e.classList.contains('school'); }), loose = els.filter(function(e){ return !e.classList.contains('school'); });
+    function pos(e){ var o = list[+e.getAttribute('data-i') - 1]; return o.y * 1000 + o.x; }
+    sch.sort(function(a, b){ return pos(a) - pos(b); }); loose.sort(function(a, b){ return pos(a) - pos(b); });
+    var n = 0, delay = si * 700;
+    sch.forEach(function(e, i){ n += 10; var t = n; setTimeout(function(){ if (screen !== 'croc' || !e.isConnected) return; e.classList.add('counted'); e.insertAdjacentHTML('beforeend', '<span class="count-tag stag">' + t + '</span>'); }, delay + i * 160); });
+    /* loose fish packed too close for a tag each (a small phone): they light up one by one and only the last one gets its number */
+    var rs = loose.map(function(e){ var r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }), tight = false;
+    rs.forEach(function(a, i){ rs.forEach(function(c, j){ if (i < j && Math.abs(a[0] - c[0]) < 34 && Math.abs(a[1] - c[1]) < 30) tight = true; }); });
+    loose.forEach(function(e, i){ n += 1; var t = n, o = list[+e.getAttribute('data-i') - 1];
+      setTimeout(function(){ if (screen !== 'croc' || !e.isConnected) return; e.classList.add('counted'); if (tight && i < loose.length - 1) return;
+        e.insertAdjacentHTML('afterend', '<span class="count-tag ltag" style="left:' + (o.x + o.w * 0.5).toFixed(1) + '%;top:' + o.y.toFixed(1) + '%">' + t + '</span>'); }, delay + sch.length * 160 + i * 140 + 250); });
+  });
 }
 function showCrocReward(){
   if (screen !== 'croc') return;
