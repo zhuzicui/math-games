@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-13.184003">
+<meta name="build" content="2026-11-13.190244">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1337,6 +1337,21 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 @media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
 .upgame .bubble{background:rgba(255,252,247,.96)}
 @media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
+
+/* ===== boxes of 10 (Feed the Unicorn at 50 / 100) ===== */
+.cookie.tenbox{--box:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 52'><rect x='1.5' y='1.5' width='109' height='49' rx='11' fill='%23D8EAF6' stroke='%233B78A0' stroke-width='3'/><circle cx='12' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='34' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='56' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='78' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='100' cy='16' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='12' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='34' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='56' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='78' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/><circle cx='100' cy='36' r='9' fill='%23A7D0E8' stroke='%233B78A0' stroke-width='2.5'/></svg>");border-radius:12px;border:0;background:var(--box) center / 100% 100% no-repeat;aspect-ratio:112 / 52;filter:drop-shadow(0 2px 1px rgba(90,62,51,.18))}
+.cookie.tenbox.start{--box:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 52'><rect x='1.5' y='1.5' width='109' height='49' rx='11' fill='%23FBE0D9' stroke='%23B5604A' stroke-width='3'/><circle cx='12' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='34' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='56' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='78' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='100' cy='16' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='12' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='34' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='56' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='78' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/><circle cx='100' cy='36' r='9' fill='%23F4AE9F' stroke='%23B5604A' stroke-width='2.5'/></svg>")}
+.table .loose .cookie.tenbox,.ghost.tenbox{width:calc(var(--ck) * 2.2);height:calc(var(--ck) * 1.02);max-width:none}
+.table .plate.big{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:center;justify-content:center;gap:6px;grid-template-columns:none}
+.plate.big .pboxes{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:6px;width:100%}
+.plate.big .pones{display:grid;grid-template-columns:repeat(5,var(--psc,28px));gap:6px;justify-content:center;position:relative}
+.plate.big .pones.ring{outline:4px dashed var(--butter,#F7D98C);outline-offset:4px;border-radius:14px}
+.table .plate.big .tenbox{width:var(--pbw,60px);height:auto;max-width:none}
+.table .plate.big .pones .cookie{width:var(--psc,28px);max-width:none}
+.cookie.tenbox.counted{background:#FFF1C9;border:4px solid var(--edge-c);box-shadow:0 0 0 5px var(--butter);filter:none}
+.cookie.tenbox .num{font-size:calc(var(--ck) * .6)}
+.flying.tenbox{aspect-ratio:auto}
+.groups .g .cookie.tenbox{width:calc(var(--ck) * 2.2);height:calc(var(--ck) * 1.02);max-width:none}
 </style>
 <!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -1515,6 +1530,7 @@ en: {
   sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
   gUp: 'Up and Away', upAlt: 'Sheep', upOne: 'Balloon', upAsk: 'Tap each balloon to let it go!', upHow: 'How many balloons?',
   sUpAsk: [P('Look! The sheep is flying!', 'cheer'), P('Tap each balloon to let it go, and count.', 'ask')], sUpAsk2: [P('Tap each balloon to count.', 'ask')], sUpRight: function(n){ return [P('Yes!', 'cheer'), P(n + ' balloons!', 'proud')]; },
+  tenBox: '10 cookies make a box!', boxOf10: 'Box of 10 cookies',
   sVoiceOn: [P('Voice is on.', 'calm')],
   sSample: [P('Hi! I’m Momo.', 'cheer'), P('Let’s count cookies!', 'calm')]
 },
@@ -1626,6 +1642,7 @@ fr: {
   sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
   gUp: 'Haut dans le ciel', upAlt: 'Mouton', upOne: 'Ballon', upAsk: 'Touche chaque ballon pour le lâcher !', upHow: 'Combien de ballons ?',
   sUpAsk: [P('Regarde ! Le mouton vole !', 'cheer'), P('Touche chaque ballon pour le lâcher, et compte.', 'ask')], sUpAsk2: [P('Touche chaque ballon pour compter.', 'ask')], sUpRight: function(n){ return [P('Oui !', 'cheer'), P(n + ' ballons !', 'proud')]; },
+  tenBox: '10 biscuits font une boîte !', boxOf10: 'Boîte de 10 biscuits',
   sVoiceOn: [P('La voix est activée.', 'calm')],
   sSample: [P('Coucou ! Je suis Momo.', 'cheer'), P('On compte des biscuits ?', 'ask')]
 },
@@ -1737,6 +1754,7 @@ es: {
   sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
   gUp: '¡Arriba y lejos!', upAlt: 'Oveja', upOne: 'Globo', upAsk: '¡Toca cada globo para soltarlo!', upHow: '¿Cuántos globos hay?',
   sUpAsk: [P('¡Mira! ¡La oveja está volando!', 'cheer'), P('Toca cada globo para soltarlo, y cuenta.', 'ask')], sUpAsk2: [P('Toca cada globo para contar.', 'ask')], sUpRight: function(n){ return [P('¡Sí!', 'cheer'), P('¡' + n + ' globos!', 'proud')]; },
+  tenBox: '¡10 galletas hacen una caja!', boxOf10: 'Caja de 10 galletas',
   sVoiceOn: [P('La voz está activada.', 'calm')],
   sSample: [P('¡Hola! Soy Momo.', 'cheer'), P('¡Vamos a contar galletas!', 'calm')]
 },
@@ -1848,6 +1866,7 @@ zh: {
   sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
   gUp: '气球飞呀飞', upAlt: '小羊', upOne: '气球', upAsk: '点一点气球，让它飞走！', upHow: '一共有几个气球？',
   sUpAsk: [P('看！小羊飞起来啦！', 'cheer'), P('点一点每个气球，让它飞走，数一数。', 'ask')], sUpAsk2: [P('点一点每个气球，数一数。', 'ask')], sUpRight: function(n){ return [P('对啦！', 'cheer'), P(n + '个气球！', 'proud')]; },
+  tenBox: '10块饼干装成一盒！', boxOf10: '一盒10块饼干',
   sVoiceOn: [P('语音已打开。', 'calm')],
   sSample: [P('你好！我是莫莫。', 'cheer'), P('我们来数饼干吧！', 'calm')]
 },
@@ -1959,6 +1978,7 @@ ja: {
   sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
   gUp: 'ふうせん ふわふわ', upAlt: 'ひつじ', upOne: 'ふうせん', upAsk: 'ふうせんを タッチして とばしてね！', upHow: 'ふうせんは いくつ？',
   sUpAsk: [P('みて！ ひつじが とんでるよ！', 'cheer'), P('ふうせんを ひとつずつ タッチして かぞえてね。', 'ask')], sUpAsk2: [P('ふうせんを タッチして かぞえてね。', 'ask')], sUpRight: function(n){ return [P('せいかい！', 'cheer'), P('ふうせんは ' + n + 'こ！', 'proud')]; },
+  tenBox: 'クッキー10こで 1はこ！', boxOf10: 'クッキー10この はこ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
   sSample: [P('こんにちは！ モモだよ。', 'cheer'), P('いっしょに クッキーを かぞえよう！', 'calm')]
 },
@@ -2070,6 +2090,7 @@ yue: {
   sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
   gUp: '氣球飛呀飛', upAlt: '小羊', upOne: '氣球', upAsk: '撳下氣球，等佢飛走！', upHow: '一共有幾多個氣球？',
   sUpAsk: [P('睇下！小羊飛起咗！', 'cheer'), P('撳下每個氣球，等佢飛走，數一數。', 'ask')], sUpAsk2: [P('撳下每個氣球，數一數。', 'ask')], sUpRight: function(n){ return [P('啱喇！', 'cheer'), P(n + '個氣球！', 'proud')]; },
+  tenBox: '10塊餅乾裝成一盒！', boxOf10: '一盒10塊餅乾',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
   sSample: [P('你好！我係摩摩。', 'cheer'), P('我哋一齊數曲奇啦！', 'calm')]
 },
@@ -2181,6 +2202,7 @@ ko: {
   sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
   gUp: '풍선 타고 둥실', upAlt: '양', upOne: '풍선', upAsk: '풍선을 눌러서 날려 보내요!', upHow: '풍선이 몇 개일까요?',
   sUpAsk: [P('봐요! 양이 날고 있어요!', 'cheer'), P('풍선을 하나씩 눌러 날려 보내며 세어 보세요.', 'ask')], sUpAsk2: [P('풍선을 눌러서 세어 보세요.', 'ask')], sUpRight: function(n){ return [P('맞아요!', 'cheer'), P('풍선 ' + n + '개!', 'proud')]; },
+  tenBox: '쿠키 10개가 한 상자!', boxOf10: '쿠키 10개 상자',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
   sSample: [P('안녕! 나는 모모야.', 'cheer'), P('같이 쿠키를 세어 봐요!', 'calm')]
 }
@@ -3972,6 +3994,14 @@ function BIG(){ return S.maxSum || 5; }
 function isBig(){ return BIG() > 20; }
 function bigStep(q){ return ['tens', 'tensones', 'addten', 'addones', 'cross'][Math.max(0, Math.min(4, q))]; }
 function rint(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+/* Feed the Unicorn at 50 / 100: start a, add b, with b made of boxes of 10 and loose cookies. */
+function bigSum(q, cap){
+  cap = cap || BIG();
+  var kind = bigStep(q), t = Math.floor(cap / 10), a, b, x, y, u;
+  if (kind === 'tens') { x = rint(1, t - 2); y = rint(1, t - 1 - x); return { kind: kind, a: 10 * x, b: 10 * y }; }
+  if (kind === 'tensones') { x = rint(1, t - 2); u = rint(1, 9); y = rint(1, t - 1 - x); return { kind: kind, a: 10 * x + u, b: 10 * y }; }
+  var p = bigPlan(q, cap); return { kind: p.kind, a: p.a, b: p.b };
+}
 /* One question for round position q (0..4) with answers up to cap (50 or 100).
    kind: tens (30), tensones (34), addten (34+10), addones (34+5, same ten), cross (38+5, next ten).
    Returns {kind, n} for counting games and {kind, a, b, n:a+b} for sum games. */
@@ -4008,19 +4038,50 @@ function pickFact(){
 }
 function startRound(){ G = { q:0, earned:0, startStars:S.stars }; newQuestion(); }
 function newQuestion(){
-  var p = pickFact();
+  var big = isBig(), p;
+  if (big) { var bp = bigSum(G.q, BIG()); p = [bp.a, bp.b]; G.kind = bp.kind; } else p = pickFact();
+  G.big = big; G.vals = null; G.carry = false;
   G.s = p[0]; G.a = p[1]; G.t = p[0] + p[1];
   G.last = factKey(G.s, G.a);
-  G.added = 0; G.jarCount = MX() <= 10 ? Math.min(G.a + 2, 12 - G.s) : Math.min(G.a + 2, 11); G.first = true; G.lock = false; G.mood = 'hungry';
+  G.added = 0;
+  if (big) bigJar(); else G.jarCount = MX() <= 10 ? Math.min(G.a + 2, 12 - G.s) : Math.min(G.a + 2, 11);
+  G.first = true; G.lock = false; G.mood = 'hungry';
   G.taken = []; G.stack = []; G.seed = Math.floor(Math.random() * 1e9); G.pos = null; G.faceSeed = Math.floor(Math.random() * 12);
   G.bubble2 = '';
   screen = 'play'; closeOverlay(); renderPlay();
   askAloud();
 }
+function bigJar(){
+  var nb = Math.floor(G.a / 10), no = G.a % 10, boxes = G.kind === 'tens' || G.kind === 'tensones' || G.kind === 'addten' ? nb + 1 : 1, ones = no + 2, v = [], i;
+  if (G.kind === 'tens' || G.kind === 'tensones') ones = 2;
+  for (i = 0; i < boxes; i++) v.push(10);
+  for (i = 0; i < ones; i++) v.push(1);
+  G.vals = v; G.jarCount = v.length;
+}
+function onesRaw(){ var n = G.s % 10; G.stack.forEach(function(sp){ if (G.vals[sp] === 1) n++; }); return n; }
+function addedVal(){ var n = 0; G.stack.forEach(function(sp){ n += G.vals ? G.vals[sp] : 1; }); return n; }
+function bigPlateHtml(popLast){
+  var T = total(), B = Math.floor(T / 10), sOnes = G.s % 10, raw = onesRaw(), ones, carried = raw >= 10 && !G.carry;
+  if (G.carry) { B -= Math.floor(raw / 10); ones = raw; } else ones = T % 10;
+  var redBoxes = Math.floor(G.s / 10), redOnes = carried ? 0 : Math.min(sOnes, ones), h = '', i;
+  var lastBox = G.stack.length && G.vals[G.stack[G.stack.length - 1]] === 10;
+  h += '<div class="pboxes">';
+  for (i = 0; i < B; i++) {
+    var pop = (popLast === 'carry' && i === B - 1) || (popLast === true && lastBox && i === B - 1) ? ' pop' : '';
+    if (i < redBoxes) h += '<span class="cookie tenbox start" role="img" aria-label="' + esc(L('boxOf10')) + '"></span>';
+    else h += '<button class="cookie tenbox' + pop + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"></button>';
+  }
+  h += '</div><div class="pones' + (G.carry ? ' ring' : '') + '">';
+  for (i = 0; i < ones; i++) {
+    if (i < redOnes) h += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
+    else h += '<button class="cookie' + (popLast === true && !lastBox && i === ones - 1 ? ' pop' : '') + '" style="' + blueFace(i) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
+  }
+  return h + '</div>';
+}
 function askAloud(){
   say(L('sAsk', G.t, G.s));
 }
-function total(){ return G.s + G.added; }
+function total(){ return G.s + addedVal(); }
 function setBubble2(t, kind){
   var box = document.getElementById('bubble2Box'), b = document.getElementById('bubble2'); if (!box || !b) return;
   b.textContent = t || '\u00a0';
@@ -4051,19 +4112,23 @@ function updatePlay(popLast){
   document.getElementById('bubble').textContent = L('feedMe', G.t);
   setBubble2(G.bubble2);
   var plate = '';
+  var pl0 = document.getElementById('plate'); if (pl0) pl0.classList.toggle('big', !!G.big);
+  if (G.big) plate = bigPlateHtml(popLast); else {
   for (var i = 0; i < G.s; i++) plate += '<span class="cookie start" style="' + redFace(i) + '" role="img" aria-label="' + esc(L('cookie')) + '"></span>';
   for (var j = 0; j < G.added; j++) plate += '<button class="cookie' + (popLast === true && j === G.added - 1 ? ' pop' : '') + '" style="' + blueFace(G.stack[j]) + '" data-act="remove" aria-label="' + esc(L('takeBack')) + '"><span class="x" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6"/></svg></span></button>';
+  }
   document.getElementById('plate').innerHTML = plate;
   var jar = '';
   for (var k = 0; k < G.jarCount; k++) if (!G.taken[k]) {
     var ps = G.pos && G.pos[k];
-    jar += '<button class="cookie' + (popLast === 'back' && G.lastBack === k ? ' pop' : '') + '" data-jar="1" data-spot="' + k + '" aria-label="' + esc(L('putOn')) + '"' +
+    jar += '<button class="cookie' + (G.vals && G.vals[k] === 10 ? ' tenbox' : '') + (popLast === 'back' && G.lastBack === k ? ' pop' : '') + '" data-jar="1" data-spot="' + k + '" aria-label="' + esc(L('putOn')) + '"' +
       ' style="' + blueFace(k) + (ps ? ';left:' + ps[0] + 'px;top:' + ps[1] + 'px' : '') + '"></button>';
   }
   document.getElementById('jar').innerHTML = jar;
-  document.getElementById('eqA').textContent = G.added;
+  document.getElementById('eqA').textContent = addedVal();
   document.getElementById('eqT').textContent = total();
   document.getElementById('doneBtn').disabled = G.lock;
+  fitBig();
 }
 var FACES = 12;
 function face(color, n){ return '--face:url(cookies/' + color + '_' + ('0' + ((((n % FACES) + FACES) % FACES) + 1)).slice(-2) + '.png)'; }
@@ -4079,21 +4144,22 @@ function layoutTable(){
   /* plate: as big as possible while leaving a band around it for the loose cookies */
   var cap = (5 * c + 32) / 0.70;                       /* plate cookies never bigger than loose ones */
   var rand, pos, cx = W / 2, cy = H / 2, R;
-  function ok(x, y, g){
-    var mx = x + c / 2, my = y + c / 2;
-    if (Math.hypot(mx - cx, my - cy) < R + c / 2) return false;
-    for (var i = 0; i < pos.length; i++) if (Math.hypot(pos[i][0] - x, pos[i][1] - y) < c + g) return false;
+  function dims(k){ return G.vals && G.vals[k] === 10 ? [c * 2.2, c * 1.02] : [c, c]; }   /* a box of 10 is wider than a cookie */
+  function ok(x, y, g, w, h){
+    var mx = x + w / 2, my = y + h / 2, rr = Math.max(w, h) / 2;
+    if (Math.hypot(mx - cx, my - cy) < R + rr) return false;
+    for (var i = 0; i < pos.length; i++) { var d = dims(i), px = pos[i][0] + d[0] / 2, py = pos[i][1] + d[1] / 2; if (Math.hypot(px - mx, py - my) < rr + Math.max(d[0], d[1]) / 2 + g) return false; }
     return true;
   }
   function place(D, g, force){
     R = D / 2 + 8; rand = rng(G.seed); pos = [];
     for (var k = 0; k < G.jarCount; k++) {
-      var got = null;
+      var got = null, d = dims(k);
       for (var t = 0; t < 500 && !got; t++) {
-        var x = 4 + rand() * Math.max(1, W - c - 8), y = 4 + rand() * Math.max(1, H - c - 8);
-        if (ok(x, y, g)) got = [Math.round(x), Math.round(y)];
+        var x = 4 + rand() * Math.max(1, W - d[0] - 8), y = 4 + rand() * Math.max(1, H - d[1] - 8);
+        if (ok(x, y, g, d[0], d[1])) got = [Math.round(x), Math.round(y)];
       }
-      if (!got) { if (!force) return false; got = [Math.round(4 + rand() * (W - c - 8)), Math.round(k % 2 ? 4 : H - c - 4)]; }
+      if (!got) { if (!force) return false; got = [Math.round(4 + rand() * (W - d[0] - 8)), Math.round(k % 2 ? 4 : H - d[1] - 4)]; }
       pos.push(got);
     }
     return true;
@@ -4103,13 +4169,27 @@ function layoutTable(){
   for (; D >= 120 && !done; D -= 6) done = place(D, 6, false);
   if (done) D += 6; else { D = 120; place(D, 0, true); }
   tb.style.setProperty('--pd', D + 'px');
+  tb.dataset.c = c;
   /* more than 10 on the plate (up to 15 / 20): shrink plate cookies so 3-4 rows of 5 fit inside the rim */
   var rows = Math.ceil((G.s + G.jarCount) / 5);
   if (rows > 2) { var inner = D * 0.7, gp = 8, cell = Math.max(14, Math.min(c, (inner - 4 * gp) / 5, (inner - (rows - 1) * gp) / rows)); tb.style.setProperty('--pcol', Math.floor(cell) + 'px'); }
   else tb.style.removeProperty('--pcol');
   G.pos = pos;
+  fitBig();
   var els = document.querySelectorAll('#jar .cookie');
   els.forEach(function(el){ var p = pos[+el.getAttribute('data-spot')]; if (p) { el.style.left = p[0] + 'px'; el.style.top = p[1] + 'px'; } });
+}
+/* boxes of 10 on top, loose cookies below: shrink both until everything sits inside the rim */
+function fitBig(){
+  var tb = document.getElementById('table'), pl = document.getElementById('plate');
+  if (!tb || !pl || !G || !G.big) return;
+  var D = pl.clientWidth, inner = D * 0.7, gp = 6, c = +tb.dataset.c || 44;
+  var bw0 = (inner - 2 * gp) / 3, sc0 = Math.min(c, (inner - 4 * gp) / 5), f = 1, bx = pl.querySelector('.pboxes'), on = pl.querySelector('.pones');
+  for (var i = 0; i < 12; i++) {
+    tb.style.setProperty('--pbw', Math.floor(bw0 * f) + 'px'); tb.style.setProperty('--psc', Math.floor(sc0 * f) + 'px');
+    if (!bx || !on || bx.offsetHeight + on.offsetHeight + gp <= inner) break;
+    f *= 0.88;
+  }
 }
 window.addEventListener('resize', function(){ if (screen === 'play') layoutTable(); });
 function setMomo(mood, anim){
@@ -4121,19 +4201,30 @@ function setMomo(mood, anim){
 function addCookie(spot){
   if (!G || G.lock || G.added >= G.jarCount) return;
   if (spot === undefined || spot === null || isNaN(spot) || G.taken[spot]) { spot = 0; while (G.taken[spot]) spot++; }
+  var before = G.big ? onesRaw() : 0;
   G.taken[spot] = true; G.stack.push(spot); G.added = G.stack.length;
   G.bubble2 = ''; G.mood = 'hungry';
+  if (G.big && G.vals[spot] === 1 && before < 10 && onesRaw() >= 10) {        /* ten loose cookies: they pack into a box */
+    G.carry = true; var q0 = G.q, g0 = G;
+    updatePlay(true);
+    say([P(String(total()), 'count', total()), L('tenBox')]);
+    setTimeout(function(){
+      if (G !== g0 || G.q !== q0 || screen !== 'play' || !G.carry) return;
+      G.carry = false; G.bubble2 = L('tenBox'); updatePlay('carry');
+    }, 1100);
+    return;
+  }
   updatePlay(true);
   say(P(String(total()), 'count', total()));
 }
 function removeCookie(){
   if (!G || G.lock || G.added <= 0) return;
-  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = '';
+  var spot = G.stack.pop(); G.taken[spot] = false; G.added = G.stack.length; G.lastBack = spot; G.bubble2 = ''; G.carry = false;
   updatePlay('back');
   say(P(String(total()), 'count', total()));
 }
 function record(right){
-  var k = factKey(G.s, G.a);
+  var k = G.big ? 'T:' + G.kind : factKey(G.s, G.a);
   var f = S.facts[k] || { t:0, r:0 };
   f.t++; if (right) f.r++;
   S.facts[k] = f; save();
@@ -4143,7 +4234,7 @@ function record(right){
 var reduceMotion = false;
 try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
 function feedUnicorn(){
-  var cs = Array.prototype.slice.call(document.querySelectorAll('#plate .cookie'));
+  var cs = Array.prototype.slice.call(document.querySelectorAll('#plate .cookie'));   /* boxes of 10 are .cookie too */
   var m = document.querySelector('#momo .momo');
   if (!cs.length || !m) return 0;
   var gentle = reduceMotion;                       /* Reduce Motion: still fly, but straight and without spinning */
@@ -4153,7 +4244,7 @@ function feedUnicorn(){
   cs.forEach(function(c, i){
     var r = c.getBoundingClientRect();
     var fly = document.createElement('span');
-    fly.className = c.className.replace(/\b(pop|counted)\b/g, '') + ' flying';
+    fly.className = c.className.replace(/\b(pop|counted)\b/g, '') + ' flying' + (c.classList.contains('tenbox') ? ' ghostbox' : '');
     var fc = c.style.getPropertyValue('--face');
     fly.style.cssText = (fc ? '--face:' + fc + ';' : '') + 'position:fixed;left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;margin:0;z-index:30;pointer-events:none';
     var dx = tx - (r.left + r.width / 2), dy = ty - (r.top + r.height / 2);
@@ -4211,9 +4302,12 @@ function check(){
     G.bubble2 = tooFew ? L('more') : L('full'); setBubble2(G.bubble2);
     setMomo('hungry', 'wobble');
     var parts = [L('sCount')];
-    for (var i = 1; i <= n; i++) parts.push(P(String(i), 'count', i));
+    var cookies = document.querySelectorAll('#plate .cookie'), nums = [], cnt = cookies.length, bx = 0;
+    for (var i = 1; i <= cnt; i++) {
+      if (G.big && cookies[i-1].classList.contains('tenbox')) { bx++; nums.push(bx * 10); } else nums.push(G.big ? bx * 10 + (i - bx) : i);
+    }
+    nums.forEach(function(v){ parts.push(P(String(v), 'count', v)); });
     parts = parts.concat(tooFew ? L('sTooFew', n, G.t) : L('sTooMany', n, G.t));
-    var cookies = document.querySelectorAll('#plate .cookie');
     var tbl = document.getElementById('table'); if (tbl) tbl.classList.add('counting');
     var q = G.q, unlocked = false;
     function unlock(){
@@ -4223,14 +4317,14 @@ function check(){
       var d = document.getElementById('doneBtn'); if (d) d.disabled = false;
     }
     say(parts, function(i){
-      if (i >= 1 && i <= n && cookies[i-1]) {
+      if (i >= 1 && i <= cnt && cookies[i-1]) {
         cookies[i-1].classList.add('counted');
-        cookies[i-1].innerHTML = '<span class="num">' + i + '</span>';
+        cookies[i-1].innerHTML = '<span class="num">' + nums[i-1] + '</span>';
       }
-      if (i > n) unlock();             /* counting is over: play again right away, no wait */
+      if (i > cnt) unlock();             /* counting is over: play again right away, no wait */
     }, 750);
     G.unlock = unlock;                                     /* stopping the voice (mute, repeat, leaving) also unlocks */
-    setTimeout(unlock, (n + 2) * 2500);                   /* safety net if speech events never arrive */
+    setTimeout(unlock, (cnt + 2) * 2500);                   /* safety net if speech events never arrive */
   }
 }
 
@@ -4250,7 +4344,7 @@ document.addEventListener('pointermove', function(e){
   var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (!drag.moved && Math.hypot(dx, dy) > 10) {
     drag.moved = true;
-    var g = document.createElement('span'); g.className = 'cookie ghost'; g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
+    var g = document.createElement('span'); g.className = 'cookie ghost' + (drag.el.classList.contains('tenbox') ? ' tenbox' : ''); g.style.setProperty('--face', drag.el.style.getPropertyValue('--face'));
     document.body.appendChild(g); drag.ghost = g; drag.el.style.visibility = 'hidden';
   }
   /* keep the ghost on screen, so it can never get parked out at the edge */
@@ -4332,7 +4426,9 @@ function confetti(){
   c.innerHTML = h; document.body.appendChild(c);
   setTimeout(function(){ c.remove(); }, 4200);
 }
-function cookies(n, cls){ var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(i) : blueFace(i)) + '"></span>'; return h; }
+function cookies(n, cls){
+  if (G && G.big) { var h2 = ''; for (var b = 0; b < Math.floor(n / 10); b++) h2 += '<span class="cookie tenbox ' + (cls || '') + '"></span>'; n = n % 10; for (var j = 0; j < n; j++) h2 += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(j) : blueFace(j)) + '"></span>'; return h2; }
+  var h = ''; for (var i = 0; i < n; i++) h += '<span class="cookie ' + (cls || '') + '" style="' + (cls === 'start' ? redFace(i) : blueFace(i)) + '"></span>'; return h; }
 function showReward(){
   if (screen !== 'play') return;
   var last = G.q + 1 >= ROUND;
