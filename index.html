@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.043637">
+<meta name="build" content="2026-11-14.093840">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1350,6 +1350,41 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 @media (orientation:landscape){ .upgame > .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
 @media (orientation:landscape) and (max-height:600px){ .upgame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
 .upgame .bubble{background:rgba(255,252,247,.96)}
+/* ===== Hide and Seek Bunnies ===== */
+/* one game in a group (Subtraction): one normal-sized tile, not a stretched column; with three groups on a tall screen the pictures shrink so each fits its card */
+.tiles.solo{flex:none;grid-auto-rows:minmax(0,clamp(170px,34dvh,300px))}
+@media (orientation:portrait){ .tiles.groups .grp-pics{height:clamp(56px,13dvh,150px)} .tiles.groups .grp-name{margin-top:clamp(2px,.8dvh,8px)} .tiles.groups .tile{padding-top:clamp(4px,1dvh,10px);padding-bottom:clamp(4px,1dvh,10px)} }
+.tile.hidet{background:#E6E0F5;border-color:#C5B9E6;box-shadow:0 7px 0 #C5B9E6}
+.tile.mini.hidet{box-shadow:0 4px 0 #C5B9E6}
+.tile.group-sub{background:#E6E0F5;border-color:#C5B9E6;box-shadow:0 7px 0 #C5B9E6}
+@media (orientation:landscape){ .tiles.groups{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.hidegame{position:relative;gap:clamp(4px,1.2dvh,12px)}
+.hidegame > .bar,.hidegame > .croc-ask,.hidegame > .hd-field,.hidegame > .bw-choices{position:relative;z-index:1}
+.hd-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#BFE3F7 0%,#E6F4FB 100%)}
+.hd-sky .hill{position:absolute;left:-10%;right:-10%;bottom:-6vh;height:64%;border-radius:50% 50% 0 0/16% 16% 0 0;background:linear-gradient(#9BD672,#7BC25E);box-shadow:inset 0 10px 0 #B2E48C}
+.hd-field{flex:1;min-height:0;position:relative}
+.hd-b{position:absolute;pointer-events:none}
+.hd-b img{position:absolute;left:0;bottom:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block;filter:drop-shadow(0 4px 3px rgba(40,70,30,.25))}
+.hd-b.idle img{animation:hdbob 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes hdbob{50%{translate:0 -3%}}
+.hd-b.gone{visibility:hidden}
+.hd-b.back{animation:hdpop .5s ease-out}
+@keyframes hdpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:none;opacity:1}}
+.hd-b.pulse img{animation:hdpulse .5s}
+@keyframes hdpulse{40%{translate:0 -10%}}
+.hd-n{position:absolute;right:4%;top:2%;min-width:1.5em;height:1.5em;padding:0 .25em;box-sizing:border-box;border-radius:1em;background:#FFFCF7;border:3px solid #E8685A;color:var(--ink);font-family:var(--display);font-weight:800;font-size:clamp(14px,3.6dvh,26px);line-height:1.3;text-align:center;opacity:0;transform:scale(.4);transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.6,1)}
+.hd-n.show{opacity:1;transform:none}
+.hd-b.hid .hd-n{border-color:#4F9AD6}
+.hd-burrow{position:absolute;pointer-events:none;display:block}
+.hd-burrow.back{z-index:1}
+.hd-burrow.front{z-index:300}
+.hd-bush{position:absolute;pointer-events:none}
+.hd-bush img{width:100%;height:100%;display:block;object-fit:contain;object-position:50% 100%}
+.hidegame .bw-choices{flex:none}
+@media (orientation:landscape){ .hidegame > .hd-field{margin-right:clamp(76px,12vw,130px)} .hidegame > .bw-choices{position:absolute;z-index:3;right:max(18px,env(safe-area-inset-right));bottom:clamp(10px,4dvh,40px);flex-direction:column;gap:clamp(10px,2dvh,18px);min-height:0;padding:0} }
+@media (orientation:landscape) and (max-height:600px){ .hidegame .bw-choices .choice{width:clamp(54px,15dvh,72px);height:clamp(54px,15dvh,72px);font-size:clamp(24px,8dvh,34px)} }
+.hidegame .bubble{background:rgba(255,252,247,.96)}
+@media (prefers-reduced-motion:reduce){ .hd-b.idle img,.hd-b.back,.hd-b.pulse img{animation:none} }
 @media (prefers-reduced-motion:reduce){ .up-rig > *,.up-up img,.up-sky .cl{animation:none} }
 
 /* ===== boxes of 10 (Feed the Unicorn at 50 / 100) ===== */
@@ -1529,6 +1564,14 @@ html[data-theme="dark"] .up-num{background:var(--card);color:var(--ink)}
 html[data-theme="dark"] .up-sky .deep{background:linear-gradient(180deg,#12304A 0%,#1F4463 60%,#2C5878 100%)}
 html[data-theme="dark"] .up-sky .cl, html[data-theme="dark"] .up-sky .cl::before, html[data-theme="dark"] .up-sky .cl::after{background:#9DB4C6}
 html[data-theme="dark"] .up-sky .hill{background:linear-gradient(#5B8A4E,#47733E);box-shadow:inset 0 10px 0 #6C9C5E}
+html[data-theme="dark"] .tile.hidet,html[data-theme="dark"] .tile.group-sub{background:#352D4B;border-color:#5C4D80;box-shadow:0 7px 0 #5C4D80}
+html[data-theme="dark"] .tile.mini.hidet{box-shadow:0 4px 0 #5C4D80}
+html[data-theme="dark"] .hd-sky{background:linear-gradient(180deg,#1F4463 0%,#2C5878 100%)}
+html[data-theme="dark"] .hd-sky .hill{background:linear-gradient(#4A7840,#35592E);box-shadow:inset 0 10px 0 #5B8A4E}
+html[data-theme="dark"] .hidegame .bubble{background:rgba(58,45,39,.96)}
+html[data-theme="dark"] .hd-burrow,html[data-theme="dark"] .hd-bush{filter:brightness(.78)}
+html[data-theme="dark"] .hd-b img{filter:drop-shadow(0 4px 3px rgba(0,0,0,.35)) brightness(.92)}
+html[data-theme="dark"] .hd-n{background:#3A2D27;color:#FFF3E8}
 html[data-theme="dark"] .up-strings path{stroke:#D9C9BC}
 /* Tower ruler */
 html[data-theme="dark"] .ruler span{border-top-color:var(--edge)}
@@ -1670,6 +1713,7 @@ function pl(n, one, many){ return n === 1 ? one : many; }
 function koEun(n){ return /[2459]$/.test(String(n)) ? '는' : '은'; }
 function koEul(n){ return /[2459]$/.test(String(n)) ? '를' : '을'; }
 
+function jpHiki(n){ return n + ([1, 6, 8, 10].indexOf(n) >= 0 ? 'ぴき' : n === 3 ? 'びき' : 'ひき'); }
 var TX = {
 en: {
   hearIt: 'Hear it', hearInstr: 'Hear instructions', hearAgain: 'Hear it again',
@@ -1782,6 +1826,18 @@ en: {
   sMkColour: [P('It’s market day!', 'cheer'), P('Sort the food by colour.', 'ask')], sMkKind: [P('Put the same ones together.', 'ask')], sMkFood: [P('Is it a fruit or a vegetable?', 'ask')], sMkNope: 'Not that basket.', sMkDone: [P('All sorted!', 'cheer')],
   gUp: 'Up and Away', upAlt: 'Sheep', upOne: 'Balloon', upAsk: 'Tap each balloon to let it go!', upHow: 'How many balloons?',
   sUpAsk: [P('Look! The sheep is flying!', 'cheer'), P('Tap each balloon to let it go, and count.', 'ask')], sUpAsk2: [P('Tap each balloon to count.', 'ask')], sUpRight: function(n){ return [P('Yes!', 'cheer'), P(n + ' balloons!', 'proud')]; },
+  gSub: 'Subtraction', gHide: 'Hide and Seek Bunnies', hideBurrow: 'Burrow', hideHowQ: 'How many are hiding?',
+  hideAsk: function(n){ return n + ' bunnies are playing in the meadow!'; },
+  sHideIntro: function(n){ return [P('Look! ' + n + ' bunnies are playing in the meadow.', 'cheer')]; },
+  sHideHop: [P('Watch! Some bunnies hop into the burrow.', 'cheer')],
+  hideHow: function(n, r){ return 'There were ' + n + '. ' + r + (r === 1 ? ' is' : ' are') + ' showing. How many are hiding?'; },
+  sHideHow: function(n, r){ return [P('There were ' + n + ' bunnies.', 'calm'), P(r + (r === 1 ? ' is' : ' are') + ' showing.', 'calm'), P('How many are hiding?', 'ask')]; },
+  hideCount: "Let's count!", sHideSee: [P("Let's count the bunnies we can see.", 'calm')],
+  sHideTry: function(n){ return [P('There were ' + n + ' bunnies, and some are hiding.', 'calm'), P('Try again!', 'ask')]; },
+  sHideAll: function(n){ return [P("Let's count all " + n + " bunnies, the hiding ones too.", 'calm')]; },
+  sHideWere: function(k){ return [P(k + (k === 1 ? ' bunny was' : ' bunnies were') + ' hiding!', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('Yes!', 'cheer'), P(k + (k === 1 ? ' bunny is' : ' bunnies are') + ' hiding!', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + ' take away ' + k + ' leaves ' + r; },
   skTitle: 'Bigger numbers', skTens: 'Whole tens', skTensOnes: 'Tens and ones', skAddTen: 'Add a ten', skAddOnes: 'Add ones', skCross: 'Cross a ten',
   tenBox: '10 cookies make a box!', boxOf10: 'Box of 10 cookies',
   sVoiceOn: [P('Voice is on.', 'calm')],
@@ -1898,6 +1954,18 @@ fr: {
   sMkColour: [P('C’est le jour du marché !', 'cheer'), P('Trie les aliments par couleur.', 'ask')], sMkKind: [P('Mets les mêmes ensemble.', 'ask')], sMkFood: [P('C’est un fruit ou un légume ?', 'ask')], sMkNope: 'Pas ce panier.', sMkDone: [P('Tout est trié !', 'cheer')],
   gUp: 'Haut dans le ciel', upAlt: 'Mouton', upOne: 'Ballon', upAsk: 'Touche chaque ballon pour le lâcher !', upHow: 'Combien de ballons ?',
   sUpAsk: [P('Regarde ! Le mouton vole !', 'cheer'), P('Touche chaque ballon pour le lâcher, et compte.', 'ask')], sUpAsk2: [P('Touche chaque ballon pour compter.', 'ask')], sUpRight: function(n){ return [P('Oui !', 'cheer'), P(n + ' ballons !', 'proud')]; },
+  gSub: 'Soustraction', gHide: 'Cache-cache des lapins', hideBurrow: 'Terrier', hideHowQ: 'Combien sont cachés ?',
+  hideAsk: function(n){ return n + ' lapins jouent dans le pré !'; },
+  sHideIntro: function(n){ return [P('Regarde ! ' + n + ' lapins jouent dans le pré.', 'cheer')]; },
+  sHideHop: [P('Regarde ! Des lapins sautent dans le terrier.', 'cheer')],
+  hideHow: function(n, r){ return 'Il y en avait ' + n + '. ' + r + (r === 1 ? ' est encore là' : ' sont encore là') + '. Combien sont cachés ?'; },
+  sHideHow: function(n, r){ return [P('Il y avait ' + n + ' lapins.', 'calm'), P(r + (r === 1 ? ' est encore là.' : ' sont encore là.'), 'calm'), P('Combien sont cachés ?', 'ask')]; },
+  hideCount: 'Comptons !', sHideSee: [P('Comptons les lapins qu’on voit.', 'calm')],
+  sHideTry: function(n){ return [P('Il y avait ' + n + ' lapins, et certains sont cachés.', 'calm'), P('Essaie encore !', 'ask')]; },
+  sHideAll: function(n){ return [P('Comptons les ' + n + ' lapins, avec ceux qui sont cachés.', 'calm')]; },
+  sHideWere: function(k){ return [P(k + (k === 1 ? ' lapin était caché !' : ' lapins étaient cachés !'), 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('Oui !', 'cheer'), P(k + (k === 1 ? ' lapin est caché !' : ' lapins sont cachés !'), 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + ' moins ' + k + ' égale ' + r; },
   skTitle: 'Grands nombres', skTens: 'Dizaines entières', skTensOnes: 'Dizaines et unités', skAddTen: 'Ajouter une dizaine', skAddOnes: 'Ajouter des unités', skCross: 'Passer la dizaine',
   tenBox: '10 biscuits font une boîte !', boxOf10: 'Boîte de 10 biscuits',
   sVoiceOn: [P('La voix est activée.', 'calm')],
@@ -2014,6 +2082,18 @@ es: {
   sMkColour: [P('¡Es día de mercado!', 'cheer'), P('Ordena la comida por color.', 'ask')], sMkKind: [P('Junta los que son iguales.', 'ask')], sMkFood: [P('¿Es una fruta o una verdura?', 'ask')], sMkNope: 'En esa cesta no.', sMkDone: [P('¡Todo ordenado!', 'cheer')],
   gUp: '¡Arriba y lejos!', upAlt: 'Oveja', upOne: 'Globo', upAsk: '¡Toca cada globo para soltarlo!', upHow: '¿Cuántos globos hay?',
   sUpAsk: [P('¡Mira! ¡La oveja está volando!', 'cheer'), P('Toca cada globo para soltarlo, y cuenta.', 'ask')], sUpAsk2: [P('Toca cada globo para contar.', 'ask')], sUpRight: function(n){ return [P('¡Sí!', 'cheer'), P('¡' + n + ' globos!', 'proud')]; },
+  gSub: 'Resta', gHide: 'Conejitos escondidos', hideBurrow: 'Madriguera', hideHowQ: '¿Cuántos están escondidos?',
+  hideAsk: function(n){ return '¡' + n + ' conejitos juegan en el prado!'; },
+  sHideIntro: function(n){ return [P('¡Mira! ' + n + ' conejitos juegan en el prado.', 'cheer')]; },
+  sHideHop: [P('¡Mira! Algunos conejitos saltan a la madriguera.', 'cheer')],
+  hideHow: function(n, r){ return 'Había ' + n + '. Se ve' + (r === 1 ? ' ' : 'n ') + r + '. ¿Cuántos están escondidos?'; },
+  sHideHow: function(n, r){ return [P('Había ' + n + ' conejitos.', 'calm'), P('Se ve' + (r === 1 ? ' ' : 'n ') + r + '.', 'calm'), P('¿Cuántos están escondidos?', 'ask')]; },
+  hideCount: '¡Contemos!', sHideSee: [P('Contemos los conejitos que vemos.', 'calm')],
+  sHideTry: function(n){ return [P('Había ' + n + ' conejitos y algunos están escondidos.', 'calm'), P('¡Inténtalo otra vez!', 'ask')]; },
+  sHideAll: function(n){ return [P('Contemos los ' + n + ' conejitos, también los escondidos.', 'calm')]; },
+  sHideWere: function(k){ return [P(k === 1 ? '¡1 conejito estaba escondido!' : '¡' + k + ' conejitos estaban escondidos!', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('¡Sí!', 'cheer'), P(k === 1 ? '¡1 conejito está escondido!' : '¡' + k + ' conejitos están escondidos!', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + ' menos ' + k + ' son ' + r; },
   skTitle: 'Números más grandes', skTens: 'Decenas completas', skTensOnes: 'Decenas y unidades', skAddTen: 'Sumar una decena', skAddOnes: 'Sumar unidades', skCross: 'Pasar a la siguiente decena',
   tenBox: '¡10 galletas hacen una caja!', boxOf10: 'Caja de 10 galletas',
   sVoiceOn: [P('La voz está activada.', 'calm')],
@@ -2130,6 +2210,18 @@ zh: {
   sMkColour: [P('今天去赶集！', 'cheer'), P('按颜色把食物分一分。', 'ask')], sMkKind: [P('把一样的放在一起。', 'ask')], sMkFood: [P('它是水果还是蔬菜？', 'ask')], sMkNope: '不是这个篮子。', sMkDone: [P('都分好啦！', 'cheer')],
   gUp: '气球飞呀飞', upAlt: '小羊', upOne: '气球', upAsk: '点一点气球，让它飞走！', upHow: '一共有几个气球？',
   sUpAsk: [P('看！小羊飞起来啦！', 'cheer'), P('点一点每个气球，让它飞走，数一数。', 'ask')], sUpAsk2: [P('点一点每个气球，数一数。', 'ask')], sUpRight: function(n){ return [P('对啦！', 'cheer'), P(n + '个气球！', 'proud')]; },
+  gSub: '减法', gHide: '小兔子躲猫猫', hideBurrow: '兔子洞', hideHowQ: '躲起来的有几只？',
+  hideAsk: function(n){ return n + '只小兔子在草地上玩！'; },
+  sHideIntro: function(n){ return [P('看！草地上有' + n + '只小兔子在玩。', 'cheer')]; },
+  sHideHop: [P('看！有些小兔子跳进洞里啦。', 'cheer')],
+  hideHow: function(n, r){ return '本来有' + n + '只，还看得见' + r + '只。躲起来的有几只？'; },
+  sHideHow: function(n, r){ return [P('本来有' + n + '只小兔子。', 'calm'), P('还看得见' + r + '只。', 'calm'), P('躲起来的有几只？', 'ask')]; },
+  hideCount: '我们来数一数！', sHideSee: [P('我们先数一数看得见的小兔子。', 'calm')],
+  sHideTry: function(n){ return [P('本来有' + n + '只小兔子，有些躲起来了。', 'calm'), P('再试一次！', 'ask')]; },
+  sHideAll: function(n){ return [P('我们把' + n + '只小兔子都数一数，躲起来的也数。', 'calm')]; },
+  sHideWere: function(k){ return [P(k + '只小兔子躲起来啦！', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('对啦！', 'cheer'), P(k + '只小兔子躲起来啦！', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + '减' + k + '等于' + r; },
   skTitle: '更大的数', skTens: '整十数', skTensOnes: '几十几', skAddTen: '加一个十', skAddOnes: '加个位数', skCross: '进位',
   tenBox: '10块饼干装成一盒！', boxOf10: '一盒10块饼干',
   sVoiceOn: [P('语音已打开。', 'calm')],
@@ -2246,6 +2338,18 @@ ja: {
   sMkColour: [P('きょうは いちばの ひ！', 'cheer'), P('たべものを いろで わけてね。', 'ask')], sMkKind: [P('おなじ ものを あつめてね。', 'ask')], sMkFood: [P('くだものかな？ やさいかな？', 'ask')], sMkNope: 'その かごじゃ ないよ。', sMkDone: [P('ぜんぶ わけられたね！', 'cheer')],
   gUp: 'ふうせん ふわふわ', upAlt: 'ひつじ', upOne: 'ふうせん', upAsk: 'ふうせんを タッチして とばしてね！', upHow: 'ふうせんは いくつ？',
   sUpAsk: [P('みて！ ひつじが とんでるよ！', 'cheer'), P('ふうせんを ひとつずつ タッチして かぞえてね。', 'ask')], sUpAsk2: [P('ふうせんを タッチして かぞえてね。', 'ask')], sUpRight: function(n){ return [P('せいかい！', 'cheer'), P('ふうせんは ' + n + 'こ！', 'proud')]; },
+  gSub: 'ひきざん', gHide: 'うさぎの かくれんぼ', hideBurrow: 'すあな', hideHowQ: 'かくれてるのは なんびき？',
+  hideAsk: function(n){ return jpHiki(n) + 'の うさぎが あそんでるよ！'; },
+  sHideIntro: function(n){ return [P('みて！ うさぎが ' + jpHiki(n) + '、くさはらで あそんでるよ。', 'cheer')]; },
+  sHideHop: [P('みてて！ うさぎが すあなに ぴょん！', 'cheer')],
+  hideHow: function(n, r){ return 'ぜんぶで ' + jpHiki(n) + '。' + jpHiki(r) + ' みえてるよ。かくれてるのは なんびき？'; },
+  sHideHow: function(n, r){ return [P('ぜんぶで ' + jpHiki(n) + ' いたよ。', 'calm'), P(jpHiki(r) + ' みえてるよ。', 'calm'), P('かくれてるのは なんびき？', 'ask')]; },
+  hideCount: 'かぞえてみよう！', sHideSee: [P('まず みえてる うさぎを かぞえよう。', 'calm')],
+  sHideTry: function(n){ return [P('ぜんぶで ' + jpHiki(n) + ' いたよ。いくつか かくれてるね。', 'calm'), P('もういちど！', 'ask')]; },
+  sHideAll: function(n){ return [P(jpHiki(n) + ' ぜんぶ かぞえよう。かくれてた うさぎも いっしょに。', 'calm')]; },
+  sHideWere: function(k){ return [P(jpHiki(k) + ' かくれてたよ！', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('せいかい！', 'cheer'), P(jpHiki(k) + ' かくれてるよ！', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + 'ひく' + k + 'は' + r; },
   skTitle: 'おおきい かず', skTens: 'ちょうどの 10', skTensOnes: '10と 1', skAddTen: '10を たす', skAddOnes: '1を たす', skCross: 'くりあがり',
   tenBox: 'クッキー10こで 1はこ！', boxOf10: 'クッキー10この はこ',
   sVoiceOn: [P('おんせいが オンに なりました。', 'calm')],
@@ -2362,6 +2466,18 @@ yue: {
   sMkColour: [P('今日去趁墟！', 'cheer'), P('跟顏色將食物分一分。', 'ask')], sMkKind: [P('將一樣嘅放埋一齊。', 'ask')], sMkFood: [P('佢係生果定蔬菜？', 'ask')], sMkNope: '唔係呢個籃。', sMkDone: [P('全部分好喇！', 'cheer')],
   gUp: '氣球飛呀飛', upAlt: '小羊', upOne: '氣球', upAsk: '撳下氣球，等佢飛走！', upHow: '一共有幾多個氣球？',
   sUpAsk: [P('睇下！小羊飛起咗！', 'cheer'), P('撳下每個氣球，等佢飛走，數一數。', 'ask')], sUpAsk2: [P('撳下每個氣球，數一數。', 'ask')], sUpRight: function(n){ return [P('啱喇！', 'cheer'), P(n + '個氣球！', 'proud')]; },
+  gSub: '減數', gHide: '小兔捉迷藏', hideBurrow: '兔仔洞', hideHowQ: '匿咗幾隻呢？',
+  hideAsk: function(n){ return n + '隻小兔仔喺草地上面玩緊！'; },
+  sHideIntro: function(n){ return [P('睇！草地上有' + n + '隻小兔仔玩緊。', 'cheer')]; },
+  sHideHop: [P('睇！有啲小兔仔跳咗入洞度。', 'cheer')],
+  hideHow: function(n, r){ return '原本有' + n + '隻，仲睇到' + r + '隻。匿咗幾隻呢？'; },
+  sHideHow: function(n, r){ return [P('原本有' + n + '隻小兔仔。', 'calm'), P('仲睇到' + r + '隻。', 'calm'), P('匿咗幾隻呢？', 'ask')]; },
+  hideCount: '我哋一齊數下！', sHideSee: [P('我哋先數下睇到嘅小兔仔。', 'calm')],
+  sHideTry: function(n){ return [P('原本有' + n + '隻小兔仔，有啲匿咗起身。', 'calm'), P('再試多次！', 'ask')]; },
+  sHideAll: function(n){ return [P('我哋將' + n + '隻小兔仔全部數晒，匿咗嘅都數埋。', 'calm')]; },
+  sHideWere: function(k){ return [P(k + '隻小兔仔匿咗起身！', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('啱喇！', 'cheer'), P(k + '隻小兔仔匿咗起身！', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + '減' + k + '等於' + r; },
   skTitle: '更大嘅數', skTens: '整十數', skTensOnes: '幾十幾', skAddTen: '加一個十', skAddOnes: '加個位數', skCross: '進位',
   tenBox: '10塊餅乾裝成一盒！', boxOf10: '一盒10塊餅乾',
   sVoiceOn: [P('語音已經開咗。', 'calm')],
@@ -2478,6 +2594,18 @@ ko: {
   sMkColour: [P('오늘은 장날이에요!', 'cheer'), P('색깔별로 나눠 보세요.', 'ask')], sMkKind: [P('같은 것끼리 모아 보세요.', 'ask')], sMkFood: [P('과일일까요, 채소일까요?', 'ask')], sMkNope: '그 바구니가 아니에요.', sMkDone: [P('다 나눴어요!', 'cheer')],
   gUp: '풍선 타고 둥실', upAlt: '양', upOne: '풍선', upAsk: '풍선을 눌러서 날려 보내요!', upHow: '풍선이 몇 개일까요?',
   sUpAsk: [P('봐요! 양이 날고 있어요!', 'cheer'), P('풍선을 하나씩 눌러 날려 보내며 세어 보세요.', 'ask')], sUpAsk2: [P('풍선을 눌러서 세어 보세요.', 'ask')], sUpRight: function(n){ return [P('맞아요!', 'cheer'), P('풍선 ' + n + '개!', 'proud')]; },
+  gSub: '뺄셈', gHide: '토끼 숨바꼭질', hideBurrow: '토끼 굴', hideHowQ: '숨은 토끼는 몇 마리일까요?',
+  hideAsk: function(n){ return '토끼 ' + n + '마리가 풀밭에서 놀고 있어요!'; },
+  sHideIntro: function(n){ return [P('보세요! 토끼 ' + n + '마리가 풀밭에서 놀고 있어요.', 'cheer')]; },
+  sHideHop: [P('보세요! 토끼들이 굴속으로 폴짝 뛰어들어가요.', 'cheer')],
+  hideHow: function(n, r){ return '모두 ' + n + '마리였어요. ' + r + '마리가 보여요. 숨은 토끼는 몇 마리일까요?'; },
+  sHideHow: function(n, r){ return [P('토끼는 모두 ' + n + '마리였어요.', 'calm'), P(r + '마리가 보여요.', 'calm'), P('숨은 토끼는 몇 마리일까요?', 'ask')]; },
+  hideCount: '세어 봐요!', sHideSee: [P('먼저 보이는 토끼를 세어 봐요.', 'calm')],
+  sHideTry: function(n){ return [P('토끼는 모두 ' + n + '마리였어요. 몇 마리는 숨었어요.', 'calm'), P('다시 해 봐요!', 'ask')]; },
+  sHideAll: function(n){ return [P('토끼 ' + n + '마리를 모두 세어 봐요. 숨은 토끼도 함께요.', 'calm')]; },
+  sHideWere: function(k){ return [P('토끼 ' + k + '마리가 숨어 있었어요!', 'proud')]; },
+  sHideRight: function(n, r, k){ return [P('맞아요!', 'cheer'), P('토끼 ' + k + '마리가 숨어 있어요!', 'proud')]; },
+  hideEqLabel: function(n, k, r){ return n + ' 빼기 ' + k + '은 ' + r; },
   skTitle: '더 큰 수', skTens: '딱 떨어지는 십', skTensOnes: '십과 일', skAddTen: '십 더하기', skAddOnes: '일 더하기', skCross: '받아올림',
   tenBox: '쿠키 10개가 한 상자!', boxOf10: '쿠키 10개 상자',
   sVoiceOn: [P('음성 안내가 켜졌어요.', 'calm')],
@@ -2786,6 +2914,7 @@ function render(){
   else if (screen === 'birds') renderBirds();
   else if (screen === 'market') renderMarket();
   else if (screen === 'up') renderUp();
+  else if (screen === 'hide') renderHide();
   else if (screen === 'avatar') renderAvatar();
   else if (screen === 'addbuddy') renderAddBuddy();
   else if (screen === 'garden') renderGarden();
@@ -2868,7 +2997,7 @@ function syncDaynight(){
 }
 function timerTick(){
   /* a new session is due (4 hours passed): back to the start, unless a round is in progress */
-  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write', 'birds', 'market', 'up'].indexOf(screen) >= 0;
+  var inGame = G && ['play', 'ten', 'bus', 'frog', 'tower', 'croc', 'train', 'beads', 'write', 'birds', 'market', 'up', 'hide'].indexOf(screen) >= 0;
   if (!sessOk() && S.sess && !inGame && ['start', 'timer', 'parents', 'avatar', 'addbuddy'].indexOf(screen) < 0) { show('start'); return; }
   if (timeUp() && screen === 'home') { show('home'); say(L('sLock')); }
   syncDaynight();
@@ -3020,7 +3149,7 @@ function renderAddBuddy(){
 }
 
 /* ---------- home ---------- */
-var homeGroup = null;   /* null = the two group tiles; 'add' | 'kinder' = that group's games */
+var homeGroup = null;   /* null = the group tiles; 'add' | 'kinder' | 'sub' = that group's games */
 function renderHome(){
   var starChip = '<button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('gGarden') + ' · ' + L('stars', S.stars)) + '">' + ICON.star + '<span>' + S.stars + '</span></button>';
   var gear = '<button class="small-round" data-act="gate" aria-label="' + esc(L('grownArea')) + '">' + ICON.lock + '</button>';
@@ -3028,7 +3157,7 @@ function renderHome(){
   if (homeGroup) {
     /* group page: back, then the group's name with the stars beside it, no avatar */
     bar = '<div class="bar group-bar"><div class="group-title"><button class="small-round" data-act="home-top" aria-label="' + esc(L('backLabel')) + '">' + ICON.back + '</button>' +
-      '<h1>' + esc(homeGroup === 'add' ? L('gAddition') : L('gKinder')) + '</h1></div><div class="group-right">' + starChip + gear + '</div></div>';
+      '<h1>' + esc(homeGroup === 'add' ? L('gAddition') : homeGroup === 'sub' ? L('gSub') : L('gKinder')) + '</h1></div><div class="group-right">' + starChip + gear + '</div></div>';
     hero = '';
   } else {
     /* top: the buddy sits in the top-left corner, the greeting gets its own line */
@@ -3052,9 +3181,13 @@ function renderHome(){
       '<button class="tile markett" data-act="market">' + critter('raccoon') + '<span class="tl">' + L('gMarket') + '</span></button>' +
       '<button class="tile upt" data-act="up">' + critter('sheep') + '<span class="tl">' + L('gUp') + '</span></button>' +
     '</div></div>';
+  else if (homeGroup === 'sub') body = '<div class="games"><div class="tiles six solo">' +
+      '<button class="tile hidet" data-act="hide"><img class="pic animal" src="bunnies/sit-10.svg" alt="" draggable="false"><span class="tl">' + L('gHide') + '</span></button>' +
+    '</div></div>';
   else body = '<div class="games"><div class="tiles groups">' +
       '<button class="tile group-kinder" data-act="group" data-v="kinder"><span class="grp-pics"><img class="grp-solo" src="animals/penguin.png" alt=""></span><span class="grp-name">' + L('gKinder') + '</span><span class="grp-eg">5 &gt; 3</span></button>' +
       '<button class="tile group-add" data-act="group" data-v="add"><span class="grp-pics"><img class="grp-solo" src="animals/unicorn.png" alt=""></span><span class="grp-name">' + L('gAddition') + '</span><span class="grp-eg">2 + 3 = 5</span></button>' +
+      '<button class="tile group-sub" data-act="group" data-v="sub"><span class="grp-pics"><img class="grp-solo" src="bunnies/sit-3.svg" alt=""></span><span class="grp-name">' + L('gSub') + '</span><span class="grp-eg">5 \u2212 2 = 3</span></button>' +
     '</div></div>';
   app.innerHTML = '<section class="screen home' + (homeGroup ? ' in-group' : '') + '">' + bar + hero + body + '</section>';
   /* long group names on a narrow phone: shrink the title until it fits beside the stars */
@@ -4399,6 +4532,200 @@ function upPick(v){
   }
 }
 
+/* =====================================================================
+   HIDE AND SEEK BUNNIES (hide): subtraction as the missing part. N bunnies play in the meadow, some hop into the
+   burrow, r are still showing: how many are hiding? A wrong answer first counts the bunnies we can see; a second one
+   brings the hiding bunnies back out and counts on to N.
+   ===================================================================== */
+var HIDE_SIT_FACE = ['l', 'l', 'f', 'r', 'l', 'l', 'r', 'r', 'l', 'l'];   /* which way each sitting drawing looks (f = front) */
+var HIDE_HOP_FACE = ['r', 'l'];                                          /* hop-1 leaps to the right, hop-2 to the left */
+var HIDE_BUSHES = 14;
+function startHide(){ G = { game:'hide', q:0, earned:0, startStars:S.stars }; hideQuestion(); }
+function hideLive(q){ return screen === 'hide' && G && G.game === 'hide' && G.q === q; }
+function hideQuestion(){
+  /* numbers stay within 10 (and within the grown-ups' "sums up to" setting); the first and third are easier */
+  var max = Math.max(4, Math.min(10, MX() || 5)), q = G.q, R = [[.5, .6], [.6, .8], [.5, .7], [.8, 1], [.7, 1]][q] || [.5, .8];
+  var lo = Math.max(3, Math.round(max * R[0])), hi = Math.max(lo, Math.round(max * R[1])), n, k, tries = 0;
+  do { n = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (n === G.prevN && hi > lo && ++tries < 12);
+  var kmax = (q === 0 || q === 2) ? Math.max(1, Math.min(n - 1, Math.ceil(n / 2))) : n - 1; tries = 0;
+  do { k = 1 + Math.floor(Math.random() * kmax); } while (k === G.prevK && kmax > 1 && ++tries < 12);
+  G.prevN = n; G.prevK = k; G.n = n; G.k = k; G.r = n - k;
+  var arts = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, n), hid = shuffle(arts.map(function(_, i){ return i; })).slice(0, k);
+  G.bn = arts.map(function(a, i){ return { id:i, art:a, flip:Math.random() < .5, hop:Math.floor(Math.random() * 2), hides:hid.indexOf(i) >= 0 }; });
+  /* three answers: the right one, the number still showing (the usual slip), and one more close by */
+  var extra = []; if (G.r !== k) extra.push(G.r);
+  shuffle([k + 1, k - 1, k + 2, k - 2]).forEach(function(v){ if (v >= 1 && v <= n && v !== k && extra.indexOf(v) < 0) extra.push(v); });
+  G.opts = [k].concat(extra.slice(0, 2)); for (var v = 1; G.opts.length < 3 && v <= 12; v++) if (G.opts.indexOf(v) < 0) G.opts.push(v);
+  G.opts.sort(function(x, y){ return x - y; });
+  G.bushes = shuffle(Array.apply(null, Array(HIDE_BUSHES)).map(function(_, i){ return i + 1; })).slice(0, 6);
+  G.rnd = null; G.phase = 'intro'; G.lock = true; G.done = false; G.miss = 0; G.revealed = false; G.tried = {}; G.bubble2 = ''; G.bubble2Kind = '';
+  screen = 'hide'; closeOverlay(); renderHide();
+  say(L('sHideIntro', n));
+  var qq = q; setTimeout(function(){ hideGo(qq); }, reduceMotion ? 1600 : (S.voice ? 3400 : 2400));
+}
+function renderHide(){
+  var dots = '', q = G.q;
+  for (var i = 0; i < ROUND; i++) dots += '<span class="' + (i < q ? 'done' : i === q ? 'now' : '') + '"></span>';
+  var bun = G.bn.map(function(b){
+    var f = HIDE_SIT_FACE[b.art];
+    return '<div class="hd-b idle' + (b.hides ? ' hid' : '') + '" data-id="' + b.id + '" style="--d:-' + (Math.random() * 3).toFixed(2) + 's"><img src="bunnies/sit-' + (b.art + 1) + '.svg" alt="" draggable="false"' + (b.flip && f !== 'f' ? ' style="scale:-1 1"' : '') + '><b class="hd-n"></b></div>';
+  }).join('');
+  var bush = G.bushes.map(function(i){ return '<div class="hd-bush"><img src="bushes/bush-' + i + '.svg" alt="" draggable="false"></div>'; }).join('');
+  var choices = G.opts.map(function(v){ return '<button class="choice" data-act="hide-pick" data-v="' + v + '" disabled>' + v + '</button>'; }).join('');
+  app.innerHTML = '<section class="screen hidegame">' +
+    '<div class="hd-sky" aria-hidden="true"><i class="hill"></i></div>' +
+    '<div class="bar"><button class="round" data-act="home" aria-label="' + esc(L('backGames')) + '">' + ICON.home + '</button>' +
+    '<div class="dots" aria-label="' + esc(L('qOf', q + 1, ROUND)) + '">' + dots + '</div>' +
+    speakBtn('hide-repeat', L('hearAgain')) + '</div>' +
+    '<div class="croc-ask"><div class="bubble"><b id="bubble">' + esc(G.phase === 'intro' ? L('hideAsk', G.n) : L('hideHow', G.n, G.r)) + '</b></div><div class="bubble bubble2" id="bubble2Box"><b id="bubble2"></b></div></div>' +
+    '<div class="hd-field" id="hdField">' + bush +
+      '<img class="hd-burrow back" id="hdBurrowB" src="burrow/burrow-back.svg" alt="" draggable="false">' + bun +
+      '<img class="hd-burrow front" id="hdBurrowF" src="burrow/burrow-front.svg" alt="' + esc(L('hideBurrow')) + '" draggable="false"></div>' +
+    '<div class="bw-choices' + (G.phase === 'ask' ? '' : ' wait') + '" id="hdChoices" role="group" aria-label="' + esc(L('hideHowQ')) + '">' + choices + '</div>' +
+    '</section>';
+  setBubble2(G.bubble2, G.bubble2Kind);
+  if (G.phase === 'ask') document.querySelectorAll('#hdChoices .choice').forEach(function(c){ if (!G.tried[+c.getAttribute('data-v')]) c.disabled = false; });
+  layoutHide();
+}
+/* where everything sits: the burrow on the right (below, on a tall screen), the bunnies spread over the rest of the meadow */
+function layoutHide(){
+  var f = document.getElementById('hdField'); if (!f || !G || G.game !== 'hide') return;
+  var W = f.clientWidth, H = f.clientHeight; if (!W || !H) return;
+  var land = W >= H * 1.1, bw, bh, bx, by, RW, RH, RX, RY;
+  if (land) { bw = Math.min(W * .3, H * .62 * 1.6, 440); bh = bw * .625; bx = W - bw - W * .02; by = H - bh - H * .06; RX = W * .02; RY = H * .06; RW = bx - RX - W * .02; RH = H * .92; }
+  else { bw = Math.min(W * .6, H * .28 * 1.6, 440); bh = bw * .625; bx = W / 2 - bw / 2; by = H - bh - H * .02; RX = W * .02; RY = H * .02; RW = W * .96; RH = by - RY + bh * .12; }
+  function put(el, l, t, w, h, z){ el.style.left = Math.round(l) + 'px'; el.style.top = Math.round(t) + 'px'; el.style.width = Math.round(w) + 'px'; el.style.height = Math.round(h) + 'px'; if (z !== undefined) el.style.zIndex = z; }
+  put(document.getElementById('hdBurrowB'), bx, by, bw, bh); put(document.getElementById('hdBurrowF'), bx, by, bw, bh);
+  /* the grid that gives the biggest bunnies */
+  var n = G.n, best = null;
+  for (var c = 1; c <= n; c++) { var rows = Math.ceil(n / c), cell = Math.min(RW / c, RH / rows * 1.05); if (!best || cell > best.cell) best = { c:c, rows:rows, cell:cell }; }
+  var cw = RW / best.c, ch = RH / best.rows, bs = Math.max(40, Math.min(best.cell * .96, 200, land ? H * .5 : H * .4));
+  G.lay = { W:W, H:H, bs:bs, hole:{ x: bx + bw * .5, y: by + bh * .78 }, pos:{} };
+  var rnd = G.rnd || (G.rnd = G.bn.map(function(){ return [Math.random() - .5, Math.random() - .5]; }));
+  G.bn.forEach(function(b, i){
+    var r = Math.floor(i / best.c), col = i % best.c, inRow = Math.min(best.c, n - r * best.c), off = (best.c - inRow) * cw / 2;
+    var cx = RX + off + (col + .5) * cw + rnd[i][0] * Math.max(0, cw - bs) * .7, cy = RY + (r + .5) * ch + rnd[i][1] * Math.max(0, ch - bs) * .5;
+    var l = cx - bs / 2, t = cy - bs / 2, el = f.querySelector('.hd-b[data-id="' + i + '"]');
+    G.lay.pos[i] = { l:l, t:t };
+    if (el) put(el, l, t, bs, bs, 2 + Math.round((t + bs) / H * 100));
+  });
+  /* the bushes sit along the back of the meadow, behind everything */
+  var nb = G.bushes.length, bws = Math.min(W * (land ? .12 : .2), 170);
+  f.querySelectorAll('.hd-bush').forEach(function(el, i){
+    var x = (i + .5) / nb * (land ? W - bw * .9 : W) - bws / 2 + (i % 2 ? bws * .1 : -bws * .1), y = land ? H * (.12 + (i % 2) * .09) : by - bws * .55 + (i % 2) * bws * .15;
+    put(el, x, y, bws, bws * .6, 0);
+  });
+}
+window.addEventListener('resize', function(){ if (screen === 'hide' && G && G.game === 'hide') layoutHide(); });
+/* the sitting bunnies, left to right then top to bottom (for counting) */
+function hideOrder(list){ var bs = G.lay ? G.lay.bs : 80; return list.slice().sort(function(a, b){ var pa = G.lay.pos[a], pb = G.lay.pos[b], ra = Math.round(pa.t / (bs * .8)), rb = Math.round(pb.t / (bs * .8)); return ra - rb || pa.l - pb.l; }); }
+function hideEl(id){ return document.querySelector('.hd-b[data-id="' + id + '"]'); }
+function hideGo(q){
+  if (!hideLive(q) || G.phase !== 'intro') return;
+  G.phase = 'hop'; say(L('sHideHop'));
+  var ids = G.bn.filter(function(b){ return b.hides; }).map(function(b){ return b.id; }), h = G.lay.hole;
+  ids.sort(function(a, b){ var pa = G.lay.pos[a], pb = G.lay.pos[b]; return Math.hypot(pa.l - h.x, pa.t - h.y) - Math.hypot(pb.l - h.x, pb.t - h.y); });
+  var step = reduceMotion ? 250 : 800;
+  ids.forEach(function(id, i){ setTimeout(function(){ if (hideLive(q)) hideHopIn(id); }, 700 + i * step); });
+  setTimeout(function(){ if (hideLive(q)) hideAsk(); }, 700 + (ids.length - 1) * step + (reduceMotion ? 500 : 1700));
+}
+/* one bunny leaps toward the burrow in a few hops, shrinks and disappears behind the lip of the burrow */
+function hideHopIn(id){
+  var b = G.bn[id], el = hideEl(id), L0 = G.lay; if (!el) return;
+  var img = el.querySelector('img'), p = L0.pos[id], dx = L0.hole.x - (p.l + L0.bs / 2), dy = L0.hole.y - (p.t + L0.bs * .8);
+  var faceR = HIDE_HOP_FACE[b.hop] === 'r', flip = (dx > 0) !== faceR;
+  img.src = 'bunnies/hop-' + (b.hop + 1) + '.svg'; img.style.scale = (flip ? '-1.25 1.25' : '1.25 1.25');
+  el.classList.remove('idle'); b.inside = true;
+  function done(){ el.classList.add('gone'); }
+  if (!el.animate || reduceMotion) { el.style.transition = 'opacity .3s'; el.style.opacity = 0; setTimeout(done, 320); return; }
+  var frames = [{ transform:'translate(0,0) scale(1)', opacity:1, offset:0 }], N = 3, arc = Math.max(26, L0.bs * .5);
+  for (var i = 0; i < N; i++) {
+    var ta = (i + .5) / N, tb = (i + 1) / N;
+    frames.push({ transform:'translate(' + dx * ta + 'px,' + (dy * ta - arc) + 'px) scale(' + (1 - .12 * ta) + ')', opacity:1, offset:ta });
+    frames.push({ transform:'translate(' + dx * tb + 'px,' + dy * tb + 'px) scale(' + (1 - .6 * tb * tb) + ')', opacity:i === N - 1 ? 0 : 1, offset:tb * .98 + (i === N - 1 ? .02 : 0) });
+  }
+  var an = el.animate(frames, { duration:1300, easing:'ease-in-out', fill:'forwards' });
+  an.onfinish = function(){ done(); };
+  setTimeout(done, 1500);
+}
+function hideAsk(){
+  G.phase = 'ask'; G.lock = false;
+  var bb = document.getElementById('bubble'); if (bb) bb.textContent = L('hideHow', G.n, G.r);
+  var ch = document.getElementById('hdChoices'); if (ch) ch.classList.remove('wait');
+  document.querySelectorAll('#hdChoices .choice').forEach(function(c){ if (!G.tried[+c.getAttribute('data-v')]) c.disabled = false; });
+  say(L('sHideHow', G.n, G.r));
+}
+function hideBadge(id, num, hidden){
+  var el = hideEl(id); if (!el) return; var nb = el.querySelector('.hd-n');
+  nb.textContent = num; nb.classList.add('show');
+  el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
+}
+function hideClearBadges(){ document.querySelectorAll('.hd-n').forEach(function(n){ n.classList.remove('show'); }); }
+/* a hiding bunny hops back out where it was sitting */
+function hideBringBack(id){
+  var b = G.bn[id], el = hideEl(id); if (!el) return;
+  var img = el.querySelector('img'); img.src = 'bunnies/sit-' + (b.art + 1) + '.svg';
+  var f = HIDE_SIT_FACE[b.art]; img.style.scale = (b.flip && f !== 'f') ? '-1 1' : '';
+  el.getAnimations && el.getAnimations().forEach(function(a){ a.cancel(); });
+  el.style.opacity = ''; el.style.transition = ''; el.classList.remove('gone'); b.inside = false;
+  el.classList.remove('back'); void el.offsetWidth; el.classList.add('back', 'idle');
+}
+function hideVisible(){ return hideOrder(G.bn.filter(function(b){ return !b.hides; }).map(function(b){ return b.id; })); }
+function hideHidden(){ return hideOrder(G.bn.filter(function(b){ return b.hides; }).map(function(b){ return b.id; })); }
+/* wrong, first time: count the bunnies we can see; second time (and later): bring the hiding ones back and count on */
+function hideHint(){
+  var q = G.q, vis = hideVisible(), hid = hideHidden(), n = G.n, r = G.r, parts, unlockAt;
+  G.lock = true; hideClearBadges();
+  if (G.miss === 1) {
+    parts = [L('sHideSee')]; for (var i = 1; i <= r; i++) parts.push(P(String(i), 'count', i)); parts.push(L('sHideTry', n, r));
+    G.bubble2 = L('hideCount'); G.bubble2Kind = ''; setBubble2(G.bubble2);
+    say(parts, function(i){ if (!hideLive(q)) return; if (i >= 1 && i <= r) hideBadge(vis[i - 1], i); if (i > r) hideUnlock(q); }, 800);
+  } else {
+    parts = [L('sHideAll', n)]; for (var j = 1; j <= n; j++) parts.push(P(String(j), 'count', j)); parts.push(L('sHideWere', G.k));
+    G.bubble2 = L('hideCount'); G.bubble2Kind = ''; setBubble2(G.bubble2);
+    say(parts, function(i){
+      if (!hideLive(q)) return;
+      if (i >= 1 && i <= r) hideBadge(vis[i - 1], i);
+      else if (i > r && i <= n) { if (G.bn[hid[i - r - 1]].inside) hideBringBack(hid[i - r - 1]); hideBadge(hid[i - r - 1], i); }
+      else if (i > n) hideUnlock(q);
+    }, 800);
+    G.revealed = true;
+  }
+  setTimeout(function(){ hideUnlock(q); }, (n + 4) * 2400);
+}
+function hideUnlock(q){ if (hideLive(q) && !G.done) G.lock = false; }
+function hidePick(v){
+  if (!G || G.lock || G.done || G.phase !== 'ask' || G.tried[v]) return;
+  var right = v === G.k, q = G.q, btn = document.querySelector('#hdChoices .choice[data-v="' + v + '"]');
+  clearSay();
+  if (right) {
+    G.done = true; G.lock = true;
+    if (btn) btn.classList.add('right');
+    document.querySelectorAll('#hdChoices .choice').forEach(function(c){ if (c !== btn) c.disabled = true; });
+    /* the hiding bunnies come back out, counting on from the ones we can see */
+    hideClearBadges();
+    hideVisible().forEach(function(id, i){ hideBadge(id, i + 1); });
+    hideHidden().forEach(function(id, i){ setTimeout(function(){ if (!hideLive(q)) return; if (G.bn[id].inside) hideBringBack(id); hideBadge(id, G.r + i + 1); }, reduceMotion ? 0 : 250 + i * 330); });
+    S.stars++; G.earned++; save();
+    G.bubble2 = L('bravo'); G.bubble2Kind = 'yum'; setBubble2(G.bubble2, 'yum');
+    say(L('sHideRight', G.n, G.r, G.k));
+    setTimeout(function(){ if (hideLive(q)) showHideReward(); }, S.voice ? 3200 : 2200);
+  } else {
+    G.tried[v] = true; G.miss++;
+    if (btn) { btn.classList.remove('nope'); void btn.offsetWidth; btn.classList.add('nope', 'tried'); btn.disabled = true; }
+    hideHint();
+  }
+}
+function showHideReward(){
+  if (screen !== 'hide') return;
+  var last = G.q + 1 >= ROUND;
+  overlay('<div class="reward">' +
+    '<h1>' + L('didIt') + '</h1><img class="pic animal" src="bunnies/sit-' + (G.bn[0].art + 1) + '.svg" alt="" draggable="false">' +
+    '<div class="sumcard"><div class="bigeq" aria-label="' + esc(L('hideEqLabel', G.n, G.k, G.r)) + '"><span class="s">' + G.n + '</span><span>−</span><span class="a">' + G.k + '</span><span>=</span><span class="t">' + G.r + '</span></div></div>' +
+    '<div class="row"><button class="chip chip-btn" data-act="garden" aria-label="' + esc(L('seeGarden')) + '">' + ICON.star + '+1</button><button class="big-btn" data-act="next">' + (last ? L('finish') : L('next')) + '</button></div></div>');
+  confetti();
+}
+
 /* ---------- game ---------- */
 var G = null;
 var ROUND = 5;
@@ -4856,17 +5183,19 @@ function showReward(){
 }
 function next(){
   G.q++;
-  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else if (G.game === 'birds') birdQuestion(); else if (G.game === 'market') marketQuestion(); else if (G.game === 'up') upQuestion(); else newQuestion();
+  if (G.q >= ROUND) roundDone(); else if (G.game === 'ten') tenQuestion(); else if (G.game === 'bus') busQuestion(); else if (G.game === 'frog') frogQuestion(); else if (G.game === 'tower') towerQuestion(); else if (G.game === 'croc') crocQuestion(); else if (G.game === 'train') trainQuestion(); else if (G.game === 'beads') beadQuestion(); else if (G.game === 'write') writeQuestion(); else if (G.game === 'birds') birdQuestion(); else if (G.game === 'market') marketQuestion(); else if (G.game === 'hide') hideQuestion(); else if (G.game === 'up') upQuestion(); else newQuestion();
 }
 /* small tiles for the other games of the same group (Addition or Kindergarten): one tap starts that game */
 var GAME_TILES = {
   add:    [['play', 'feed', 'unicorn', 'gFeed'], ['ten', 'ten', 'chick', 'gTen'], ['bus', 'bus', 'snail', 'gBus'], ['frog', 'frogt', 'frog', 'gFrog'], ['tower', 'towert', 'tiger', 'gTower'], ['write', 'writet', 'hedgehog', 'gWrite']],
-  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads'], ['birds', 'birdt', 'bird', 'gBird'], ['market', 'markett', 'raccoon', 'gMarket'], ['up', 'upt', 'sheep', 'gUp']]
+  kinder: [['croc', 'croct', 'croc-icon', 'gCroc'], ['train', 'traint', 'penguin', 'gTrain'], ['beads', 'beadt', 'octopus', 'gBeads'], ['birds', 'birdt', 'bird', 'gBird'], ['market', 'markett', 'raccoon', 'gMarket'], ['up', 'upt', 'sheep', 'gUp']],
+  sub:    [['hide', 'hidet', 'bunnies/sit-10.svg', 'gHide']]
 };
 function otherGames(){
-  var cur = G.game || 'play', grp = ['croc', 'train', 'beads', 'birds', 'market', 'up'].indexOf(cur) >= 0 ? 'kinder' : 'add';
-  return '<div class="mini-tiles" role="group" aria-label="' + esc(L('otherGames')) + '">' + GAME_TILES[grp].filter(function(t){ return t[0] !== cur; }).map(function(t){
-    return '<button class="tile mini ' + t[1] + '" data-act="' + t[0] + '" aria-label="' + esc(L(t[3])) + '"><img src="animals/' + t[2] + '.png" alt="" draggable="false"></button>';
+  var cur = G.game || 'play', grp = cur === 'hide' ? 'sub' : ['croc', 'train', 'beads', 'birds', 'market', 'up'].indexOf(cur) >= 0 ? 'kinder' : 'add';
+  var others = GAME_TILES[grp].filter(function(t){ return t[0] !== cur; }); if (!others.length) return '';
+  return '<div class="mini-tiles" role="group" aria-label="' + esc(L('otherGames')) + '">' + others.map(function(t){
+    return '<button class="tile mini ' + t[1] + '" data-act="' + t[0] + '" aria-label="' + esc(L(t[3])) + '"><img src="' + (t[2].indexOf('/') >= 0 ? t[2] : 'animals/' + t[2] + '.png') + '" alt="" draggable="false"></button>';
   }).join('') + '</div>';
 }
 function roundDone(){
@@ -5891,6 +6220,9 @@ document.addEventListener('click', function(e){
     case 'birds': startBirds(); break;
     case 'market': startMarket(); break;
     case 'up': startUp(); break;
+    case 'hide': startHide(); break;
+    case 'hide-pick': hidePick(+b.getAttribute('data-v')); break;
+    case 'hide-repeat': if (G && G.game === 'hide') say(G.phase === 'ask' ? L('sHideHow', G.n, G.r) : L('sHideIntro', G.n)); break;
     case 'up-pick': upPick(+b.getAttribute('data-v')); break;
     case 'up-repeat': say(G.asked ? P(L('upHow'), 'ask') : L('sUpAsk2')); break;
     case 'mk-bin': marketBin(b.getAttribute('data-v')); break;
@@ -5975,7 +6307,7 @@ document.addEventListener('click', function(e){
     case 'check': check(); break;
     case 'next': next(); break;
     case 'again': if (timeUp()) { show('home'); say(L('sLock')); break; }
-      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else if (G && G.game === 'birds') startBirds(); else if (G && G.game === 'market') startMarket(); else if (G && G.game === 'up') startUp(); else startRound(); break;
+      if (G && G.game === 'ten') startTen(); else if (G && G.game === 'bus') startBus(); else if (G && G.game === 'frog') startFrog(); else if (G && G.game === 'tower') startTower(); else if (G && G.game === 'croc') startCroc(); else if (G && G.game === 'train') startTrain(); else if (G && G.game === 'beads') startBeads(); else if (G && G.game === 'write') startWrite(); else if (G && G.game === 'birds') startBirds(); else if (G && G.game === 'market') startMarket(); else if (G && G.game === 'up') startUp(); else if (G && G.game === 'hide') startHide(); else startRound(); break;
     case 'gate': gateFor = 'parents'; gate(); break;
     case 'update-now': if (newBuild) doUpdate(); break;
     case 'timer-set': startSession(+b.getAttribute('data-v')); break;

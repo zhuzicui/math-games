@@ -15,6 +15,7 @@ A gentle addition app for 4–6 year olds. Kids feed cookies to Momo the unicorn
   - **Frog Hops**: guess where the frog lands, then watch it hop along the number line (the number line)
   - **Tower**: stack the blue tower on the red one and read its height on the ruler (addition as length)
   - **Write It** (still under development): a hedgehog asks for a number and the child writes it with a finger; an on-device reader learns her handwriting
+- **Subtraction** (a third home group): **Hide and Seek Bunnies** shows 8 bunnies in a meadow, some hop into the burrow and 5 are still showing: how many are hiding? (the missing part). Numbers stay within 10. A wrong answer first counts the bunnies you can see, then brings the hiding ones back out and counts on
 - **Colour coding everywhere**: red = what was already there, blue = what you add, matching the numbers in the sum
 - **Kind feedback**: a wrong answer triggers counting together, never a buzzer
 - **Rewards**: stars colour in rainbows; finished rainbows become stickers in a sticker book
@@ -57,6 +58,7 @@ A single `index.html` (plain HTML, CSS and JavaScript, no framework, no build st
 | Path | What it's for |
 |---|---|
 | `index.html` | The whole app |
+| `bunnies/`, `bushes/`, `burrow/` | Hide and Seek Bunnies art (all SVG): 2 hopping and 10 sitting bunnies, 14 bushes, the burrow in two layers |
 | `animals/`, `avatars/`, `stars/`, `cookies/`, `eggs/` | Characters, buddy faces, stars, cookies and eggs |
 | `rainbows.js`, `rainbows-more.js`, `stickers/` | Rainbow stickers and the special animal stickers |
 | `write-test.html`, `digits-model.js` | Write It (in development): the writing pad and the small on-device digit reader |

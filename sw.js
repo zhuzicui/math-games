@@ -3,8 +3,8 @@
    Every build gets its own cache. A new worker downloads the whole new build first, then waits; the page switches to it
    at a safe moment (see sw-register.js), so a game never mixes old and new files. */
 /*GEN-START*/
-var VERSION = '6962677a8c96';
-var BUILD = '2026-11-14.043637';
+var VERSION = '932824e9eef5';
+var BUILD = '2026-11-14.093840';
 var ASSETS = [
   './',
   'animals/bear.png',
@@ -71,6 +71,34 @@ var ASSETS = [
   'birds/b3.svg',
   'birds/b4.svg',
   'birds/b6.svg',
+  'bunnies/hop-1.svg',
+  'bunnies/hop-2.svg',
+  'bunnies/sit-1.svg',
+  'bunnies/sit-10.svg',
+  'bunnies/sit-2.svg',
+  'bunnies/sit-3.svg',
+  'bunnies/sit-4.svg',
+  'bunnies/sit-5.svg',
+  'bunnies/sit-6.svg',
+  'bunnies/sit-7.svg',
+  'bunnies/sit-8.svg',
+  'bunnies/sit-9.svg',
+  'burrow/burrow-back.svg',
+  'burrow/burrow-front.svg',
+  'bushes/bush-1.svg',
+  'bushes/bush-10.svg',
+  'bushes/bush-11.svg',
+  'bushes/bush-12.svg',
+  'bushes/bush-13.svg',
+  'bushes/bush-14.svg',
+  'bushes/bush-2.svg',
+  'bushes/bush-3.svg',
+  'bushes/bush-4.svg',
+  'bushes/bush-5.svg',
+  'bushes/bush-6.svg',
+  'bushes/bush-7.svg',
+  'bushes/bush-8.svg',
+  'bushes/bush-9.svg',
   'cookies/blue_01.svg',
   'cookies/blue_02.svg',
   'cookies/blue_03.svg',
