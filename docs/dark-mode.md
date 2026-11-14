@@ -27,6 +27,10 @@ Sample screens: `/mnt/project-files/dark-mode/dark-mode-light-vs-dark.png`.
 8. **Answer cards look the same in every game:** `var(--card)` fill, `#4C7590` border and lip, `#A7D0E8` number
    (the Bird on a Wire treatment). Selected or lit: `#5A4A1E` fill, `#F2C640` border, `#FFE9A8` text.
 
+9. **Selected pills are mid cocoa, not cream.** `.seg`, `.tabs` and `.kpill.on` use `#7A6253` with cream text;
+   a cream fill glares at night. Bus signs are `#D8CABB`, a step darker than other light surfaces.
+10. The Appearance choices carry icons (half circle, sun, moon) from `TH_ICON`, drawn with `currentColor`.
+
 ## 2. Palette
 
 | Token | Light | Dark | Use |

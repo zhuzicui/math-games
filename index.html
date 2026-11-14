@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.042806">
+<meta name="build" content="2026-11-14.043510">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1375,6 +1375,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .skills .sk-n small{font-size:15px;opacity:.7;font-weight:700}
 .pad.tenpad::after{content:'';position:absolute;inset:-5px;border:4px solid #E8B923;border-radius:50%;pointer-events:none}
 
+.seg .th-ic{width:18px;height:18px;vertical-align:-3px;margin-right:6px;flex:none}
 /* =====================================================================
    DARK MODE (see docs/dark-mode.md)
    <html data-theme="dark"> is set by the boot script in <head> and by applyTheme().
@@ -1568,6 +1569,17 @@ html[data-theme="dark"] .mini-bunny.add{background:#263B4B}
 html[data-theme="dark"] .kid-badge{background:#263B4B;color:#A7D0E8}
 html[data-theme="dark"] .av-opt[aria-checked="true"]{box-shadow:0 0 0 4px #263B4B}
 html[data-theme="dark"] .hold-ring .track{stroke:var(--edge)}
+/* ---- round 3 ---- */
+/* selected pills: a cream fill glares at night, so the selected state is a mid cocoa with cream text */
+html[data-theme="dark"] .seg button[aria-pressed="true"], html[data-theme="dark"] .tabs button[aria-selected="true"]{background:#7A6253;border-color:#7A6253;color:var(--ink)}
+html[data-theme="dark"] .kpill.on{background:#7A6253;border-color:#7A6253}
+html[data-theme="dark"] .kpill.on .kp-main, html[data-theme="dark"] .kpill.on .kp-edit{color:var(--ink)}
+html[data-theme="dark"] .ruler span.hi{background:#D8CABB;color:#2B201C}
+/* bus signs: a step darker than the other light surfaces, with the light-mode ink so the number stays readable */
+html[data-theme="dark"] .roof-sign, html[data-theme="dark"] .win .num, html[data-theme="dark"] .stop-sign .sign{background:#D8CABB}
+html[data-theme="dark"] .roof-sign{color:#A04F3A;border-color:#A85C48}
+html[data-theme="dark"] .win .num{color:#255F8C}
+html[data-theme="dark"] .roof-sign.glow{box-shadow:0 0 0 6px #6B3B30}
 /* the lock screen is already night: identical in both modes */
 html[data-theme="dark"] body.nightbg .lockscreen .big-btn{color:#3E2A22}
 </style>
@@ -1607,6 +1619,11 @@ function isDark(){ var t = S.theme || 'auto'; return t === 'dark' || (t === 'aut
 /* the strip behind the phone's clock and battery takes the colour of the top of the page */
 var TOP_COL = { light: { up:'#9FD3F2', locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC', '':'#F7F1EA' },
                 dark:  { up:'#1F4463', locked:'#10194A', garden:'#1D3236', book:'#30251F', '':'#2B201C' } };
+var TH_ICON = {
+  auto: '<svg class="th-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>',
+  light: '<svg class="th-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+  dark: '<svg class="th-ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.2A8.3 8.3 0 0 1 9.8 4a8.3 8.3 0 1 0 10.2 10.2z"/></svg>'
+};
 function applyTheme(){
   var mode = isDark() ? 'dark' : 'light', map = TOP_COL[mode], topCol = map[typeof screen === 'string' ? screen : ''] || map[''];
   document.documentElement.setAttribute('data-theme', mode);
@@ -5822,7 +5839,7 @@ function renderParents(){
           ['slow', 'medium', 'fast'].map(function(r){ return '<button data-act="vrate" data-v="' + r + '" aria-pressed="' + ((S.voiceRate || 'medium') === r) + '"' + (S.voice ? '' : ' disabled') + '>' + L('rate_' + r) + '</button>'; }).join('') + '</div></div>';
       })() : '') +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('theme') + '</span><div class="seg">' +
-        ['auto', 'light', 'dark'].map(function(t){ return '<button data-act="theme" data-v="' + t + '" aria-pressed="' + ((S.theme || 'auto') === t) + '">' + L('th_' + t) + '</button>'; }).join('') + '</div>' +
+        ['auto', 'light', 'dark'].map(function(t){ return '<button data-act="theme" data-v="' + t + '" aria-pressed="' + ((S.theme || 'auto') === t) + '">' + TH_ICON[t] + L('th_' + t) + '</button>'; }).join('') + '</div>' +
         '<span class="tip small" style="margin:0">' + L('themeTip') + '</span></div>' +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
