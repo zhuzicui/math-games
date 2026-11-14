@@ -3,8 +3,8 @@
    Every build gets its own cache. A new worker downloads the whole new build first, then waits; the page switches to it
    at a safe moment (see sw-register.js), so a game never mixes old and new files. */
 /*GEN-START*/
-var VERSION = '376312340fac';
-var BUILD = '2026-11-14.020401';
+var VERSION = '6962677a8c96';
+var BUILD = '2026-11-14.043637';
 var ASSETS = [
   './',
   'animals/bear.png',
