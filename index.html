@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.014135">
+<meta name="build" content="2026-11-14.021204">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -30,6 +30,8 @@
 <meta name="twitter:title" content="Momo Math">
 <meta name="twitter:description" content="Learn to add with Momo the unicorn. Free, in 6 languages.">
 <meta property="og:site_name" content="Momo Math">
+<script>/* dark mode: set before the first paint so the page never flashes the wrong colours (see docs/dark-mode.md) */
+(function(){var d=false;try{var t=(JSON.parse(localStorage.getItem('feed-the-monster-v1')||'{}')||{}).theme||'auto';d=t==='dark'||(t==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light')})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -1372,6 +1374,135 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
 .skills .sk-n b{font-size:18px}
 .skills .sk-n small{font-size:15px;opacity:.7;font-weight:700}
 .pad.tenpad::after{content:'';position:absolute;inset:-5px;border:4px solid #E8B923;border-radius:50%;pointer-events:none}
+
+/* =====================================================================
+   DARK MODE (see docs/dark-mode.md)
+   <html data-theme="dark"> is set by the boot script in <head> and by applyTheme().
+   Rule 1: the light rules above are never edited for dark mode; everything dark lives in this block.
+   Rule 2: chrome (page, cards, text, buttons) turns to warm cocoa; scenes turn to dusk; artwork is not redrawn.
+   ===================================================================== */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  /* chrome */
+  --paper:#2B201C; --card:#3A2D27; --edge:#5A463C; --ink:#F7F1EA; --ink2:#CFBBAD; --line:#EADBCD;
+  --on-ink:#2B201C;          /* text on a cream (ink-coloured) pill */
+  --well:#221915;            /* inputs and insets: darker than the page */
+  --lift:#46372F;            /* a surface one step above a card */
+  /* accents: same hues, a touch deeper so they do not glare; text on them stays dark brown */
+  --coral:#DE8A73; --coral-d:#A85C48; --sage:#9CBD92; --sage-d:#6A8D61; --butter:#E6C97F; --peach:#F6C9B4;
+  --cta:#8FC0E3; --cta-d:#5A8FB8;
+  /* red = already there, blue = what you add: the numbers take the cookie colours */
+  --red-ink:#F4AE9F; --red-bg:#4A2F29; --red-ring:#5A3830; --red-edge:#8A5547;
+  --blue-ink:#A7D0E8; --blue-bg:#263B4B; --blue-edge:#4C7590; --blue-slot:#4C7590;
+}
+
+/* tiles: the same hue as in light mode, deep instead of pale */
+html[data-theme="dark"] .tile.feed{background:#4B3325;border-color:#7D523B;box-shadow:0 7px 0 #7D523B}
+html[data-theme="dark"] .tile.mini.feed{box-shadow:0 4px 0 #7D523B}
+html[data-theme="dark"] .tile.garden{background:#27484A;border-color:#3F7578;box-shadow:0 7px 0 #3F7578}
+html[data-theme="dark"] .tile.mini.garden{box-shadow:0 4px 0 #3F7578}
+html[data-theme="dark"] .tile.ten{background:#4B4225;border-color:#7D6D3B;box-shadow:0 7px 0 #7D6D3B}
+html[data-theme="dark"] .tile.mini.ten{box-shadow:0 4px 0 #7D6D3B}
+html[data-theme="dark"] .tile.bus{background:#253C4B;border-color:#3B627D;box-shadow:0 7px 0 #3B627D}
+html[data-theme="dark"] .tile.mini.bus{box-shadow:0 4px 0 #3B627D}
+html[data-theme="dark"] .tile.frogt{background:#324B25;border-color:#527A3D;box-shadow:0 7px 0 #527A3D}
+html[data-theme="dark"] .tile.mini.frogt{box-shadow:0 4px 0 #527A3D}
+html[data-theme="dark"] .tile.towert{background:#4B3825;border-color:#7D5C3B;box-shadow:0 7px 0 #7D5C3B}
+html[data-theme="dark"] .tile.mini.towert{box-shadow:0 4px 0 #7D5C3B}
+html[data-theme="dark"] .tile.writet{background:#36254B;border-color:#573B7D;box-shadow:0 7px 0 #573B7D}
+html[data-theme="dark"] .tile.mini.writet{box-shadow:0 4px 0 #573B7D}
+html[data-theme="dark"] .tile.group-add{background:#4B3225;border-color:#7D523B;box-shadow:0 7px 0 #7D523B}
+html[data-theme="dark"] .tile.mini.group-add{box-shadow:0 4px 0 #7D523B}
+html[data-theme="dark"] .tile.group-kinder{background:#354B25;border-color:#567D3B;box-shadow:0 7px 0 #567D3B}
+html[data-theme="dark"] .tile.mini.group-kinder{box-shadow:0 4px 0 #567D3B}
+html[data-theme="dark"] .tile.croct{background:#354B25;border-color:#567D3B;box-shadow:0 7px 0 #567D3B}
+html[data-theme="dark"] .tile.mini.croct{box-shadow:0 4px 0 #567D3B}
+html[data-theme="dark"] .tile.traint{background:#26444A;border-color:#3E7079;box-shadow:0 7px 0 #3E7079}
+html[data-theme="dark"] .tile.mini.traint{box-shadow:0 4px 0 #3E7079}
+html[data-theme="dark"] .tile.beadt{background:#4B2530;border-color:#7D3B4D;box-shadow:0 7px 0 #7D3B4D}
+html[data-theme="dark"] .tile.mini.beadt{box-shadow:0 4px 0 #7D3B4D}
+html[data-theme="dark"] .tile.birdt{background:#253A4B;border-color:#3B607D;box-shadow:0 7px 0 #3B607D}
+html[data-theme="dark"] .tile.mini.birdt{box-shadow:0 4px 0 #3B607D}
+html[data-theme="dark"] .tile.markett{background:#4B3B25;border-color:#7D613B;box-shadow:0 7px 0 #7D613B}
+html[data-theme="dark"] .tile.mini.markett{box-shadow:0 4px 0 #7D613B}
+html[data-theme="dark"] .tile.upt{background:#253C4B;border-color:#3B627D;box-shadow:0 7px 0 #3B627D}
+html[data-theme="dark"] .tile.mini.upt{box-shadow:0 4px 0 #3B627D}
+/* icons drawn in JS with the brown line colour */
+html[data-theme="dark"] svg [stroke="#6B4A3A"], html[data-theme="dark"] svg[stroke="#6B4A3A"], html[data-theme="dark"] svg [stroke="#5A3E33"], html[data-theme="dark"] svg[stroke="#5A3E33"]{stroke:var(--line)}
+html[data-theme="dark"] svg[stroke="#7A5A4A"]{stroke:var(--ink2)}
+html[data-theme="dark"] svg [fill="#5A3E33"]{fill:var(--line)}
+/* shared chrome */
+html[data-theme="dark"] .big-btn, html[data-theme="dark"] .big-btn.green, html[data-theme="dark"] .donebtn{color:#2B1D17}
+html[data-theme="dark"] .big-btn.plain, html[data-theme="dark"] .round-rw .big-btn.plain{background:var(--card);color:var(--ink)}
+html[data-theme="dark"] .soon button{border-color:var(--edge);background:var(--card)}
+html[data-theme="dark"] .dots span{border-color:var(--edge)}
+html[data-theme="dark"] .dots span.done, html[data-theme="dark"] .dots span.now{border-color:var(--line)}
+html[data-theme="dark"] .dots span.now{box-shadow:0 0 0 4px #6B3B30}
+html[data-theme="dark"] .overlay{background:rgba(34,25,21,.96)}
+html[data-theme="dark"] .sticker-zoom{background:rgba(34,25,21,.94)}
+html[data-theme="dark"] .seg button[aria-pressed="true"], html[data-theme="dark"] .tabs button[aria-selected="true"], html[data-theme="dark"] .kpill.on .kp-main, html[data-theme="dark"] .kpill.on .kp-edit{color:var(--on-ink)}
+html[data-theme="dark"] .field input, html[data-theme="dark"] .kid-dialog .kid-name{background:var(--well)}
+html[data-theme="dark"] .gate .opts button{background:var(--lift)}
+html[data-theme="dark"] .link-btn, html[data-theme="dark"] .kid-dialog .kid-del, html[data-theme="dark"] .rainbow-news{color:#F4AE9F}
+html[data-theme="dark"] .tip{color:#E6D7CA}
+html[data-theme="dark"] .f-new{background:var(--lift);border-color:var(--edge);color:var(--ink2)}
+html[data-theme="dark"] .f-x{border-color:#4A3A32}
+html[data-theme="dark"] body.muted .speakbtn{background:#33261F}
+html[data-theme="dark"] .avatar{--avbg:#F3EADF !important}
+html[data-theme="dark"] .kp-av, html[data-theme="dark"] .sk-face{background:#F3EADF}
+html[data-theme="dark"] .sk-add .sk-face{background:transparent}
+html[data-theme="dark"] .cookie .x svg{stroke:#5A3E33}
+html[data-theme="dark"] .ghost{box-shadow:0 10px 20px rgba(0,0,0,.45)}
+html[data-theme="dark"] .update-pill{background:#263B4B;color:#DCEEFA;border-color:#6EA6D1}
+html[data-theme="dark"] .count-tag{background:#F7F1EA;color:#2B201C}
+html[data-theme="dark"] .star-pop{background:var(--lift);box-shadow:0 10px 26px rgba(0,0,0,.5)}
+html[data-theme="dark"] .star-pop b{color:#F2C640}
+html[data-theme="dark"] #daynight{box-shadow:0 0 0 3px rgba(255,255,255,.22),0 2px 6px rgba(0,0,0,.4)}
+/* speech bubbles and answer cards */
+html[data-theme="dark"] .bubble2{background:#4A2F29;border-color:#8A5547}
+html[data-theme="dark"] .bubble2 b{color:#F4AE9F}
+html[data-theme="dark"] .bubble2.yum, html[data-theme="dark"] .choice.right, html[data-theme="dark"] .same .same-btn{background:#2F4427;border-color:#5F8A52;color:#BFE0AE}
+html[data-theme="dark"] .bubble2.yum b, html[data-theme="dark"] .cmp .sign.shown{color:#BFE0AE}
+html[data-theme="dark"] .choice.right, html[data-theme="dark"] .same .same-btn{box-shadow:0 6px 0 #5F8A52}
+html[data-theme="dark"] .choice, html[data-theme="dark"] .numcard{background:var(--card);border-color:#4C7590;color:#A7D0E8}
+html[data-theme="dark"] .choice{box-shadow:0 6px 0 #4C7590}
+html[data-theme="dark"] .same-btn.picked{border-color:#F2C640;background:#4B4225;box-shadow:0 5px 0 #8A6D14;color:#FFE9A8}
+/* Feed the Unicorn: a clay plate, so the cookies stay the brightest thing */
+html[data-theme="dark"] .plate{background:#4A3A32;border-color:#6A5448;box-shadow:inset 0 0 0 clamp(8px,3.2cqmin,18px) #3F312A, inset 0 0 0 calc(clamp(8px,3.2cqmin,18px) + 4px) #5A473D, 0 6px 0 #1F1713}
+html[data-theme="dark"] .table .plate{box-shadow:inset 0 0 0 calc(var(--pd,240px) * .045) #3F312A, inset 0 0 0 calc(var(--pd,240px) * .045 + 4px) #5A473D, 0 6px 0 #1F1713}
+html[data-theme="dark"] .plate.hot{background:#54423A}
+html[data-theme="dark"] .jar.hot{background:#2E4658}
+html[data-theme="dark"] .cell{background:rgba(255,255,255,.08)}
+html[data-theme="dark"] .cookie, html[data-theme="dark"] .cookie.tenbox{filter:drop-shadow(0 2px 1px rgba(0,0,0,.35))}
+html[data-theme="dark"] .cookie.tenbox.counted{background:#5A4A1E}
+/* scenes: day turns to dusk; never the blue-violet of the lock screen */
+html[data-theme="dark"] body.skybg, html[data-theme="dark"] body.skybg #app{background:#1D3236}
+html[data-theme="dark"] .shelf{background:rgba(255,255,255,.07);border-color:#3F6C70}
+html[data-theme="dark"] .shelf-label, html[data-theme="dark"] .shelf .more, html[data-theme="dark"] .shelf .none{color:#A9D3D6}
+html[data-theme="dark"] .bookbtn{background:var(--card);border-color:#3F6C70;box-shadow:0 6px 0 #3F6C70}
+html[data-theme="dark"] .bookcount{border-color:var(--card)}
+html[data-theme="dark"] .kstar.empty{color:#6FA3A8}
+html[data-theme="dark"] .rb-img .rbi-g{filter:grayscale(1) brightness(.75) contrast(.6);opacity:.35}
+html[data-theme="dark"] svg [stroke="#F3F9F9"], html[data-theme="dark"] svg [fill="#F3F9F9"]{stroke:#2C4A4F;fill:#2C4A4F}
+html[data-theme="dark"] svg [fill="none"][stroke="#F3F9F9"]{fill:none}
+html[data-theme="dark"] body.bookbg, html[data-theme="dark"] body.bookbg #app{background:#30251F}
+html[data-theme="dark"] .book{background-color:var(--card);border-color:var(--edge);box-shadow:0 6px 0 var(--edge);background-image:repeating-linear-gradient(to bottom, transparent 0 39px, #46372F 39px 41px)}
+html[data-theme="dark"] .sticker-slot{border-color:var(--edge)}
+html[data-theme="dark"] body.waterbg, html[data-theme="dark"] body.waterbg #app{background:linear-gradient(180deg,#34637E 0%,#2B5670 55%,#234A63 100%) fixed}
+html[data-theme="dark"] body.waterbg::before{opacity:.14}
+/* dark fish would melt into dark water, and a fish that cannot be seen cannot be counted: every fish gets a thin light rim.
+   One filter per loose fish and one per school of 10 (never per fish inside a school). */
+html[data-theme="dark"] .fish, html[data-theme="dark"] .school{filter:drop-shadow(0 0 1.5px rgba(255,255,255,.8))}
+html[data-theme="dark"] .fish.counted{filter:drop-shadow(0 0 1.5px rgba(255,255,255,.8)) drop-shadow(0 0 6px #FFD54A) brightness(1.08)}
+html[data-theme="dark"] .waterbg .bar .round, html[data-theme="dark"] .waterbg .bubble, html[data-theme="dark"] .waterbg .cmp .n, html[data-theme="dark"] .waterbg .same-btn{box-shadow:0 5px 0 rgba(8,20,30,.45)}
+html[data-theme="dark"] .school{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.55)}
+html[data-theme="dark"] .school.counted{background:rgba(242,198,64,.22)}
+html[data-theme="dark"] .crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp, html[data-theme="dark"] .crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp .sign{color:rgba(247,241,234,.4)}
+html[data-theme="dark"] body.railbg, html[data-theme="dark"] body.railbg #app{background:linear-gradient(rgba(22,26,46,.62),rgba(22,26,46,.62)),#1E2A3A url(train/bg.jpg) center bottom/cover no-repeat fixed}
+html[data-theme="dark"] body.birdbg, html[data-theme="dark"] body.birdbg #app{background:linear-gradient(180deg,#22384C 0%,#2B3F4A 60%,#3A382E 100%) fixed}
+html[data-theme="dark"] .up-sky{background:linear-gradient(180deg,#1F4463 0%,#2C5878 55%,#3B6C8A 100%)}
+/* the lock screen is already night: identical in both modes */
+html[data-theme="dark"] body.nightbg .lockscreen .big-btn{color:#3E2A22}
 </style>
 <!-- Vercel Web Analytics (the plain-HTML version of @vercel/analytics) -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -1403,6 +1534,19 @@ function load(){
   return d;
 }
 var S = load();
+/* ---------- appearance: S.theme is 'auto' (follow the device), 'light' or 'dark'; it belongs to the device, not to a child ---------- */
+var darkMQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+function isDark(){ var t = S.theme || 'auto'; return t === 'dark' || (t === 'auto' && !!darkMQ && darkMQ.matches); }
+/* the strip behind the phone's clock and battery takes the colour of the top of the page */
+var TOP_COL = { light: { up:'#9FD3F2', locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC', '':'#F7F1EA' },
+                dark:  { up:'#1F4463', locked:'#10194A', garden:'#1D3236', book:'#30251F', '':'#2B201C' } };
+function applyTheme(){
+  var mode = isDark() ? 'dark' : 'light', map = TOP_COL[mode], topCol = map[typeof screen === 'string' ? screen : ''] || map[''];
+  document.documentElement.setAttribute('data-theme', mode);
+  var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', topCol);
+  document.documentElement.style.backgroundColor = topCol;
+}
+if (darkMQ) { if (darkMQ.addEventListener) darkMQ.addEventListener('change', applyTheme); else if (darkMQ.addListener) darkMQ.addListener(applyTheme); }
 if (!S.avatarPicked || !/^av\d\d$/.test(S.avatar || '')) S.avatar = 'av17';   /* until the child picks one, the koala is their buddy */
 /* ---------- children: each has their own name, buddy, stars, stickers, progress and level ----------
    The active child's values live directly on S (so the games read S.stars etc.); S.kids keeps everyone. */
@@ -1519,6 +1663,7 @@ en: {
   tabKids: 'Children', addKid: 'Add a child', playingNow: 'Playing now', editKid: function(n){ return 'Edit ' + n; }, deleteKid: 'Delete this child', deleteConfirm: 'Tap again to delete all their progress', saveBtn: 'Save',
   back: 'Back',
   nextStep: 'Next',
+  theme: 'Appearance', th_auto: 'Auto', th_light: 'Light', th_dark: 'Dark', themeTip: 'Auto follows this device’s setting.',
   speed: 'Speed', rate_slow: 'Slower', rate_medium: 'Medium', rate_fast: 'Faster',
   towerAlt: 'Tiger', towerPut: 'Put the blue tower on top!', towerHow: 'How tall is it now?',
   sTowerAsk: function(s, a){ return [P('Here are ' + s + ' red ' + pl(s, 'block', 'blocks') + ' and ' + a + ' blue ' + pl(a, 'block', 'blocks') + '.', 'calm'), P('Put the blue tower on top!', 'ask')]; },
@@ -1634,6 +1779,7 @@ fr: {
   tabKids: 'Enfants', addKid: 'Ajouter un enfant', playingNow: 'Joue maintenant', editKid: function(n){ return 'Modifier ' + n; }, deleteKid: 'Supprimer cet enfant', deleteConfirm: 'Touche encore pour effacer toute sa progression', saveBtn: 'Enregistrer',
   back: 'Retour',
   nextStep: 'Suivant',
+  theme: 'Apparence', th_auto: 'Auto', th_light: 'Clair', th_dark: 'Sombre', themeTip: 'Auto suit le réglage de cet appareil.',
   speed: 'Vitesse', rate_slow: 'Plus lente', rate_medium: 'Moyenne', rate_fast: 'Plus rapide',
   towerAlt: 'Tigre', towerPut: 'Mets la tour bleue dessus\u00a0!', towerHow: 'Elle mesure combien\u00a0?',
   sTowerAsk: function(s, a){ return [P('Voici ' + s + (s === 1 ? ' bloc rouge' : ' blocs rouges') + ' et ' + a + (a === 1 ? ' bloc bleu.' : ' blocs bleus.'), 'calm'), P('Mets la tour bleue dessus !', 'ask')]; },
@@ -1749,6 +1895,7 @@ es: {
   tabKids: 'Niños', addKid: 'Añadir un niño', playingNow: 'Jugando ahora', editKid: function(n){ return 'Editar a ' + n; }, deleteKid: 'Eliminar este perfil', deleteConfirm: 'Toca otra vez para borrar todo su progreso', saveBtn: 'Guardar',
   back: 'Volver',
   nextStep: 'Siguiente',
+  theme: 'Apariencia', th_auto: 'Auto', th_light: 'Claro', th_dark: 'Oscuro', themeTip: 'Auto sigue el ajuste de este dispositivo.',
   speed: 'Velocidad', rate_slow: 'Más lenta', rate_medium: 'Media', rate_fast: 'Más rápida',
   towerAlt: 'Tigre', towerPut: '¡Pon la torre azul encima!', towerHow: '¿Qué tan alta es ahora?',
   sTowerAsk: function(s, a){ return [P('Aquí hay ' + s + (s === 1 ? ' bloque rojo' : ' bloques rojos') + ' y ' + a + (a === 1 ? ' bloque azul.' : ' bloques azules.'), 'calm'), P('¡Pon la torre azul encima!', 'ask')]; },
@@ -1864,6 +2011,7 @@ zh: {
   tabKids: '孩子', addKid: '添加孩子', playingNow: '正在玩', editKid: function(n){ return '编辑' + n; }, deleteKid: '删除这个孩子', deleteConfirm: '再点一次将删除他的所有进度', saveBtn: '保存',
   back: '返回',
   nextStep: '下一步',
+  theme: '外观', th_auto: '自动', th_light: '浅色', th_dark: '深色', themeTip: '“自动”会跟随这台设备的设置。',
   speed: '语速', rate_slow: '慢一点', rate_medium: '中等', rate_fast: '快一点',
   towerAlt: '小老虎', towerPut: '把蓝色的塔放到上面！', towerHow: '现在有多高？',
   sTowerAsk: function(s, a){ return [P('这里有' + s + '块红积木和' + a + '块蓝积木。', 'calm'), P('把蓝色的塔放到上面！', 'ask')]; },
@@ -1979,6 +2127,7 @@ ja: {
   tabKids: 'こども', addKid: 'こどもを追加', playingNow: 'プレイ中', editKid: function(n){ return n + 'を編集'; }, deleteKid: 'このこどもを削除', deleteConfirm: 'もう一度タップすると記録がすべて消えます', saveBtn: '保存',
   back: 'もどる',
   nextStep: 'つぎへ',
+  theme: '外観', th_auto: '自動', th_light: 'ライト', th_dark: 'ダーク', themeTip: '「自動」はこの端末の設定に合わせます。',
   speed: 'はやさ', rate_slow: 'ゆっくり', rate_medium: 'ふつう', rate_fast: 'はやい',
   towerAlt: 'トラ', towerPut: 'あおい タワーを うえに のせてね！', towerHow: 'いま どのくらい たかい？',
   sTowerAsk: function(s, a){ return [P('あかい ブロックが ' + s + 'こ、あおい ブロックが ' + a + 'こ あるよ。', 'calm'), P('あおい タワーを うえに のせてね！', 'ask')]; },
@@ -2094,6 +2243,7 @@ yue: {
   tabKids: '小朋友', addKid: '加小朋友', playingNow: '玩緊', editKid: function(n){ return '修改' + n; }, deleteKid: '刪除呢個小朋友', deleteConfirm: '再撳一次就會刪除佢所有進度', saveBtn: '儲存',
   back: '返回',
   nextStep: '下一步',
+  theme: '外觀', th_auto: '自動', th_light: '淺色', th_dark: '深色', themeTip: '「自動」會跟隨呢部機嘅設定。',
   speed: '語速', rate_slow: '慢啲', rate_medium: '中等', rate_fast: '快啲',
   towerAlt: '小老虎', towerPut: '將藍色座塔放上面！', towerHow: '而家有幾高？',
   sTowerAsk: function(s, a){ return [P('呢度有' + s + '粒紅積木同' + a + '粒藍積木。', 'calm'), P('將藍色座塔放上面！', 'ask')]; },
@@ -2209,6 +2359,7 @@ ko: {
   tabKids: '아이', addKid: '아이 추가', playingNow: '지금 하는 중', editKid: function(n){ return n + ' 수정'; }, deleteKid: '이 아이 삭제', deleteConfirm: '한 번 더 누르면 모든 기록이 지워져요', saveBtn: '저장',
   back: '뒤로',
   nextStep: '다음',
+  theme: '화면 모드', th_auto: '자동', th_light: '라이트', th_dark: '다크', themeTip: '자동은 이 기기의 설정을 따라가요.',
   speed: '속도', rate_slow: '느리게', rate_medium: '보통', rate_fast: '빠르게',
   towerAlt: '호랑이', towerPut: '파란 탑을 위에 올려 보세요!', towerHow: '이제 얼마나 높을까요?',
   sTowerAsk: function(s, a){ return [P('빨간 블록 ' + s + '개와 파란 블록 ' + a + '개가 있어요.', 'calm'), P('파란 탑을 위에 올려 보세요!', 'ask')]; },
@@ -2535,10 +2686,7 @@ function render(){
   document.body.classList.toggle('railbg', screen === 'train');
   document.body.classList.toggle('birdbg', screen === 'birds');
   document.body.classList.toggle('nightbg', screen === 'locked');
-  /* the strip behind the phone's clock and battery takes the colour of the top of the page */
-  var topCol = { up:'#9FD3F2', locked:'#10194A', garden:'#DAECEC', book:'#F3E9DC' }[screen] || '#F7F1EA';
-  var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', topCol);
-  document.documentElement.style.backgroundColor = topCol;
+  applyTheme();
   if (screen === 'start') renderStart();
   else if (screen === 'home') renderHome();
   else if (screen === 'play') renderPlay();
@@ -5606,6 +5754,9 @@ function renderParents(){
           '<div class="field' + (S.voice ? '' : ' off') + '"><span class="lab">' + L('speed') + '</span><div class="seg">' +
           ['slow', 'medium', 'fast'].map(function(r){ return '<button data-act="vrate" data-v="' + r + '" aria-pressed="' + ((S.voiceRate || 'medium') === r) + '"' + (S.voice ? '' : ' disabled') + '>' + L('rate_' + r) + '</button>'; }).join('') + '</div></div>';
       })() : '') +
+      '</div><div class="card settings"><div class="field"><span class="lab">' + L('theme') + '</span><div class="seg">' +
+        ['auto', 'light', 'dark'].map(function(t){ return '<button data-act="theme" data-v="' + t + '" aria-pressed="' + ((S.theme || 'auto') === t) + '">' + L('th_' + t) + '</button>'; }).join('') + '</div>' +
+        '<span class="tip small" style="margin:0">' + L('themeTip') + '</span></div>' +
       '</div><div class="card settings"><div class="field"><span class="lab">' + L('progressLab') + '</span><button class="link-btn" style="text-align:left" data-act="reset">' + (resetArmed ? L('resetConfirm', L('stars', S.stars), L('stickersN', rainbowProgress(S.stars).done.length)) : L('reset')) + '</button>' +
         '<span class="tip small" style="margin:0">' + L('savedHere') + '</span></div>' +
     '</div></div>';
@@ -5766,6 +5917,7 @@ document.addEventListener('click', function(e){
     case 'vtype': S.voiceType = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'vrate': S.voiceRate = b.getAttribute('data-v'); save(); renderParents(); say(L('sSample')); break;
     case 'voice': S.voice = b.getAttribute('data-v') === '1'; save(); syncMute(); renderParents(); if (S.voice) say(L('sVoiceOn')); break;
+    case 'theme': S.theme = b.getAttribute('data-v'); save(); applyTheme(); renderParents(); break;
     case 'reset':
       if (!resetArmed) { resetArmed = true; renderParents(); }
       else { resetArmed = false; S.stars = 0; S.facts = {}; save(); renderParents(); }   /* only the active child's progress */
