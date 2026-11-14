@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.043637">
+<meta name="build" content="2026-11-14.093125">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -3065,7 +3065,7 @@ function renderHome(){
 /* =====================================================================
    HUNGRY CROCODILE (croc): which side has more fish? The croc always eats the bigger side.
    ===================================================================== */
-var FISH_N = 12, FISH_LEFT = [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1];   /* which fish drawings face left */
+var FISH_N = 28, FISH_LEFT = [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];   /* which fish drawings face left */
 function crocImg(open, cls){ return '<img class="' + (cls || 'croc-img') + '" src="animals/croc-' + (open ? 'open' : 'closed') + '.svg" alt="' + esc(L('crocAlt')) + '" draggable="false">'; }
 /* each round of 5 mixes kinds of question: 'easy' (clear difference), 'close' (1-2 apart, fish sizes that mislead),
    'num' (just two numbers; the fish appear only if the child needs to count), 'eq' (same on both sides) */
@@ -5672,7 +5672,7 @@ function rainbowSvg(idx, filled, cls, empty){
       var BA = 1.45, w = Math.min(B[2], BA), hh = w / B[2], ox = (BA - w) / 2, oy = (1 - hh) / 2;
       var X = ox + B[0] * w, Y = Math.min(1, oy + B[1] * hh), RR = B[3 + Math.min(B.length - 4, Math.max(0, filled - 1))] * w;
       var f = function(v){ return v.toFixed(2) + '%'; };
-      var top = 'radial-gradient(' + f(RR / BA * 100) + ' ' + f(RR / Y * 100) + ' at ' + f(X / BA * 100) + ' 100%, transparent 99.4%, #000 100%)';
+      var top = 'radial-gradient(' + f(RR / BA * 100) + ' ' + f(RR * (R.ev || 1) / Y * 100) + ' at ' + f(X / BA * 100) + ' 100%, transparent 99.4%, #000 100%)';
       var l = (X - RR) / BA * 100, r2 = (X + RR) / BA * 100;
       var leg = 'linear-gradient(90deg, #000 ' + f(l) + ', transparent ' + f(l) + ', transparent ' + f(r2) + ', #000 ' + f(r2) + ')';
       st += ';--mk:' + top + ',' + leg + ';--ms:100% ' + f(Y * 100) + ', 100% ' + f((1 - Y) * 100 + 0.5);
