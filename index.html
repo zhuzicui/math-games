@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.021204">
+<meta name="build" content="2026-11-14.042806">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -423,7 +423,7 @@ body.bookbg,body.bookbg #app{background:#F3E9DC}
 .book-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(6px,1.4dvh,14px);align-items:center;justify-items:center}
 .sticker{border:0;background:none;padding:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform:rotate(var(--rot));cursor:pointer}
 .stk{width:88%;height:88%;overflow:visible;
-  filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 4px 4px rgba(90,62,51,.22))}
+  filter:drop-shadow(0 4px 4px rgba(90,62,51,.22))}
 .sticker.wiggle{animation:wiggle .5s ease-in-out}
 @keyframes wiggle{25%{transform:rotate(calc(var(--rot) - 10deg)) scale(1.08)}75%{transform:rotate(calc(var(--rot) + 8deg)) scale(1.08)}}
 .sticker-slot{width:70%;aspect-ratio:1/1;max-height:90%;border:4px dashed #E6D5C4;border-radius:24px}
@@ -720,7 +720,7 @@ img.stk{object-fit:contain}
 @keyframes shine{0%,100%{transform:rotate(var(--rot)) scale(1)}50%{transform:rotate(var(--rot)) scale(1.06)}}
 .sticker-zoom{position:fixed;inset:0;z-index:80;background:rgba(247,241,234,.94);display:flex;align-items:center;justify-content:center;padding:6vmin;cursor:zoom-out;animation:fade .2s}
 .sticker-zoom.out{opacity:0;transition:opacity .2s}
-.sticker-zoom .zoomed{width:min(88vw, 125vh) !important;height:auto !important;max-width:none !important;max-height:80vh !important;aspect-ratio:auto;transform:none;filter:drop-shadow(6px 0 0 #fff) drop-shadow(-6px 0 0 #fff) drop-shadow(0 6px 0 #fff) drop-shadow(0 -6px 0 #fff) drop-shadow(0 10px 14px rgba(90,62,51,.25))}
+.sticker-zoom .zoomed{width:min(88vw, 125vh) !important;height:auto !important;max-width:none !important;max-height:80vh !important;aspect-ratio:auto;transform:none;filter:drop-shadow(0 10px 14px rgba(90,62,51,.25))}
 .sticker-zoom .zoomed.rb-img{aspect-ratio:1.45/1;max-height:80vh;width:min(88vw, calc(80vh * 1.45)) !important}
 .sticker-zoom img.zoomed{object-fit:contain;height:80vh !important}
 .pond{background:none !important;border:0 !important;border-radius:0 !important}
@@ -1451,6 +1451,7 @@ html[data-theme="dark"] body.muted .speakbtn{background:#33261F}
 html[data-theme="dark"] .avatar{--avbg:#F3EADF !important}
 html[data-theme="dark"] .kp-av, html[data-theme="dark"] .sk-face{background:#F3EADF}
 html[data-theme="dark"] .sk-add .sk-face{background:transparent}
+html[data-theme="dark"] .cookie .x{background:#F3EADF;border-color:#5A3E33;box-shadow:0 2px 0 rgba(0,0,0,.35)}
 html[data-theme="dark"] .cookie .x svg{stroke:#5A3E33}
 html[data-theme="dark"] .ghost{box-shadow:0 10px 20px rgba(0,0,0,.45)}
 html[data-theme="dark"] .update-pill{background:#263B4B;color:#DCEEFA;border-color:#6EA6D1}
@@ -1501,6 +1502,72 @@ html[data-theme="dark"] .crocgame:not(.eat-left):not(.eat-right):not(.same) .cmp
 html[data-theme="dark"] body.railbg, html[data-theme="dark"] body.railbg #app{background:linear-gradient(rgba(22,26,46,.62),rgba(22,26,46,.62)),#1E2A3A url(train/bg.jpg) center bottom/cover no-repeat fixed}
 html[data-theme="dark"] body.birdbg, html[data-theme="dark"] body.birdbg #app{background:linear-gradient(180deg,#22384C 0%,#2B3F4A 60%,#3A382E 100%) fixed}
 html[data-theme="dark"] .up-sky{background:linear-gradient(180deg,#1F4463 0%,#2C5878 55%,#3B6C8A 100%)}
+/* ---- round 2: fixes from the first iPad test ---- */
+/* rule: nothing in dark mode is pure white. Light surfaces are #F3EADF, light text is var(--ink) #F7F1EA */
+/* icon fills: the peach used inside the home, speaker and book icons is too pale next to a cream line */
+html[data-theme="dark"] .round svg [fill="#F6C9B4"], html[data-theme="dark"] .chip svg [fill="#F6C9B4"], html[data-theme="dark"] .bookbtn svg [fill="#F6C9B4"], html[data-theme="dark"] .big-btn svg [fill="#F6C9B4"]{fill:#C0745C}
+html[data-theme="dark"] .round svg [fill="#E4D6CC"]{fill:#8A7468}
+/* Number Train: darker dusk so the grey wheels stand out; number cards like the answer cards of Bird on a Wire */
+html[data-theme="dark"] body.railbg, html[data-theme="dark"] body.railbg #app{background:linear-gradient(rgba(16,20,36,.82),rgba(16,20,36,.82)),#161C2C url(train/bg.jpg) center bottom/cover no-repeat fixed}
+html[data-theme="dark"] .tnum, html[data-theme="dark"] .tcard{background:var(--card);border-color:#4C7590;color:#A7D0E8}
+html[data-theme="dark"] .tcard{box-shadow:0 5px 0 #4C7590}
+html[data-theme="dark"] .tnum.new{color:#F2C640}
+html[data-theme="dark"] .tslot{background:rgba(58,45,39,.8);border-color:#A7D0E8;color:#A7D0E8}
+html[data-theme="dark"] .picking .tcar.gap:not(.filled) .tslot, html[data-theme="dark"] .tcar.over .tslot, html[data-theme="dark"] .tcar.lit .tnum{background:#5A4A1E;color:#FFE9A8;border-color:#F2C640}
+html[data-theme="dark"] .tcard.sel{background:#5A4A1E;color:#FFE9A8;border-color:#F2C640;box-shadow:0 5px 0 #8A6D14}
+html[data-theme="dark"] .puffs i{background:#C9CED6}
+html[data-theme="dark"] .ghost-card{box-shadow:0 10px 18px rgba(0,0,0,.5)}
+/* Bead Necklace */
+html[data-theme="dark"] .btray{background:var(--card);border-color:#4C7590;box-shadow:0 5px 0 #4C7590}
+html[data-theme="dark"] .bslot.empty{border-color:#8A7468;background:rgba(58,45,39,.7)}
+html[data-theme="dark"] .bslot.empty.next{border-color:#E8708F;background:#4B2530}
+html[data-theme="dark"] .necklace .string path{stroke:#C9A893}
+/* Up and Away */
+html[data-theme="dark"] .upgame .bubble{background:rgba(58,45,39,.96)}
+html[data-theme="dark"] .up-num{background:var(--card);color:var(--ink)}
+html[data-theme="dark"] .up-sky .deep{background:linear-gradient(180deg,#12304A 0%,#1F4463 60%,#2C5878 100%)}
+html[data-theme="dark"] .up-sky .cl, html[data-theme="dark"] .up-sky .cl::before, html[data-theme="dark"] .up-sky .cl::after{background:#9DB4C6}
+html[data-theme="dark"] .up-sky .hill{background:linear-gradient(#5B8A4E,#47733E);box-shadow:inset 0 10px 0 #6C9C5E}
+html[data-theme="dark"] .up-strings path{stroke:#D9C9BC}
+/* Tower ruler */
+html[data-theme="dark"] .ruler span{border-top-color:var(--edge)}
+html[data-theme="dark"] .ruler span.hi{color:var(--on-ink)}
+html[data-theme="dark"] .ruler span.ok{color:#F7F1EA}
+html[data-theme="dark"] .ruler span.mark{background:#E6C97F;color:#2B201C}
+html[data-theme="dark"] .tw-shelf{background:#8A6A4E;box-shadow:0 6px 0 #6B5039}
+/* Write It: the pad stays paper (the handwriting reader needs dark ink on light), but off-white, not white */
+html[data-theme="dark"] .wpad{background:#E9DFD3}
+html[data-theme="dark"] .wpad::before{border-top-color:#CDBFAF}
+html[data-theme="dark"] .wpad .wguide{color:#D2C4B5}
+html[data-theme="dark"] .wpad.good{background:#D9E6CB}
+/* other pure whites */
+html[data-theme="dark"] .pad span{color:#F7F1EA !important}
+html[data-theme="dark"] .win .num, html[data-theme="dark"] .roof-sign, html[data-theme="dark"] .stop-sign .sign{background:#F3EADF}
+html[data-theme="dark"] .dev-badge{background:#36254B;border-color:#573B7D;color:#D9C9F0}
+html[data-theme="dark"] .av-check{border-color:#F3EADF}
+html[data-theme="dark"] .mk-label{background:var(--card);border-color:var(--edge)}
+html[data-theme="dark"] .mk-bin.c-red .mk-label{background:#4B2A27}
+html[data-theme="dark"] .mk-bin.c-yellow .mk-label{background:#4B4225}
+html[data-theme="dark"] .mk-bin.c-green .mk-label{background:#324B25}
+html[data-theme="dark"] .mk-bin.c-purple .mk-label{background:#36254B}
+html[data-theme="dark"] .mk-item.sel{background:rgba(242,198,64,.25)}
+html[data-theme="dark"] .bw-wire{background:#B8A898}
+html[data-theme="dark"] .ten .qbox{color:#A7D0E8;border-color:#4C7590}
+html[data-theme="dark"] .ten .qbox.solved{background:#263B4B}
+html[data-theme="dark"] .carton{background:#6B573F;border-color:#4E3F2D;box-shadow:0 6px 0 #4E3F2D}
+html[data-theme="dark"] .carton.hot{background:#786348}
+html[data-theme="dark"] .carton .cell::before{background:#57462F;box-shadow:inset 0 calc(var(--cell) * .06) 0 #47381F}
+html[data-theme="dark"] .carton .post{background:#786348;border-color:#4E3F2D}
+html[data-theme="dark"] .tray{background:#3A2D27;border-color:#5A463C}
+html[data-theme="dark"] .pond{background:#263B4B;border-color:#4C7590}
+html[data-theme="dark"] .pad::before{background:#263B4B}
+html[data-theme="dark"] .arcs .arc{stroke:#A7D0E8}
+html[data-theme="dark"] .road{background:#4A4038}
+html[data-theme="dark"] .mini-bunny.start{background:#4A2F29}
+html[data-theme="dark"] .mini-bunny.add{background:#263B4B}
+html[data-theme="dark"] .kid-badge{background:#263B4B;color:#A7D0E8}
+html[data-theme="dark"] .av-opt[aria-checked="true"]{box-shadow:0 0 0 4px #263B4B}
+html[data-theme="dark"] .hold-ring .track{stroke:var(--edge)}
 /* the lock screen is already night: identical in both modes */
 html[data-theme="dark"] body.nightbg .lockscreen .big-btn{color:#3E2A22}
 </style>

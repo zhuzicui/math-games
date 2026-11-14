@@ -1,6 +1,6 @@
 # Dark mode: design and build spec
 
-Status: design prototype. The switch, the boot code and the dark colours for the shared chrome, the home screens,
+Status: design prototype, round 2 (after the first iPad test every game has a first dark pass). The switch, the boot code and the dark colours for the shared chrome, the home screens,
 Feed the Unicorn, Hungry Crocodile, the reward screens, the rainbow screen and the grown-ups area are in `index.html`
 on this branch. The other games are only partly covered (they inherit the tokens) and are the build work listed in section 7.
 
@@ -21,6 +21,11 @@ Sample screens: `/mnt/project-files/dark-mode/dark-mode-light-vs-dark.png`.
 5. **Anything a child has to count must stay as visible as in light mode.** This outranks looks.
 6. **JS never bakes a theme colour into markup.** Colours that change with the theme come from CSS, so a live switch needs
    no re-render.
+
+7. **Nothing in dark mode is pure white.** Light surfaces (write pad, bus signs, buddy medallions, the cookie "x")
+   are `#F3EADF` or `#E9DFD3`; light text is `var(--ink)` `#F7F1EA`. Artwork files are the only exception.
+8. **Answer cards look the same in every game:** `var(--card)` fill, `#4C7590` border and lip, `#A7D0E8` number
+   (the Bird on a Wire treatment). Selected or lit: `#5A4A1E` fill, `#F2C640` border, `#FFE9A8` text.
 
 ## 2. Palette
 
@@ -77,7 +82,7 @@ Scenes
 | Sticker book | `#F3E9DC` | `#30251F` |
 | Birds sky | `#D9ECF6 → #E8F3F3 → #F3F1E6` | `#22384C → #2B3F4A → #3A382E` |
 | Up and Away sky | `#9FD3F2 → #C7E6F8 → #E6F4FB` | `#1F4463 → #2C5878 → #3B6C8A` |
-| Number Train | `train/bg.jpg` | the same picture under a 62% `rgb(22,26,46)` scrim (no new image) |
+| Number Train | `train/bg.jpg` | the same picture under an 82% `rgb(16,20,36)` scrim, dark enough for the grey wheels to stand out |
 | Lock screen | night sky | unchanged |
 
 ## 3. The switch
@@ -121,7 +126,8 @@ Scenes
 
 1. Image files (`animals/`, `fish/`, `avatars/`, `stars/`, `cookies/`, and the rest) are used as they are.
 2. Buddy avatars stay on a light medallion (`#F3EADF`, a little dimmer than white). Their line art needs it.
-3. Icons built in JS with a hardcoded brown stroke are recoloured in the dark block with attribute selectors, for example
+3. The peach fill inside the home, speaker and book icons becomes `#C0745C` in dark mode.
+   Icons built in JS with a hardcoded brown stroke are recoloured in the dark block with attribute selectors, for example
    `html[data-theme="dark"] svg [stroke="#6B4A3A"]{stroke:var(--line)}`. This is how the prototype does it and it is
    safe. Cleaner, optional: change those strokes to `currentColor` in the JS.
 4. The empty rainbow colour `#F3F9F9` is written by JS as an SVG attribute; the dark block overrides it the same way.
@@ -130,7 +136,7 @@ Scenes
    Done for fish. Likely needed for: birds and the wire, sheep strings, bead string, tower flag.
 6. Existing brown drop shadows (`rgba(90,62,51,…)`, `rgba(71,28,14,…)`) are invisible on dark. Replace with
    `rgba(0,0,0,.35–.45)` only where the shadow carries meaning (a dragged object lifting). Otherwise leave them.
-7. White sticker outlines (`.stk`, `.sticker-zoom .zoomed`) stay white: they are part of the sticker look.
+7. Stickers have no white outline, in light or dark (removed on request; this is the one light-mode change).
 
 ## 6. Traps found in the code
 
