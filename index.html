@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F7F1EA">
-<meta name="build" content="2026-11-14.014135">
+<meta name="build" content="2026-11-14.020401">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Momo Math">
@@ -1387,6 +1387,7 @@ body.birdbg,body.birdbg #app{background:linear-gradient(180deg,#D9ECF6 0%,#E8F3F
   </defs>
 </svg>
 <main id="app"></main>
+<script src="sw-register.js"></script>
 <script src="rainbows.js"></script>
 <script src="rainbows-more.js"></script>
 <div id="live" class="sr" aria-live="polite"></div>
@@ -2662,8 +2663,9 @@ function safeToReload(){
   if (ov) return !!ov.querySelector('.round-rw');     /* the end-of-round page is a fine moment; other dialogs are not */
   return ['start', 'home', 'timer', 'locked'].indexOf(screen) >= 0;
 }
-function doUpdate(){ try { sessionStorage.setItem('momo-reloaded-for', newBuild || ''); } catch(e) {} save(); location.reload(); }
+function doUpdate(){ try { sessionStorage.setItem('momo-reloaded-for', newBuild || ''); } catch(e) {} save(); (window.momoReload || function(){ location.reload(); })(); }
 function updateTick(){
+  if (!newBuild && window.momoSwReady) newBuild = 'sw';   /* the offline copy of a newer build is downloaded and waiting */
   if (!newBuild) return;
   if (safeToReload()) { doUpdate(); return; }
   if (!document.getElementById('updatePill')) {
